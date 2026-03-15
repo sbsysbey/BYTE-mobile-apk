@@ -1,0 +1,732 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 6: Veri Gizliliği & Bulut</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/modules.css">>
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(96,200,240,.07);border:1px solid rgba(96,200,240,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--cyan);letter-spacing:2px;margin:24px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(96,200,240,.2);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;color:var(--cyan);margin-bottom:4px;}
+.stat-lbl{font-size:.78rem;color:var(--text-dim);line-height:1.4;}
+.gdpr-note{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-size:.86rem;line-height:1.6;}
+
+/* İZİN KARTLARI */
+.perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.perm-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.2s;}
+.perm-card:hover{border-color:rgba(96,200,240,.3);}
+.pc-top{display:flex;align-items:center;gap:9px;margin-bottom:6px;}
+.pc-icon{font-size:1.2rem;}
+.pc-name{font-size:.88rem;font-weight:700;color:#fff;}
+.risk-badge{margin-left:auto;font-size:.72rem;font-family:'Orbitron',sans-serif;padding:2px 8px;border-radius:20px;}
+.risk-high{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+.risk-med{background:rgba(251,191,36,.09);color:var(--yellow);border:1px solid rgba(251,191,36,.3);}
+.risk-low{background:rgba(74,222,154,.09);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.pc-desc{font-size:.83rem;color:var(--text-dim);line-height:1.55;}
+
+/* BULUT KARŞILAŞTIRMA */
+.cloud-compare{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:.84rem;}
+.cloud-compare th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1px;color:var(--text-dim);}
+.cloud-compare td{border:1px solid var(--border);padding:10px 14px;color:var(--text-dim);vertical-align:top;line-height:1.5;}
+.cloud-compare tr:hover td{background:rgba(255,255,255,.02);}
+.cloud-compare td:first-child{color:var(--text);font-weight:600;}
+.c-apple-adp{color:var(--green);}
+.c-apple{color:var(--cyan);}
+.c-google{color:var(--yellow);}
+.c-ms{color:var(--orange);}
+.cloud-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.cloud-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid;}
+.cc-best{border-top-color:var(--green);}
+.cc-good{border-top-color:var(--cyan);}
+.cc-mid{border-top-color:var(--yellow);}
+.cc-bottom{border-top-color:var(--orange);}
+.cc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.cc-icon{font-size:1.3rem;}
+.cc-name{font-size:.88rem;font-weight:700;color:#fff;}
+.cc-score{margin-left:auto;font-family:'Orbitron',sans-serif;font-size:.74rem;}
+.cc-best .cc-score{color:var(--green);}
+.cc-good .cc-score{color:var(--cyan);}
+.cc-mid .cc-score{color:var(--yellow);}
+.cc-bottom .cc-score{color:var(--orange);}
+.cc-pros{font-size:.82rem;color:var(--green);margin-bottom:5px;display:flex;gap:5px;}
+.cc-cons{font-size:.82rem;color:var(--red);display:flex;gap:5px;}
+
+/* DRIVE TEMİZLİK */
+.hygiene-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.hy-step{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.hy-num{width:28px;height:28px;border-radius:50%;background:rgba(96,200,240,.12);border:1px solid rgba(96,200,240,.3);color:var(--cyan);font-family:'Orbitron',sans-serif;font-size:.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.hy-title{font-size:.90rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.hy-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;}
+.hy-tip{font-size:.80rem;color:var(--cyan);margin-top:4px;}
+
+/* GDPR HAKLAR */
+.gdpr-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.gdpr-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;}
+.gd-icon{font-size:1.2rem;margin-bottom:6px;}
+.gd-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.gd-desc{font-size:.82rem;color:var(--text-dim);line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;font-size:.86rem;line-height:1.55;}
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.04),rgba(74,222,154,.03));border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--cyan);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:8px;}
+.side-item{font-size:.85rem;color:var(--text-dim);display:flex;gap:8px;line-height:1.5;}
+.side-item strong{color:var(--text);}
+
+/* QUIZ */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* SENARYO */
+.byte-fb{display:none;margin-top:18px;background:rgba(74,222,154,.04);border:1px solid rgba(74,222,154,.2);border-radius:12px;padding:16px;gap:12px;}
+
+.notif-mockup{background:#0a1520;border:1px solid rgba(96,200,240,.2);border-radius:10px;margin-top:14px;overflow:hidden;}
+.nm-header{background:rgba(96,200,240,.06);padding:10px 16px;border-bottom:1px solid rgba(96,200,240,.12);display:flex;align-items:center;gap:10px;}
+.nm-app{font-size:.80rem;color:var(--cyan);font-weight:700;}
+.nm-time{font-size:.78rem;color:var(--text-dim);margin-left:auto;}
+.nm-body{padding:14px 16px;}
+.nm-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.nm-text{font-size:.84rem;color:var(--text);line-height:1.65;}
+.nm-link{color:var(--cyan);text-decoration:underline;cursor:pointer;}
+.nm-warn{padding:10px 16px;background:rgba(251,191,36,.04);border-top:1px solid rgba(251,191,36,.15);}
+.nw-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--yellow);letter-spacing:1px;margin-bottom:6px;}
+.nw-item{font-size:.81rem;color:var(--text-dim);display:flex;gap:6px;margin-bottom:4px;}
+.nw-dot{color:var(--yellow);flex-shrink:0;}
+
+
+
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span><span class="xp-label">XP</span>
+      <span id="xp-count">1850</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span>5</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">✓ Tamamlandı · 300 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">06</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Veri Gizliliği & Bulut</div><div class="mod-meta">Aktif · 400 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        🔐
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 06 🔊</div>
+        <h1 class="mod-title">Veri Gizliliği & <span>Bulut Güvenliği</span></h1>
+        <p class="mod-desc">Verilerine kim erişiyor? Bulut depolama güvenli mi? Hangi uygulama ne alıyor? BYTE ile dijital ayak izini kontrol et, bulut servislerini karşılaştır ve GDPR haklarını öğren.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>400 XP</div>
+          <div class="stat-chip"><div class="dot dot-c"></div>~35 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+150 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+100 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+50 XP</div></div>
+    </div>
+
+    <!-- PANEL 1: VIDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 06</div>
+          <div class="vs-title">VERİ GİZLİLİĞİ & BULUT GÜVENLİĞİ</div>
+          <div class="vs-sub">Uygulama izinleri · iCloud vs Google Drive · GDPR hakların · Drive hijyeni</div>
+          <button class="play-big" onclick="startVideo()">▶</button>
+          <div class="chapters">
+            <div class="ch-pill active">📱 Uygulama İzinleri</div>
+            <div class="ch-pill">☁️ Bulut Karşılaştırma</div>
+            <div class="ch-pill">🗂️ Drive Temizliği</div>
+            <div class="ch-pill">⚖️ GDPR Hakların</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <span class="vtime" id="vtime">0:00 / 9:45</span>
+          <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Bir fener uygulamasının rehberine erişmesi gerekmez — izin isteyen her uygulama şüphelidir</li>
+          <li><span class="kp-b">▸</span>iCloud Gelişmiş Veri Koruması açıkken Apple bile verilerine erişemiyor — diğer servislerde böyle değil</li>
+          <li><span class="kp-b">▸</span>Google Drive'daki veriler reklam hedefleme için analiz edilebilir — ücretsizliğin bedeli bu</li>
+          <li><span class="kp-b">▸</span>GDPR kapsamında verilerinin silinmesini, görülmesini ve düzeltilmesini talep etme hakkın var</li>
+          <li><span class="kp-b">▸</span>Drive'daki eski paylaşımlı dosyalar erişim hakkını kaldırsan da başkasının cihazında kalabilir</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;"><button id="video-complete-btn" class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Video Tamamlandı →</button></div>
+    </div>
+
+    <!-- PANEL 2: READING -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Veri Gizliliği & Bulut Güvenliği: Verilerine Kim Erişiyor?</div>
+          <p class="article-intro">Telefondaki her uygulama veri topluyor. Buluta yüklediğin her dosya bir sunucuda bekliyor. Kim görebilir, kim erişebilir, kim satar? BYTE ile kontrol et.</p>
+
+          <div class="section-head">📱 BÖLÜM 1 — UYGULAMA İZİNLERİ</div>
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">%87</div><div class="stat-lbl">Ücretsiz uygulamaların konum verisi toplama oranı</div></div>
+            <div class="stat-box"><div class="stat-num">%62</div><div class="stat-lbl">Rehbere erişen uygulamalar (2024 AB raporu)</div></div>
+            <div class="stat-box"><div class="stat-num">€20M</div><div class="stat-lbl">GDPR ihlali başına maksimum ceza</div></div>
+          </div>
+
+          <div class="perm-grid">
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">📍</div><div class="pc-name">Konum</div><div class="risk-badge risk-high">YÜKSEK RİSK</div></div>
+              <div class="pc-desc">"Her zaman açık" konum = tüm rutinin haritalandı. Nerede çalıştığın, alışveriş yaptığın, uyuduğun — hepsi veri.</div>
+            </div>
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">🎙️</div><div class="pc-name">Mikrofon</div><div class="risk-badge risk-high">YÜKSEK RİSK</div></div>
+              <div class="pc-desc">Arka planda kayıt yapabilir. Konuşmaların, iş toplantıların, aile sohbetlerin hedef olabilir.</div>
+            </div>
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">👥</div><div class="pc-name">Rehber</div><div class="risk-badge risk-high">YÜKSEK RİSK</div></div>
+              <div class="pc-desc">Tüm kişilerinin isimleri, numaraları, e-postaları toplanır — onların izni olmadan.</div>
+            </div>
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">📷</div><div class="pc-name">Kamera & Galeri</div><div class="risk-badge risk-med">DİKKAT</div></div>
+              <div class="pc-desc">Fotoğraflarına tam erişim. EXIF metadata içinde konum ve cihaz bilgisi de var.</div>
+            </div>
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">📲</div><div class="pc-name">SMS Okuma</div><div class="risk-badge risk-med">DİKKAT</div></div>
+              <div class="pc-desc">Banka OTP kodları dahil tüm mesajlara erişim. 2FA'yı bypass etmek için kullanılabilir.</div>
+            </div>
+            <div class="perm-card">
+              <div class="pc-top"><div class="pc-icon">🌐</div><div class="pc-name">İnternet</div><div class="risk-badge risk-low">NORMAL</div></div>
+              <div class="pc-desc">Çoğu uygulama için gerekli. Ama hangi verileri nereye gönderdiği bilinmez.</div>
+            </div>
+          </div>
+
+          <div class="gdpr-note">
+            <span>💡</span>
+            <div><strong>Altın Soru:</strong> Fener uygulamasının rehberine neden ihtiyacı olsun? Oyunun mikrofona? Hesap makinesinin konumuna? Mantıklı olmayan her izin isteği <strong>kırmızı bayraktır</strong>.</div>
+          </div>
+
+          <div class="section-head">☁️ BÖLÜM 2 — BULUT GÜVENLİĞİ KARŞILAŞTIRMASI</div>
+
+          <div class="alert-info">
+            <span>🔬</span>
+            <div>Aşağıdaki karşılaştırma teknik olarak doğrulanmış bilgilere dayanmaktadır. Temel kriter: verilerine şirketin kendisi erişebiliyor mu?</div>
+          </div>
+
+          <div class="cloud-cards">
+            <div class="cloud-card cc-best">
+              <div class="cc-head">
+                <div class="cc-icon">🍎</div>
+                <div><div class="cc-name">iCloud — Gelişmiş Koruma</div><div style="font-size:.75rem;color:var(--text-dim);">Advanced Data Protection açık</div></div>
+                <div class="cc-score">⭐ EN İYİ</div>
+              </div>
+              <div class="cc-pros">✅ <span>Uçtan uca şifreleme — Apple bile erişemiyor</span></div>
+              <div class="cc-pros">✅ <span>Fotoğraflar, yedekler, notlar dahil tüm veri</span></div>
+              <div class="cc-pros">✅ <span>Hükümet taleplerine yanıt veremez</span></div>
+              <div class="cc-cons">⚠️ <span>Kurtarma anahtarını kaybedersen veriler gider</span></div>
+            </div>
+            <div class="cloud-card cc-good">
+              <div class="cc-head">
+                <div class="cc-icon">☁️</div>
+                <div><div class="cc-name">iCloud — Standart</div><div style="font-size:.75rem;color:var(--text-dim);">Varsayılan ayarlar</div></div>
+                <div class="cc-score">✓ İYİ</div>
+              </div>
+              <div class="cc-pros">✅ <span>AES-256 şifreleme, güçlü altyapı</span></div>
+              <div class="cc-pros">✅ <span>Anahtarlık, sağlık verisi uçtan uca</span></div>
+              <div class="cc-cons">⚠️ <span>Fotoğraflar ve yedekler Apple'a açık</span></div>
+              <div class="cc-cons">⚠️ <span>Yasal talepler karşılanabilir</span></div>
+            </div>
+            <div class="cloud-card cc-mid">
+              <div class="cc-head">
+                <div class="cc-icon">🟡</div>
+                <div><div class="cc-name">Google Drive</div><div style="font-size:.75rem;color:var(--text-dim);">AES-256, uçtan uca yok</div></div>
+                <div class="cc-score">~ ORTA</div>
+              </div>
+              <div class="cc-pros">✅ <span>Güçlü şifreleme, geniş ekosistem</span></div>
+              <div class="cc-pros">✅ <span>İşbirliği araçları güçlü</span></div>
+              <div class="cc-cons">⚠️ <span>Google verilerine erişebilir</span></div>
+              <div class="cc-cons">⚠️ <span>Veriler reklam hedefleme için analiz edilebilir</span></div>
+            </div>
+            <div class="cloud-card cc-bottom">
+              <div class="cc-head">
+                <div class="cc-icon">🔷</div>
+                <div><div class="cc-name">OneDrive</div><div style="font-size:.75rem;color:var(--text-dim);">AES-256, Personal Vault sınırlı</div></div>
+                <div class="cc-score">~ ORTA</div>
+              </div>
+              <div class="cc-pros">✅ <span>Personal Vault ekstra güvenlik</span></div>
+              <div class="cc-pros">✅ <span>Fidye yazılımı koruması, Office entegrasyonu</span></div>
+              <div class="cc-cons">⚠️ <span>Microsoft verilerine erişebilir</span></div>
+              <div class="cc-cons">⚠️ <span>Uçtan uca şifreleme yalnızca Personal Vault</span></div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head"><div class="byte-mini">🤖</div><div class="byte-name">BYTE'DAN BULUT İPUCU</div></div>
+            <div class="byte-tip-text">"iPhone kullanıyorsan Ayarlar → [Adın] → iCloud → Gelişmiş Veri Koruması'nı aç. Bu tek ayar verilerini Apple'dan bile korur. Ama kurtarma kişisini veya anahtarı kaybet — her şey gider. Önce kurtarma yöntemi, sonra aç."</div>
+          </div>
+
+          <div class="section-head">🗂️ BÖLÜM 3 — BULUT HİJYENİ</div>
+
+          <div class="hygiene-steps">
+            <div class="hy-step">
+              <div class="hy-num">1</div>
+              <div>
+                <div class="hy-title">Eski paylaşımları kapat</div>
+                <div class="hy-desc">Google Drive → Sağ tık → Paylaşımı yönet. Artık çalışmadığın kişilerin erişimini kaldır. Paylaşım kaldırılsa bile o kişi indirmişse dosya hâlâ onlarda.</div>
+                <div class="hy-tip">→ Drive → Sol menü → "Benimle paylaşılan" — kim nelere erişiyor gör</div>
+              </div>
+            </div>
+            <div class="hy-step">
+              <div class="hy-num">2</div>
+              <div>
+                <div class="hy-title">Gereksiz eski dosyaları temizle</div>
+                <div class="hy-desc">Google Drive: Dosyalar → Tarih sırası ile. iCloud: Dosyalar uygulaması → iCloud Drive. Yıllarca biriken dosyalar hem depolama hem veri riski yaratır.</div>
+                <div class="hy-tip">→ Drive arama: "before:2022" yazarak eski dosyaları filtrele</div>
+              </div>
+            </div>
+            <div class="hy-step">
+              <div class="hy-num">3</div>
+              <div>
+                <div class="hy-title">Bağlı uygulamaları denetle</div>
+                <div class="hy-desc">Google Drive erişimi olan üçüncü taraf uygulamalar bazen yıllarca bağlı kalır. Myaccount.google.com → Güvenlik → Üçüncü taraf erişimi kontrol et.</div>
+                <div class="hy-tip">→ Kullanmadığın her uygulamayı devre dışı bırak</div>
+              </div>
+            </div>
+            <div class="hy-step">
+              <div class="hy-num">4</div>
+              <div>
+                <div class="hy-title">Hassas belgeleri şifrele</div>
+                <div class="hy-desc">Kimlik belgesi, sözleşme, banka ekstresi gibi dosyaları buluta yüklerken zip ile şifrele ya da parola korumalı PDF olarak kaydet. Bulut şifreleme ≠ içerik şifreleme.</div>
+                <div class="hy-tip">→ 7-Zip (ücretsiz) ile AES-256 şifreli zip oluşturabilirsin</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">⚖️ BÖLÜM 4 — GDPR / KVKK HAKLARIN</div>
+
+          <div class="gdpr-grid">
+            <div class="gdpr-card">
+              <div class="gd-icon">👁️</div>
+              <div class="gd-title">Bilgi Alma Hakkı</div>
+              <div class="gd-desc">Hangi verilerinin tutulduğunu sorabilirsin. Şirket AB genelinde 30 gün içinde cevaplamak zorunda. Google ve Meta'ya bu talebi gönderebilirsin.</div>
+            </div>
+            <div class="gdpr-card">
+              <div class="gd-icon">🗑️</div>
+              <div class="gd-title">Silme Hakkı (Unutulma)</div>
+              <div class="gd-desc">Hizmet almayı bıraktığında verilerinin silinmesini talep edebilirsin. Sosyal medya hesabını kapatırken "veri silme" talebini ayrıca gönder.</div>
+            </div>
+            <div class="gdpr-card">
+              <div class="gd-icon">✏️</div>
+              <div class="gd-title">Düzeltme Hakkı</div>
+              <div class="gd-desc">Hatalı verilerin düzeltilmesini isteyebilirsin. Yanlış adres, yanlış doğum tarihi — şirket düzeltmek zorunda.</div>
+            </div>
+            <div class="gdpr-card">
+              <div class="gd-icon">🚫</div>
+              <div class="gd-title">İtiraz Hakkı</div>
+              <div class="gd-desc">Verilerinin profilleme, otomatik karar verme veya reklam hedefleme için kullanılmasına itiraz edebilirsin.</div>
+            </div>
+          </div>
+
+          <div class="gdpr-note">
+            <span>🇪🇺</span>
+            <div>AB vatandaşları bu hakları tüm dünya şirketlerine karşı kullanabilir. Türkiye'de KVKK benzer hakları güvence altına alır. Şikâyet için: <strong>ENISA, Hollanda APD (AP)</strong> veya ülkene göre yetkili kurum.</div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:24px" onclick="completeStep(2)">Okumayı Tamamladım →</button>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">📱 İZİN KONTROLÜ</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--red)">✗</span><div><strong>Fener → Rehber</strong> tuhaf</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div><strong>Oyun → Mikrofon</strong> şüpheli</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div><strong>Hesap mak. → Konum</strong> anlamsız</div></div>
+              <div class="side-item"><span style="color:var(--green)">✓</span><div>Harita → Konum mantıklı</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Ayarlar → Gizlilik → İzinler</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">☁️ BULUT SIRASI</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--green)">🥇</span><div><strong>iCloud ADP</strong> (en güvenli)</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">🥈</span><div><strong>iCloud Standart</strong></div></div>
+              <div class="side-item"><span style="color:var(--yellow)">🥉</span><div><strong>OneDrive / G.Drive</strong></div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">⚖️ GDPR HAKLARIN</div>
+            <div class="side-list">
+              <div class="side-item"><span>👁️</span><div>Bilgi alma (30 gün)</div></div>
+              <div class="side-item"><span>🗑️</span><div>Silme / unutulma</div></div>
+              <div class="side-item"><span>✏️</span><div>Düzeltme</div></div>
+              <div class="side-item"><span>🚫</span><div>İtiraz (profilleme)</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🗂️ DRIVE TEMİZLİK</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Eski paylaşımları kapat</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Bağlı uygulamaları denetle</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Hassas dosyaları şifrele</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label"><span id="q-counter">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div style="flex:1;">
+              <div class="scene-label">BYTE'IN SENARYOSU — BULUT LİNKİ TUZAĞI</div>
+              <div class="scene-text">Bir arkadaşından WhatsApp mesajı geldi. Ama son zamanlarda konuşmadınız ve mesaj biraz tuhaf:</div>
+              <div class="notif-mockup">
+                <div class="nm-header">
+                  <span style="font-size:.9rem;">💬</span>
+                  <div class="nm-app">WhatsApp — Lars van den Berg</div>
+                  <div class="nm-time">17:43</div>
+                </div>
+                <div class="nm-body">
+                  <div class="nm-title">Lars'ın mesajı:</div>
+                  <div class="nm-text">Heyy! Seni çok özledim. Tatilden harika fotoğraflarım var, hepsini paylaştım. Bir bak: <span class="nm-link">drive.google-photos-share.net/albüm/lars2024</span> 💙</div>
+                </div>
+                <div class="nm-warn">
+                  <div class="nw-title">⚠️ ŞÜPHELİ İŞARETLER</div>
+                  <div class="nw-item"><span class="nw-dot">1</span><span>Domain: <strong>google-photos-share.net</strong> — gerçek Google değil (<strong>photos.google.com</strong>)</span></div>
+                  <div class="nw-item"><span class="nw-dot">2</span><span>Lars'ın telefonu daha önce hack'lendi mi bilmiyorsun</span></div>
+                  <div class="nw-item"><span class="nw-dot">3</span><span>Link tıklanınca Google hesabı giriş sayfası çıkabilir — sahte!</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)"><span class="s-icon">🔗</span><span>Lars'ın paylaşımı — linke tıklayıp Google hesabınla giriş yaparsın.</span></button>
+            <button class="scene-opt" onclick="pickScene(1)"><span class="s-icon">📞</span><span>Linke tıklamadan önce Lars'ı başka bir yoldan ararsın (telefon veya farklı uygulama). Doğruluyorsa kendisi link gönderir. Domain'i de kontrol edersin — <strong>photos.google.com</strong> değilse tıklamazsın.</span></button>
+            <button class="scene-opt" onclick="pickScene(2)"><span class="s-icon">🤷</span><span>Lars olduğunu bildiğin için linke tıklarsın ama giriş yapmaz, sadece bakmaya çalışırsın.</span></button>
+            <button class="scene-opt" onclick="pickScene(3)"><span class="s-icon">🗑️</span><span>Mesajı silersin, Lars'a da haber vermezsin.</span></button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: BADGE -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🔐</div>
+        </div>
+        <h2 class="badge-title">VERİ BEKÇİSİ</h2>
+        <p class="badge-subtitle">Dijital ayak izini kontrol ediyorsun — izinler, bulut, GDPR</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+400 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 06</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">4</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">400</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+  
+
+
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance('Modül altı. Veri Gizliliği ve Bulut Güvenliği. Telefondaki her uygulama veri topluyor. Buluta yüklediğin her dosya bir sunucuda bekliyor. Bu modülde uygulama izinlerini sorgulamayı, bulut servislerini karşılaştırmayı ve GDPR haklarını öğreneceksin.');
+  ut.lang='tr-TR';ut.rate=0.92;ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
+}
+
+
+
+
+
+window.moduleQuestions = [
+  {
+    q: "Bir fener uygulaması hangi izni isterse şüphelenmelisin?",
+    opts: ["İnternet erişimi", "Ekran parlaklığı", "Depolama alanı", "Rehbere erişim"],
+    correct: 3,
+    fb: {
+      wrong: "Fener uygulamasının rehberine kesinlikle ihtiyacı yoktur. Bu tür mantıksız izin istekleri kırmızı bayraktır.",
+      correct: "Doğru! Fener → Rehber tamamen anlamsız. Veri toplamak için bahane izin demektir."
+    }
+  },
+  {
+    q: "iCloud Gelişmiş Veri Koruması (Advanced Data Protection) etkinleştirildiğinde ne olur?",
+    opts: ["Apple bile verilerinize erişemez — uçtan uca şifreleme kapsamı genişler", "Veriler yalnızca Wi-Fi ile aktarılır", "Yedeklemeler otomatik durur", "Fotoğraflar otomatik silinir"],
+    correct: 0,
+    fb: {
+      wrong: "Gelişmiş Veri Koruması açıkken Apple dahil hiçbir üçüncü taraf verilerinize erişemez.",
+      correct: "Kesinlikle doğru! Bu ayar açıkken Apple'ın şifreleme anahtarı yoktur — bu yüzden hukuki talepler de karşılanamaz."
+    }
+  },
+  {
+    q: "Google Drive'ın temel gizlilik sorunu nedir?",
+    opts: ["Dosyalar şifrelenmez", "Dosya boyutu sınırı çok düşük", "Google verilerinize erişebilir ve reklam hedefleme için analiz edebilir", "2FA desteklemiyor"],
+    correct: 2,
+    fb: {
+      wrong: "Google Drive AES-256 şifreleme kullanır — ama Google şifreleme anahtarlarını yönetir, yani verilerinize erişimi vardır.",
+      correct: "Doğru! Ücretsiz ürünün bedeli: verilerinizin analiz edilmesi. Reklam modeli buna dayanır."
+    }
+  },
+  {
+    q: "OneDrive'ın Google Drive'a göre öne çıkan güvenlik özelliği nedir?",
+    opts: ["Uçtan uca şifreleme", "Personal Vault ve fidye yazılımı koruması", "Açık kaynak şifreleme", "Apple ile entegrasyon"],
+    correct: 1,
+    fb: {
+      wrong: "OneDrive'ın avantajı Personal Vault (ekstra güvenlik katmanı) ve fidye yazılımı saldırısı sonrası dosyaları geri yükleme özelliğidir.",
+      correct: "Doğru! Personal Vault hassas dosyalar için ek koruma sunar. Fidye yazılımı koruması ise versiyonlama sayesinde çalışır."
+    }
+  },
+  {
+    q: "GDPR kapsamında 'unutulma hakkı' ne anlama gelir?",
+    opts: ["Şifreni unutunca sıfırlama hakkı", "Hesabını geçici kapatma hakkı", "Verilerinin şirketten silinmesini talep etme hakkı", "Bildirimleri kapatma hakkı"],
+    correct: 2,
+    fb: {
+      wrong: "Unutulma hakkı (silme hakkı): hizmet kullanmayı bıraktığında verilerinin tamamen silinmesini talep edebilirsin.",
+      correct: "Doğru! GDPR Madde 17. Sosyal medya hesabını kapatırken bu talebi ayrıca göndermelisin."
+    }
+  },
+  {
+    q: "Google Drive'daki eski paylaşımı kaldırdığında o dosya karşı taraftan silinir mi?",
+    opts: ["Evet, anında silinir", "Hayır, indirildiyse karşı tarafın cihazında hâlâ vardır", "Evet ama 30 gün sonra", "Google Cloud tarafından silinir"],
+    correct: 1,
+    fb: {
+      wrong: "Paylaşım erişimi kaldırıldığında yalnızca Drive'dan erişim kesilir. Karşı taraf dosyayı daha önce indirdiyse o kopyaya müdahale edemezsin.",
+      correct: "Kesinlikle! Bu yüzden hassas dosyaları hiç paylaşmamak veya paylaşımı zamanında kısıtlamak kritik."
+    }
+  },
+  {
+    q: "Bir uygulama izin kontrolü için nereye bakmalısın? (iPhone)",
+    opts: ["Ayarlar → Gizlilik & Güvenlik → İzinler", "Uygulama içi ayarlar", "App Store değerlendirmeleri", "Safari'de arama"],
+    correct: 0,
+    fb: {
+      wrong: "iPhone'da Ayarlar → Gizlilik & Güvenlik menüsünden her izin kategorisine hangi uygulamanın eriştiğini görebilirsin.",
+      correct: "Doğru! Buradan her kategoriyi (Konum, Mikrofon, Rehber) açıp hangi uygulama ne zaman erişmiş görebilirsin."
+    }
+  },
+  {
+    q: "GDPR kapsamında şirket verilerini görme talebine kaç günde yanıt vermek zorunda?",
+    opts: ["7 gün", "15 gün", "60 gün", "30 gün"],
+    correct: 3,
+    fb: {
+      wrong: "AB GDPR'a göre şirketler veri erişim taleplerine 30 gün içinde yanıt vermek zorundadır.",
+      correct: "Doğru! 30 gün. Karmaşık durumlarda 60 güne kadar uzatılabilir ama yazılı bildirim yapmaları gerekir."
+    }
+  },
+  {
+    q: "Buluta yüklenecek hassas bir belge (kimlik fotokopisi gibi) için en doğru yaklaşım hangisidir?",
+    opts: ["Doğrudan yükle, zaten şifreli", "Önce zip ile şifrele veya parola korumalı PDF yap, sonra yükle", "Hiçbir belgeyi buluta yükleme", "Sadece iCloud'a yükle"],
+    correct: 1,
+    fb: {
+      wrong: "Bulut şifreleme depolama güvenliği sağlar, belge içeriğini korumaz. İçeriği şifrelemek ayrı bir adımdır.",
+      correct: "Doğru! Bulut sağlayıcısı şifreleme anahtarına sahipse teorik olarak belgeyi görebilir. 7-Zip ile AES-256 şifreli zip oluşturabilirsin."
+    }
+  },
+  {
+    q: "Google hesabına bağlı üçüncü taraf uygulamaları nerede kontrol edebilirsin?",
+    opts: ["google.com/apps", "Gmail → Ayarlar → Uygulamalar", "Chrome → Uzantılar", "myaccount.google.com → Güvenlik → Üçüncü Taraf Erişimi"],
+    correct: 3,
+    fb: {
+      wrong: "Doğru adres: myaccount.google.com → Güvenlik → Üçüncü taraf erişimine sahip uygulamalar.",
+      correct: "Doğru! Buraya gidince yıllarca bağlı kalmış uygulamalara şaşıracaksın. Kullanmadıklarını kaldır."
+    }
+  }
+];
+
+
+
+
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function skipVideo(){if(window.completeStep) window.completeStep(1);}
+
+
+
+
+
+
+
+
+
+
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Domain 'google-photos-share.net' — gerçek Google 'photos.google.com' kullanır. Giriş yapınca şifren çalınır. Arkadaşın hesabı hack'lenmiş olabilir."},
+  {correct:true,text:"<strong>Mükemmel!</strong> Doğrulama adımı şarttı. Domain kontrolü + alternatif kanal üzerinden doğrulama — iki katmanlı düşünme. Arkadaşının hesabı hack'lenmişse ona da yardım etmiş olacaksın."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Linke tıklamak bile zararlı olabilir — bazı saldırılar tıklama anında devreye girer. 'Sadece bakarım' diye bir şey yoktur."},
+  {correct:false,text:"<strong class='bad'>Eksik.</strong> Silmek seni korur ama Lars'ı korumaz. Hesabı gerçekten hack'lendiyse haberdar edilmeli — böylece o da hesabını kurtarabilir."}
+];
+
+
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

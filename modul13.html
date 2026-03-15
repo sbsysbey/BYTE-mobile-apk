@@ -1,0 +1,928 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 13: Siber Zorbalık</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/modules.css">
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px 30px;}
+.article-tag{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.article-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.35;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:2px;margin:26px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:4px;}
+.stat-lbl{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+.alert-warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-red{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.05);border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-green{background:rgba(74,222,154,.05);border:1px solid rgba(74,222,154,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+/* READING SIDEBAR */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1.5px;margin-bottom:10px;}
+.side-list{display:flex;flex-direction:column;gap:7px;}
+.side-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-dim);line-height:1.4;}
+.side-ok{color:var(--green);flex-shrink:0;font-weight:700;}
+.side-bad{color:var(--red);flex-shrink:0;font-weight:700;}
+.side-arr{color:var(--cyan);flex-shrink:0;font-weight:700;}
+/* ZORBALIK TİPLERİ */
+.zorba-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.zorba-card{background:var(--bg-panel);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+.zorba-icon{font-size:1.5rem;flex-shrink:0;}
+.zorba-type{font-family:'Orbitron',sans-serif;font-size:.73rem;color:var(--red);letter-spacing:.5px;margin-bottom:4px;}
+.zorba-desc{font-size:.81rem;color:var(--text-dim);line-height:1.45;}
+/* PLATFORM STEPS */
+.platform-flow{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.pf-step{background:var(--bg-panel);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:14px 18px;}
+.pf-step.warn{border-left-color:var(--orange);}
+.pf-step.safe{border-left-color:var(--green);}
+.pf-step.danger{border-left-color:var(--red);}
+.pf-num{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;margin-bottom:6px;}
+.pf-step.warn .pf-num{color:var(--orange);}
+.pf-step.safe .pf-num{color:var(--green);}
+.pf-step.danger .pf-num{color:var(--red);}
+.pf-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.pf-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;}
+/* YASAL ÇERÇEVE */
+.law-grid{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.law-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;}
+.law-flag{font-size:1.3rem;flex-shrink:0;}
+.law-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.law-desc{font-size:.80rem;color:var(--text-dim);line-height:1.45;}
+.law-penalty{font-size:.78rem;color:var(--orange);margin-top:4px;}
+/* DESTEK KANALLARI */
+.destek-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.destek-card{background:linear-gradient(135deg,rgba(96,200,240,.05),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 16px;}
+.destek-name{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--cyan);letter-spacing:.5px;margin-bottom:6px;}
+.destek-info{font-size:.81rem;color:var(--text-dim);line-height:1.5;}
+.destek-hotline{font-size:.86rem;color:var(--green);font-weight:700;margin-top:5px;}
+/* BYTE TIP */
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;margin-top:20px;}
+.byte-tip-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+/* QUIZ */
+.quiz-wrap{max-width:700px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:10px;padding:11px 15px;font-size:.91rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.3);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* CHAT SCENARIO */
+.chat-scene-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:22px;}
+.chat-scene-header{background:linear-gradient(135deg,#061220,#0d1e38);padding:18px 24px;border-bottom:1px solid var(--border);}
+.chat-scene-label{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:2px;margin-bottom:6px;}
+.chat-scene-desc{font-size:.90rem;color:var(--text);line-height:1.6;}
+.chat-messages{padding:20px 24px;display:flex;flex-direction:column;gap:12px;}
+.chat-msg{display:flex;gap:12px;align-items:flex-start;animation:fadeUp .35s ease;}
+.chat-msg.right{flex-direction:row-reverse;}
+.chat-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.80rem;font-weight:900;flex-shrink:0;font-family:'Orbitron',sans-serif;}
+.av-melek{background:rgba(244,114,182,.15);border:1px solid rgba(244,114,182,.4);color:var(--pink);}
+.av-byte{background:rgba(96,200,240,.15);border:1px solid rgba(96,200,240,.4);color:var(--cyan);}
+.av-can{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);color:var(--yellow);}
+.av-troll{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.chat-bubble{max-width:72%;padding:11px 15px;border-radius:14px;font-size:.89rem;line-height:1.6;}
+.bubble-melek{background:rgba(244,114,182,.08);border:1px solid rgba(244,114,182,.2);color:var(--text);}
+.bubble-byte{background:rgba(96,200,240,.08);border:1px solid rgba(96,200,240,.2);color:var(--text);}
+.bubble-can{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);color:var(--text);}
+.bubble-troll{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:var(--text);}
+.bubble-system{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text-dim);font-style:italic;font-size:.84rem;text-align:center;width:100%;max-width:100%;border-radius:10px;}
+.chat-name{font-size:.73rem;font-weight:700;margin-bottom:4px;}
+.cn-melek{color:var(--pink);}
+.cn-byte{color:var(--cyan);}
+.cn-can{color:var(--yellow);}
+.cn-troll{color:var(--red);}
+.chat-divider{border:none;border-top:1px solid var(--border);margin:6px 0;}
+.chat-q-section{padding:0 24px 24px;}
+.chat-q-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:14px;}
+.chat-opts{display:flex;flex-direction:column;gap:9px;}
+.chat-opt{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;cursor:pointer;transition:.25s;display:flex;align-items:center;gap:12px;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);text-align:left;width:100%;}
+.chat-opt:hover{border-color:rgba(96,200,240,.3);background:rgba(96,200,240,.04);}
+.chat-opt.chosen-correct{border-color:var(--green);background:rgba(74,222,154,.05);}
+.chat-opt.chosen-wrong{border-color:var(--red);background:rgba(248,113,113,.05);}
+.chat-opt-icon{font-size:1.3rem;flex-shrink:0;}
+.chat-fb{display:none;margin:14px 24px 20px;background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:16px 18px;gap:13px;align-items:flex-start;}
+.chat-fb.show{display:flex;animation:fadeUp .4s ease;}
+.chat-fb-text{font-size:.91rem;color:var(--text);line-height:1.6;}
+.chat-fb-text .bad{color:var(--red);}
+/* PSİKOLOJİK ETKİ KARTLARI */
+.psi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.psi-card{background:var(--bg-panel);border:1px solid rgba(244,114,182,.15);border-radius:12px;padding:16px;}
+.psi-icon{font-size:1.8rem;margin-bottom:8px;}
+.psi-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.psi-desc{font-size:.81rem;color:var(--text-dim);line-height:1.5;}
+/* DELİL KAYDEDME STEPS */
+.delil-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.delil-step{background:var(--bg-panel);border-radius:12px;padding:13px 18px;display:flex;gap:14px;align-items:flex-start;}
+.delil-num{width:28px;height:28px;border-radius:50%;background:rgba(96,200,240,.15);border:1px solid rgba(96,200,240,.4);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.72rem;font-weight:700;color:var(--cyan);flex-shrink:0;}
+.delil-title{font-size:.87rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.delil-desc{font-size:.81rem;color:var(--text-dim);line-height:1.45;}
+
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span class="xp-label">XP</span>
+      <span id="xp-count">4450</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill"></div></div>
+    </div>
+    <div class="mod-badge-top">MODÜL 13 / 13</div>
+  </div>
+</div>
+
+<div id="app">
+    <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 300 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul6.html')"><div class="mod-num done">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul7.html')"><div class="mod-num done">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul8.html')"><div class="mod-num done">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul9.html')"><div class="mod-num done">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul10.html')"><div class="mod-num done">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul11.html')"><div class="mod-num done">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 450 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul12.html')"><div class="mod-num done">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">13</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Siber Zorbalık</div><div class="mod-meta">Aktif &middot; 400 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">&#x1F4CB;</div>
+        <div><div class="mod-name" style="color:var(--yellow)">H&#x131;zl&#x131; Rehber</div><div class="mod-meta">&#xD6;zet &middot; Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        🤖
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">▶ BYTE'a tıkla</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">▶ BYTE KONUŞUYOR</div>
+        <div class="mod-title">MODÜL 13 — <span>Siber Zorbalık</span></div>
+        <div class="mod-desc">Dijital ortamda taciz ve zorbalığı tanı, müdahale et, önle. AB mevzuatı, platform raporlama mekanizmaları ve destek kaynakları.</div>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>~40 dakika</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-c"></div>5 Adım</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP NAV -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">1</div>
+        <div class="step-label">Video</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">2</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+70 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">3</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+160 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">4</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+40 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">5</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+30 XP</div>
+      </div>
+    </div>
+
+    <!-- PANEL 1: VİDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-wrapper">
+        <iframe id="yt-frame" class="video-yt" src="https://www.youtube.com/embed/KKJc5u3ILQQ" allowfullscreen></iframe>
+        <div class="video-overlay" id="vid-overlay" onclick="startVideo()">
+          <div class="vs-label">MODÜL 13 · GİRİŞ</div>
+          <div class="vs-title">SİBER ZORBALIK</div>
+          <div class="vs-sub">Dijital taciz, çevrimiçi nefret ve kimlik haklarını anlayın. ENISA ve Europol verileriyle güncel tehdit tablosu.</div>
+          <div class="play-big">▶</div>
+          <div class="play-hint">OYNAT</div>
+        </div>
+      </div>
+
+      <div class="key-points">
+        <div class="kp-head"><span style="font-size:1.2rem">📌</span><div class="kp-title">VİDEODAN TEMEL ÇIKARIMLAR</div></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Siber zorbalık yalnızca gençlerin sorunu değil; çalışanların <strong style="color:#fff">%40'ı</strong> iş ortamında dijital tacize maruz kalıyor (ENISA 2023).</li>
+          <li><span class="kp-b">▸</span>AB'nin <strong style="color:#fff">Dijital Hizmetler Yasası (DSA)</strong>, büyük platformlara içerik moderasyonu zorunluluğu getiriyor.</li>
+          <li><span class="kp-b">▸</span>Europol, siber zorbalık vakalarının <strong style="color:#fff">%68'inin</strong> kurbanlar tarafından raporlanmadığını tespit etti.</li>
+          <li><span class="kp-b">▸</span>Bir kez çevrimiçiye yüklenen içerik tam olarak silinemeyebilir — <em>önce düşün, sonra paylaş.</em></li>
+          <li><span class="kp-b">▸</span>Tanık olmak da sorumluluk gerektirir: <strong style="color:#fff">aktif izleyici</strong> zorbalığı büyütür.</li>
+        </ul>
+      </div>
+
+      <div style="text-align:right;">
+        <button class="btn btn-primary" onclick="return safeAdvance(1,2)">Videoyu Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 2: OKUMA -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">ENISA · EUROPOL · AB YASALARI</div>
+          <div class="article-title">Siber Zorbalık: Tanı, Hisset, Durdur</div>
+          <div class="article-intro">Bir kişiyi dijital ortamda defalarca rahatsız etmek, aşağılamak veya dışlamak — bu siber zorbalıktır. Tek bir kaba yorum zorbalık sayılmayabilir; ama arkasından gelen sessizlik, dışlama ve tekrar kesinlikle zorbalıktır.</div>
+
+          <div class="section-head">📊 RAKAMLAR NE SÖYLÜYOR?</div>
+          <div class="stat-row">
+            <div class="stat-box">
+              <div class="stat-num">44%</div>
+              <div class="stat-lbl">AB gençleri çevrimiçi zorbalığa maruz kalıyor (ENISA)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">%68</div>
+              <div class="stat-lbl">Vakalar raporlanmıyor — çoğu sessizce yaşanıyor (Europol)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">%57</div>
+              <div class="stat-lbl">Bir tanık müdahale edince zorbalık bu oranda duruyor</div>
+            </div>
+          </div>
+
+          <div class="section-head">🗂️ ZORBALIK TÜRLERİ — TANI</div>
+          <div class="zorba-grid">
+            <div class="zorba-card">
+              <div class="zorba-icon">💬</div>
+              <div>
+                <div class="zorba-type">TAHKİR & HAKARET</div>
+                <div class="zorba-desc">Sürekli aşağılayıcı mesajlar, yorumlar. Anonim ya da açık hesaplardan yapılabilir.</div>
+              </div>
+            </div>
+            <div class="zorba-card">
+              <div class="zorba-icon">📷</div>
+              <div>
+                <div class="zorba-type">İZİNSİZ PAYLAŞIM</div>
+                <div class="zorba-desc">Kişinin rızası olmadan özel fotoğraf veya videosunu yaymak. AB'de suç sayılır.</div>
+              </div>
+            </div>
+            <div class="zorba-card">
+              <div class="zorba-icon">🚪</div>
+              <div>
+                <div class="zorba-type">KASITLI DIŞLAMA</div>
+                <div class="zorba-desc">Grup sohbetlerinden, etkinliklerden bilerek çıkarmak veya almamak.</div>
+              </div>
+            </div>
+            <div class="zorba-card">
+              <div class="zorba-icon">🕵️</div>
+              <div>
+                <div class="zorba-type">SAHTE PROFİL</div>
+                <div class="zorba-desc">Birinin adına hesap açarak zarar vermek, onun adına yalan paylaşımlar yapmak.</div>
+              </div>
+            </div>
+            <div class="zorba-card">
+              <div class="zorba-icon">🔥</div>
+              <div>
+                <div class="zorba-type">TEHDİT & BASKI</div>
+                <div class="zorba-desc">Korkutmak, şantaj yapmak, "bunu yayarım" diye baskı kurmak.</div>
+              </div>
+            </div>
+            <div class="zorba-card">
+              <div class="zorba-icon">👀</div>
+              <div>
+                <div class="zorba-type">ANONİM SALDIRI</div>
+                <div class="zorba-desc">Kimliği gizli hesaplardan saldırı. "Anonim hesap bulunmaz" yanlış — IP takibi mümkün.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">🤍 İÇERİDE NE YAŞANIYOR?</div>
+          <div class="psi-grid">
+            <div class="psi-card">
+              <div class="psi-icon">🧟</div>
+              <div class="psi-title">7/24 Kaçış Yok</div>
+              <div class="psi-desc">Klasik zorbalıkta ev güvenli limandır. Siber zorbalıkta telefon elinde — yatağında bile zorba seninle. Uyku bozuklukları, sürekli tetikte olma hali.</div>
+            </div>
+            <div class="psi-card">
+              <div class="psi-icon">👀</div>
+              <div class="psi-title">Kitlenin Gözü Önünde</div>
+              <div class="psi-desc">Fiziksel zorbalık tanıksız kalabilir. Dijitalde ekran görüntüsü anında yüzlerce kişiye ulaşır. Utanç ve damgalanma hissi kat kat büyür.</div>
+            </div>
+            <div class="psi-card">
+              <div class="psi-icon">😢</div>
+              <div class="psi-title">Sessizliğin Ağırlığı</div>
+              <div class="psi-desc">"Kimsenin 'bu yanlış' dememesi, zorbalığın kendisinden daha ağır gelebilir." Tanık sessizliği mağduru daha da yalnız bırakır.</div>
+            </div>
+            <div class="psi-card">
+              <div class="psi-icon">🔌</div>
+              <div class="psi-title">Sil Diyememe</div>
+              <div class="psi-desc">Mesajları okumak zorunda hissediyorsun, bakmak istemiyorsun ama durulmuyor. Bu döngü psikolojik yorgunluğu katlar.</div>
+            </div>
+          </div>
+
+          <div class="section-head">📸 DELİL SAKLA — SİLME</div>
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div>İlk içgüdü "unut ve geç" oluyor — ama bu kanıtları yok eder. Doğru sıralama şöyle:</div>
+          </div>
+          <div class="delil-steps">
+            <div class="delil-step">
+              <div class="delil-num">1</div>
+              <div><div class="delil-title">Ekran görüntüsü al</div><div class="delil-desc">Mesajları, yorumları, profil sayfalarını. Tarih ve saat görünsün. Birden fazla al.</div></div>
+            </div>
+            <div class="delil-step">
+              <div class="delil-num">2</div>
+              <div><div class="delil-title">Kaynağı kaydet</div><div class="delil-desc">Gönderenin adı, profil bağlantısı, tarih/saat. Anonim hesap bile bulunabilir.</div></div>
+            </div>
+            <div class="delil-step">
+              <div class="delil-num">3</div>
+              <div><div class="delil-title">Sonra engelle</div><div class="delil-desc">Engellemeden önce delil al! Engelledikten sonra profiline erişim kapanabilir.</div></div>
+            </div>
+            <div class="delil-step">
+              <div class="delil-num">4</div>
+              <div><div class="delil-title">Güvendiğin birine söyle</div><div class="delil-desc">Ebeveyn, öğretmen, okul rehberi, arkadaş. Yalnız taşıma — paylaşmak güç gerektirir.</div></div>
+            </div>
+            <div class="delil-step">
+              <div class="delil-num">5</div>
+              <div><div class="delil-title">Platforma şikayet et</div><div class="delil-desc">Instagram, TikTok, WhatsApp — hepsinin şikayet butonu var. Kullan, işe yarıyor.</div></div>
+            </div>
+          </div>
+
+          <div class="section-head">👀 TANIK OLUNCA: SES ÇIKAR</div>
+          <div class="alert-info">
+            <span>💡</span>
+            <div>Araştırmalar, bir tanık müdahale edince zorbalığın <strong>%57 oranında durduğunu</strong> gösteriyor. Herkes "başkası yapar" diye beklediğinde sonuç: kimse yapmaz.</div>
+          </div>
+          <div class="alert-green">
+            <span>✅</span>
+            <div><strong>Basit ama güçlü adımlar:</strong> İçeriği raporla · Mağdura özel "Yanındayım" yaz · Grupta "Bu yanlış" de · Beğenme, paylaşma — pasif onay zorbalığı büyütür.</div>
+          </div>
+
+          <div class="section-head">⚖️ HUKUK NE DİYOR?</div>
+          <div class="law-grid">
+            <div class="law-card">
+              <div class="law-flag">🇪🇺</div>
+              <div>
+                <div class="law-title">Dijital Hizmetler Yasası (DSA) — AB, 2023</div>
+                <div class="law-desc">Instagram, TikTok, YouTube gibi büyük platformlar zararlı içerikleri <strong style="color:#fff">72 saat içinde</strong> kaldırmak zorunda. Kaldırmazlarsa ağır para cezası var.</div>
+              </div>
+            </div>
+            <div class="law-card">
+              <div class="law-flag">🇪🇺</div>
+              <div>
+                <div class="law-title">Unutulma Hakkı — GDPR Madde 17</div>
+                <div class="law-desc">Senden izinsiz paylaşılan fotoğraf veya videonun kaldırılmasını isteyebilirsin. Platform 30 gün içinde yanıt vermek zorunda.</div>
+              </div>
+            </div>
+            <div class="law-card">
+              <div class="law-flag">🇹🇷</div>
+              <div>
+                <div class="law-title">Türk Ceza Kanunu — Hakaret & İftira</div>
+                <div class="law-desc">İnternette yapılan hakaret suçtur. Sosyal medyada yayılan asılsız suçlama cezayı ağırlaştırır. Şikayetini BTK ve savcılık üzerinden yapabilirsin.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:1.2rem">🤖</span><span style="font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;">BYTE diyor ki:</span></div>
+              <div class="byte-tip-text">Siber zorbalık "sadece internet" değil — gerçek insanlara gerçek zarar veriyor. Ekran arkasında da olsa, yazdıkların senin sorumluluğundur. Ve bir tanık olarak sesin, birini kurtarabilir.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🆘 DESTEK HATLARI</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">BTK Şikayet</strong><br><span style="color:var(--green);">ihbar.gov.tr</span></span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">Çocuk Hattı</strong><br><span style="color:var(--green);">182</span> — ücretsiz</span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">ALO 183</strong><br>Aile & Sosyal, 7/24</span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">AB Safer Internet</strong><br>saferinternet.eu</span></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">📱 NASIL ŞİKAYET EDERİM?</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">▸</span>Instagram: Profil → ··· → Şikayet Et</div>
+              <div class="side-item"><span class="side-arr">▸</span>TikTok: Video → Paylaş → Şikayet</div>
+              <div class="side-item"><span class="side-arr">▸</span>WhatsApp: Sohbet → Engelle & Şikayet</div>
+              <div class="side-item"><span class="side-arr">▸</span>YouTube: Video → ··· → Şikayet Et</div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">✅ YAPIN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span>Kanıtları hemen kaydedin</div>
+              <div class="side-item"><span class="side-ok">✓</span>İçeriği raporlayın</div>
+              <div class="side-item"><span class="side-ok">✓</span>Güvendiğiniz birini bilgilendirin</div>
+              <div class="side-item"><span class="side-ok">✓</span>Tanık olursanız harekete geçin</div>
+              <div class="side-item"><span class="side-ok">✓</span>Mağdura "Yanındayım" deyin</div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🚫 YAPMAYIN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✕</span>Hemen duygusal yanıt vermeyin</div>
+              <div class="side-item"><span class="side-bad">✕</span>Kanıtları silmeyin</div>
+              <div class="side-item"><span class="side-bad">✕</span>Yalnız taşımayın</div>
+              <div class="side-item"><span class="side-bad">✕</span>Zararlı içeriği yaymayın</div>
+              <div class="side-item"><span class="side-bad">✕</span>Saldırganla tartışmaya girmeyin</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:20px;">
+        <button class="btn btn-primary" onclick="return safeAdvance(2,3)">Okumayı Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:0%"></div></div>
+        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">Doğru: 0</span></div>
+        <div id="q-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="chat-scene-wrap">
+        <div class="chat-scene-header">
+          <div class="chat-scene-label">📍 SENARYO — SINIF GRUP SOHBETİ</div>
+          <div class="chat-scene-desc">Sınıf WhatsApp grubunda Can'ın fotoğrafı, üzerine alay eden metinler eklenerek paylaşıldı. 18 kişi okudu. Kimse bir şey demedi...</div>
+        </div>
+
+        <div class="chat-messages">
+          <!-- Sistem mesajı -->
+          <div class="chat-msg">
+            <div class="chat-bubble bubble-system">📱 Grup sohbeti — Can'ın fotoğrafı alay amacıyla paylaşıldı · 18 kişi gördü · Kimse yanıt vermedi</div>
+          </div>
+
+          <!-- Melek -->
+          <div class="chat-msg">
+            <div class="chat-avatar av-melek">M</div>
+            <div>
+              <div class="chat-name cn-melek">MELEK</div>
+              <div class="chat-bubble bubble-melek">Bu çok yanlış. Can bu fotoğrafın böyle kullanılmasını istemedi ki. Ama ne yazacağımı bilemiyorum... Bana da yaparlar mı? 😟</div>
+            </div>
+          </div>
+
+          <!-- BYTE -->
+          <div class="chat-msg">
+            <div class="chat-avatar av-byte">B</div>
+            <div>
+              <div class="chat-name cn-byte">BYTE 🤖</div>
+              <div class="chat-bubble bubble-byte">Bu hissini biliyorum Melek. "Seyirci etkisi" deniyor — herkes başkasının müdahale etmesini bekler. Sonuç: kimse etmez. Ama şunu bil: <strong>tanık sessiz kaldığında zorba güçleniyor.</strong></div>
+            </div>
+          </div>
+
+          <!-- Can -->
+          <div class="chat-msg">
+            <div class="chat-avatar av-can">C</div>
+            <div>
+              <div class="chat-name cn-can">CAN</div>
+              <div class="chat-bubble bubble-can">Telefona bakıyorum... mesajları okuyorum... kimsenin "bu yanlış" dememesi... bu bazen zorbalığın kendisinden daha ağır geliyor. 💔</div>
+            </div>
+          </div>
+
+          <!-- Troll -->
+          <div class="chat-msg right">
+            <div class="chat-avatar av-troll">T</div>
+            <div style="text-align:right;">
+              <div class="chat-name cn-troll" style="text-align:right;">TROLL</div>
+              <div class="chat-bubble bubble-troll">Hayır hayır, yanlış anladınız. Bu sadece bir şaka! Can da güldü zaten... değil mi Can? 😂</div>
+            </div>
+          </div>
+
+          <!-- BYTE cevap -->
+          <div class="chat-msg">
+            <div class="chat-avatar av-byte">B</div>
+            <div>
+              <div class="chat-name cn-byte">BYTE 🤖</div>
+              <div class="chat-bubble bubble-byte">Can gülmedi. <em>Sustu.</em> Ve bu senin istediğin buydu. "Sadece şakaydı" — zorbalığın en klasik savunması. Ama zorbalıkta kriter şudur: <strong>hedefin yaşadığı acı, senin niyetinden önce gelir.</strong></div>
+            </div>
+          </div>
+
+          <!-- Can son -->
+          <div class="chat-msg">
+            <div class="chat-avatar av-can">C</div>
+            <div>
+              <div class="chat-name cn-can">CAN</div>
+              <div class="chat-bubble bubble-can">Hayır. Telefonu kapatamadım. Mesajları okumadan duramadım. Sabaha kadar.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="chat-divider">
+
+        <div class="chat-q-section">
+          <div class="chat-q-title">🤔 Melek'sin. Grup mesajını gördün, Can'ın fotoğrafı alay amacıyla paylaşılmış. Ne yaparsın?</div>
+          <div class="chat-opts" id="scene-opts">
+            <button class="chat-opt" onclick="pickScene(0)">
+              <span class="chat-opt-icon">😂</span>
+              <div><strong>A)</strong> Sen de "hahaha" emojisi gönderiyorsun — akıntıya kürek çekmeden.</div>
+            </button>
+            <button class="chat-opt" onclick="pickScene(1)">
+              <span class="chat-opt-icon">👀</span>
+              <div><strong>B)</strong> Okuyorsun ama sessiz kalıyorsun — bana da yapabilirler diye korkuyorsun.</div>
+            </button>
+            <button class="chat-opt" onclick="pickScene(2)">
+              <span class="chat-opt-icon">💬</span>
+              <div><strong>C)</strong> Gruba "Bu çok yanlış, bu böyle yapılmaz" yazıyorsun; sonra Can'a özel mesaj atıp yanında olduğunu söylüyorsun.</div>
+            </button>
+            <button class="chat-opt" onclick="pickScene(3)">
+              <span class="chat-opt-icon">🔕</span>
+              <div><strong>D)</strong> Grubu sessize alıyorsun — görmezsem olmamış gibi.</div>
+            </button>
+          </div>
+          <div class="chat-fb" id="byte-fb">
+            <span style="font-size:2rem;flex-shrink:0;">🤖</span>
+            <div class="chat-fb-text" id="byte-fb-text"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;padding:0 0 8px;">
+        <button class="btn btn-green" id="scene-next-btn" style="display:none;" onclick="return safeAdvance(4,5)">Devam Et →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 5: ROZET -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🦋</div>
+        </div>
+        <div class="badge-title">DİJİTAL CESARET</div>
+        <div class="badge-subtitle">Siber zorbalığı tanıyan, müdahale eden ve başkalarını koruyan dijital vatandaş</div>
+        <div class="xp-celebrate">
+          <div class="xp-big" id="final-xp">4800</div>
+          <div class="xp-lbl">TOPLAM<br>XP</div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="s-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">350</div><div class="sum-label">XP Kazanıldı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">5/5</div><div class="sum-label">Adım Tamamlandı</div></div>
+        </div>
+        <p style="font-size:.93rem;color:var(--text-dim);max-width:520px;margin:0 auto 32px;line-height:1.7;">"Dijital dünyada da insan onuruna saygı temel haktır. Sessiz kalmak onay vermektir — sesin, birini kurtarabilir."</p>
+        <div style="background:var(--bg-card);border:1px solid rgba(244,114,182,.2);border-radius:16px;padding:24px;max-width:500px;margin:0 auto 32px;text-align:left;">
+          <div style="font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--pink);letter-spacing:1px;margin-bottom:14px;">🎓 BYTE ACADEMY — SERTIFIKA</div>
+          <div style="font-size:1rem;color:#fff;font-weight:700;margin-bottom:6px;">Tüm 13 Modülü Tamamladınız!</div>
+          <div style="font-size:.86rem;color:var(--text-dim);line-height:1.6;">Dijital güvenlik, gizlilik, sosyal mühendislik, yapay zeka ve siber zorbalık konularında AB standartlarına uygun kapsamlı eğitiminizi başarıyla tamamladınız.</div>
+          <div style="margin-top:14px;">
+            <button class="btn btn-primary" onclick="goTo('certificate.html')">Sertifikayı Görüntüle →</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+
+<script>
+let completedSteps = new Set();
+const stepXP = {1:50,2:70,3:160,4:40,5:30};
+let quizScore = 0, quizIdx = 0, quizAnswered = false;
+
+function forceCompleteModule13() {
+  try {
+    var users = JSON.parse(localStorage.getItem('byte_users') || '{}');
+    var session = localStorage.getItem('byte_session');
+    if (!session || !users[session]) return;
+
+    var u = users[session];
+    var done = Array.isArray(u.completedModules) ? u.completedModules : [];
+    done = done.map(function(v) { return Number(v); }).filter(function(v) { return v >= 1 && v <= 13; });
+    if (done.indexOf(13) === -1) done.push(13);
+    done = Array.from(new Set(done)).sort(function(a, b) { return a - b; });
+    u.completedModules = done;
+
+    if (!u.quizStats || typeof u.quizStats !== 'object') u.quizStats = {};
+    if (!u.quizStats['13']) {
+      var totalQ = (window.moduleQuestions && window.moduleQuestions.length) ? window.moduleQuestions.length : 10;
+      u.quizStats['13'] = { correct: Math.max(0, Number(quizScore) || 0), total: totalQ };
+    }
+
+    users[session] = u;
+    localStorage.setItem('byte_users', JSON.stringify(users));
+    localStorage.setItem('byte_m13_done_' + session, '1');
+  } catch (e) {}
+
+  if (typeof updateTopbarBadgeCount === 'function') updateTopbarBadgeCount();
+  if (typeof syncSidebarModuleState === 'function') syncSidebarModuleState();
+}
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function goStep(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('step-btn-'+n).classList.add('active');
+  if (n===5) forceCompleteModule13();
+  if (n===5 && typeof saveProgress === 'function') saveProgress(13);
+  if (n===3 && quizIdx===0) renderQuestion();
+  window.scrollTo({top:180,behavior:'smooth'});
+}
+
+function completeStep(n) {
+  if (completedSteps.has(n)) { goStep(n+1); return; }
+  completedSteps.add(n);
+  addXP(stepXP[n], '');
+  const dot = document.getElementById('dot-'+n);
+  dot.textContent = '✓'; dot.className = 'step-dot done';
+  const msgs = {1:'Video tamamlandı!',2:'Okuma tamamlandı!',3:'Quiz tamamlandı!',4:'Senaryo tamamlandı!',5:'Modül tamamlandı!'};
+  showToast('xp','⚡ +'+stepXP[n]+' XP', msgs[n]||'');
+  if (n===5) {
+    forceCompleteModule13();
+    if (typeof saveProgress === 'function') saveProgress(13);
+    document.getElementById('final-xp').textContent = xp;
+    document.getElementById('s-correct').textContent = quizScore;
+    showToast('xp','🏆 ROZET KAZANILDI!','Dijital Cesaret rozetini aldın!');
+    showToast('xp','🎓 TEBRİKLER!','Tüm 13 modülü tamamladın!');
+    goStep(5);
+  } else {
+    goStep(n+1);
+  }
+}
+
+function safeAdvance(stepNo, nextStep) {
+  try {
+    completeStep(stepNo);
+  } catch (e) {
+    // No-op: keep navigation resilient.
+  }
+  try {
+    goStep(nextStep);
+  } catch (e) {
+    // No-op.
+  }
+  if (nextStep===5) forceCompleteModule13();
+  if (nextStep===5 && typeof saveProgress === 'function') saveProgress(13);
+  return false;
+}
+
+function goTo(url){ window.location.href=url; }
+
+function byteSpeak() {
+  const av = document.getElementById('byteAvatar');
+  const lines = [
+    'Siber zorbalık dijital dünyada bıraktığın izlerin başkasını incitip incitmediğini sorgulamaktır.',
+    'Bir mesaj göndermeden önce sor: Bu kişinin yüzüne karşı da söyler miydim?',
+    'Tanık olmak sorumluluk gerektirir. Sessizlik zorbayı güçlendirir.',
+    'Ekran görüntüsü al, raporla, destek al. Bu üç adım seni koruyan zırhtır.',
+    'Unutulma Hakkı gerçek bir hak. Fotoğrafının kaldırılmasını platforma talep edebilirsin.',
+    'AB Dijital Hizmetler Yasası platformları zararlı içeriği 72 saat içinde kaldırmaya zorluyor.',
+    'Dijital cesaret: Biri zorbalığa uğrarken harekete geçmek, sadece izlemek değil.'
+  ];
+  const msg = lines[Math.floor(Math.random()*lines.length)];
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(msg);
+    u.lang='tr-TR'; u.rate=0.91; u.pitch=1.04;
+    u.onstart=()=>av.classList.add('speaking');
+    u.onend=()=>av.classList.remove('speaking');
+    window.speechSynthesis.speak(u);
+  }
+}
+
+window.moduleQuestions = [
+  {
+    q:'ENISA verilerine göre AB\'de gençlerin yüzde kaçı çevrimiçi zorbalığa maruz kalmaktadır?',
+    opts:['%15','%28','%44','%60'],
+    correct:2,
+    fb:'Doğru! ENISA 2023 raporuna göre AB gençlerinin %44\'ü çevrimiçi zorbalığa maruz kalıyor. Bu oran siber zorbalığın ne kadar yaygın olduğunu gözler önüne seriyor.'
+  },
+  {
+    q:'Europol\'e göre siber zorbalık vakalarının yaklaşık kaçta kaçı raporlanmamaktadır?',
+    opts:['%20','%40','%55','%68'],
+    correct:3,
+    fb:'Doğru! Europol\'e göre vakaların %68\'i raporlanmıyor. Utanç, sürecin karmaşıklığı ve "ciddiye alınmam" korkusu en sık gösterilen nedenler.'
+  },
+  {
+    q:'Araştırmalar, bir tanık müdahale ettiğinde zorbalığın ne oranda durduğunu gösteriyor?',
+    opts:['%20','%35','%57','%80'],
+    correct:2,
+    fb:'Doğru! Bir tanık sesini yükselttiğinde zorbalık %57 oranında duruyor. "Seyirci etkisi" tam tersi çalışıyor — bir kişi yeter.'
+  },
+  {
+    q:'"Doxing" ne demektir?',
+    opts:['Hesap şifrelerini kırmak','Kişinin özel bilgilerini rızası olmadan kamuya ifşa etmek','Sahte kimlikle profil açmak','Virüslü dosya göndermek'],
+    correct:1,
+    fb:'Doğru! Doxing, ev adresi, telefon, işyeri gibi kişisel bilgilerin izinsiz paylaşılmasıdır. Fiziksel tehlikeye yol açabildiği için pek çok AB ülkesinde suç sayılır.'
+  },
+  {
+    q:'Zorbalığa maruz kaldığında yapman gereken ilk şey nedir?',
+    opts:['Hemen saldırgana yanıt ver','Ekran görüntüsü al ve kanıtları kaydet','Sosyal medya hesabını kapat','Polise git'],
+    correct:1,
+    fb:'Doğru! Kanıtları kaydetmek en kritik ilk adımdır. Ekran görüntüsü, URL ve tarih/saat hukuki süreçte delil niteliği taşır. Engelleme kanıt almadan ÖNCE değil SONRA yapılmalı.'
+  },
+  {
+    q:'AB\'nin Dijital Hizmetler Yasası (DSA) kapsamında büyük platformlar zararlı içerikleri kaç saat içinde kaldırmak zorundadır?',
+    opts:['24 saat','48 saat','72 saat','7 gün'],
+    correct:2,
+    fb:'Doğru! DSA büyük platformlara 72 saatlik kaldırma yükümlülüğü getiriyor. Uymayan platformlar küresel cironun %6\'sına kadar para cezasıyla karşılaşabilir.'
+  },
+  {
+    q:'GDPR\'ın "Unutulma Hakkı" hangi maddede yer alır ve ne anlama gelir?',
+    opts:['Madde 5 — Veri işleme ilkeleri','Madde 7 — Açık rıza şartı','Madde 17 — İzinsiz paylaşılan içeriklerin kaldırılmasını talep etme hakkı','Madde 32 — Güvenlik önlemleri'],
+    correct:2,
+    fb:'Doğru! GDPR Madde 17, senden izinsiz paylaşılan fotoğraf veya videonun kaldırılmasını isteme hakkını düzenler. Platform 30 gün içinde yanıt vermek zorunda.'
+  },
+  {
+    q:'"Aktif seyirci" olmak ne demektir?',
+    opts:['Zorbalığa katılmadan sadece izleyen, hiçbir şey yapmayan kişi','Zorbalığı kaydedip polise bildiren kişi','İçeriği raporlayan ve mağdura destek olan kişi','Zorbalığı başlatan kişi'],
+    correct:0,
+    fb:'Doğru! Aktif seyirci, içeriği beğenmese de sessiz kalan kişidir. Bu sessizlik zorbanın cesaretini artırır. Oysa bir kişinin "bu yanlış" demesi durumu değiştirebilir.'
+  },
+  {
+    q:'"Sadece şakaydı" savunması zorbalık bağlamında neden geçerli değildir?',
+    opts:['Geçerlidir, niyet her şeydir','Zorbalıkta kriter gönderenin niyeti değil, hedefin yaşadığı acıdır','Şaka yalnızca yüz yüze yapılabilir','Dijital ortamda şaka olmaz'],
+    correct:1,
+    fb:'Doğru! Zorbalığın ölçüsü gönderenin niyeti değil, hedefin hissettiği acıdır. "Ben şaka yaptım" demek zararı ortadan kaldırmaz.'
+  },
+  {
+    q:'Kanıt toplarken engelleme işlemini ne zaman yapmalısın?',
+    opts:['Zorbalığı fark eder etmez hemen','Önce tüm kanıtları (ekran görüntüsü, URL, tarih) aldıktan sonra','Yetkililere başvurduktan sonra','Engellemene gerek yok'],
+    correct:1,
+    fb:'Doğru! Engelledikten sonra kişinin profiline erişimin kapanabilir. Bu yüzden önce ekran görüntüsü, URL ve tarih bilgisini kaydet, SONRA engelle.'
+  }
+];
+
+function renderQuestion() {
+  if (quizIdx>=window.moduleQuestions.length){showQuizResult();return;}
+  quizAnswered=false;
+  const q=window.moduleQuestions[quizIdx];
+  document.getElementById('qprog').style.width=(quizIdx/window.moduleQuestions.length*100)+'%';
+  document.getElementById('q-label').textContent='Soru '+(quizIdx+1)+' / '+window.moduleQuestions.length;
+  document.getElementById('q-score').textContent='Doğru: '+quizScore;
+  const L=['A','B','C','D'];
+  document.getElementById('q-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${quizIdx+1} / ${window.moduleQuestions.length}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="fb-box"></div>
+    </div>
+    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">Sonraki Soru →</button></div>`;
+}
+
+function answerQ(i) {
+  if(quizAnswered)return;
+  quizAnswered=true;
+  const q=window.moduleQuestions[quizIdx];
+  document.querySelectorAll('.option-btn').forEach((b,j)=>{
+    b.style.pointerEvents='none';
+    if(j===q.correct)b.classList.add('correct');
+    else if(j===i&&i!==q.correct)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('fb-box');
+  if(i===q.correct){
+    quizScore++;
+    fb.className='feedback-box correct show';
+    fb.textContent='✓ '+q.fb;
+    document.getElementById('q-score').textContent='Doğru: '+quizScore;
+  } else {
+    fb.className='feedback-box wrong show';
+    fb.textContent='✗ '+q.fb;
+  }
+  document.getElementById('nqb').style.display='block';
+}
+
+function nextQuestion(){quizIdx++;renderQuestion();}
+
+function showQuizResult() {
+  document.getElementById('qprog').style.width='100%';
+  const passed=quizScore>=7;
+  if (typeof saveQuizResult === 'function') saveQuizResult(quizScore, window.moduleQuestions.length);
+  document.getElementById('q-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3.5rem;margin-bottom:16px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENE'}</div>
+      <div style="font-size:.95rem;color:var(--text-dim);margin-bottom:24px;">${quizScore} / ${window.moduleQuestions.length} doğru${passed?' — Geçme eşiğini aştın!':' — En az 7 doğru gerekiyor.'}</div>
+      ${passed?`<button class="btn btn-green" onclick="return safeAdvance(3,4)">Devam Et — Senaryo →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Quizi Tekrar Dene</button>`}
+    </div>`;
+  document.getElementById('s-correct').textContent=quizScore;
+}
+
+function restartQuiz(){quizScore=0;quizIdx=0;renderQuestion();}
+
+const sceneFB=[
+  {ok:false, text:'<span class="bad">❌ Bu zorbalığa ortak olmak.</span> "Hahaha" emojisi göndermek zorbanın yanında yer almak demektir. Can o emojileri de gördü ve saydı. Dijital ayak izin kalıcı — "sadece emoji" değil bu.'},
+  {ok:false, text:'<span class="bad">❌ Sessizlik onay değil mi?</span> Seyirci etkisi tam da bu: herkes korkar, kimse müdahale etmez. Araştırmalar, bir tanık sesini yükseltince zorbalığın %57 oranında durduğunu gösteriyor.'},
+  {ok:true,  text:'✅ Dijital cesaret tam olarak bu! Grupta "Bu yanlış" demek zorbanın gücünü kırar. Canın görmesi, 18 sessiz mesajın ağırlığını taşımak zorunda olmadığını hissettirir.'},
+  {ok:false, text:'<span class="bad">❌ Görmezden gelmek sorunu çözmüyor.</span> Sessize almak seni rahatlatır ama Can hâlâ orada, mesajları hâlâ okuyor. Grupta kalan 17 kişi de aynı şeyi yaptığında zorba kazanıyor.'}
+];
+
+function pickScene(i){
+  document.querySelectorAll('.chat-opt').forEach(b=>b.style.pointerEvents='none');
+  document.querySelectorAll('.chat-opt')[i].classList.add(sceneFB[i].ok?'chosen-correct':'chosen-wrong');
+  document.getElementById('byte-fb-text').innerHTML=sceneFB[i].text;
+  document.getElementById('byte-fb').classList.add('show');
+  if(sceneFB[i].ok) setTimeout(()=>{document.getElementById('scene-next-btn').style.display='inline-block';},800);
+}
+
+function showToast(type,title,msg){
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  const icons={xp:'⚡',info:'ℹ️',warn:'⚠️'};
+  t.innerHTML='<div class="toast-icon">'+( icons[type]||'•')+'</div><div class="toast-body"><div class="toast-title">'+title+'</div><div class="toast-msg">'+msg+'</div></div>';
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(()=>t.remove(),3600);
+}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+

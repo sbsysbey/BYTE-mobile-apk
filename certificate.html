@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#0a1020">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy - Sertifika</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a1020;
+  --page:#0f1b33;
+  --page-soft:#122546;
+  --panel:#13284b;
+  --text:#eef4ff;
+  --text-dim:#b7c6e4;
+  --cyan:#59d0ff;
+  --lime:#b7ff5a;
+  --orange:#ffb347;
+  --pink:#ff7db6;
+  --violet:#8b93ff;
+  --gold:#ffd66b;
+  --green:#4ade80;
+  --line:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Exo 2',sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(60rem 40rem at 8% -10%, rgba(89,208,255,.18), transparent 58%),
+    radial-gradient(50rem 34rem at 92% 0%, rgba(183,255,90,.10), transparent 60%),
+    linear-gradient(180deg,#091022,#0f1b33);
+}
+.wrap{max-width:1120px;margin:0 auto;padding:28px 20px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.logo{font-family:'Orbitron',sans-serif;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--cyan)}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--page);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:600}
+.btn:hover{border-color:rgba(89,208,255,.55)}
+.btn.primary{background:linear-gradient(135deg,rgba(89,208,255,.22),rgba(183,255,90,.08));border-color:rgba(89,208,255,.55)}
+
+.a4{
+  position:relative;
+  width:min(100%, 860px);
+  margin:0 auto;
+  min-height:1180px;
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  background:linear-gradient(170deg,var(--page),var(--page-soft));
+  overflow:hidden;
+}
+.byte-mark{
+  position:absolute;
+  top:18px;
+  right:22px;
+  width:120px;
+  height:120px;
+  border-radius:16px;
+  border:1px solid rgba(176,138,70,.45);
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+  box-shadow:0 8px 24px rgba(4,21,54,.18);
+}
+.byte-mark img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.byte-character{
+  margin:14px auto 6px;
+  width:92px;
+  height:92px;
+  border-radius:12px;
+  border:1px solid rgba(176,138,70,.28);
+  background:rgba(255,255,255,.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px;
+}
+.byte-character img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+.byte-mark-fallback{
+  font-family:'Orbitron',sans-serif;
+  font-size:.62rem;
+  letter-spacing:.8px;
+  color:#17345f;
+  text-align:center;
+  line-height:1.35;
+  display:none;
+}
+.a4:before,
+.a4:after{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.a4:before{
+  background:
+    radial-gradient(circle at 0% 0%, rgba(89,208,255,.18), transparent 30%),
+    radial-gradient(circle at 100% 10%, rgba(255,125,182,.16), transparent 34%),
+    radial-gradient(circle at 80% 100%, rgba(183,255,90,.12), transparent 32%);
+}
+.a4:after{
+  opacity:.22;
+  background-image:
+    linear-gradient(30deg, rgba(255,255,255,.2) 1px, transparent 1px),
+    linear-gradient(-30deg, rgba(255,255,255,.16) 1px, transparent 1px);
+  background-size:28px 28px;
+}
+
+.paper{position:relative;z-index:2;padding:44px 46px 34px}
+.ribbon{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.chip{font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1.8px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.chip.lime{color:var(--lime);border-color:rgba(183,255,90,.35)}
+.chip.cyan{color:var(--cyan);border-color:rgba(89,208,255,.35)}
+
+.cert{
+  background:linear-gradient(165deg,rgba(15,32,60,.86),rgba(19,40,75,.76));
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:22px;
+  padding:30px;
+  position:relative;
+  overflow:hidden;
+}
+.cert:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% -4%,rgba(255,179,71,.22),transparent 52%);pointer-events:none}
+.cert:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,rgba(255,125,182,.07),transparent 35%,rgba(89,208,255,.06) 70%,transparent)}
+.seal{font-size:52px;text-align:center;margin-bottom:8px;filter:drop-shadow(0 0 10px rgba(255,179,71,.35))}
+.title{font-family:'Orbitron',sans-serif;font-size:.82rem;color:var(--orange);letter-spacing:2.2px;text-align:center}
+.name{font-family:'Orbitron',sans-serif;font-size:1.45rem;text-align:center;margin:12px 0 8px}
+.sub{text-align:center;color:var(--text-dim);font-size:.96rem;line-height:1.6;max-width:620px;margin:0 auto}
+.meta{text-align:center;margin-top:8px;font-size:.82rem;color:#cfe1ff}
+
+.diploma-text{
+  margin-top:18px;
+  background:rgba(10,23,45,.56);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:.93rem;
+  line-height:1.7;
+  color:#dbe9ff;
+  text-align:center;
+}
+.pill-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mini-pill{padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-size:.78rem;background:rgba(255,255,255,.03);color:#d7e8ff}
+.mini-pill b{color:#fff}
+.mini-pill.cyan{border-color:rgba(89,208,255,.45);color:#c9f2ff}
+.mini-pill.gold{border-color:rgba(255,214,107,.5);color:#ffe6a5}
+.mini-pill.pink{border-color:rgba(255,125,182,.45);color:#ffd0e7}
+
+.progress-wrap{margin-top:16px}
+.progress-label{display:flex;justify-content:space-between;font-size:.8rem;color:#d6e7ff;margin-bottom:7px}
+.progress{background:rgba(8,17,34,.72);border:1px solid var(--line);border-radius:999px;height:12px;overflow:hidden}
+.progress>div{height:100%;background:linear-gradient(90deg,var(--orange),var(--lime));width:0}
+
+.listCard{margin-top:18px;background:rgba(12,28,54,.74);border:1px solid var(--line);border-radius:16px;padding:16px}
+.listTitle{font-family:'Orbitron',sans-serif;font-size:.62rem;color:#9ddfff;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;opacity:.9}
+.doneList{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item{background:rgba(17,39,72,.82);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:.80rem;color:var(--text-dim)}
+.item b{color:#fff}
+.sign-area{margin-top:24px;display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.sign-left{max-width:470px;font-size:.80rem;color:#c5d8f9;line-height:1.55}
+.sign-right{min-width:230px;text-align:center}
+.sign-line{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.65),transparent);margin-bottom:8px}
+.sign-name{font-family:'Orbitron',sans-serif;font-size:.76rem;color:#fff;letter-spacing:1px}
+.sign-role{font-size:.75rem;color:#b9cdeb;margin-top:3px}
+.footer-note{margin-top:18px;text-align:center;font-size:.78rem;color:#c0d4f8}
+.ok{color:var(--green)}
+@media (max-width:900px){
+  .a4{min-height:auto}
+  .paper{padding:26px 18px 24px}
+  .ribbon{flex-wrap:wrap}
+  .byte-mark{position:static;margin:0 auto 12px}
+  .doneList{grid-template-columns:1fr}
+  .sign-area{flex-direction:column;align-items:stretch}
+  .sign-right{width:100%}
+}
+
+@page { size: A4 portrait; margin: 0; }
+@media print{
+  html,body{width:210mm;height:297mm;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .wrap{padding:0;max-width:none}
+  .top .actions{display:none}
+  .top{margin:0;padding:12mm 12mm 0}
+  .a4{
+    width:210mm;
+    min-height:297mm;
+    border:none;
+    border-radius:0;
+    margin:0;
+    box-shadow:none;
+  }
+}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">BYTE<span>ACADEMY</span> / SERTİFİKA</div>
+      <div class="actions">
+        <button class="btn" onclick="window.location.href='index.html'">Dashboard</button>
+        <button class="btn primary" onclick="window.print()">Yazdır / PDF</button>
+      </div>
+    </div>
+
+    <div class="a4">
+      <div class="paper">
+        <div class="byte-mark">
+          <img id="byte-logo" src="videos/LOGO (2).png" alt="BYTE Academy Logo">
+          <div id="byte-logo-fallback" class="byte-mark-fallback">BYTE<br>ACADEMY</div>
+        </div>
+        <div class="ribbon">
+          <div class="chip cyan">YOUTH CYBER SKILLS</div>
+          <div class="chip lime">A4 DİKEY SERTİFİKA</div>
+        </div>
+
+        <div class="cert">
+          <div class="seal">🏆</div>
+          <div class="title">DİJİTAL GÜVENLİK EĞİTİM SERTİFİKASI</div>
+          <div class="name" id="cert-name">-</div>
+          <div class="sub" id="cert-sub">-</div>
+          <div class="meta" id="cert-date">-</div>
+
+          <div class="diploma-text" id="cert-story">
+            Bu belge, katılımcının BYTE Academy Dijital Güvenlik Programı kapsamındaki tüm modülleri başarıyla tamamladığını teyit eder.
+          </div>
+
+          <div class="pill-row">
+            <div class="mini-pill cyan">Modül: <b id="mod-count">0/13</b></div>
+            <div class="mini-pill gold">Rozet: <b id="badge-count">0</b></div>
+            <div class="mini-pill pink">Toplam XP: <b id="xp-count">0</b></div>
+          </div>
+
+          <div class="progress-wrap">
+            <div class="progress-label"><span>Tamamlama Oranı</span><span id="progress-pct">%0</span></div>
+            <div class="progress"><div id="progress-fill"></div></div>
+          </div>
+        </div>
+
+        <div class="listCard">
+          <div class="listTitle">BİTİRİLEN MODÜLLER</div>
+          <div class="doneList" id="done-list"></div>
+        </div>
+
+        <div class="sign-area">
+          <div class="sign-left">
+            BYTE Academy olarak dijital dünyada bilinçli, güvenli ve etik davranış kültürünü gençlerle birlikte güçlendirmeye devam ediyoruz.
+          </div>
+          <div class="sign-right">
+            <div class="byte-character"><img id="byte-character-img" src="videos/byte1.png" alt="BYTE karakteri"></div>
+            <div class="sign-line"></div>
+            <div class="sign-name">BYTE ACADEMY</div>
+            <div class="sign-role">Program Direktorlugu / Imza</div>
+          </div>
+        </div>
+
+        <div class="footer-note">BYTE Academy - Gençler için güvenli dijital dünya programı</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+(function initCert(){
+  const session = localStorage.getItem('byte_session');
+  const users = JSON.parse(localStorage.getItem('byte_users') || '{}');
+  if (!session || !users[session]) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  const MODULES = [
+    { n:1, name:'Şifre Güvenliği' },
+    { n:2, name:'Ağ Güvenliği' },
+    { n:3, name:'Mobil Güvenlik' },
+    { n:4, name:'Sosyal Mühendislik' },
+    { n:5, name:'Phishing & Zararlı Yazılımlar' },
+    { n:6, name:'Veri Gizliliği & Bulut' },
+    { n:7, name:'Sunum Güvenliği' },
+    { n:8, name:'Güvenli İletişim' },
+    { n:9, name:'Hesap & Platform Güvenliği' },
+    { n:10, name:'Seyahat Güvenliği' },
+    { n:11, name:'Yapay Zeka Güvenliği' },
+    { n:12, name:'Sosyal Medya Güvenliği' },
+    { n:13, name:'Siber Zorbalık' }
+  ];
+
+  const user = users[session];
+  const logoEl = document.getElementById('byte-logo');
+  const logoFallbackEl = document.getElementById('byte-logo-fallback');
+  const byteCharacterEl = document.getElementById('byte-character-img');
+  if (logoEl) {
+    const candidateLogoPaths = [
+      'videos/LOGO (2).png',
+      'videos/LOGO%20(2).png',
+      '/videos/LOGO (2).png',
+      '/videos/LOGO%20(2).png',
+      './videos/LOGO (2).png',
+      './videos/LOGO%20(2).png'
+    ];
+    let idx = 0;
+    logoEl.onerror = function() {
+      idx += 1;
+      if (idx < candidateLogoPaths.length) {
+        logoEl.src = candidateLogoPaths[idx];
+      } else if (logoFallbackEl) {
+        logoEl.style.display = 'none';
+        logoFallbackEl.style.display = 'block';
+      }
+    };
+    logoEl.src = candidateLogoPaths[idx];
+  }
+  if (byteCharacterEl) {
+    const characterPaths = ['videos/byte1.png', '/videos/byte1.png', './videos/byte1.png', 'videos/byte.gif', '/videos/byte.gif'];
+    let cidx = 0;
+    byteCharacterEl.onerror = function() {
+      cidx += 1;
+      if (cidx < characterPaths.length) {
+        byteCharacterEl.src = characterPaths[cidx];
+      } else {
+        byteCharacterEl.style.display = 'none';
+      }
+    };
+    byteCharacterEl.src = characterPaths[cidx];
+  }
+
+  const done = Array.isArray(user.completedModules) ? user.completedModules.slice().sort((a,b)=>a-b) : [];
+  const doneCount = done.length;
+  const total = MODULES.length;
+  if (doneCount < total) {
+    window.location.href = 'index.html';
+    return;
+  }
+  const pct = Math.round(doneCount / total * 100);
+
+  document.getElementById('cert-name').textContent = session.toUpperCase();
+  document.getElementById('cert-sub').innerHTML =
+    'BYTE Academy dijital güvenlik eğitiminde ilerleme belgesidir.<br>' +
+    (doneCount === total ? '<span class="ok">Tüm modüller tamamlandı.</span>' : 'Tamamlama durumu: %' + pct);
+  document.getElementById('cert-story').innerHTML =
+    'Bu diploma, <b>' + session.toUpperCase() + '</b> isimli katılımcının BYTE Academy Dijital Guvenlik Programı kapsamındaki <b>' + doneCount + '/' + total + '</b> modulu tamamlayarak dijital guvenlik farkindaligi ve etik internet kullanimi yetkinligi kazandigini belgelemektedir.';
+
+  document.getElementById('mod-count').textContent = doneCount + '/' + total;
+  document.getElementById('badge-count').textContent = String(doneCount);
+  document.getElementById('xp-count').textContent = String(user.xp || 0);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = '%' + pct;
+  document.getElementById('cert-date').textContent = 'Belge Tarihi: ' + new Date().toLocaleDateString('tr-TR');
+
+  const names = done.map(n => MODULES.find(m => m.n === n)).filter(Boolean);
+  const list = document.getElementById('done-list');
+  if (names.length === 0) {
+    list.innerHTML = '<div class="item">Henüz tamamlanan modül yok.</div>';
+    return;
+  }
+  list.innerHTML = names.map(m => '<div class="item"><b>Modül ' + String(m.n).padStart(2,'0') + '</b> · ' + m.name + '</div>').join('');
+})();
+</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
+</body>
+</html>

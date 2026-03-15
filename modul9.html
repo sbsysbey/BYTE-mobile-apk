@@ -1,0 +1,893 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 9: Hesap & Platform Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/modules.css">
+
+<style>
+
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 290px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(96,200,240,.07);border:1px solid rgba(96,200,240,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1.25rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:2px;margin:24px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(96,200,240,.2);}
+
+/* MFA PYRAMID */
+.mfa-levels{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.mfa-row{background:var(--bg-panel);border-radius:14px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;border:1px solid transparent;transition:.3s;}
+.mfa-row.level-best{border-color:rgba(74,222,154,.2);background:rgba(74,222,154,.04);}
+.mfa-row.level-ok{border-color:rgba(251,191,36,.18);background:rgba(251,191,36,.03);}
+.mfa-row.level-weak{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04);}
+.mfa-icon{font-size:1.7rem;flex-shrink:0;margin-top:2px;}
+.mfa-tier{font-family:'Orbitron',sans-serif;font-size:.67rem;letter-spacing:1px;color:var(--text-dim);margin-bottom:3px;}
+.mfa-name{font-size:.93rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.mfa-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;}
+.mfa-status{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:.75rem;font-weight:600;margin-top:7px;}
+.ms-green{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.ms-yellow{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.25);}
+.ms-red{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.25);}
+.mfa-arrow{display:flex;justify-content:center;align-items:center;color:var(--text-dim);font-size:.70rem;letter-spacing:1px;font-family:'Orbitron',sans-serif;gap:6px;padding:3px 0;}
+
+/* PLATFORM TABLE */
+.plat-table-wrap{overflow-x:auto;margin-bottom:20px;}
+.plat-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.plat-table th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:1px;color:var(--text-dim);white-space:nowrap;}
+.plat-table td{border:1px solid var(--border);padding:10px 14px;vertical-align:middle;}
+.plat-table tr:hover td{background:rgba(255,255,255,.02);}
+.plat-name{font-weight:700;color:#fff;}
+.tick{color:var(--green);}.cross{color:var(--red);}.partial{color:var(--yellow);}
+.plat-rec{font-size:.70rem;padding:2px 7px;border-radius:10px;margin-left:5px;}
+.rec-best{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.rec-ok{background:rgba(251,191,36,.07);color:var(--yellow);border:1px solid rgba(251,191,36,.2);}
+
+/* BREACH STEPS */
+.breach-steps{display:flex;flex-direction:column;gap:0;margin-bottom:20px;}
+.breach-step{display:flex;gap:16px;padding:14px 20px;background:var(--bg-panel);border-radius:12px;margin-bottom:8px;border-left:3px solid var(--cyan);}
+.bs-num{width:32px;height:32px;border-radius:50%;background:rgba(96,200,240,.12);border:1px solid rgba(96,200,240,.35);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--cyan);flex-shrink:0;}
+.bs-title{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.bs-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
+.bs-time{font-size:.75rem;font-family:'Orbitron',sans-serif;color:var(--orange);margin-top:4px;}
+
+/* PASSKEY CARD */
+.passkey-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.pk-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.pk-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.pk-icon{font-size:1.6rem;}
+.pk-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:#fff;letter-spacing:1px;}
+.pk-badge{font-size:.70rem;padding:2px 7px;border-radius:8px;}
+.pk-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.pk-list li{font-size:.84rem;color:var(--text-dim);display:flex;gap:8px;line-height:1.45;}
+.pk-ok{color:var(--green);flex-shrink:0;}
+.pk-bad{color:var(--red);flex-shrink:0;}
+
+/* READING SIDEBAR */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.74rem;letter-spacing:2px;color:var(--cyan);margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:8px;}
+.side-item{display:flex;align-items:flex-start;gap:9px;font-size:.83rem;color:var(--text-dim);line-height:1.45;}
+.side-ok{color:var(--green);flex-shrink:0;font-weight:700;}
+.side-bad{color:var(--red);flex-shrink:0;font-weight:700;}
+.side-arr{color:var(--cyan);flex-shrink:0;}
+.enisa-badge{background:linear-gradient(135deg,rgba(96,200,240,.07),rgba(168,85,247,.05));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:16px 18px;margin-bottom:14px;}
+.enisa-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.enisa-icon{font-size:1.3rem;}
+.enisa-label{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;}
+.enisa-text{font-size:.83rem;color:var(--text-dim);line-height:1.55;}
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.05),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:18px 20px;}
+.byte-tip-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.byte-mini{width:32px;height:32px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:1px;}
+.byte-tip-text{font-size:.84rem;color:var(--text-dim);line-height:1.6;font-style:italic;}
+
+/* ALERTS */
+.alert-info{background:rgba(96,200,240,.05);border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:13px 16px;font-size:.85rem;color:var(--text-dim);line-height:1.55;display:flex;gap:10px;margin-bottom:16px;}
+.alert-warn{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:13px 16px;font-size:.85rem;color:var(--text-dim);line-height:1.55;display:flex;gap:10px;margin-bottom:16px;}
+.alert-red{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.2);border-radius:10px;padding:13px 16px;font-size:.85rem;color:var(--text-dim);line-height:1.55;display:flex;gap:10px;margin-bottom:16px;}
+
+/* STAT HIGHLIGHTS */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:4px;}
+.stat-lbl{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+
+/* SETTINGS PATH */
+.settings-paths{display:flex;flex-direction:column;gap:14px;margin-bottom:20px;}
+.sp-row{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 20px;display:flex;gap:16px;}
+.sp-app-icon{font-size:1.8rem;flex-shrink:0;}
+.sp-app-name{font-weight:700;color:#fff;margin-bottom:8px;font-size:.92rem;}
+.sp-path-line{font-size:.82rem;color:var(--text-dim);line-height:1.55;margin-bottom:4px;padding-left:8px;border-left:2px solid rgba(96,200,240,.25);}
+.sp-path-line span{color:var(--cyan);font-weight:600;font-size:.78rem;font-family:'Orbitron',sans-serif;display:inline-block;margin-right:6px;}
+.sp-warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:8px;padding:6px 10px;font-size:.79rem;color:var(--yellow);margin-top:8px;}
+
+/* RECOMMEND BOX */
+.recommend-box{background:var(--bg-panel);border:1px solid rgba(74,222,154,.2);border-radius:14px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.rb-icon{font-size:1.8rem;flex-shrink:0;}
+.rb-title{font-family:'Orbitron',sans-serif;font-size:.74rem;color:var(--green);letter-spacing:1px;margin-bottom:6px;}
+.rb-text{font-size:.85rem;color:var(--text-dim);line-height:1.55;}
+
+/* QUIZ */
+.quiz-wrap{max-width:700px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:10px;padding:11px 15px;font-size:.91rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.3);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+
+
+/* NOTIFICATION MOCKUP */
+.notif-mockup{background:#000;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:20px 22px;max-width:380px;margin:18px auto;font-family:-apple-system,system-ui,sans-serif;}
+.nm-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1);}
+.nm-icon{width:34px;height:34px;border-radius:8px;background:#e44;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.nm-app{font-size:.78rem;color:rgba(255,255,255,.6);margin-bottom:1px;}
+.nm-time{font-size:.72rem;color:rgba(255,255,255,.4);margin-left:auto;}
+.nm-title{font-size:.94rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.nm-body{font-size:.83rem;color:rgba(255,255,255,.7);line-height:1.45;}
+.nm-location{display:flex;align-items:center;gap:7px;margin-top:10px;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.25);border-radius:8px;padding:7px 11px;}
+.nm-loc-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse2 1s infinite;}
+@keyframes pulse2{0%,100%{opacity:1;}50%{opacity:.4;}}
+.nm-loc-text{font-size:.80rem;color:var(--red);}
+.nm-flags{display:flex;flex-direction:column;gap:5px;margin-top:11px;}
+.nm-flag{display:flex;align-items:center;gap:7px;font-size:.79rem;color:rgba(255,255,255,.6);}
+.nm-flag-dot{width:5px;height:5px;border-radius:50%;background:var(--yellow);flex-shrink:0;}
+
+
+
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span class="xp-label">XP</span>
+      <span id="xp-count">3000</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill"></div></div>
+    </div>
+    <div class="mod-badge-top">MODÜL 09 / 13</div>
+  </div>
+</div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-title">MÜFREDAT</div>
+
+    <div class="module-item" onclick="goTo('modul1.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">01 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul2.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">02 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul3.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">03 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul4.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">04 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul5.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">05 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul6.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">06 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul7.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">07 · Tamamlandı</div></div>
+    </div>
+    <div class="module-item" onclick="goTo('modul8.html')">
+      <div class="mod-num done">✓</div>
+      <div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">08 · Tamamlandı</div></div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="module-item active">
+      <div class="mod-num active2">09</div>
+      <div><div class="mod-name" style="color:var(--cyan);">Hesap & Platform Güvenliği</div><div class="mod-meta">Aktif · 400 XP</div></div>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="module-item" onclick="tryNav()">
+      <div class="mod-num locked">10</div>
+      <div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">🔒 Kilitli</div></div>
+    </div>
+    <div class="module-item" onclick="tryNav()">
+      <div class="mod-num locked">11</div>
+      <div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">🔒 Kilitli</div></div>
+    </div>
+    <div class="module-item" onclick="tryNav()">
+      <div class="mod-num locked">12</div>
+      <div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">🔒 Kilitli</div></div>
+    </div>
+    <div class="module-item" onclick="tryNav()">
+      <div class="mod-num locked">13</div>
+      <div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">🔒 Kilitli</div></div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- MODULE HEADER -->
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="Tıkla, BYTE anlatsın">
+        🤖
+        <div class="byte-rings">
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">▶ BYTE'a tıkla</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 09 · 🔊 Dinle</div>
+        <h1 class="mod-title">Hesap & <span>Platform Güvenliği</span></h1>
+        <p class="mod-desc">2FA türleri, passkey'ler, hesap ele geçirme saldırıları, ihlal müdahalesi ve platform bazlı güvenlik ayarları. ENISA & Europol verileriy le AB odaklı içerik.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-c"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>400 XP</div>
+          <div class="stat-chip"><div class="dot dot-g"></div>~40 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">01</div>
+        <div class="step-label">Video Ders</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">02</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+70 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">03</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+180 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">04</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">05</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 1: VIDEO ═══════════════ -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMy · MODÜL 09</div>
+          <div class="vs-title">Hesap & Platform Güvenliği</div>
+          <div class="vs-sub">2FA · Passkey · İhlal Müdahalesi · Platform Ayarları</div>
+          <div class="play-big" id="play-btn" onclick="startVideo()">▶</div>
+          <div class="chapters">
+            <div class="ch-pill active" id="ch0">Giriş & İstatistikler</div>
+            <div class="ch-pill" id="ch1">2FA Türleri</div>
+            <div class="ch-pill" id="ch2">Passkey Nedir?</div>
+            <div class="ch-pill" id="ch3">İhlal Müdahalesi</div>
+            <div class="ch-pill" id="ch4">Platform Ayarları</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" id="play-ctrl" onclick="startVideo()">▶ Oynat</button>
+          <button class="ctrl-btn" onclick="skipVideo()">⏭ Atla</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <div class="vtime" id="vtime">0:00 / 9:20</div>
+          <button class="ctrl-btn">⚙</button>
+        </div>
+      </div>
+
+      <div class="key-points">
+        <div class="kp-head"><span>🔑</span><span class="kp-title">Ders Öncesi Anahtar Noktalar</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>ENISA 2024 verilerine göre AB'de hesap ele geçirme saldırıları bir önceki yıla kıyasla %38 arttı.</li>
+          <li><span class="kp-b">▸</span>Tüm 2FA türleri eşit değil: SMS 2FA, donanım anahtarı veya passkey kadar güvenli değil.</li>
+          <li><span class="kp-b">▸</span>Passkey (geçiş anahtarı) şifrenin yerini alıyor; phishing, kaba kuvvet saldırılarına karşı %100 dirençli.</li>
+          <li><span class="kp-b">▸</span>Bir ihlalde ilk 60 dakika kritik — doğru sırayla adım atmak hasarı minimuma indirir.</li>
+          <li><span class="kp-b">▸</span>GDPR gereği platformların hesap ihlallerini 72 saat içinde yetkililere bildirme yükümlülüğü var.</li>
+        </ul>
+      </div>
+
+      <div style="text-align:right;margin-top:16px;">
+        <button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Videoyu Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 2: READING ═══════════════ -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Hesabın Ele Geçirildi — Şimdi Ne Yapacaksın?</div>
+          <div class="article-intro">Şifren doğru ama giremiyorsun. Ya da bir yabancı şehrinden giriş bildirimi aldın. Hesap ele geçirme (Account Takeover / ATO) AB'de en hızlı büyüyen siber suç kategorisi. <strong>Europol 2024 raporuna göre</strong> Avrupa'daki ATO vakalarının %61'i credential stuffing — yani başka platformdan çalınan şifre-kullanıcı adı ikilisinin denenmes i — yoluyla gerçekleşiyor.</div>
+
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">%61</div><div class="stat-lbl">ATO vakasının credential stuffing kaynaklı olduğu oran (Europol 2024)</div></div>
+            <div class="stat-box"><div class="stat-num">€4.5M</div><div class="stat-lbl">AB'de ortalama kurumsal hesap ihlali maliyeti (IBM 2024)</div></div>
+            <div class="stat-box"><div class="stat-num">15 Milyar</div><div class="stat-lbl">Dark web'de satılan çalıntı kimlik bilgisi tahmini (ENISA)</div></div>
+          </div>
+
+          <div class="alert-warn">
+            <span>🇪🇺</span>
+            <div><strong>GDPR Bağlantısı:</strong> Bir platform hesabınızın ihlal edildiğini öğrenirse, bu kişisel veri içeriyorsa ilgili Veri Koruma Otoritesine (DPA) <strong>72 saat</strong> içinde bildirmek zorunda. Almanya'da BfDI, Fransa'da CNIL, Türkiye'de KVKK bunun karşılığı.</div>
+          </div>
+
+          <div class="section-head">🛡️ BÖLÜM 1 — 2FA (İKİ FAKTÖRLÜ KİMLİK DOĞRULAMA)</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:16px;">2FA, şifrene ek olarak ikinci bir doğrulama katmanı ekler. Ancak tüm 2FA türleri aynı güvenliği sağlamaz. ENISA, kurumlar için en az TOTP uygulaması veya donanım anahtarı seviyesinde 2FA kullanılmasını tavsiye ediyor.</p>
+
+          <div class="mfa-levels">
+            <div class="mfa-row level-best">
+              <div class="mfa-icon">🔑</div>
+              <div style="flex:1;">
+                <div class="mfa-tier">SEVİYE 4 — EN GÜÇLÜ</div>
+                <div class="mfa-name">Donanım Güvenlik Anahtarı (FIDO2/WebAuthn)</div>
+                <div class="mfa-desc">YubiKey, Google Titan gibi fiziksel anahtarlar. Kimlik avına (phishing) karşı %100 dirençli. Site bağlamını doğruladığından sahte sayfalarda çalışmaz. AB kurumları ve bankalar için ENISA'nın birincil önerisi.</div>
+                <div class="mfa-status ms-green">✓ Phishing-Proof · Önerilen</div>
+              </div>
+            </div>
+            <div class="mfa-arrow">↑ Güvenlik Seviyesi ↑</div>
+            <div class="mfa-row level-best">
+              <div class="mfa-icon">🔐</div>
+              <div style="flex:1;">
+                <div class="mfa-tier">SEVİYE 3 — ÇOK GÜÇLÜ</div>
+                <div class="mfa-name">Passkey (Geçiş Anahtarı)</div>
+                <div class="mfa-desc">Şifrenin yerini alan kriptografik anahtar çifti. Parmak izi veya yüz tanımayla açılır. Google, Apple, Microsoft, Bitwarden destekli. Şifre yoksa çalınacak bir şey yok — credential stuffing imkânsız.</div>
+                <div class="mfa-status ms-green">✓ Şifresiz · Phishing-Proof</div>
+              </div>
+            </div>
+            <div class="mfa-arrow">↑ Güvenlik Seviyesi ↑</div>
+            <div class="mfa-row level-ok">
+              <div class="mfa-icon">📱</div>
+              <div style="flex:1;">
+                <div class="mfa-tier">SEVİYE 2 — İYİ</div>
+                <div class="mfa-name">TOTP Authenticator Uygulaması</div>
+                <div class="mfa-desc">Google Authenticator, Aegis (açık kaynak, önerilen), Authy. 30 saniyelik tek kullanımlık kod üretir. SMS'ten çok daha güvenli çünkü SIM swap saldırısına karşı dirençli. Gelişmiş phishing ile kırılabilir ama nadir.</div>
+                <div class="mfa-status ms-yellow">⚠ SMS'den Üstün · Önerilen</div>
+              </div>
+            </div>
+            <div class="mfa-arrow">↑ Güvenlik Seviyesi ↑</div>
+            <div class="mfa-row level-weak">
+              <div class="mfa-icon">💬</div>
+              <div style="flex:1;">
+                <div class="mfa-tier">SEVİYE 1 — ZAYIF</div>
+                <div class="mfa-name">SMS / E-posta Kodu</div>
+                <div class="mfa-desc">Hiç 2FA olmamaktan iyidir ama SIM swap (operatörü arayıp hattı başka SIM'e taşıtma), SS7 protokol zafiyetleri ve phishing ile kolayca atlatılabilir. Almanya'da telekom operatörleri SIM swap'a karşı ek önlem zorunluluğuyla karşı karşıya.</div>
+                <div class="mfa-status ms-red">✗ SIM Swap Riski · Minimum Güvenlik</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">🗝️ BÖLÜM 2 — PASSKEY: ŞİFRENİN SONU MU?</div>
+
+          <div class="passkey-grid">
+            <div class="pk-card">
+              <div class="pk-head"><div class="pk-icon">🔑</div><div><div class="pk-name">PASSKEY</div><span class="pk-badge rec-best">Gelecek Standart</span></div></div>
+              <ul class="pk-list">
+                <li><span class="pk-ok">✓</span>Şifre yok — cihazda kriptografik anahtar çifti</li>
+                <li><span class="pk-ok">✓</span>Parmak izi / yüz / PIN ile açılır</li>
+                <li><span class="pk-ok">✓</span>Phishing'e karşı dirençli: site URL'si doğrulanmadan çalışmaz</li>
+                <li><span class="pk-ok">✓</span>FIDO2 / WebAuthn standardı (W3C onaylı)</li>
+                <li><span class="pk-ok">✓</span>Google, Apple, Microsoft, PayPal, GitHub destekler</li>
+                <li><span class="pk-ok">✓</span>Credential stuffing imkânsız — çalınacak şifre yok</li>
+              </ul>
+            </div>
+            <div class="pk-card">
+              <div class="pk-head"><div class="pk-icon">🔒</div><div><div class="pk-name">ŞIFRE + 2FA</div><span class="pk-badge rec-ok">Mevcut En İyi Pratik</span></div></div>
+              <ul class="pk-list">
+                <li><span class="pk-ok">✓</span>Güçlü, benzersiz şifre + TOTP/donanım anahtarı</li>
+                <li><span class="pk-bad">✗</span>Şifre manager olmadan yönetimi zor</li>
+                <li><span class="pk-bad">✗</span>Phishing ile şifre + TOTP kodu çalınabilir</li>
+                <li><span class="pk-ok">✓</span>Şu an en yaygın desteklenen yöntem</li>
+                <li><span class="pk-ok">✓</span>Bitwarden, 1Password, KeePassXC ile yönetilebilir</li>
+                <li><span class="pk-bad">✗</span>Şifre ihlallerinde credential stuffing riski</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-head">🚨 BÖLÜM 3 — İHLAL SONRASI 60 DAKİKA: ADIM ADIM</div>
+          <p style="font-size:.87rem;color:var(--text-dim);line-height:1.6;margin-bottom:14px;">Hesabının ele geçirildiğini öğrendiğinde saat başlar. Doğru sıra kritik — yanlış sıra saldırgana zaman kazandırır.</p>
+
+          <div class="breach-steps">
+            <div class="breach-step">
+              <div class="bs-num">1</div>
+              <div>
+                <div class="bs-title">Şifreyi Hemen Değiştir</div>
+                <div class="bs-desc">Hâlâ girebiliyorsan ilk işin bu. Yeni şifre güçlü ve bu platformda daha önce kullanılmamış olmalı. Şifre yöneticisi kullan.</div>
+                <div class="bs-time">⏱ İlk 5 dakika</div>
+              </div>
+            </div>
+            <div class="breach-step">
+              <div class="bs-num">2</div>
+              <div>
+                <div class="bs-title">Tüm Aktif Oturumları Sonlandır</div>
+                <div class="bs-desc">Güvenlik ayarlarından "Aktif oturumlar" veya "Bağlı cihazlar" bölümüne gir. Tanımadığın tüm cihazları çıkar. Saldırgan hâlâ bağlıysa bu oturumu keser.</div>
+                <div class="bs-time">⏱ İlk 10 dakika</div>
+              </div>
+            </div>
+            <div class="breach-step">
+              <div class="bs-num">3</div>
+              <div>
+                <div class="bs-title">2FA'yı Gözden Geçir veya Etkinleştir</div>
+                <div class="bs-desc">Saldırgan 2FA ayarını değiştirdiyse sıfırla. Henüz aktif değilse hemen etkinleştir (TOTP veya donanım anahtarı). SMS 2FA zayıf — mümkünse TOTP'ye geç.</div>
+                <div class="bs-time">⏱ İlk 15 dakika</div>
+              </div>
+            </div>
+            <div class="breach-step">
+              <div class="bs-num">4</div>
+              <div>
+                <div class="bs-title">Kurtarma Kodlarını Yenile</div>
+                <div class="bs-desc">Mevcut kurtarma/yedek kodların saldırganın eline geçmiş olabilir. Yenilerini oluştur ve güvenli bir yere kaydet (şifre manager, şifreli belge).</div>
+                <div class="bs-time">⏱ İlk 20 dakika</div>
+              </div>
+            </div>
+            <div class="breach-step">
+              <div class="bs-num">5</div>
+              <div>
+                <div class="bs-title">Bağlı Uygulamaları ve İzinleri Denetle</div>
+                <div class="bs-desc">Saldırgan sahte bir OAuth uygulaması bağlamış olabilir (mail erişimi, takvim vb.). "Bağlı uygulamalar" bölümünde tanımadığın uygulamaları iptal et.</div>
+                <div class="bs-time">⏱ İlk 30 dakika</div>
+              </div>
+            </div>
+            <div class="breach-step" style="border-left-color:var(--orange);">
+              <div class="bs-num" style="border-color:rgba(251,146,60,.4);color:var(--orange);">6</div>
+              <div>
+                <div class="bs-title">Aynı Şifreyi Kullandığın Diğer Platformları Kontrol Et</div>
+                <div class="bs-desc">Credential stuffing riski: Saldırganlar çalınan kimlik bilgisini diğer platformlarda deneyecek. haveibeenpwned.com ile e-postanı kontrol et; aynı şifreyi kullanan tüm hesapları değiştir.</div>
+                <div class="bs-time">⏱ İlk 60 dakika</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">⚙️ BÖLÜM 4 — PLATFORM BAZLI GÜVENLİK AYARLARI</div>
+
+          <div class="settings-paths">
+            <div class="sp-row">
+              <div class="sp-app-icon">🔵</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Google Hesabı</div>
+                <div class="sp-path-line"><span>2FA →</span> myaccount.google.com → Güvenlik → 2 Adımlı Doğrulama → Authenticator uygulaması veya Passkey seç</div>
+                <div class="sp-path-line"><span>PASSKEY →</span> myaccount.google.com → Güvenlik → Passkey'ler → Yeni Passkey Oluştur</div>
+                <div class="sp-path-line"><span>OTURUMLAR →</span> myaccount.google.com → Güvenlik → Cihazlarınız → "Oturumu Kapat"</div>
+                <div class="sp-path-line"><span>İHLAL KONTROLÜ →</span> myaccount.google.com → Güvenlik → Güvenlik Kontrolü → Çalıntı Şifreler</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🔷</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Microsoft / Outlook</div>
+                <div class="sp-path-line"><span>2FA →</span> account.microsoft.com → Güvenlik → Gelişmiş Güvenlik → İki Adımlı Doğrulama → Microsoft Authenticator</div>
+                <div class="sp-path-line"><span>PASSKEY →</span> account.microsoft.com → Güvenlik → Gelişmiş Güvenlik → Şifresiz Hesap → Etkinleştir</div>
+                <div class="sp-path-line"><span>OTURUMLAR →</span> account.microsoft.com → Güvenlik → Etkinlik → "Bağlı Cihazlar"</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🔗</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">LinkedIn</div>
+                <div class="sp-path-line"><span>2FA →</span> Ayarlar → Oturum Açma ve Güvenlik → İki Adımlı Doğrulama → Authenticator Uygulaması (SMS değil)</div>
+                <div class="sp-path-line"><span>OTURUMLAR →</span> Ayarlar → Oturum Açma ve Güvenlik → Aktif Oturumlarınız → Oturumları Kapat</div>
+                <div class="sp-warn">⚠️ LinkedIn hedefli spear-phishing AB'de ciddi bir iş tehdidi. 2FA şart.</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🍎</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Apple ID</div>
+                <div class="sp-path-line"><span>2FA →</span> iOS: Ayarlar → [Ad] → Parola ve Güvenlik → İki Faktörlü Kimlik Doğrulama</div>
+                <div class="sp-path-line"><span>OTURUMLAR →</span> Ayarlar → [Ad] → altta cihaz listesi → Cihaz Kaldır</div>
+                <div class="sp-path-line"><span>KURTARMA →</span> Ayarlar → [Ad] → Parola ve Güvenlik → Hesap Kurtarma → Kurtarma İletişim Kişisi ekle</div>
+                <div class="sp-warn">⚠️ Apple ID 2FA açık olmadan Find My, iCloud backup erişimi tehlikeli.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="recommend-box">
+            <div class="rb-icon">🎯</div>
+            <div>
+              <div class="rb-title">ENISA'NIN TAVSİYESİ — AB ÇALIŞANLARI İÇİN</div>
+              <div class="rb-text">ENISA'nın "Cybersecurity for SMEs" 2023 kılavuzu şunu söylüyor: İş hesapları için <strong style="color:var(--green)">Passkey veya FIDO2 donanım anahtarı</strong> en üst öncelik. Minimum standart: TOTP authenticator uygulaması. SMS 2FA kabul edilemez kurumsal güvenlik standardı. Şifre yöneticisi (Bitwarden veya KeePassXC açık kaynak) zorunlu.</div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head"><div class="byte-mini">🤖</div><div class="byte-name">BYTE'IN ÖZETI</div></div>
+            <div class="byte-tip-text">Şifre + SMS = bir kilit, ama çok zayıf. Passkey veya donanım anahtarı = çelik kasa. İhlal sonrası sıra önemli: şifre → oturumlar → 2FA → kurtarma kodları → bağlı uygulamalar → diğer platformlar. Hepsini paralel yapma — sırayla git.</div>
+          </div>
+
+          <div style="margin-top:20px;"><button class="btn btn-primary" onclick="completeStep(2)">Okumayı Tamamladım →</button></div>
+        </div>
+
+        <!-- READING SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="enisa-badge">
+            <div class="enisa-head"><div class="enisa-icon">🇪🇺</div><div class="enisa-label">ENISA REFERANSI</div></div>
+            <div class="enisa-text">"ENISA Threat Landscape 2024": Hesap ele geçirme (ATO) AB'de en üst 3 tehdit kategorisinde. Credential stuffing saldırıları %38 artış gösterdi. MFA olmadan kurumsal hesaplar yüksek riskli.</div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">2FA SIRALAMASI</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">1</span><div>Donanım Anahtarı (FIDO2)</div></div>
+              <div class="side-item"><span class="side-ok">2</span><div>Passkey (WebAuthn)</div></div>
+              <div class="side-item"><span class="side-ok">3</span><div>TOTP Uygulama</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>SMS / E-posta kodu</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">İHLAL SONRASI SIRA</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">1</span><div>Şifreyi değiştir</div></div>
+              <div class="side-item"><span class="side-arr">2</span><div>Oturumları kapat</div></div>
+              <div class="side-item"><span class="side-arr">3</span><div>2FA gözden geçir</div></div>
+              <div class="side-item"><span class="side-arr">4</span><div>Kurtarma kodları yenile</div></div>
+              <div class="side-item"><span class="side-arr">5</span><div>Bağlı uygulamalar denetle</div></div>
+              <div class="side-item"><span class="side-arr">6</span><div>Diğer platformları kontrol et</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">ÖNERİLEN ARAÇLAR</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>Bitwarden</strong> — açık kaynak şifre yöneticisi</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>Aegis</strong> — açık kaynak TOTP (Android)</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>YubiKey</strong> — FIDO2 donanım anahtarı</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>haveibeenpwned.com</strong> — ihlal kontrolü</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">DİKKAT</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✗</span><div>SMS 2FA'yı yeterli sayma</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Kurtarma kodlarını e-postada saklama</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Platformlar arası aynı şifreyi kullanma</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Aktif oturumları ihmal etme</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 3: QUIZ ═══════════════ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label"><span id="q-counter">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 4: SENARYO ═══════════════ -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div style="flex:1;">
+              <div class="scene-label">BYTE'IN SENARYOSU — ŞÜPHELI GİRİŞ BİLDİRİMİ</div>
+              <div class="scene-text">Sabah 3:17'de telefonuna bir bildirim geliyor. İş için kullandığın LinkedIn hesabından:<br><br>
+              <em>"Frankfurt, Almanya'dan yeni giriş tespit edildi. Bu sen miydin?"</em></div>
+              <div class="notif-mockup">
+                <div class="nm-bar">
+                  <div class="nm-icon">🔗</div>
+                  <div style="flex:1;"><div class="nm-app">LinkedIn Güvenlik</div></div>
+                  <div class="nm-time">03:17</div>
+                </div>
+                <div class="nm-title">Yeni Cihazdan Giriş Tespit Edildi</div>
+                <div class="nm-body">Windows · Chrome · Frankfurt, DE</div>
+                <div class="nm-location">
+                  <div class="nm-loc-dot"></div>
+                  <div class="nm-loc-text">⚠️ Bu giriş senin normal konumun değil</div>
+                </div>
+                <div class="nm-flags">
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Gece 03:17 — alışılmadık saat</div>
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Frankfurt — bilinen konum değil</div>
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Windows cihazı — sen Mac kullanıyorsun</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)"><span class="s-icon">😴</span><span>Sabah bakarsın — gece yarısı değildir, sabah iş saatinde ilgilenirsin.</span></button>
+            <button class="scene-opt" onclick="pickScene(1)"><span class="s-icon">🔒</span><span>Hemen LinkedIn'e gir: şifreyi değiştir → tüm aktif oturumları sonlandır → 2FA'yı TOTP'ye yükselt → ilk 60 dakika protokolünü uygula.</span></button>
+            <button class="scene-opt" onclick="pickScene(2)"><span class="s-icon">📧</span><span>LinkedIn'e destek talebi gönderirsin ve cevaplamasını beklersin.</span></button>
+            <button class="scene-opt" onclick="pickScene(3)"><span class="s-icon">🔑</span><span>Sadece şifreyi değiştirirsin, yeterli olur.</span></button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 5: BADGE ═══════════════ -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🛡️</div>
+        </div>
+        <h2 class="badge-title">HESAP KALKANI</h2>
+        <p class="badge-subtitle">2FA · Passkey · İhlal Protokolü · Platform Güvenliği</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+400 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 09</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">5</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">400</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+/* ── BYTE TTS ── */
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance(
+    'Modül dokuz. Hesap ve Platform Güvenliği. Şifreni ele geçirmek zorunda değiller — başka platformdan çaldıkları şifrenle deniyorlar. Credential stuffing bu yüzden bu kadar etkili. Çözüm şu: her hesap için benzersiz şifre, şifre yöneticisi ve güçlü iki faktörlü doğrulama. Mümkünse passkey kullan — şifre yoksa çalınacak şey de yok. Ve hesabın ihlal edildiğinde sıra önemli: önce şifre, sonra oturumlar, sonra iki faktörlü doğrulama. Altmış dakikan var. Hızlı ol.'
+  );
+  ut.lang='tr-TR';ut.rate=0.91;ut.pitch=1.04;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}
+  else{window.speechSynthesis.speak(ut);}
+}
+
+/* ── STATE ── */
+let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
+
+/* ── QUIZ DATA ── */
+window.moduleQuestions=[
+  {q:"ENISA'ya göre AB'deki hesap ele geçirme (ATO) vakalarının büyük çoğunluğu hangi yöntemle gerçekleşiyor?",
+   opts:["Brute force (kaba kuvvet) saldırısı","Credential stuffing — başka platformdan çalınan şifre bilgisinin denenmesi","SIM swap saldırısı","Keylogger yazılımı"],
+   correct:1,fb:{wrong:"Europol 2024 verileri: AB'deki ATO vakalarının %61'i credential stuffing kaynaklı. Saldırganlar dark web'de satılan çalıntı listelerle tüm büyük platformlarda otomatik deneme yapıyor.",correct:"Doğru! Credential stuffing bu yüzden bu kadar yaygın: platformlar arası şifre yeniden kullanımı açığı çok geniş. Çözüm: her platform için benzersiz şifre + şifre yöneticisi."}},
+  {q:"2FA türleri arasında phishing'e karşı en dirençli seçenek hangisidir?",
+   opts:["SMS ile gelen 6 haneli kod","TOTP authenticator uygulaması (Google Authenticator vb.)","FIDO2 donanım güvenlik anahtarı (YubiKey vb.)","E-posta ile gelen doğrulama kodu"],
+   correct:2,fb:{wrong:"FIDO2 donanım anahtarları phishing'e karşı tam dirençli: site URL'sini kriptografik olarak doğrular — sahte sitede çalışmaz. SMS ve TOTP ise gelişmiş phishing ile atlatılabilir.",correct:"Kesinlikle! FIDO2/WebAuthn standardı: anahtar yalnızca kayıtlı domain için çalışır. Sahte login sayfasında imkânsız — ENISA'nın kurumsal hesaplar için birincil önerisi bu."}},
+  {q:"Passkey (geçiş anahtarı) teknolojisinin şifreye göre en kritik avantajı nedir?",
+   opts:["Daha kısa ve hatırlanması kolay","Şifre olmadığından credential stuffing ve phishing mümkün değil","Yalnızca Apple cihazlarında çalışır","Daha ucuz güvenlik çözümü sunar"],
+   correct:1,fb:{wrong:"Passkey'in özü: cihazda saklanan kriptografik anahtar çifti. Şifre yok → çalınacak şey yok → credential stuffing imkânsız. Domain doğrulaması → phishing çalışmaz.",correct:"Doğru! Şifresiz kimlik doğrulamanın temel mantığı bu. Google, Apple, Microsoft, PayPal, GitHub destekliyor. FIDO2/WebAuthn standardı W3C tarafından onaylı."}},
+  {q:"Hesabının ihlal edildiğini fark ettiğinde doğru adım sırası hangisi?",
+   opts:["Oturumları kapat → şifreyi değiştir → 2FA'yı etkinleştir","Şifreyi değiştir → oturumları kapat → 2FA'yı gözden geçir → kurtarma kodlarını yenile","Platformun destek ekibine bildir → şifreyi değiştir","Antivirüs tara → şifreyi değiştir → oturumları kapat"],
+   correct:1,fb:{wrong:"Sıra kritik. Önce şifre değişmeli — bu saldırganın erişimini kırar. Sonra oturumlar: hâlâ aktif bağlantıyı keser. Sonra 2FA ve kurtarma kodları.",correct:"Tam doğru! Bu sıra hasarı minimize eder. Şifre → Oturumlar → 2FA → Kurtarma Kodları → Bağlı Uygulamalar → Diğer Platformlar. 60 dakikan var."}},
+  {q:"GDPR kapsamında bir platform bir hesap ihlalini öğrendiğinde yetkililere ne kadar süre içinde bildirmek zorundadır?",
+   opts:["7 gün","30 gün","72 saat","24 saat"],
+   correct:2,fb:{wrong:"GDPR Madde 33: Kişisel veri ihlali tespit edildiğinde ilgili Veri Koruma Otoritesine (DPA) 72 saat içinde bildirim zorunlu. Bu süre aşılırsa ciddi para cezaları gündeme gelir.",correct:"Doğru! 72 saatlik kural GDPR'nin en bilinenleri arasında. AB'deki tüm veri işleyiciler için geçerli. Almanya'da BfDI, Fransa'da CNIL, Hollanda'da AP sorumlu otorite."}},
+  {q:"SMS ile 2FA'nın en ciddi güvenlik açığı nedir?",
+   opts:["SMS mesajları çok hızlı siliyor","SIM swap — saldırgan operatörü arayarak hattı kendi SIM'ine taşıtabilir","SMS mesajı yalnızca 5 dakika geçerli","SMS mesajı şifreli değil"],
+   correct:1,fb:{wrong:"SIM swap: Saldırgan teleoperatörü arayıp sosyal mühendislik yaparak hattı kendi SIM kartına taşıtır. Artık senin SMS'lerin ona gidiyor. Bu yüzden SMS 2FA zayıf sayılır.",correct:"Kesinlikle! SIM swap + SS7 protokol zafiyetleri SMS 2FA'yı kurumsal hesaplar için yetersiz kılıyor. TOTP uygulaması veya donanım anahtarı minimum standart olmalı."}},
+  {q:"LinkedIn güvenlik ayarlarında 2FA için hangi seçenek tercih edilmelidir?",
+   opts:["SMS kodu — en hızlı seçenek","Authenticator uygulaması (TOTP) — SMS'den çok daha güvenli","E-posta kodu","Telefon araması"],
+   correct:1,fb:{wrong:"LinkedIn'de TOTP authenticator uygulaması seçimi: Ayarlar → Oturum Açma ve Güvenlik → İki Adımlı Doğrulama → Authenticator Uygulaması. SMS kodu iş hesapları için yetersiz.",correct:"Doğru! LinkedIn spear-phishing saldırılarının birincil hedefi. TOTP minimum — mümkünse FIDO2 donanım anahtarı ekle. AB'deki iş dünyası hesapları için ENISA bu standardı tavsiye ediyor."}},
+  {q:"Hesabını ihlal eden saldırgan, oturumunu kapatmadan önce ne yapabilir?",
+   opts:["Yalnızca profilini görüntüleyebilir","OAuth uygulaması bağlayarak şifren değişse bile erişimini sürdürebilir","Hesabını tamamen silebilir","Yalnızca e-postalarını okuyabilir"],
+   correct:1,fb:{wrong:"Sofistike saldırganlar OAuth token bağlar: sahte bir 'verimlilik aracı' izni alırlar. Şifreni değiştirsen de bu yetki devam eder. Bu yüzden 'Bağlı Uygulamalar' inceleme şart.",correct:"Kritik nokta! İhlal sonrası 5. adım bu yüzden var: Ayarlar → Güvenlik → Bağlı Uygulamalar / Üçüncü Taraf Erişim. Tanımadığın her şeyi iptal et."}},
+  {q:"haveibeenpwned.com sitesi ne için kullanılır?",
+   opts:["Güçlü şifre üretmek","E-posta adresinin geçmiş veri ihlallerinde yer alıp almadığını kontrol etmek","2FA kodunu doğrulamak","VPN bağlantısı kurmak"],
+   correct:1,fb:{wrong:"haveibeenpwned.com: Troy Hunt tarafından kurulan, milyarlarca çalıntı kimlik bilgisini içeren veri tabanı. E-postanı gir — hangi ihlallerde yer aldığını görürsün. Sonra o hesapların şifrelerini değiştir.",correct:"Tam isabet! haveibeenpwned.com'u düzenli kontrol et (ayda bir). Bir ihlal varsa o platformun şifresini hemen değiştir. AB'de Almanya BSI de benzer araçlar öneriyor."}},
+  {q:"Google Passkey oluşturmak için doğru adım dizisi hangisidir?",
+   opts:["Google Play Store → Passkey Uygulaması → İndir","myaccount.google.com → Güvenlik → Passkey'ler → Yeni Passkey Oluştur","Gmail → Ayarlar → Gizlilik → Passkey Etkinleştir","Google → Profil → Güvenlik → 2FA → Passkey Ekle"],
+   correct:1,fb:{wrong:"Google Passkey yolu: myaccount.google.com adresine git → Sol menüden 'Güvenlik' → 'Passkey'ler' bölümü → 'Yeni Passkey Oluştur'. Cihazının biyometrik sensörü veya PIN'i kullanılır.",correct:"Doğru! Bu adımı şimdi tamamlamak 5 dakika alıyor — hesabını credential stuffing'e karşı tam koruma altına alıyor. Google, 2024'te kullanıcıları passkey'e geçişi varsayılan yaptı."}}
+];
+
+/* ── NAVIGATION ── */
+function goStep(n){
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('step-btn-'+n).classList.add('active');
+  if(n===3&&moduleCurrentQ===0)renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function completeStep(n){
+  if(!moduleStepsCompleted.has(n)){
+    moduleStepsCompleted.add(n);
+    const earned={1:50,2:70,3:180,4:50,5:50}[n]||0;
+    xp+=earned;
+    document.getElementById('xp-count').textContent=xp;
+    const dot=document.getElementById('dot-'+n);
+    if(dot){dot.classList.remove('active','pending');dot.classList.add('done');dot.textContent='✓';}
+    showToast('xp','⚡ +'+earned+' XP',['','Video Ders','Okuma','Quiz','Senaryo','Rozet'][n]+' tamamlandı!');
+  }
+  if(n<5)goStep(n+1);
+}
+
+/* ── VIDEO ── */
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function skipVideo(){if(window.completeStep) window.completeStep(1);}
+
+/* ── QUIZ ── */
+function renderQuestion(){
+  if(moduleCurrentQ>=10){showResult();return;}
+  const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
+  document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
+  const L=['A','B','C','D'];
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${moduleCurrentQ+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="feedback"></div>
+    </div>
+    <div class="quiz-actions" id="q-actions" style="display:none;">
+      <button class="btn btn-primary" onclick="nextQuestion()">${moduleCurrentQ<9?'Sonraki Soru →':'Sonucu Gör →'}</button>
+    </div>`;
+}
+
+function answerQ(i){
+  if(moduleQuizAnswered)return;moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  if(ok)moduleQuizCorrect++;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
+  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
+  document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
+  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
+  fb.className='feedback-box show '+(ok?'correct':'wrong');
+  document.getElementById('q-actions').style.display='flex';
+}
+
+function nextQuestion(){moduleCurrentQ++;if(moduleCurrentQ<10)renderQuestion();else showResult();}
+
+function showResult(){
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
+  const passed=moduleQuizCorrect>=7;
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3rem;margin-bottom:14px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:\'Orbitron\',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.88rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / 10 doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      <button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>
+      ${!passed?'<button class="btn btn-green" style="margin-left:10px;" onclick="restartQuiz()">Tekrar Dene</button>':''}
+    </div>`;
+}
+
+function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+
+/* ── SCENARIO ── */
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Sabah beklemenin bedeli ağır olabilir: saldırgan bu sürede şifre değiştirir, 2FA'yı kaldırır, kurtarma bilgilerini günceller — seni tamamen kilitler. İhlal bildirimleri 'acil' kategorisinde; gece olsa da ilk 60 dakika kritik."},
+  {correct:true,text:"<strong>Tam doğru protokol!</strong> Frankfurt + gece 03:17 + Windows (sen Mac kullanıyorsun) = üç kırmızı bayrak. Hemen hareket ettin: şifre → oturumlar → 2FA yükseltme → kurtarma kodları. Bu sıra hasarı minimize eder. Meslektaşlarına da bu protokolü öğret — farkındalık kültürü şirket güvenliğinin temelidir."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Destek ekibi saatlerce, bazen günlerce yanıt vermeyebilir. Bu sürede saldırgan hesabı tamamen ele geçirir. Önce kendi önlemlerini al — şifre, oturumlar, 2FA. Destek talebi buna ek olarak açılabilir, ama öncelik değil."},
+  {correct:false,text:"<strong class='bad'>Yetersiz.</strong> Yalnızca şifre değiştirmek iyi bir başlangıç ama eksik: saldırgan hâlâ aktif oturumda olabilir. Şifre değişikliği eski oturumları otomatik sonlandırmayabilir. Aktif oturumları elle kapat ve 2FA'yı TOTP'ye yükselt."}
+];
+
+function pickScene(i){
+  if(document.querySelector('.scene-opt.chosen-correct,.scene-opt.chosen-wrong'))return;
+  const opts=document.querySelectorAll('.scene-opt'),fb=sceneFeedbacks[i];
+  opts.forEach(o=>{o.disabled=true;});
+  opts[i].classList.add(fb.correct?'chosen-correct':'chosen-wrong');
+  if(!fb.correct)opts[1].classList.add('chosen-correct');
+  document.getElementById('byte-fb-text').innerHTML=fb.text;
+  document.getElementById('byte-fb').classList.add('show');
+  document.getElementById('scene-next').style.display='block';
+}
+
+/* ── TOAST ── */
+function showToast(type,title,sub){
+  const c=document.getElementById('toast-container'),t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<span class="toast-icon">${{xp:'⚡',info:'💬',warn:'⚠️'}[type]||'ℹ'}</span><div><div class="toast-title">${title}</div><div class="toast-sub">${sub}</div></div>`;
+  c.appendChild(t);
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),400);},3500);
+}
+
+function tryNav(){showToast('warn','🔒 Kilitli','Bu modülü önce tamamla.');}
+function goTo(url){window.location.href=url;}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+

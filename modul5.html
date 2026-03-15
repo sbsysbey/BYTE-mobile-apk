@@ -1,0 +1,558 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 5: Phishing & Zararlı Yazılımlar</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/modules.css">
+
+<style>
+
+
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--red);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--red);letter-spacing:2px;margin:24px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(248,113,113,.2);}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;color:var(--red);margin-bottom:4px;}
+.stat-lbl{font-size:.78rem;color:var(--text-dim);line-height:1.4;}
+
+.gdpr-note{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;margin:14px 0;font-size:.86rem;line-height:1.6;}
+
+/* Attack cards 3col */
+.attack-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.attack-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:.2s;}
+.attack-card:hover{border-color:rgba(248,113,113,.3);}
+.ac-icon{font-size:1.3rem;margin-bottom:6px;}
+.ac-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:5px;}
+.ac-desc{font-size:.83rem;color:var(--text-dim);line-height:1.55;margin-bottom:6px;}
+.ac-example{font-size:.79rem;color:var(--orange);font-style:italic;}
+
+/* Golden rules */
+.golden-rules{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.rule-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;gap:12px;}
+.rule-num{width:28px;height:28px;border-radius:50%;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.3);color:var(--red);font-family:'Orbitron',sans-serif;font-size:.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.rule-title{font-size:.90rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.rule-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;}
+
+/* Malware 2x2 */
+.malware-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.mw-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;border-top:3px solid;}
+.mw-ransomware{border-top-color:var(--red);}
+.mw-trojan{border-top-color:var(--orange);}
+.mw-spyware{border-top-color:var(--purple);}
+.mw-adware{border-top-color:var(--yellow);}
+.mw-top{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
+.mw-icon{font-size:1.4rem;}
+.mw-name{font-size:.90rem;font-weight:700;color:#fff;}
+.mw-sub{font-size:.74rem;font-family:'Orbitron',sans-serif;letter-spacing:.5px;}
+.mw-ransomware .mw-sub{color:var(--red);}
+.mw-trojan .mw-sub{color:var(--orange);}
+.mw-spyware .mw-sub{color:var(--purple);}
+.mw-adware .mw-sub{color:var(--yellow);}
+.mw-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;margin-bottom:8px;}
+.mw-tip{font-size:.82rem;color:var(--green);display:flex;gap:5px;}
+
+.alert-box{border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);}
+
+.byte-tip-card{background:linear-gradient(135deg,rgba(248,113,113,.04),rgba(96,200,240,.03));border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--red);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--red);letter-spacing:2px;margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:8px;}
+.side-item{font-size:.85rem;color:var(--text-dim);display:flex;gap:8px;line-height:1.5;}
+.side-item strong{color:var(--text);}
+
+/* QUIZ */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--orange));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--red);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(248,113,113,.05);border-color:rgba(248,113,113,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* SCENARIO */
+
+.email-mockup{background:#08101a;border:1px solid rgba(248,113,113,.2);border-radius:10px;margin-top:14px;overflow:hidden;}
+.em-header{background:rgba(248,113,113,.06);padding:12px 16px;border-bottom:1px solid rgba(248,113,113,.15);}
+.em-row{display:flex;gap:8px;font-size:.82rem;margin-bottom:4px;}
+.em-row:last-child{margin-bottom:0;}
+.em-label{color:var(--text-dim);min-width:55px;flex-shrink:0;}
+.em-val{color:var(--text);}
+.em-red{color:var(--red);}
+.em-body{padding:14px 16px;font-size:.84rem;color:var(--text);line-height:1.7;}
+.em-body p{margin-bottom:8px;}
+.em-link{color:var(--red);text-decoration:underline;cursor:pointer;}
+.em-annot{padding:12px 16px;background:rgba(251,191,36,.04);border-top:1px solid rgba(251,191,36,.15);}
+.ea-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--yellow);letter-spacing:1px;margin-bottom:8px;}
+.ea-item{display:flex;gap:8px;font-size:.82rem;color:var(--text-dim);margin-bottom:5px;}
+.ea-dot{color:var(--yellow);flex-shrink:0;}
+
+
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span><span class="xp-label">XP</span>
+      <span id="xp-count">1450</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" style="width:80%"></div></div>
+    </div>1
+    <div class="mod-badge-top">🏅 <span>4</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">✓ Tamamlandı · 300 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">05</div>
+        <div><div class="mod-name" style="color:var(--red)">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">Aktif · 400 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        🎣
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 05 🔊</div>
+        <h1 class="mod-title">Phishing & <span>Zararlı Yazılımlar</span></h1>
+        <p class="mod-desc">Saldırganlar seni kandırıyor ya da sisteme gizlice giriyor — çoğunlukla ikisi birden. BYTE ile oltalama tuzaklarını ve 4 temel zararlı yazılım türünü tanı, korun.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>400 XP</div>
+          <div class="stat-chip"><div class="dot dot-r"></div>~35 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+150 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+100 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+50 XP</div></div>
+    </div>
+
+    <!-- PANEL 1: VIDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 05</div>
+          <div class="vs-title">PHİSHİNG & ZARARLI YAZILIMLAR</div>
+          <div class="vs-sub">Oltalama türleri · 3 altın kural · Ransomware · Trojan · Spyware · Adware</div>
+          <button class="play-big" onclick="startVideo()">▶</button>
+          <div class="chapters">
+            <div class="ch-pill active">🎣 Phishing Türleri</div>
+            <div class="ch-pill">🔑 3 Altın Kural</div>
+            <div class="ch-pill">🦠 4 Zararlı Tür</div>
+            <div class="ch-pill">🛡️ Korunma</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <span class="vtime" id="vtime">0:00 / 9:30</span>
+          <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Her gün 3,4 milyar phishing e-postası gönderiliyor — çoğu gerçek şirket gibi görünüyor</li>
+          <li><span class="kp-b">▸</span>HTTPS görmek sitenin güvenilir olduğunu kanıtlamaz; sahte siteler de HTTPS kullanır</li>
+          <li><span class="kp-b">▸</span>Spear phishing LinkedIn'den toplanan bilgilerle sana özel hazırlanır</li>
+          <li><span class="kp-b">▸</span>Ransomware'e karşı tek gerçek sigorta: düzenli çevrimdışı yedek</li>
+          <li><span class="kp-b">▸</span>Trojan her zaman faydalı bir şey gibi görünür — ücretsiz oyun, VPN, araç</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;"><button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Video Tamamlandı →</button></div>
+    </div>
+
+    <!-- PANEL 2: READING -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Phishing & Zararlı Yazılımlar: Güveni ve Sistemi Ele Geçirmek</div>
+          <p class="article-intro">İki farklı saldırı, aynı amaç. Phishing güvenini hedef alır; zararlı yazılım sistemini. Çoğunlukla birlikte çalışırlar — oltalama linki zararlı yazılımı indirir.</p>
+
+          <div class="section-head">🎣 BÖLÜM 1 — PHİSHİNG (OLTALAMA)</div>
+
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">3,4 Milyar</div><div class="stat-lbl">Her gün gönderilen phishing e-postası</div></div>
+            <div class="stat-box"><div class="stat-num">%83</div><div class="stat-lbl">Şirketlerin 2023'te saldırıya maruz kalma oranı</div></div>
+            <div class="stat-box"><div class="stat-num">€10,5T</div><div class="stat-lbl">2025'e kadar tahmini küresel siber suç maliyeti</div></div>
+          </div>
+
+          <div class="gdpr-note">
+            <span>🇪🇺</span>
+            <div><strong>GDPR Bağlantısı:</strong> Phishing ile çalınan kişisel veriler veri ihlali sayılır. Şirketler 72 saat içinde yetkililere bildirmek zorunda — ihlal başına <strong>20 milyon €</strong>'ya kadar ceza.</div>
+          </div>
+
+          <div class="attack-cards">
+            <div class="attack-card">
+              <div class="ac-icon">📧</div>
+              <div class="ac-title">E-posta Phishing</div>
+              <div class="ac-desc">ING, Netflix, Amazon gibi görünen sahte mailler. Logo birebir kopyalanmış ama gönderen adresi sahte.</div>
+              <div class="ac-example">support@ing-security-alert.net</div>
+            </div>
+            <div class="attack-card">
+              <div class="ac-icon">📱</div>
+              <div class="ac-title">Smishing (SMS)</div>
+              <div class="ac-desc">Sahte kargo veya banka SMS'i. "Paketiniz bekliyor, tıklayın" — Avrupa'da son 2 yılda %300 artış.</div>
+              <div class="ac-example">PostNL: Paketiniz → postnl-delivery.me/xyz</div>
+            </div>
+            <div class="attack-card">
+              <div class="ac-icon">📷</div>
+              <div class="ac-title">QR Kod Phishing</div>
+              <div class="ac-desc">Kafe veya otoparklarda sahte QR kodlar. Tararken URL'yi göremezsin — doğrudan sahte siteye düşersin.</div>
+              <div class="ac-example">Otopark metresine yapıştırılmış sahte ödeme QR'ı</div>
+            </div>
+            <div class="attack-card">
+              <div class="ac-icon">🎯</div>
+              <div class="ac-title">Spear Phishing</div>
+              <div class="ac-desc">Sana özel hazırlanmış saldırı. LinkedIn'den adın, şirketin, müdürünün adı kullanılır.</div>
+              <div class="ac-example">"Merhaba [Adın], CEO acil ödeme onayı istiyor"</div>
+            </div>
+            <div class="attack-card">
+              <div class="ac-icon">📞</div>
+              <div class="ac-title">Vishing (Sesli Arama)</div>
+              <div class="ac-desc">Sahte banka araması — gerçek numara gibi görünebilir. "Kartınız bloke, kodu söyleyin."</div>
+              <div class="ac-example">+31 numarasından sahte "ING Güvenlik" araması</div>
+            </div>
+            <div class="attack-card">
+              <div class="ac-icon">👔</div>
+              <div class="ac-title">CEO Fraud / BEC</div>
+              <div class="ac-desc">Şirket CEO'su gibi davranarak acil havale yaptırmak. Milyarlarca Euro zarara yol açan yaygın bir yöntem.</div>
+              <div class="ac-example">"Muhasebe, bugün €15.000 transferi yapabilir misin?"</div>
+            </div>
+          </div>
+
+          <div class="section-head">🔑 3 ALTIN KURAL</div>
+          <div class="golden-rules">
+            <div class="rule-item">
+              <div class="rule-num">1</div>
+              <div>
+                <div class="rule-title">🔗 URL'yi kontrol et</div>
+                <div class="rule-desc">Tıklamadan önce fareyi linkin üzerine getir. <strong style="color:var(--red)">paypa<u>ll</u>.com</strong> veya <strong style="color:var(--red)">amazon-security-alert.net</strong> gibi sahte domainlere dikkat. HTTPS görmek tek başına güvenli değildir — sahte siteler de HTTPS kullanır.</div>
+              </div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-num">2</div>
+              <div>
+                <div class="rule-title">⏰ Aciliyet tuzağına düşme</div>
+                <div class="rule-desc">"Son 2 saat!", "Hesabın silinecek!", "Hemen tıkla!" — panik yarat, düşünme fırsatı verme. Ne kadar acil görünürse o kadar yavaş hareket et. Gerçek şirketler bu kadar acil davranmaz.</div>
+              </div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-num">3</div>
+              <div>
+                <div class="rule-title">📧 Göndereni doğrula</div>
+                <div class="rule-desc">Görünen ad "ING Bank" olabilir ama gerçek adres <strong style="color:var(--red)">billing@mailer-promo.xyz</strong>. E-posta adresini her zaman aç ve oku. Resmi şirketler asla şifre veya kod istemez.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">🦠 BÖLÜM 2 — ZARARLI YAZILIMLAR</div>
+
+          <div class="alert-box alert-info">
+            <span>💡</span>
+            <div>Zararlı yazılımlar çoğunlukla bir phishing linki veya sahte uygulama aracılığıyla cihaza girer. Bu yüzden ikisini birlikte öğrenmek, ikisinden birden korunmak demektir.</div>
+          </div>
+
+          <div class="malware-grid">
+            <div class="mw-card mw-ransomware">
+              <div class="mw-top">
+                <div class="mw-icon">🔒</div>
+                <div><div class="mw-name">Ransomware</div><div class="mw-sub">FİDYE YAZILIMI</div></div>
+              </div>
+              <div class="mw-desc">Dosyalarını şifreler, para ödemeden açmaz. Hastaneler, şirketler ve bireyler hedef alınır. Ödesen bile dosyalar geri gelmeyebilir.</div>
+              <div class="mw-tip">✅ <span>Düzenli çevrimdışı yedek al — tek gerçek sigorta. 3 kopya, 2 ortam, 1 offline.</span></div>
+            </div>
+            <div class="mw-card mw-trojan">
+              <div class="mw-top">
+                <div class="mw-icon">🐴</div>
+                <div><div class="mw-name">Trojan</div><div class="mw-sub">TRUVA ATI</div></div>
+              </div>
+              <div class="mw-desc">Faydalı bir uygulama gibi görünür — ücretsiz oyun, VPN, PDF okuyucu. Kurulunca sisteme arka kapı açar, saldırgan uzaktan erişim sağlar.</div>
+              <div class="mw-tip">✅ <span>Yalnızca resmi siteden veya güvenilir mağazadan indir. "Ücretsiz premium" = tuzak.</span></div>
+            </div>
+            <div class="mw-card mw-spyware">
+              <div class="mw-top">
+                <div class="mw-icon">🕵️</div>
+                <div><div class="mw-name">Spyware / Keylogger</div><div class="mw-sub">CASUS YAZILIM</div></div>
+              </div>
+              <div class="mw-desc">Arka planda sessizce çalışır. Şifren, banka bilgin, her tuş vuruşun kaydedilir. Aylarca fark etmeden sisteminde kalabilir.</div>
+              <div class="mw-tip">✅ <span>Sistemi güncel tut. Kafe bilgisayarına şifre girme. Bilinmeyen uygulama yükleme.</span></div>
+            </div>
+            <div class="mw-card mw-adware">
+              <div class="mw-top">
+                <div class="mw-icon">📢</div>
+                <div><div class="mw-name">Adware</div><div class="mw-sub">REKLAM YAZILIMI</div></div>
+              </div>
+              <div class="mw-desc">Tarayıcını ele geçirir, istenmeyen reklamlar ve sahte uyarılar gösterir. Ücretsiz indirme araçları veya tarayıcı uzantıları ile sessizce yüklenir.</div>
+              <div class="mw-tip">✅ <span>Tarayıcı uzantılarını düzenli temizle. Ücretsiz araçları resmi sitelerden indir.</span></div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head">
+              <div class="byte-mini">🤖</div>
+              <div class="byte-name">BYTE'DAN İPUCU</div>
+            </div>
+            <div class="byte-tip-text">"Şüpheli bir dosya veya link mi var? virustotal.com'a yükle — ücretsiz, 70'ten fazla motor aynı anda tarar. Emin olamadığın her şeyi açmadan önce buradan geçir."</div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:24px" onclick="completeStep(2)">Okumayı Tamamladım →</button>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🚨 PHİSHİNG İŞARETİ</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--red)">⚠</span><div><strong>Sahte domain:</strong> paypa<u>ll</u>.com</div></div>
+              <div class="side-item"><span style="color:var(--red)">⚠</span><div><strong>Aciliyet:</strong> "Son 2 saat!"</div></div>
+              <div class="side-item"><span style="color:var(--red)">⚠</span><div><strong>Şifre isteği:</strong> e-posta ile</div></div>
+              <div class="side-item"><span style="color:var(--red)">⚠</span><div><strong>Genel hitap:</strong> "Sayın Müşterimiz"</div></div>
+              <div class="side-item"><span style="color:var(--green)">✓</span><div>Her zaman kendin yaz, linke tıklama</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🦠 4 ZARARLI TÜR</div>
+            <div class="side-list">
+              <div class="side-item"><span>🔒</span><div><strong>Ransomware</strong> — dosyaları şifreler</div></div>
+              <div class="side-item"><span>🐴</span><div><strong>Trojan</strong> — arka kapı açar</div></div>
+              <div class="side-item"><span>🕵️</span><div><strong>Spyware</strong> — sessizce izler</div></div>
+              <div class="side-item"><span>📢</span><div><strong>Adware</strong> — tarayıcıyı ele geçirir</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🛡️ KORUNMA</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--green)">✅</span><div>Sistem güncellemelerini açık tut</div></div>
+              <div class="side-item"><span style="color:var(--green)">✅</span><div>Çevrimdışı yedek (3-2-1 kuralı)</div></div>
+              <div class="side-item"><span style="color:var(--green)">✅</span><div>Şüpheliyi virustotal.com'a yükle</div></div>
+              <div class="side-item"><span style="color:var(--green)">✅</span><div>Yalnızca resmi kaynaktan indir</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label"><span id="q-counter">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div style="flex:1;">
+              <div class="scene-label">BYTE'IN SENARYOSU — SAHTE ING MAİLİ</div>
+              <div class="scene-text">İş günü sonunda e-posta kutunu açtın. Şu mail seni karşıladı:</div>
+              <div class="email-mockup">
+                <div class="em-header">
+                  <div class="em-row"><span class="em-label">Kimden:</span><span class="em-val">ING Bank Güvenlik <span class="em-red">&lt;security@ing-account-verify.net&gt;</span></span></div>
+                  <div class="em-row"><span class="em-label">Konu:</span><span class="em-val">⚠️ Hesabınızda şüpheli işlem — 24 saat içinde doğrulayın</span></div>
+                </div>
+                <div class="em-body">
+                  <p>Sayın ING Müşterimiz,</p>
+                  <p>Hesabınızda olağandışı bir giriş denemesi tespit ettik. Güvenliğiniz için kimliğinizi doğrulamanız gerekmektedir.</p>
+                  <p><strong>24 saat içinde doğrulamazsanız hesabınız askıya alınacaktır.</strong></p>
+                  <p>👉 <span class="em-link">Güvenli Doğrulama → ing-account-verify.net/login</span></p>
+                  <p style="font-size:.76rem;color:rgba(255,255,255,.3);">ING Bank N.V. · Bijlmerplein 888, Amsterdam</p>
+                </div>
+                <div class="em-annot">
+                  <div class="ea-title">⚠️ ŞÜPHELİ İŞARETLER</div>
+                  <div class="ea-item"><span class="ea-dot">1</span><span>Gönderen: <strong>@ing-account-verify.net</strong> — gerçek ING: <strong>@ing.nl</strong></span></div>
+                  <div class="ea-item"><span class="ea-dot">2</span><span>"Sayın Müşterimiz" — gerçek banka adını bilir</span></div>
+                  <div class="ea-item"><span class="ea-dot">3</span><span>"24 saat" — klasik aciliyet tuzağı</span></div>
+                  <div class="ea-item"><span class="ea-dot">4</span><span>Link: <strong>ing-account-verify.net</strong> — ing.nl değil</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)"><span class="s-icon">🔗</span><span>Linke tıklayıp giriş yaparsın — ING logosu ve tasarımı gerçek görünüyor.</span></button>
+            <button class="scene-opt" onclick="pickScene(1)"><span class="s-icon">🔍</span><span>Linke tıklamazsın. Tarayıcıya kendin <strong>ing.nl</strong> yazarsın ve hesabını kontrol edersin. Şüphe devam ederse ING'nin resmi numarasını arayıp teyit edersin.</span></button>
+            <button class="scene-opt" onclick="pickScene(2)"><span class="s-icon">🗑️</span><span>Phishing olduğu açık, e-postayı silersin ama başka bir şey yapmazsın.</span></button>
+            <button class="scene-opt" onclick="pickScene(3)"><span class="s-icon">🛡️</span><span>Linki antivirüs programınla taratırsın, temizse tıklarsın.</span></button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: BADGE -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🎣</div>
+        </div>
+        <h2 class="badge-title">PHİSHİNG AVCISI</h2>
+        <p class="badge-subtitle">Oltalama tuzaklarını ve zararlı yazılımları artık tanıyorsun</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+400 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 05</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">2</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">400</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+function byteSpeak() {
+  if (!('speechSynthesis' in window)) { showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.'); return; }
+  window.speechSynthesis.cancel();
+  const av = document.getElementById('byteAvatar');
+  const ut = new SpeechSynthesisUtterance('Modül beş. Phishing ve Zararlı Yazılımlar. Saldırganlar seni kandırıyor ya da sisteme gizlice giriyor — çoğunlukla ikisi birden. Bu modülde oltalama tuzaklarını, zararlı yazılım türlerini öğrenecek ve nasıl korunacağını keşfedeceksin.');
+  ut.lang='tr-TR'; ut.rate=0.92; ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr) ut.voice=tr;
+  ut.onstart=()=>{ av.classList.add('speaking'); showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...'); };
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{ av.classList.remove('speaking'); showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.'); };
+  if(voices.length===0){ window.speechSynthesis.onvoiceschanged=()=>{ const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr')); if(t2) ut.voice=t2; window.speechSynthesis.speak(ut); }; } else { window.speechSynthesis.speak(ut); }
+}
+
+// ── MODÜL 5 QUIZ VERİLERİ ──────────────────────────────
+window.moduleQuestions=[
+  { q:"Bir e-posta 'noreply@netf1ix-billing.com' adresinden geliyor. Bu ne tür bir saldırıdır?",
+    opts:["Vishing","E-posta Phishing — sahte domain (netf1ix yerine netf1ix)","CEO Fraud","Ransomware"],
+    correct:1, fb:{wrong:"Sahte domain: 'l' yerine '1' kullanılmış. Gönderen adresini her zaman dikkatlice oku.",correct:"Doğru! 'Netf1ix' gerçek Netflix değil. Tek karakter değişikliği büyük fark yaratır."} },
+  { q:"Bir site HTTPS kullanıyor. Bu o sitenin güvenilir olduğu anlamına gelir mi?",
+    opts:["Evet, HTTPS şifreleme demektir","Hayır — HTTPS yalnızca bağlantının şifreli olduğunu gösterir, site meşruiyetini kanıtlamaz","Evet ama yalnızca .com uzantılılar için","Evet, sertifikası varsa güvenlidir"],
+    correct:1, fb:{wrong:"Sahte phishing siteleri de HTTPS sertifikası alabilir. HTTPS + doğru domain = güvenli.",correct:"Kesinlikle! HTTPS ≠ güvenilir site. Domain adresini ayrıca kontrol etmek şart."} },
+  { q:"Spear phishing ile normal phishing arasındaki temel fark nedir?",
+    opts:["Spear phishing sadece e-postayla yapılır","Spear phishing belirli bir kişiye özel hazırlanır — adı, şirketi, müdürünün adı kullanılır","Normal phishing daha tehlikelidir","Aralarında fark yoktur"],
+    correct:1, fb:{wrong:"Normal phishing herkese aynı mesajı atar; spear phishing sana özel hazırlanır.",correct:"Doğru! LinkedIn'den bilgi toplanıp kişiselleştirilmiş saldırı yapılır. Bu yüzden çok daha inandırıcıdır."} },
+  { q:"Ransomware saldırısına karşı en etkili korunma yöntemi hangisidir?",
+    opts:["Fidyeyi hemen ödemek","Antivirüs yazılımı yüklemek","Düzenli çevrimdışı yedek almak (3-2-1 kuralı)","İnterneti kapatmak"],
+    correct:2, fb:{wrong:"Fidye ödemek dosyaların geri geleceğini garantilemez. Offline yedek — tek gerçek sigorta.",correct:"Harika! 3-2-1: 3 kopya, 2 farklı ortam, 1 çevrimdışı. Ransomware yedeğe ulaşamazsa elini kolunu sallayarak gider."} },
+  { q:"Trojan (Truva Atı) zararlı yazılımı en çok hangi yolla bulaşır?",
+    opts:["Yalnızca e-posta ekleriyle","Meşru görünen ücretsiz yazılım, oyun veya araç — kurulunca arka kapı açar","Bluetooth ile","Sadece virüslü web sitelerini ziyaret ederek"],
+    correct:1, fb:{wrong:"Trojanlar farklı yollarla bulaşabilir ama en yaygını 'ücretsiz premium' yazılım tuzağıdır.",correct:"Doğru! İçinde ne olduğunu bilemezsin. Yalnızca resmi sitelerden indir."} },
+  { q:"QR kod phishing saldırısı neden tehlikelidir?",
+    opts:["QR kodlar daha hızlı çalışır","Mobil ekranda URL'nin tamamı görünmez — sahte siteye fark etmeden düşersin","Antivirüs tarafından hiç taranamaz","Yalnızca Android'i etkiler"],
+    correct:1, fb:{wrong:"Asıl tehlike URL görünürlüğüdür. E-postada fareyle üzerine gelebilirsin ama QR'de göremezsin.",correct:"Kesinlikle! QR tarınca tarayıcı açılır — ama o ana kadar nereye gittiğini bilemezsin."} },
+  { q:"haveibeenpwned.com ne işe yarar?",
+    opts:["Şifre üretir","E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder","Antivirüs taraması yapar","VPN hizmeti sunar"],
+    correct:1, fb:{wrong:"haveibeenpwned.com e-posta veya şifreni milyarlarca çalınan veriyle karşılaştırır.",correct:"Doğru! Ücretsiz, kayıt gerektirmez. Hemen kontrol et."} },
+  { q:"CEO Fraud (BEC) saldırısı nedir?",
+    opts:["CEO'nun bilgisayarına virüs bulaştırmak","Şirket yöneticisi gibi davranarak çalışanı acil para transferine yönlendirmek","CEO'nun e-postasını hacklemek","Şirketin web sitesini ele geçirmek"],
+    correct:1, fb:{wrong:"BEC: saldırgan CEO gibi davranır, muhasebeden acil havale ister. Milyarlarca Euro zarara yol açıyor.",correct:"Kesinlikle! 'Müdür acil para istiyor' e-postaları her zaman doğrulama gerektirir."} },
+  { q:"Spyware / Keylogger zararlı yazılımından korunmak için en etkili adım nedir?",
+    opts:["Güçlü şifre kullanmak","Sistemi ve uygulamaları güncel tutmak, bilinmeyen program yüklememek","Pahalı antivirüs satın almak","Sadece bilinen siteleri ziyaret etmek"],
+    correct:1, fb:{wrong:"Güncellemeler güvenlik yamalarıdır. Spyware çoğunlukla güncellenmemiş açıklardan veya bilinmeyen yazılımdan girer.",correct:"Doğru! Güncel sistem + kaynağı doğrulanmış yazılım = en temel savunma."} },
+  { q:"Şüpheli bir dosya veya linki açmadan önce ne yapmalısın?",
+    opts:["Hızlıca açıp kontrol edersin","virustotal.com'a yükleyerek 70'ten fazla motor ile tara","Güvenilir birine gönderip açmasını iste","Resmi siteden geliyorsa açabilirsin"],
+    correct:1, fb:{wrong:"Tek bir antivirüs motoru her zararlıyı tespit edemez. VirusTotal 70+ motor kullanır.",correct:"Mükemmel! virustotal.com ücretsiz. Dosyayı veya linki yükle — saniyeler içinde sonuç alırsın."} }
+];
+
+
+
+
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Logo ve tasarım kopyalanmış olabilir ama domain 'ing-account-verify.net' — gerçek ING 'ing.nl' kullanır. Bu sahte site giriş bilgilerini çalar."},
+  {correct:true,text:"<strong>Mükemmel!</strong> Linke tıklamadın ve kendin resmi siteye gittin. Şüpheli e-postadaki linklere asla tıklama — tarayıcıya kendin yaz."},
+  {correct:false,text:"<strong class='bad'>Neredeyse doğru ama eksik.</strong> Silmek seni korur ama ING'nin gerçekten şüpheli bir işlem tespit etmiş olma ihtimali var. Linke tıklamadan kendin ing.nl'ye girip kontrol etmek daha sağlıklı."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Antivirüs bazı phishing sitelerini tespit edemez. Üstelik zaten tıklamış olacaksın. En güvenli yol: linke hiç tıklamamak."}
+];
+
+
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

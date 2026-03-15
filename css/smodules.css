@@ -1,0 +1,40 @@
+﻿/* style-modules.css */
+:root {
+  --bg: #1e2d4a; --bg-card: #2d4166; --bg-panel: #3a5280;
+  --cyan: #60c8f0; --green: #4ade9a; --red: #f87171; --yellow: #fbbf24;
+  --text: #f0f6ff; --text-dim: #b0caf0; --border: rgba(56,189,248,0.2);
+}
+
+body {
+  font-family: 'Exo 2', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+/* Byte Avatarı Kaldırıldı - Header Düzenlendi */
+.mod-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 20px;
+  background: var(--bg-card);
+  border-radius: 12px;
+}
+
+.mod-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  color: #fff;
+}
+
+/* Sidebar ve İçerik Alanları Sabitlendi */
+#app { display: flex; min-height: 100vh; }
+#sidebar { width: 280px; background: var(--bg-card); border-right: 1px solid var(--border); }
+#main { flex: 1; padding: 30px; }
+
+/* Adım Navigasyonu (Video, Okuma, Quiz) */
+.step-nav { display: flex; gap: 10px; margin-bottom: 20px; }
+.step-btn { flex: 1; padding: 10px; background: var(--bg-panel); border: 1px solid var(--border); color: var(--text-dim); cursor: pointer; text-align: center; border-radius: 8px; }
+.step-btn.active { border-color: var(--cyan); color: var(--cyan); background: rgba(96,200,240,0.1); }
