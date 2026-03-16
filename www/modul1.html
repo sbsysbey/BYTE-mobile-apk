@@ -1,0 +1,872 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 1: Şifre Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+<style>
+
+
+
+
+
+/* ── STEP 2: READING ─────────────────── */
+.reading-grid{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.2);border-radius:20px;padding:3px 10px;font-size:.81rem;color:var(--green);letter-spacing:2px;font-family:'Orbitron',sans-serif;margin-bottom:14px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:14px;}
+.article-body{font-size:.91rem;line-height:1.8;color:var(--text);}
+.article-body p{margin-bottom:12px;}
+.article-body strong{color:var(--green);}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--green);letter-spacing:2px;margin:20px 0 10px;}
+
+/* Password criteria grid */
+.pw-criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.pwc-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;transition:border-color .2s;}
+.pwc-item:hover{border-color:rgba(96,200,240,.35);}
+.pwc-icon{width:40px;height:40px;border-radius:10px;border:1px solid;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.79rem;font-weight:700;flex-shrink:0;text-align:center;line-height:1.2;}
+.pwc-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.pwc-desc{font-size:.81rem;color:var(--text-dim);line-height:1.55;}
+.pwc-tip-bar{background:linear-gradient(90deg,rgba(96,200,240,.07),rgba(74,222,154,.05));border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+
+/* Password strength meter */
+.strength-meter-wrap{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:20px;margin:16px 0;}
+.sm-title{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:14px;}
+.sm-input-wrap{position:relative;margin-bottom:14px;}
+.sm-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 40px 10px 14px;font-family:'Exo 2',sans-serif;font-size:.9rem;color:#fff;outline:none;transition:border .2s;}
+.sm-input:focus{border-color:rgba(0,229,255,.4);}
+.sm-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;color:var(--text-dim);font-size:1rem;user-select:none;}
+.strength-bars{display:flex;gap:5px;margin-bottom:10px;}
+.s-bar{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.07);transition:background .4s;}
+.strength-label{font-size:.86rem;font-weight:600;transition:color .3s;}
+.strength-tips{font-size:.84rem;color:var(--text-dim);line-height:1.6;margin-top:8px;}
+
+/* Data breach cards */
+.breach-cards{display:flex;flex-direction:column;gap:10px;margin:14px 0;}
+.breach-card{background:var(--bg-panel);border-radius:10px;padding:14px 16px;border-left:3px solid var(--red);display:flex;align-items:flex-start;gap:12px;}
+.breach-icon{font-size:1.3rem;flex-shrink:0;}
+.breach-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.breach-detail{font-size:.90rem;color:var(--text-dim);line-height:1.5;}
+.breach-num{font-family:'Orbitron',sans-serif;font-size:.88rem;color:var(--red);font-weight:700;}
+
+/* Consequence chain */
+.consequence-chain{display:flex;flex-direction:column;gap:0;margin:14px 0;}
+.cc-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;}
+.cc-arrow{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.cc-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.cc-line{width:2px;flex:1;min-height:16px;}
+.cc-text{padding-top:6px;}
+.cc-label{font-size:.88rem;font-weight:600;color:#fff;margin-bottom:2px;}
+.cc-desc{font-size:.90rem;color:var(--text-dim);line-height:1.5;}
+
+/* 2FA section */
+.twofa-steps{display:flex;flex-direction:column;gap:10px;margin:14px 0;}
+.tfa-step{background:var(--bg-panel);border-radius:10px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;border:1px solid rgba(255,255,255,.05);}
+.tfa-num{width:28px;height:28px;border-radius:50%;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--cyan);flex-shrink:0;}
+.tfa-title{font-size:.88rem;font-weight:600;color:#fff;margin-bottom:3px;}
+.tfa-desc{font-size:.90rem;color:var(--text-dim);line-height:1.5;}
+
+/* Reading sidebar */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--cyan);letter-spacing:2px;margin-bottom:14px;}
+
+/* Password manager comparison */
+.pm-table{width:100%;border-collapse:collapse;font-size:.90rem;}
+.pm-table th{font-family:'Orbitron',sans-serif;font-size:.77rem;letter-spacing:1px;color:var(--text-dim);padding:6px 8px;border-bottom:1px solid var(--border);text-align:left;}
+.pm-table td{padding:8px 8px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--text);vertical-align:middle;}
+.pm-table tr:last-child td{border-bottom:none;}
+.pm-name{font-weight:600;color:#fff;}
+.pm-check{color:var(--green);}
+.pm-x{color:var(--red);}
+.pm-free{background:rgba(0,255,136,.08);color:var(--green);border-radius:4px;padding:1px 6px;font-size:.84rem;}
+.pm-paid{background:rgba(255,214,0,.08);color:var(--yellow);border-radius:4px;padding:1px 6px;font-size:.84rem;}
+
+/* Byte tip */
+.byte-tip-card{background:linear-gradient(135deg,rgba(0,255,136,.04),rgba(0,229,255,.03));border:1px solid rgba(0,255,136,.18);border-radius:14px;padding:18px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--green);letter-spacing:1px;}
+.byte-tip-text{font-size:.86rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+/* ── STEP 3: QUIZ ─────────────────────── */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.76rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--green);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;text-align:left;cursor:pointer;transition:all .22s;font-family:'Exo 2',sans-serif;font-size:.90rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn:hover{background:rgba(0,255,136,.05);border-color:rgba(0,255,136,.25);color:#fff;}
+.option-btn.correct{background:rgba(0,255,136,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(255,59,92,.09);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:all .22s;}
+.option-btn.correct .option-letter{background:rgba(0,255,136,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(255,59,92,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.86rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(255,59,92,.07);border:1px solid rgba(255,59,92,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* ── STEP 4: SCENARIO ────────────────── */
+.notif-mockup{background:#0a1520;border:1px solid rgba(96,200,240,.2);border-radius:10px;margin-top:14px;overflow:hidden;}
+.nm-header{background:rgba(96,200,240,.06);padding:10px 16px;border-bottom:1px solid rgba(96,200,240,.12);display:flex;align-items:center;gap:10px;}
+.nm-app{font-size:.80rem;color:var(--cyan);font-weight:700;}
+.nm-time{font-size:.78rem;color:var(--text-dim);margin-left:auto;}
+.nm-body{padding:14px 16px;}
+.nm-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:6px;}
+.nm-text{font-size:.84rem;color:var(--text);line-height:1.65;}
+.nm-link{color:var(--cyan);text-decoration:underline;cursor:pointer;}
+.nm-warn{padding:10px 16px;background:rgba(251,191,36,.04);border-top:1px solid rgba(251,191,36,.15);}
+.nw-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--yellow);letter-spacing:1px;margin-bottom:6px;}
+.nw-item{font-size:.81rem;color:var(--text-dim);display:flex;gap:6px;margin-bottom:4px;}
+.nw-dot{color:var(--yellow);flex-shrink:0;}
+
+byte-fb{display:none;margin-top:18px;background:linear-gradient(135deg,rgba(0,255,136,.04),rgba(0,255,136,.02));border:1px solid rgba(0,255,136,.18);border-radius:12px;padding:16px 18px;}
+
+
+
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span>
+      <span class="xp-label">XP</span>
+      <span id="xp-count">0</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" id="xp-mini-fill" style="width:34%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span id="badge-count">0</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">MÜFREDAT</div>
+      <div class="module-item active">
+        <div class="mod-num">01</div>
+        <div><div class="mod-num.done" style="color:var(--accent)">Şifre Güvenliği</div><div class="mod-meta">Aktif · 350 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav(2)"><div class="mod-num locked">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(3)"><div class="mod-num locked">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">Kilitli · 300 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(4)"><div class="mod-num locked">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(5)"><div class="mod-num locked">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(5)"><div class="mod-num locked">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(6)"><div class="mod-num locked">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(7)"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(8)"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(9)"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(10)"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(11)"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(12)"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+     <!-- MODULE HEADER -->
+    <div class="mod-header">
+      <!-- BYTE AVATAR — tıkla ve dinle -->
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="">
+        🤖
+        <div class="byte-rings">
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 01 🔊</div>
+        <h1 class="mod-title">Şifre <span>Güvenliği</span></h1>
+        <p class="mod-desc">BYTE ile güçlü şifre oluşturmayı, şifre yöneticilerini, 2 faktörlü doğrulamayı ve zayıf şifrelerin yol açtığı felaketi öğrenin.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-c"></div>~25 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP NAV -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">01</div>
+        <div class="step-label">Video Ders</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">02</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">03</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+100 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">04</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+100 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">05</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 1: VIDEO ══════════════════ -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen" onclick="togglePlay()">
+          <div class="vs-label">BYTE ACADEMY — MODÜL 02</div>
+          <div class="vs-title">Şifre Güvenliği: Her Şey Burada</div>
+          <div class="vs-sub">Güçlü şifreler · 2FA · Yöneticiler · Gerçek sonuçlar</div>
+          <div class="play-big" id="play-btn">▶</div>
+          <div class="chapters">
+            <div class="ch-pill active" onclick="event.stopPropagation();setChapter(this,'Giriş & İstatistikler','0:00')">Giriş</div>
+            <div class="ch-pill" onclick="event.stopPropagation();setChapter(this,'Güçlü Şifre Nasıl?','3:10')">Güçlü Şifre</div>
+            <div class="ch-pill" onclick="event.stopPropagation();setChapter(this,'2FA Rehberi','6:40')">2FA Rehberi</div>
+            <div class="ch-pill" onclick="event.stopPropagation();setChapter(this,'Şifre Yöneticileri','9:20')">Yöneticiler</div>
+            <div class="ch-pill" onclick="event.stopPropagation();setChapter(this,'Özet & Eylem Adımları','12:00')">Özet</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" id="play-ctrl" onclick="togglePlay()">▶ Oynat</button>
+          <button class="ctrl-btn" onclick="seekBack()">↩ 10s</button>
+          <div class="progress-track" onclick="seekTo(event)">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="vtime" id="video-time">0:00 / 14:35</div>
+          <button class="ctrl-btn">⚙</button>
+        </div>
+      </div>
+
+      <div class="key-points">
+        <div class="kp-head"><span>🔑</span><span class="kp-title">Ders Öncesi Anahtar Noktalar</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Dünya genelinde kullanılan en yaygın şifre hâlâ <strong style="color:var(--red)">"123456"</strong> — saniyeler içinde kırılır.</li>
+          <li><span class="kp-b">▸</span>Aynı şifreyi birden fazla hesapta kullanmak, tek bir ihlali domino etkisiyle felakete dönüştürür.</li>
+          <li><span class="kp-b">▸</span>2 Faktörlü Doğrulama (2FA) açık hesaplar, kapalı hesaplara kıyasla saldırıya %99.9 daha az uğrar.</li>
+          <li><span class="kp-b">▸</span>Şifre yöneticisi kullanmak, güvenlik uzmanlarının 1 numaralı önerisidir — hafızanı zorlama!</li>
+          <li><span class="kp-b">▸</span>Bu derste şifre gücü ölçerini kendin test edeceksin. Hazır mısın? 💪</li>
+        </ul>
+      </div>
+
+      <div style="text-align:right">
+        <button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Videoyu Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- ══ STEP 2: READING ════════════════ -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <h2 class="article-title">Şifre Güvenliği: Baştan Sona Her Şey</h2>
+          <div class="article-body">
+
+            <div class="section-head">🔑 GÜÇLÜ ŞİFRENİN 6 ALTIN KURALI</div>
+            <div class="pw-criteria-grid">
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(74,222,154,.12);border-color:rgba(74,222,154,.3);color:var(--green)">12+</div>
+                <div>
+                  <div class="pwc-title">En Az 12 Karakter</div>
+                  <div class="pwc-desc">Her ek karakter kaba kuvvet saldırısının süresini katlar. 8 karakter = dakikalar; 12 karakter = yıllar; 16+ karakter = evrenin ömrü.</div>
+                </div>
+              </div>
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(96,200,240,.12);border-color:rgba(96,200,240,.3);color:var(--cyan)">Aa1!</div>
+                <div>
+                  <div class="pwc-title">4 Karakter Türü Birlikte</div>
+                  <div class="pwc-desc">Büyük harf (A-Z), küçük harf (a-z), rakam (0-9) ve özel karakter (!@#$%) — hepsini bir arada kullan. Her tür eklediğinde tahmin havuzu üstel büyür.</div>
+                </div>
+              </div>
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.3);color:var(--yellow)">🚫</div>
+                <div>
+                  <div class="pwc-title">Kişisel Bilgi Kullanma</div>
+                  <div class="pwc-desc">Doğum tarihin, adın, soyadın, telefon numaran, evcil hayvan adın — bunlar sosyal mühendislik ile ilk denenecek şeyler. Saldırganlar LinkedIn'ini tarar.</div>
+                </div>
+              </div>
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(192,132,252,.12);border-color:rgba(192,132,252,.3);color:var(--purple)">≠</div>
+                <div>
+                  <div class="pwc-title">Her Hesap İçin Ayrı Şifre</div>
+                  <div class="pwc-desc">Tek şifre = domino etkisi. Bir servis sızdırıldığında saldırgan aynı şifreyi bankana, e-postana, Instagram'ına dener. Buna "credential stuffing" denir.</div>
+                </div>
+              </div>
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(248,113,113,.12);border-color:rgba(248,113,113,.3);color:var(--red)">📖</div>
+                <div>
+                  <div class="pwc-title">Sözlük Kelimesi Kullanma</div>
+                  <div class="pwc-desc">"password", "güvenlik", "istanbul123" gibi kelimeler sözlük saldırılarında saniyeler içinde kırılır. Anlamsız kombinasyonlar veya passphrase tercih et.</div>
+                </div>
+              </div>
+              <div class="pwc-item">
+                <div class="pwc-icon" style="background:rgba(74,222,154,.1);border-color:rgba(74,222,154,.25);color:var(--green)">🔄</div>
+                <div>
+                  <div class="pwc-title">Sızıntı Sonrası Hemen Değiştir</div>
+                  <div class="pwc-desc">haveibeenpwned.com'da e-postanı düzenli kontrol et. Bir servis ihlali olduğunda o şifreyi ve benzer şifrelerini derhal değiştir.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pwc-tip-bar">
+              <span style="color:var(--cyan);font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:1px;">💡 PASSPHRASE İPUCU</span>
+              <span style="font-size:.78rem;color:var(--text)"> — Rastgele 4 kelime yan yana: <strong style="color:var(--green)">"karpuz·fener·dağ·pijama"</strong> gibi bir ifade hem hatırlanabilir hem de inanılmaz güvenlidir. Aralarına nokta veya sembol ekle.</span>
+            </div>
+
+            <div class="section-head">🧪 İNTERAKTİF: ŞİFRENİ TEST ET</div>
+            <div class="strength-meter-wrap">
+              <div class="sm-title">⚡ ŞIFRE GÜCÜ ÖLÇER</div>
+              <div class="sm-input-wrap">
+                <input type="password" class="sm-input" id="pw-input" placeholder="Bir şifre yaz ve gücünü gör..." oninput="checkStrength(this.value)">
+                <span class="sm-eye" onclick="togglePw()">👁</span>
+              </div>
+              <div class="strength-bars">
+                <div class="s-bar" id="sb1"></div>
+                <div class="s-bar" id="sb2"></div>
+                <div class="s-bar" id="sb3"></div>
+                <div class="s-bar" id="sb4"></div>
+                <div class="s-bar" id="sb5"></div>
+              </div>
+              <div class="strength-label" id="strength-label" style="color:var(--text-dim);font-size:.8rem">Şifreni yaz...</div>
+              <div class="strength-tips" id="strength-tips"></div>
+            </div>
+
+            <div class="section-head">💥 GERÇEK VERİ İHLALİ ÖRNEKLERİ</div>
+            <p>Zayıf şifreler milyarlarca insanı nasıl etkiledi? İşte gerçek vakalar:</p>
+            <div class="breach-cards">
+              <div class="breach-card">
+                <div class="breach-icon">🏦</div>
+                <div>
+                  <div class="breach-title">RockYou2021 — <span class="breach-num">8.4 Milyar Şifre Sızdı</span></div>
+                  <div class="breach-detail">Tarihin en büyük şifre sızıntısında 8.4 milyar benzersiz şifre karanlık ağa düştü. Listede "123456", "password", "qwerty" lider sıradalardaydı. Bu şifrelerden birini kullanıyorsan şu an risk altındasın.</div>
+                </div>
+              </div>
+              <div class="breach-card" style="border-left-color:var(--orange)">
+                <div class="breach-icon">🎮</div>
+                <div>
+                  <div class="breach-title">Sony PlayStation — <span class="breach-num" style="color:var(--orange)">77 Milyon Hesap</span></div>
+                  <div class="breach-detail">2011'de PlayStation Network'ün hacklenmesiyle 77 milyon oyuncunun şifresi, e-postası ve kredi kartı bilgisi çalındı. Servis 23 gün kapalı kaldı. Toplam zarar: 171 milyon dolar. Çoğu kullanıcının şifresi başka hesaplarda da kullanılıyordu — domino düştü.</div>
+                </div>
+              </div>
+              <div class="breach-card" style="border-left-color:var(--yellow)">
+                <div class="breach-icon">🔗</div>
+                <div>
+                  <div class="breach-title">LinkedIn 2012 — <span class="breach-num" style="color:var(--yellow)">117 Milyon Hesap</span></div>
+                  <div class="breach-detail">Başta 6.5 milyon şifre sızdı denildi, gerçekte 117 milyondu. Yıllarca karanlık ağda satıldı. Profesyonellerin iş e-postaları ve şirket ağlarına erişim kapısı oldu.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-head">⛓️ ZAYİF ŞİFRENİN DOMINO ETKİSİ</div>
+            <p>Tek bir zayıf şifre nasıl hayatını mahvedebilir?</p>
+            <div class="consequence-chain">
+              <div class="cc-item">
+                <div class="cc-arrow"><div class="cc-dot" style="background:rgba(255,59,92,.15);border:2px solid var(--red)">🔓</div><div class="cc-line" style="background:linear-gradient(var(--red),var(--orange))"></div></div>
+                <div class="cc-text"><div class="cc-label" style="color:var(--red)">1. E-posta şifresi kırıldı</div><div class="cc-desc">Saldırgan e-postana erişti. Artık her şeyin anahtarı elinde.</div></div>
+              </div>
+              <div class="cc-item">
+                <div class="cc-arrow"><div class="cc-dot" style="background:rgba(255,140,0,.15);border:2px solid var(--orange)">💳</div><div class="cc-line" style="background:linear-gradient(var(--orange),var(--yellow))"></div></div>
+                <div class="cc-text"><div class="cc-label" style="color:var(--orange)">2. Banka hesabı ele geçirildi</div><div class="cc-desc">"Şifremi unuttum" ile bankan şifreyi e-postana gönderdi. Para gitti.</div></div>
+              </div>
+              <div class="cc-item">
+                <div class="cc-arrow"><div class="cc-dot" style="background:rgba(255,214,0,.15);border:2px solid var(--yellow)">📱</div><div class="cc-line" style="background:linear-gradient(var(--yellow),var(--purple))"></div></div>
+                <div class="cc-text"><div class="cc-label" style="color:var(--yellow)">3. Sosyal medya hesapları çalındı</div><div class="cc-desc">Aynı şifreyi Instagram'da kullandın. Hesap kilitlendi, takipçilere dolandırıcılık mesajı atıldı.</div></div>
+              </div>
+              <div class="cc-item">
+                <div class="cc-arrow"><div class="cc-dot" style="background:rgba(168,85,247,.15);border:2px solid var(--purple)">🏢</div><div class="cc-line" style="background:linear-gradient(var(--purple),var(--red))"></div></div>
+                <div class="cc-text"><div class="cc-label" style="color:var(--purple)">4. İş e-postası tehlikeye girdi</div><div class="cc-desc">Şirket ağına sızdılar. İşten çıkarılabilirsin, şirket seni dava edebilir.</div></div>
+              </div>
+              <div class="cc-item">
+                <div class="cc-arrow"><div class="cc-dot" style="background:rgba(255,59,92,.15);border:2px solid var(--red)">💀</div></div>
+                <div class="cc-text"><div class="cc-label" style="color:var(--red)">5. Dijital kimlik yok edildi</div><div class="cc-desc">Tüm hesaplar, tüm veriler, tüm itibar. Tek bir şifreden başladı.</div></div>
+              </div>
+            </div>
+
+            <div class="section-head">🔐 2 FAKTÖRLÜ DOĞRULAMA (2FA) REHBERİ</div>
+            <p>2FA, şifreni bilen biri bile hesabına giremez. İkinci bir kilit.</p>
+            <div class="twofa-steps">
+              <div class="tfa-step">
+                <div class="tfa-num">01</div>
+                <div><div class="tfa-title">SMS Doğrulama</div><div class="tfa-desc">Giriş yapınca telefonuna 6 haneli kod gelir. En yaygın yöntem ama SIM swap saldırısına karşı zayıf. <strong style="color:var(--yellow)">Orta güvenlik.</strong></div></div>
+              </div>
+              <div class="tfa-step">
+                <div class="tfa-num" style="background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.3);color:var(--green)">02</div>
+                <div><div class="tfa-title">Authenticator Uygulaması</div><div class="tfa-desc">Google Authenticator veya Authy gibi uygulamalar 30 saniyede bir kod üretir. SMS'ten çok daha güvenli. <strong style="color:var(--green)">Yüksek güvenlik — ÖNERİLİR.</strong></div></div>
+              </div>
+              <div class="tfa-step">
+                <div class="tfa-num" style="background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.3);color:var(--cyan)">03</div>
+                <div><div class="tfa-title">Fiziksel Güvenlik Anahtarı</div><div class="tfa-desc">Nitrokey gibi USB/NFC cihazlar. Almanya yapımı, açık kaynak, GDPR uyumlu. Fiziksel varlık gerektirir — asla uzaktan ele geçirilemez. <strong style="color:var(--cyan)">Maksimum güvenlik.</strong></div></div>
+              </div>
+              <div class="tfa-step">
+                <div class="tfa-num" style="background:rgba(168,85,247,.1);border-color:rgba(168,85,247,.3);color:var(--purple)">04</div>
+                <div><div class="tfa-title">Biyometrik Doğrulama</div><div class="tfa-desc">Parmak izi veya yüz tanıma. Mobil cihazlarda yaygın, pratik ve güvenli. <strong style="color:var(--purple)">Yüksek güvenlik.</strong></div></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- READING SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🗃️ ŞİFRE YÖNETİCİSİ KARŞILAŞTIRMASI</div>
+            <table class="pm-table">
+              <tr>
+                <th>Uygulama</th>
+                <th>Ücretsiz</th>
+                <th>2FA</th>
+              </tr>
+              <tr>
+                <td><div class="pm-name">Bitwarden</div></td>
+                <td><span class="pm-free">Ücretsiz</span></td>
+                <td><span class="pm-check">✓</span></td>
+              </tr>
+              <tr>
+                <td><div class="pm-name">1Password</div></td>
+                <td><span class="pm-paid">Ücretli</span></td>
+                <td><span class="pm-check">✓</span></td>
+              </tr>
+              <tr>
+                <td><div class="pm-name">LastPass</div></td>
+                <td><span class="pm-paid">Karma</span></td>
+                <td><span class="pm-check">✓</span></td>
+              </tr>
+              <tr>
+                <td><div class="pm-name">Dashlane</div></td>
+                <td><span class="pm-paid">Ücretli</span></td>
+                <td><span class="pm-check">✓</span></td>
+              </tr>
+              <tr>
+                <td><div class="pm-name">KeePass</div></td>
+                <td><span class="pm-free">Ücretsiz</span></td>
+                <td><span class="pm-check">✓</span></td>
+              </tr>
+            </table>
+            <p style="font-size:.7rem;color:var(--text-dim);margin-top:10px;">💡 BYTE'ın seçimi: <strong style="color:var(--green)">Bitwarden</strong> — açık kaynaklı, ücretsiz, güvenli.</p>
+          </div>
+
+          <div class="side-card">
+            <div class="side-title">📊 EN ÇOK KULLANILAN ŞİFRELER</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;align-items:center;gap:8px;font-size:.73rem;"><span style="width:16px;text-align:center">#1</span><span style="flex:1;color:var(--red);font-family:'Orbitron',sans-serif;font-size:.7rem">123456</span><span style="color:var(--red);font-size:.68rem">1 saniye</span></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:.73rem;"><span style="width:16px;text-align:center">#2</span><span style="flex:1;color:var(--red);font-family:'Orbitron',sans-serif;font-size:.7rem">password</span><span style="color:var(--red);font-size:.68rem">1 saniye</span></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:.73rem;"><span style="width:16px;text-align:center">#3</span><span style="flex:1;color:var(--orange);font-family:'Orbitron',sans-serif;font-size:.7rem">123456789</span><span style="color:var(--orange);font-size:.68rem">2 saniye</span></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:.73rem;"><span style="width:16px;text-align:center">#4</span><span style="flex:1;color:var(--orange);font-family:'Orbitron',sans-serif;font-size:.7rem">12345</span><span style="color:var(--orange);font-size:.68rem">1 saniye</span></div>
+              <div style="display:flex;align-items:center;gap:8px;font-size:.73rem;"><span style="width:16px;text-align:center">#5</span><span style="flex:1;color:var(--yellow);font-family:'Orbitron',sans-serif;font-size:.7rem">qwerty</span><span style="color:var(--yellow);font-size:.68rem">3 saniye</span></div>
+              <p style="font-size:.68rem;color:var(--text-dim);margin-top:6px;">Kırılma süresi (modern bilgisayar)</p>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head">
+              <div class="byte-mini">🤖</div>
+              <div><div class="byte-name">BYTE UYARIYOR 🚨</div></div>
+            </div>
+            <p class="byte-tip-text">"Doğum tarihini şifre olarak kullanıyorsan... sana kötü haberim var! Sosyal medyanda zaten var o bilgi. Şifreni en az 16 karakter, büyük-küçük harf, rakam ve sembol içeren bir şeyle değiştir. HEMEN ŞİMDİ!"</p>
+          </div>
+
+          <div style="text-align:right">
+            <button class="btn btn-primary" onclick="completeStep(2)">Okumayı Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 3: QUIZ ════════════════════ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="quiz-fill" style="width:20%"></div></div>
+        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 4: SCENARIO ════════════════ -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scene-byte">🤖</div>
+          <div>
+            <div class="scene-title">BYTE'IN GERÇEK HAYAT SENARYOSU — DOMINO ETKİSİ</div>
+            <div class="scene-text">BYTE sana gerçekten yaşanan bir olayı anlatıyor. Her seçim domino taşları gibi birbirini etkiler. Dikkatli karar ver!</div>
+            <div class="scene-box">
+              <strong style="color:var(--yellow)">📧 Gelen Mesaj (LinkedIn'den):</strong><br><br>
+              "Merhaba! Profiliniz incelendi, pozisyona uygunsunuz. CV'nizi <span style="color:var(--red)">karriyer-ik-form.net</span> adresinden gönderin."<br><br>
+              Merakla tıkladın. Site LinkedIn'e benziyor, giriş yapmanı istedi. Kullanıcı adı ve şifreni girdin. Sonra hata verdi. Kapattın.<br><br>
+              <strong style="color:var(--red)">⚠️ Arka planda:</strong> Şifren çalındı. Ve sen banka hesabında, e-postanda ve Instagram'da <strong style="color:var(--red)">aynı şifreyi</strong> kullanıyorsun...
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Şimdi ne yaparsın? (En doğru ve en kapsamlı seçim)</div>
+          <div class="scene-opts" id="scenario-opts">
+            <div class="scene-opt" onclick="pickScene(0)">
+              <div class="s-icon">😤</div>
+              <div class="s-text"><strong>A)</strong> Sahteymiş anladım, kapattım zaten. Olur böyle şeyler, devam ederim.</div>
+            </div>
+            <div class="scene-opt" onclick="pickScene(1)">
+              <div class="s-icon">🔒</div>
+              <div class="s-text"><strong>B)</strong> Sadece LinkedIn şifremi değiştiririm, çünkü orada giriş yaptım.</div>
+            </div>
+            <div class="scene-opt" onclick="pickScene(2)">
+              <div class="s-icon">🚨</div>
+              <div class="s-text"><strong>C)</strong> O şifreyi kullandığım TÜM hesapları hemen değiştiririm, bankanın kartlarını dondururum ve 2FA açarım.</div>
+            </div>
+            <div class="scene-opt" onclick="pickScene(3)">
+              <div class="s-icon">📞</div>
+              <div class="s-text"><strong>D)</strong> LinkedIn'i arayıp şikâyet ederim, onlar halletsin.</div>
+            </div>
+          </div>
+          <div class="byte-fb" id="scenario-feedback">
+            <div style="font-size:2rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div id="scenario-next" style="text-align:right;margin-top:18px;display:none">
+            <button class="btn btn-primary" onclick="completeStep(4)">Senaryoyu Tamamla →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STEP 5: BADGE ══════════════════ -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🔐</div>
+        </div>
+        <h2 class="badge-title">ŞİFRE EFENDİSİ</h2>
+        <p class="badge-subtitle">Tebrikler! Modül 01 — Şifre Güvenliği tamamlandı!</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big" id="final-xp">450</div></div>
+          <div>
+            <div class="xp-lbl">TOPLAM XP</div>
+            <div class="xp-lbl" style="color:var(--green);font-size:.62rem;">Modül 01'den +450 XP kazanıldı</div>
+          </div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">10/10</div><div class="sum-label">Quiz Skoru</div></div>
+          <div class="sum-card"><div class="sum-val sv-c">5/5</div><div class="sum-label">Tamamlanan Adım</div></div>
+          <div class="sum-card"><div class="sum-val sv-y" id="sum-time">23 dk</div><div class="sum-label">Geçen Süre</div></div>
+        </div>
+
+        <div style="background:var(--bg-card);border:1px solid rgba(0,255,136,.15);border-radius:14px;padding:20px 28px;max-width:520px;margin:0 auto 28px;text-align:left;">
+          <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--green);letter-spacing:2px;margin-bottom:12px;">🤖 BYTE'DAN ÖZET</div>
+          <p style="font-size:.82rem;color:var(--text);line-height:1.7;">
+            Harika iş çıkardın! Artık şunu biliyorsun: <strong style="color:var(--green)">güçlü şifre + şifre yöneticisi + 2FA</strong> üçlüsü dijital zırhının temelidir. Tek bir zayıf şifre hayatını mahvedebilir — ama artık bunu biliyorsun ve hazırsın. Bir sonraki modülde sosyal mühendisliğin karanlık sanatlarını keşfedeceğiz! 🕵️
+          </p>
+        </div>
+
+
+      </div>
+    </div>
+</main>
+</div>
+
+<div id="toast-container"></div>
+
+
+<script>
+window.moduleQuestions = [
+
+
+  {
+    q: "Aşağıdaki şifrelerden hangisi en güvenlidir?",
+    opts: ["Ahmet1990!","MyDog2023","xK#9mP!vL2@qW7","123456789"],
+    correct: 2,
+    fb: {
+      wrong: "Güvenli şifre: uzun, rastgele, harf+rakam+sembol içermeli. Doğum tarihleri, isimler ve ardışık sayılar zayıftır.",
+      correct: "Evet! Rastgele karakterler, büyük-küçük harf, rakam ve sembol — işte güçlü şifre böyle görünür!"
+    }
+  },
+  {
+    q: "2FA (2 Faktörlü Doğrulama) neden sadece şifreden daha güvenlidir?",
+    opts: [
+      "Şifreni daha uzun yapar",
+      "Saldırganın şifreni bilse bile fiziksel/ikinci bir doğrulama gerektirir",
+      "Şifren yoksa da giriş yapabilirsin",
+      "Hesabını otomatik olarak kapatır"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "2FA, şifreni bilen biri bile hesabına giremez çünkü ikinci bir doğrulama adımı gerektirir.",
+      correct: "Kesinlikle! Şifren çalınsa dahi saldırgan 2. faktörü geçemez."
+    }
+  },
+  {
+    q: "Şifre yöneticisi kullanmanın en büyük avantajı nedir?",
+    opts: [
+      "Şifreni otomatik olarak değiştirir",
+      "Her site için güçlü ve benzersiz şifre oluşturup saklar, sadece bir ana şifre hatırlarsın",
+      "İnternetsiz çalışmaz",
+      "Şifreni arkadaşlarınla paylaşmanı sağlar"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Şifre yöneticisinin gücü: her hesap için farklı, güçlü şifre — sen sadece bir ana şifreyi hatırlarsın.",
+      correct: "Süper! Tek güçlü ana şifre ile her yerde benzersiz şifre. Devrimsel güvenlik!"
+    }
+  },
+  {
+    q: "Hangi 2FA yöntemi en güvenlidir?",
+    opts: [
+      "SMS ile kod",
+      "E-posta ile kod",
+      "Fiziksel güvenlik anahtarı (Nitrokey gibi)",
+      "Güvenlik sorusu (annenin kızlık soyadı)"
+    ],
+    correct: 2,
+    fb: {
+      wrong: "SMS ve e-posta SIM swap veya e-posta ele geçirme ile atlatılabilir. Fiziksel anahtar asla uzaktan hacklenemez.",
+      correct: "Doğru! Fiziksel anahtar fiziksel varlık gerektirdiği için uzaktan saldırıya karşı mükemmel koruma sağlar."
+    }
+  },
+  {
+    q: "Aynı şifreyi birden fazla hesapta kullanmanın en büyük riski nedir?",
+    opts: [
+      "Şifreyi unutabilirsin",
+      "Bir site ihlal edilirse o şifreyi kullanan TÜM hesapların tehlikeye girer",
+      "Şifren çok kısa kalır",
+      "Sadece sosyal medya hesapların risk altına girer"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Credential stuffing denen saldırı tam da bunu hedefler: bir yerden çalınan şifre, her yerde denenir.",
+      correct: "Mükemmel! Domino etkisi. Bir düşer, hepsi düşer. Her hesap için benzersiz şifre zorunludur."
+    }
+  }
+,
+  {
+    q: "haveibeenpwned.com sitesi ne işe yarar?",
+    opts: [
+      "Güçlü şifre oluşturur",
+      "E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder",
+      "Şifreleri şifreli olarak saklar",
+      "Virüs taraması yapar"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "haveibeenpwned.com, Troy Hunt tarafından kurulan bir servistir. Milyarlarca sızdırılmış hesap kaydını içerir. E-postanı girerek hangi ihlallerde yer aldığını öğrenebilirsin.",
+      correct: "Tam doğru! E-postanı veya şifreni girerek sızdırılıp sızdırılmadığını anında görürsün. Düzenli kontrol etmek iyi alışkanlıktır."
+    }
+  },
+  {
+    q: "Tarayıcıya şifre kaydetmek ne kadar güvenlidir?",
+    opts: [
+      "Tamamen güvenli, tarayıcılar şifreleri şifreler",
+      "Kullanışlıdır ama bilgisayarın ele geçirilirse tüm şifreler çalınabilir — şifre yöneticisi daha güvenlidir",
+      "Hiç güvenli değil, şifreler düz metin olarak saklanır",
+      "Sadece Chrome güvenlidir, diğer tarayıcılar değil"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Tarayıcı şifre yöneticileri kullanışlı ama sınırlıdır: bilgisayarın fiziksel olarak ele geçirilmesi ya da zararlı yazılım durumunda tüm şifreler risk altına girer.",
+      correct: "Doğru! Tarayıcı şifre depolama konfor sağlar ama Bitwarden veya KeePass gibi bağımsız şifre yöneticileri çok daha güvenlidir."
+    }
+  },
+  {
+    q: "Passphrase (parola cümlesi) neden rastgele harflerden oluşan şifreden üstün olabilir?",
+    opts: [
+      "Daha kısadır, hatırlaması kolay",
+      "Hem uzundur hem hatırlanabilir — 'karpuz·fener·dağ·pijama' gibi 4 kelime 8 karakterli karmaşık şifreden çok daha güçlü olabilir",
+      "Özel karakter içermez, bu yüzden daha basittir",
+      "Sadece Türkçe kelimeler için çalışır"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Uzunluk, karmaşıklıktan daha güçlüdür. 4 rastgele kelime = ~44 bit entropi = kaba kuvvet saldırısı için astronomik süre. Hem güçlü hem hatırlanabilir.",
+      correct: "Mükemmel! Uzunluk kazanır. 'karpuz·fener·dağ·pijama' gibi bir passphrase, 'X#9kM!' gibi kısa ama karmaşık şifreden çok daha güvenlidir."
+    }
+  },
+  {
+    q: "Şifre yöneticisinin ana şifresi (master password) çalınırsa ne olur?",
+    opts: [
+      "Hiçbir şey, şifre yöneticileri hacklenemez",
+      "Tüm şifreler tehlikeye girebilir — bu yüzden ana şifre çok güçlü olmalı ve asla başka yerde kullanılmamalı",
+      "Sadece en son eklenen şifre risk altına girer",
+      "Şifre yöneticisi otomatik olarak tüm şifreleri değiştirir"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Ana şifre tek kilit. Güçlü bir passphrase, 2FA aktif etmek ve ana şifreyi asla başka yerde kullanmamak şarttır. Güvenilir şifre yöneticileri sıfır bilgi mimarisi kullanır.",
+      correct: "Kesinlikle! Bu yüzden ana şifre için passphrase kullan, 2FA'yı aç ve asla başka yerde kullanma. Sıfır bilgi mimarisi sayesinde şifre yöneticisi de ana şifreni bilmez."
+    }
+  },
+  {
+    q: "SIM Swap saldırısı SMS tabanlı 2FA'yı nasıl atlatır?",
+    opts: [
+      "SMS'leri kopyalayarak",
+      "Operatörü kandırarak telefon numarasını kendi SIM kartına aktarır, böylece SMS kodlarını alır",
+      "Telefonu fiziksel olarak çalarak",
+      "SMS kodlarını tahmin ederek"
+    ],
+    correct: 1,
+    fb: {
+      wrong: "SIM Swap: saldırgan operatörü arar, 'telefonum kayboldu' der ve numarayı kendi SIM'ine taşıtır. Bundan sonra senin SMS kodlarını o alır. Bu yüzden SMS 2FA zayıftır.",
+      correct: "Doğru! SIM Swap, Almanya, Hollanda ve İngiltere dahil Avrupa genelinde yaygın bir saldırı. Fiziksel güvenlik anahtarı veya authenticator uygulaması SMS'ten çok daha güvenlidir."
+    }
+  }
+];
+
+window.moduleSceneFeedbacks = [
+  {
+    correct: false,
+    correct_idx: 2,
+    text: "<strong>Dikkatli ol!</strong> Yanlış seçim tehlikeli. Saldırgan tüm hesaplarına erişmeye çalışıyor. Sadece bir hesabı değiştirmek ya da LinkedIn'i aramak yetmez. Hemen <strong>TÜM hesapları değiştir</strong>, bankayı ara, 2FA aç. Her dakika önemli!"
+  },
+  {
+    correct: false,
+    correct_idx: 2,
+    text: "<strong>Dikkatli ol!</strong> Yanlış seçim tehlikeli. Saldırgan tüm hesaplarına erişmeye çalışıyor. Sadece bir hesabı değiştirmek ya da LinkedIn'i aramak yetmez. Hemen <strong>TÜM hesapları değiştir</strong>, bankayı ara, 2FA aç. Her dakika önemli!"
+  },
+  {
+    correct: true,
+    text: "<strong>Mükemmel tepki!</strong> Bu tam olarak yapılması gereken şey. O şifreyi kullanan tüm hesapları değiştirmek domino etkisini durdurur. Bankayı aramak ve 2FA açmak ise saldırganın işini imkânsız kılar. <strong>+100 XP!</strong> Dijital güvenlik reflekslerin gelişiyor 💪"
+  },
+  {
+    correct: false,
+    correct_idx: 2,
+    text: "<strong>Dikkatli ol!</strong> Yanlış seçim tehlikeli. Saldırgan tüm hesaplarına erişmeye çalışıyor. Sadece bir hesabı değiştirmek ya da LinkedIn'i aramak yetmez. Hemen <strong>TÜM hesapları değiştir</strong>, bankayı ara, 2FA aç. Her dakika önemli!"
+  }
+];
+
+
+
+
+// ── PASSWORD STRENGTH ──────────────────
+function checkStrength(pw){
+  let score=0;
+  const tips=[];
+  if(pw.length>=8) score++;
+  else tips.push('En az 8 karakter olsun');
+  if(pw.length>=12) score++;
+  else if(pw.length>=8) tips.push('12+ karakter daha güvenli');
+  if(/[A-Z]/.test(pw)) score++;
+  else tips.push('Büyük harf ekle (A-Z)');
+  if(/[0-9]/.test(pw)) score++;
+  else tips.push('Rakam ekle (0-9)');
+  if(/[^A-Za-z0-9]/.test(pw)) score++;
+  else tips.push('Sembol ekle (!@#$%^&*)');
+
+  const colors=['','#ff3b5c','#ff8c00','#ffd600','#00e5ff','#00ff88'];
+  const labels=['','Çok Zayıf 🚨','Zayıf ⚠️','Orta 🟡','Güçlü 🔵','Çok Güçlü 🟢'];
+  for(let i=1;i<=5;i++){
+    document.getElementById('sb'+i).style.background = i<=score ? colors[score] : 'rgba(255,255,255,.07)';
+  }
+  const lbl=document.getElementById('strength-label');
+  lbl.textContent=pw.length>0?labels[score]:'Şifreni yaz...';
+  lbl.style.color=pw.length>0?colors[score]:'var(--text-dim)';
+  document.getElementById('strength-tips').innerHTML=tips.length>0&&pw.length>0?'💡 '+tips.join(' · '):'';
+
+  if(score===5 && pw.length>0){
+    showToast('🔐','Mükemmel Şifre!','Bu şifre çok güçlü — harika!','success');
+  }
+}
+function togglePw(){
+  const inp=document.getElementById('pw-input');
+  inp.type = inp.type==='password'?'text':'password';
+}
+
+// ── SCENARIO ──────────────────────────
+function chooseScenario(el, correct){
+  document.querySelectorAll('.scene-opt').forEach(o=>{o.style.pointerEvents='none';o.style.opacity='.45';});
+  el.style.opacity='1';
+  el.classList.add(correct?'chosen-correct':'chosen-wrong');
+  const fb=document.getElementById('scenario-feedback');
+  const ft=document.getElementById('feedback-text');
+  fb.classList.add('show');
+  if(correct){
+    ft.innerHTML=`<strong>Mükemmel tepki!</strong> Bu tam olarak yapılması gereken şey. O şifreyi kullanan tüm hesapları değiştirmek domino etkisini durdurur. Bankayı aramak ve 2FA açmak ise saldırganın işini imkânsız kılar. <strong>+100 XP!</strong> Dijital güvenlik reflekslerin gelişiyor 💪`;
+    addXP(100, 'Senaryo doğru kararı: +100 XP');
+    showToast('xp','🚨 Senaryo — Doğru Karar! +100 XP','');
+  } else {
+    ft.innerHTML=`<strong>Dikkatli ol!</strong> Yanlış seçim tehlikeli. Saldırgan tüm hesaplarına erişmeye çalışıyor. Sadece bir hesabı değiştirmek ya da LinkedIn'i aramak yetmez. Hemen <strong>TÜM hesapları değiştir</strong>, bankayı ara, 2FA aç. Her dakika önemli!`;
+    showToast('warn','Tehlikeli Karar!','Bu senaryoda büyük kayıp yaşardın');
+  }
+  document.getElementById('scenario-next').style.display='block';
+}
+
+
+
+// ── INIT ──────────────────────────────
+showToast('🔐','Modül 1 Başlıyor!','Şifre Güvenliği — BYTE hazır!','info');
+
+(function updateSidebar() {
+  try {
+    var users = JSON.parse(localStorage.getItem('byte_users') || '{}');
+    var session = localStorage.getItem('byte_session');
+    var done = (session && users[session] && users[session].completedModules) ? users[session].completedModules : [];
+    var THIS_MOD = 1;
+    var items = document.querySelectorAll('#sidebar .module-item');
+    items.forEach(function(item, idx) {
+      var modN = idx + 1;
+      // Find the number badge element (class mn or mod-num)
+      var badge = item.querySelector('.mn, .mod-num');
+      if (modN === THIS_MOD) {
+        item.className = 'module-item active';
+        if (badge) { badge.className = badge.className.replace(/done|locked|active2?/g,'').trim() + ' act'; }
+      } else if (done.indexOf(modN) !== -1) {
+        item.className = 'module-item';
+        if (badge) { badge.className = badge.className.replace(/locked|active2?|act/g,'').trim().replace(/done/g,'') + ' done'; }
+        var meta = item.querySelector('.mod-meta');
+        if (meta) { var xps=[300,350,400,350,300,400,450,350,500,400,350,400,350]; meta.textContent = '✓ ' + (xps[modN-1]||'') + ' XP'; }
+      } else {
+        item.className = 'module-item';
+        if (badge) { badge.className = badge.className.replace(/done|active2?|act/g,'').trim().replace(/locked/g,'') + ' locked'; }
+        var meta2 = item.querySelector('.mod-meta');
+        if (meta2) { var xps2=[300,350,400,350,300,400,450,350,500,400,350,400,350]; meta2.textContent = 'Kilitli · ' + (xps2[modN-1]||'') + ' XP'; }
+      }
+    });
+  } catch(e) {}
+})();
+
+// Keep module-specific scenario handler after shared app script loads.
+window.__m1 = {
+  chooseScenario
+};
+
+
+</script>
+<script src="js/app.js"></script>
+<script>
+if (window.__m1) {
+  Object.assign(window, window.__m1);
+}
+</script>
+</body>
+</html>
+
+

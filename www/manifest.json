@@ -1,0 +1,27 @@
+{
+  "name": "BYTE Academy",
+  "short_name": "BYTE",
+  "description": "Dijital Güvenlik Eğitim Platformu — 13 modül, quiz, rozet ve sertifika.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1e2d4a",
+  "theme_color": "#1e2d4a",
+  "lang": "tr",
+  "categories": ["education"],
+  "icons": [
+    {
+      "src": "/videos/byte1.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/videos/byte1.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

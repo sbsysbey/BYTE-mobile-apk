@@ -1,0 +1,796 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 3: Mobil Güvenlik</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+</head>
+<style>
+
+/* ── STEP 2: READING ── */
+.reading-grid{display:grid;grid-template-columns:1fr 330px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(96,200,240,.07);border:1px solid rgba(96,200,240,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:14px;}
+.article-body{font-size:.91rem;line-height:1.8;color:var(--text);}
+.article-body p{margin-bottom:12px;}
+.article-body strong{color:var(--cyan);}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border);}
+
+/* Theme cards — 4 topics */
+.theme-block{margin-bottom:32px;}
+.theme-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 18px;border-radius:12px;border-left:3px solid;}
+.theme-header.app{background:rgba(96,200,240,.06);border-color:var(--cyan);}
+.theme-header.stolen{background:rgba(247,119,119,.06);border-color:var(--red);}
+.theme-header.wifi{background:rgba(251,191,36,.06);border-color:var(--yellow);}
+.theme-header.smish{background:rgba(192,132,252,.06);border-color:var(--purple);}
+.theme-icon{font-size:1.8rem;flex-shrink:0;}
+.theme-title{font-family:'Orbitron',sans-serif;font-size:.88rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.theme-sub{font-size:.83rem;color:var(--text-dim);}
+
+/* Risk cards grid */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.risk-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.risk-card:hover{border-color:rgba(96,200,240,.3);}
+.rc-icon{font-size:1.2rem;margin-bottom:6px;}
+.rc-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.rc-desc{font-size:.84rem;color:var(--text-dim);line-height:1.5;}
+.rc-tag{display:inline-block;font-size:.72rem;padding:2px 7px;border-radius:4px;margin-top:6px;font-family:'Orbitron',sans-serif;letter-spacing:.5px;}
+.rc-tag.high{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25);}
+.rc-tag.mid{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.25);}
+
+/* Step list */
+.step-list{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.sl-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.sl-item:last-child{border-bottom:none;}
+.sl-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.74rem;font-weight:700;flex-shrink:0;}
+.sl-num.red{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+.sl-num.yellow{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3);}
+.sl-num.green{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.3);}
+
+.sl-title{font-size:.90rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.sl-desc{font-size:.86rem;color:var(--text-dim);line-height:1.55;}
+.sl-time{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--red);margin-bottom:4px;}
+
+/* Rule list */
+.rule-list{display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
+.rl-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.rl-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px;}
+.rl-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.rl-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;}
+
+/* Alert box */
+.alert-box{border-radius:10px;padding:13px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.55;}
+.alert-box.warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:var(--text);}
+.alert-box.info{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);color:var(--text);}
+.alert-box.danger{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:var(--text);}
+.alert-icon{flex-shrink:0;font-size:1rem;}
+
+/* BYTE tip */
+.byte-tip-card{background:linear-gradient(135deg,rgba(74,222,154,.04),rgba(96,200,240,.03));border:1px solid rgba(74,222,154,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--green);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+/* Reading sidebar */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:12px;}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:8px;}
+.cl-item{display:flex;align-items:flex-start;gap:9px;font-size:.86rem;line-height:1.5;color:var(--text-dim);}
+.cl-item strong{color:var(--text);}
+.cl-dot{width:18px;height:18px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.72rem;margin-top:1px;}
+.cl-dot.g{background:rgba(74,222,154,.12);color:var(--green);border:1px solid rgba(74,222,154,.3);}
+.cl-dot.r{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+
+/* ── STEP 3: QUIZ ── */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;transition:.2s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* ── STEP 4: SCENARIO ── */
+.app-list{display:flex;flex-direction:column;gap:8px;}
+.app-row{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:8px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);}
+.app-info{display:flex;align-items:center;gap:10px;}
+.app-icon{font-size:1.4rem;}
+.app-name{font-size:.90rem;font-weight:600;color:#fff;}
+.app-src{font-size:.78rem;color:var(--text-dim);}
+.app-badge{font-size:.72rem;padding:3px 9px;border-radius:5px;font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.5px;}
+.badge-safe{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.3);}
+.badge-warn{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.3);}
+.badge-danger{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.3);}
+
+/* ── STEP 5: BADGE ── */
+
+.sv-c{color:var(--cyan);}
+.sv-y{color:var(--yellow);}
+
+
+</style>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span>
+      <span class="xp-label">XP</span>
+      <span id="xp-count">700</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" id="xp-mini-fill" style="width:58%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span id="badge-count">4</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')">
+
+        <div class="mod-num done">01</div>
+        <div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div>
+      </div>
+      <div class="module-item" onclick="goTo('modul2.html')">
+        <div class="mod-num done">02</div>
+        <div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div>
+      </div>
+      <div class="module-item active">
+        <div class="mod-num active2">03</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Mobil Güvenlik</div><div class="mod-meta">Aktif · 300 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav(3)"><div class="mod-num locked">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(4)"><div class="mod-num locked">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(5)"><div class="mod-num locked">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(6)"><div class="mod-num locked">07</div><div><div class="mod-name">Dijital Kimlik</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(7)"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(8)"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(9)"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(10)"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(11)"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(12)"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main id="main">
+
+    <!-- MODULE HEADER -->
+    <div class="mod-header">
+      <div class="byte-avatar">📱</div>
+      <div class="mod-title-block">
+        <div class="mod-tag">◆ MODÜL 03</div>
+        <h1 class="mod-title">Mobil <span>Güvenlik</span></h1>
+        <p class="mod-desc">Telefon artık sadece bir telefon değil — banka, e-posta, kimlik, kamera, konum hepsi bir arada. BYTE ile cebindeki en değerli cihazı nasıl koruyacağını öğren.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>300 XP</div>
+          <div class="stat-chip"><div class="dot dot-c"></div>~35 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP NAV -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">01</div>
+        <div class="step-label">Video Ders</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">02</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">03</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+100 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">04</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">05</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+    </div>
+
+    <!-- ─────── PANEL 1: VIDEO ─────── -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 03</div>
+          <div class="vs-title">MOBİL GÜVENLİK</div>
+          <div class="vs-sub">Uygulama tuzakları · Çalınan telefon · Wi-Fi riskleri · Smishing</div>
+          <button class="play-big" onclick="startVideo()">▶</button>
+          <div class="chapters">
+            <div class="ch-pill active">📲 Uygulama Güvenliği</div>
+            <div class="ch-pill">🔴 Telefon Çalınırsa</div>
+            <div class="ch-pill">📶 Wi-Fi Riskleri</div>
+            <div class="ch-pill">💬 Smishing & Vishing</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <span class="vtime" id="vtime">0:00 / 8:30</span>
+          <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head">
+          <span style="font-size:1rem;">🎯</span>
+          <span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span>
+        </div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Sideloading (APK indirme) en yaygın mobil zararlı yazılım bulaşma yoludur</li>
+          <li><span class="kp-b">▸</span>Telefon çalınırsa ilk 5 dakika kritik — kilitlemek, banka çevirmekten önce gelir</li>
+          <li><span class="kp-b">▸</span>Halka açık Wi-Fi'de hassas işlem yapmak bilgilerini açık aktarmak gibidir</li>
+          <li><span class="kp-b">▸</span>PostNL, DHL, ING gibi kurumları taklit eden SMS/arama dolandırıcılıkları Avrupa'da her yıl %40+ artıyor</li>
+          <li><span class="kp-b">▸</span>Uygulama izinleri: her izin bir kapı — gereksiz kapıları kapat</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;">
+        <button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Video Tamamlandı →</button>
+      </div>
+    </div>
+
+    <!-- ─────── PANEL 2: READING ─────── -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Mobil Güvenlik: Telefonun Hem Cüzdanın Hem Anahtarın</div>
+          <div class="article-body">
+            <p>Telefonunda banka uygulaması, e-posta, iş yazışmaları, fotoğraflar, konum geçmişi var. Bir saldırgan ya da hırsız bunların tamamına birden erişmek istiyor. Dört temel tehdit — ve nasıl korunacağın.</p>
+          </div>
+
+          <!-- TEMA 1: UYGULAMA GÜVENLİĞİ -->
+          <div class="theme-block">
+            <div class="theme-header app">
+              <div class="theme-icon">📲</div>
+              <div>
+                <div class="theme-title">1. Uygulama Güvenliği</div>
+                <div class="theme-sub">Sideloading, sahte uygulamalar ve izin tuzakları</div>
+              </div>
+            </div>
+
+            <div class="section-head">⚠️ YÜKSEK RİSKLİ DURUMLAR</div>
+            <div class="risk-grid">
+              <div class="risk-card">
+                <div class="rc-icon">📦</div>
+                <div class="rc-title">Sideloading — APK İndirme</div>
+                <div class="rc-desc">Mağaza dışından .apk dosyası indirmek, uygulamayı Google/Apple güvenlik denetiminden geçirmeden kurmak demektir. "WhatsApp Gold", "Instagram Pro", "Netflix ücretsiz" gibi APK'lar çoğunlukla trojan içerir.</div>
+                <span class="rc-tag high">YÜKSEK RİSK</span>
+              </div>
+              <div class="risk-card">
+                <div class="rc-icon">🎮</div>
+                <div class="rc-title">Oyun Hilesi / Cheat APK</div>
+                <div class="rc-desc">"Bedava elmas", "sınırsız can" vaat eden uygulamalar. Oyun çalışır ama arka planda mikrofon, kamera, SMS ve rehber bilgilerini çalar. Hiçbir oyun hilesi buna değmez.</div>
+                <span class="rc-tag high">YÜKSEK RİSK</span>
+              </div>
+              <div class="risk-card">
+                <div class="rc-icon">🔗</div>
+                <div class="rc-title">Mesajla Gelen APK Linki</div>
+                <div class="rc-desc">WhatsApp veya SMS ile "bu uygulamayı indir" şeklinde gelen linkler. Tanıdıktan bile gelse, telefon ele geçirilmiş olabilir. Kural: Resmi mağazada olmayan her şey şüpheli.</div>
+                <span class="rc-tag high">YÜKSEK RİSK</span>
+              </div>
+              <div class="risk-card">
+                <div class="rc-icon">🔔</div>
+                <div class="rc-title">Güncellenmeyen Uygulamalar</div>
+                <div class="rc-desc">Mağaza tarafından artık desteklenmeyen uygulamalar güvenlik yamalarını almaz. Bilinen açıkları olan bu uygulamalar saldırganlar için kolay hedef haline gelir.</div>
+                <span class="rc-tag mid">ORTA RİSK</span>
+              </div>
+            </div>
+
+            <div class="section-head">✅ UYGULAMA GÜVENLİĞİ KURALLARI</div>
+            <div class="rule-list">
+              <div class="rl-item">
+                <div class="rl-icon">🏪</div>
+                <div><div class="rl-title">Yalnızca resmi mağazadan indir</div><div class="rl-desc">Google Play Store veya Apple App Store. Tarayıcıdan APK kesinlikle indirme. "Ücretsiz premium" diye bir şey yoktur — bu her zaman bir tuzaktır.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🔍</div>
+                <div><div class="rl-title">Geliştiriciyi kontrol et</div><div class="rl-desc">Geliştirici adı, indirme sayısı ve kullanıcı yorumları. Sahte uygulamalar "Adobe Inc." yerine "AdobeInc.Ltd" gibi çok benzer ama farklı geliştiricilerle yayınlanır.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🚫</div>
+                <div><div class="rl-title">Gereksiz izinleri reddet</div><div class="rl-desc">Bir fener uygulamasının konum iznine ihtiyacı yok. Bir oyunun mikrofon iznine neden ihtiyaç duysun? Ayarlar → Uygulamalar → İzinler bölümünü düzenli kontrol et.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🔄</div>
+                <div><div class="rl-title">Güncel tut, desteksizi sil</div><div class="rl-desc">Güncellemeler çoğunlukla güvenlik yamalarıdır. "Bu uygulama artık güncellenmeyecek" bildirimi aldığında hemen sil ve alternatiflere geç.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 2: TELEFON ÇALINMASI -->
+          <div class="theme-block">
+            <div class="theme-header stolen">
+              <div class="theme-icon">🔴</div>
+              <div>
+                <div class="theme-title">2. Telefon Çalınırsa — Saat Başladı</div>
+                <div class="theme-sub">Her dakika hesapların risk altında — doğru sırayla hareket et</div>
+              </div>
+            </div>
+
+            <div class="alert-box danger">
+              <div class="alert-icon">⚡</div>
+              <div>Telefon çalındığında hırsız eğer PIN'i bilirse veya biyometri ile açarsa banka, e-posta, sosyal medya — hepsine anında erişebilir. <strong>Cihazı bulmak bekleyebilir. Hesapları korumak bekleyemez.</strong></div>
+            </div>
+
+            <div class="section-head">🚨 MÜDAHALE SIRASI — İLK 30 DAKİKA</div>
+            <div class="step-list">
+              <div class="sl-item">
+                <div class="sl-num red">1</div>
+                <div class="sl-content">
+                  <div class="sl-time">⏱ İLK 5 DAKİKA</div>
+                  <div class="sl-title">Cihazı uzaktan kilitle</div>
+                  <div class="sl-desc">Başka bir cihazdan Google'da "Cihazımı Bul" veya Apple'da "Find My" aç. Önce <strong>kilitle</strong> — konum takibi ikinci öncelik. Kilitlemek her türlü erişimi durdurur.</div>
+                </div>
+              </div>
+              <div class="sl-item">
+                <div class="sl-num red">2</div>
+                <div class="sl-content">
+                  <div class="sl-time">⏱ İLK 10 DAKİKA</div>
+                  <div class="sl-title">SIM kartı dondur</div>
+                  <div class="sl-desc">Hırsız SIM'i başka cihaza takabilir, SMS tabanlı 2FA kodlarını alabilir ve banka hesaplarına girebilir. Operatörünü ara (KPN, Vodafone, Deutsche Telekom) ve hattı dondur.</div>
+                </div>
+              </div>
+              <div class="sl-item">
+                <div class="sl-num yellow">3</div>
+                <div class="sl-content">
+                  <div class="sl-time">⏱ İLK 20 DAKİKA</div>
+                  <div class="sl-title">Kritik şifreleri değiştir</div>
+                  <div class="sl-desc">Başka bir güvenli cihazdan: önce e-posta, ardından banka, ardından sosyal medya şifrelerini değiştir. 2FA kodlarını yenile. Bu sıralamayı takip et çünkü e-posta diğer hesapların sıfırlama kapısıdır.</div>
+                </div>
+              </div>
+              <div class="sl-item">
+                <div class="sl-num yellow">4</div>
+                <div class="sl-content">
+                  <div class="sl-time">⏱ İLK 30 DAKİKA</div>
+                  <div class="sl-title">Bankayı ara — kartı askıya al</div>
+                  <div class="sl-desc">ING, Deutsche Bank, Rabobank — bankanı ara ve mobil uygulama erişimini geçici olarak dondur. Telefon numarana bağlı banka işlemlerini manuel engelle.</div>
+                </div>
+              </div>
+              <div class="sl-item">
+                <div class="sl-num green">5</div>
+                <div class="sl-content">
+                  <div class="sl-time">⏱ SONRADAN</div>
+                  <div class="sl-title">Uzaktan sil (gerekirse)</div>
+                  <div class="sl-desc">Cihaz bulunamazsa ve içinde çok hassas veri varsa uzaktan silme yapılabilir. Ancak bu işlem geri alınamaz ve konum takibini de sona erdirir. Sigorta için önce polise bildir.</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-head">🛡️ ÖNCEDEN ALINACAK ÖNLEMLER</div>
+            <div class="rule-list">
+              <div class="rl-item">
+                <div class="rl-icon">☁️</div>
+                <div><div class="rl-title">Bulut yedeklemeyi aç</div><div class="rl-desc">Google Photos veya iCloud otomatik yedekleme. Telefon gitmiş olsa bile fotoğrafların, kişilerin ve belgelerinin yedeği bulutta güvende.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🔢</div>
+                <div><div class="rl-title">Güçlü PIN — parmak izi değil yeter</div><div class="rl-desc">Uyurken veya etkisiz halde iken parmak izin zorla kullanılabilir. 6 haneli PIN veya parola daha güvenli. "1234", "0000", doğum tarihi asla kullanma.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">📍</div>
+                <div><div class="rl-title">Cihaz takibini şimdiden kur</div><div class="rl-desc">Telefon çalınmadan önce "Cihazımı Bul" / "Find My" etkin olmalı. Çalındıktan sonra kurmak için zaman olmayabilir.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 3: WI-FI GÜVENLİĞİ -->
+          <div class="theme-block">
+            <div class="theme-header wifi">
+              <div class="theme-icon">📶</div>
+              <div>
+                <div class="theme-title">3. Wi-Fi & Ağ Güvenliği</div>
+                <div class="theme-sub">Halka açık ağlar, Evil Twin saldırıları ve Bluetooth riskleri</div>
+              </div>
+            </div>
+
+            <div class="alert-box warn">
+              <div class="alert-icon">⚠️</div>
+              <div>Havalimanı, kafe, otel, alışveriş merkezi Wi-Fi'leri sıfır güvence sunar. Ağı kimin kurduğunu bilmiyorsun. Aynı isimde <strong>sahte bir ağ (Evil Twin)</strong> olabilir — ve bağlandığında fark edemezsin.</div>
+            </div>
+
+            <div class="rule-list">
+              <div class="rl-item">
+                <div class="rl-icon">🔄</div>
+                <div><div class="rl-title">Otomatik bağlantıyı kapat</div><div class="rl-desc">Telefon daha önce bağlandığı ağ isimlerini hatırlar ve otomatik bağlanır. Saldırganlar "Starbucks_WiFi" gibi bilinen isimlerde sahte ağ kurabilir. Ayarlar → Wi-Fi → Otomatik katıl'ı kapat.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🔒</div>
+                <div><div class="rl-title">Hassas işlemleri mobil veriyle yap</div><div class="rl-desc">Banka, e-posta, iş uygulamaları — bunları hiçbir zaman halka açık Wi-Fi üzerinden kullanma. Kendi mobil verinle ya da VPN açarak bağlan. VPN bile her tehdidi engelleyemez.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">📵</div>
+                <div><div class="rl-title">Kullanmıyorsan kapat</div><div class="rl-desc">Wi-Fi ve Bluetooth açıkken telefon sürekli sinyal yayar. Bu sinyal cihazın tespit edilmesini ve izlenmesini kolaylaştırır. Kullanmadığın zamanlarda her ikisini de kapat.</div></div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🔵</div>
+                <div><div class="rl-title">Bluetooth otomatik eşleştirme — kapat</div><div class="rl-desc">Kamuya açık ortamda Bluetooth açık bırakmak "BlueSnarfing" ve "Bluebugging" saldırılarına kapı açar. Saldırgan rehberine, mesajlarına ve dosyalarına erişebilir.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 4: SMİSHİNG & VİSHİNG -->
+          <div class="theme-block">
+            <div class="theme-header smish">
+              <div class="theme-icon">💬</div>
+              <div>
+                <div class="theme-title">4. Smishing & Vishing</div>
+                <div class="theme-sub">SMS ve sesli arama ile kimlik avı — Avrupa'da hızla artıyor</div>
+              </div>
+            </div>
+
+            <div class="alert-box info">
+              <div class="alert-icon">📊</div>
+              <div>ENISA 2024 raporuna göre Avrupa'daki smishing saldırıları son 2 yılda <strong>%340 arttı.</strong> En yaygın tuzaklar: sahte kargo bildirimleri (DHL, PostNL, DPD) ve banka SMS'leri.</div>
+            </div>
+
+            <div class="rule-list">
+              <div class="rl-item">
+                <div class="rl-icon">📩</div>
+                <div>
+                  <div class="rl-title">Smishing — SMS ile kimlik avı</div>
+                  <div class="rl-desc">"DHL: Paketiniz bekliyor, €2,50 gümrük ücreti için tıklayın" veya "ING: Hesabınız askıya alındı, doğrulayın" gibi mesajlar. SMS'teki linklere <strong>asla tıklama</strong> — tarayıcıda doğrudan resmi siteye git.</div>
+                </div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">📞</div>
+                <div>
+                  <div class="rl-title">Vishing — sesli arama dolandırıcılığı</div>
+                  <div class="rl-desc">"Banka güvenlik birimi arıyor, kartınız bloke edildi, doğrulama kodu söyleyin." Artık AI ile banka çalışanı veya hatta yakınınızın sesi taklit edilebiliyor. <strong>Gelen aramada hiçbir zaman şifre veya kod verme.</strong> Telefonu kapat, bankanı kendin ara.</div>
+                </div>
+              </div>
+              <div class="rl-item">
+                <div class="rl-icon">🌐</div>
+                <div>
+                  <div class="rl-title">Mobil tarayıcıda URL kontrolü</div>
+                  <div class="rl-desc">Mobil ekranda URL'nin tamamı görünmez — saldırganlar uzun sahte domain isimler kullanır. Ödeme veya giriş yapacaksanız adres çubuğunu büyütüp tam URL'yi oku. HTTPS görmek tek başına güvenli değildir.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head">
+              <div class="byte-mini">🤖</div>
+              <div class="byte-name">BYTE'DAN İPUCU</div>
+            </div>
+            <div class="byte-tip-text">"Telefonun en küçük bilgisayarın — ama en az korunan cihazın. Masaüstünde yapmayacağın şeyleri telefonda da yapma: bilinmeyen Wi-Fi, şüpheli uygulama, SMS linki. Güvenlik alışkanlığı cihaza değil, sana aittir."</div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:24px" onclick="completeStep(2)">Okumayı Tamamladım →</button>
+        </div>
+
+        <!-- READING SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">📋 HIZLI KONTROL</div>
+            <div class="checklist">
+              <div class="cl-item"><div class="cl-dot g">✓</div><div><strong>Otomatik Wi-Fi bağlantısı</strong> kapalı mı?</div></div>
+              <div class="cl-item"><div class="cl-dot g">✓</div><div><strong>Bluetooth</strong> kamuya açık yerde kapalı mı?</div></div>
+              <div class="cl-item"><div class="cl-dot g">✓</div><div><strong>Cihazımı Bul</strong> etkin mi?</div></div>
+              <div class="cl-item"><div class="cl-dot g">✓</div><div><strong>Bulut yedekleme</strong> açık mı?</div></div>
+              <div class="cl-item"><div class="cl-dot g">✓</div><div><strong>Güçlü PIN</strong> (6+ hane) var mı?</div></div>
+              <div class="cl-item"><div class="cl-dot r">✗</div><div><strong>APK indirmek</strong> — hiçbir zaman</div></div>
+              <div class="cl-item"><div class="cl-dot r">✗</div><div><strong>SMS linki</strong> — asla tıklama</div></div>
+              <div class="cl-item"><div class="cl-dot r">✗</div><div>Telefonda şifre/kod <strong>söyleme</strong></div></div>
+            </div>
+          </div>
+
+          <div class="side-card">
+            <div class="side-title">🚨 TEL. ÇALININCA</div>
+            <div style="font-size:.84rem;color:var(--text-dim);line-height:1.7;">
+              <div style="margin-bottom:6px;"><span style="color:var(--red);font-weight:700;">1.</span> Google/Apple → <strong style="color:var(--text);">Cihazı Kilitle</strong></div>
+              <div style="margin-bottom:6px;"><span style="color:var(--red);font-weight:700;">2.</span> Operatör → <strong style="color:var(--text);">SIM'i Dondur</strong></div>
+              <div style="margin-bottom:6px;"><span style="color:var(--yellow);font-weight:700;">3.</span> E-posta → <strong style="color:var(--text);">Şifreyi Değiştir</strong></div>
+              <div style="margin-bottom:6px;"><span style="color:var(--yellow);font-weight:700;">4.</span> Banka → <strong style="color:var(--text);">Mobil Erişimi Dondur</strong></div>
+              <div><span style="color:var(--green);font-weight:700;">5.</span> Polis → <strong style="color:var(--text);">Tutanak Al</strong></div>
+            </div>
+          </div>
+
+          <div class="side-card">
+            <div class="side-title">📶 WI-FI KURALLARI</div>
+            <div style="font-size:.84rem;color:var(--text-dim);line-height:1.7;">
+              <div style="margin-bottom:5px;">🚫 Halka açık Wi-Fi = banka yasak</div>
+              <div style="margin-bottom:5px;">🚫 Otomatik bağlantı = kapalı</div>
+              <div style="margin-bottom:5px;">✅ Mobil veri = hassas işlemler</div>
+              <div>✅ VPN = halka açık ağlarda</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────── PANEL 3: QUIZ ─────── -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label">
+          <span id="q-counter">Soru 1 / 10</span>
+          <span id="q-score">0 / 10 Doğru</span>
+        </div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ─────── PANEL 4: SENARYO ─────── -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div>
+              <div class="scene-title">BYTE'IN SENARYOSU — SAHTE UYGULAMA TUZAĞI</div>
+              <div class="scene-text">Amsterdam'dasın. Bir arkadaşın WhatsApp'tan mesaj attı: <em>"Bu uygulamayı indir, çok iyi bir VPN — üstelik ücretsiz premium veriyor. Herkes kullanıyor."</em> Linke tıkladığında seni Google Play'e değil, üçüncü parti bir siteye götürüyor.</div>
+              <div class="scene-box">
+                <div class="app-list">
+                  <div class="app-row">
+                    <div class="app-info">
+                      <div class="app-icon">🛡️</div>
+                      <div><div class="app-name">SecureVPN Pro</div><div class="app-src">Kaynak: vpn-free-premium.net · APK dosyası</div></div>
+                    </div>
+                    <span class="app-badge badge-danger">⚠️ MAĞAZA DIŞI</span>
+                  </div>
+                  <div class="app-row">
+                    <div class="app-info">
+                      <div class="app-icon">📋</div>
+                      <div><div class="app-name">İstenen İzinler</div><div class="app-src">Konum · Rehber · Mikrofon · SMS · Kamera · Tam ağ erişimi</div></div>
+                    </div>
+                    <span class="app-badge badge-danger">⚠️ AŞIRI İZİN</span>
+                  </div>
+                  <div class="app-row">
+                    <div class="app-info">
+                      <div class="app-icon">✅</div>
+                      <div><div class="app-name">ProtonVPN</div><div class="app-src">Kaynak: Google Play Store · Proton AG</div></div>
+                    </div>
+                    <span class="app-badge badge-safe">✓ GÜVENLİ</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)">
+              <span class="s-icon">📲</span>
+              <span>APK'yı indiriyorum — arkadaşım önerdi, ücretsiz premium VPN iyi fırsat.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(1)">
+              <span class="s-icon">🔒</span>
+              <span>APK'yı indiriyorum ama izinleri tek tek kontrol ederek sadece gerekli olanları veriyorum.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(2)">
+              <span class="s-icon">✅</span>
+              <span>Bu APK'yı indirmiyorum. Google Play'den ProtonVPN veya Mullvad gibi güvenilir bir VPN arıyorum. Arkadaşıma da durumu açıklıyorum — telefonu ele geçirilmiş olabilir.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(3)">
+              <span class="s-icon">❓</span>
+              <span>APK'yı bir antivirüs taramasından geçirip temizse kuruyorum.</span>
+            </button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-primary" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────── PANEL 5: BADGE ─────── -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">📱</div>
+        </div>
+        <h2 class="badge-title">MOBİL KORUYUCU</h2>
+        <p class="badge-subtitle">Telefonu artık hem akıllı hem güvenli kullanıyorsun</p>
+        <div class="xp-celebrate">
+          <div>
+            <div class="xp-big">+300 XP</div>
+            <div class="xp-lbl">KAZANILDI<br>MODÜL 03</div>
+          </div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-c">4</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">300</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+const totalSteps = 5;
+
+// ── QUESTIONS ──
+window.moduleQuestions = [
+  {
+    q: "Sideloading nedir ve neden tehlikelidir?",
+    opts: ["Uygulamaları güncellemeden kullanmak","Google Play veya App Store dışından uygulama yüklemek — Google/Apple güvenlik denetimini atlatır","Uygulamaları Wi-Fi yerine mobil veriyle indirmek","Çok fazla uygulama yükleyerek telefonu yavaşlatmak"],
+    correct: 1,
+    fb: { wrong: "Sideloading, resmi mağaza dışından .apk veya .ipa dosyası yüklemektir. Mağaza denetimini atladığı için zararlı kod içerme riski çok yüksektir.", correct: "Kesinlikle! Resmi mağazalar uygulamaları güvenlik kontrolünden geçirir. Mağaza dışı kaynaklar bu denetimi atlatır — içinde ne olduğunu bilemezsin." }
+  },
+  {
+    q: "Telefon çalındığında ilk yapman gereken adım nedir?",
+    opts: ["Polisi aramak ve kayıp bildirimi yapmak","Hırsızı aramak ve cihazı geri istemek","Başka bir cihazdan cihazı uzaktan kilitlemek","Bankayı arayıp kartları iptal ettirmek"],
+    correct: 2,
+    fb: { wrong: "Polis ve banka önemli ama cihaz kilitlenmeden önce her şeye erişilebilir. Önce kilitle — diğer adımlar sonra gelir.", correct: "Doğru sıra! Cihazı kilitle → SIM'i dondur → Şifreleri değiştir → Bankayı ara. Kilit her erişimi durduran ilk savunmadır." }
+  },
+  {
+    q: "Telefon çalındığında neden SIM kartı kilitlemen gerekir?",
+    opts: ["Telefon numaranın çalınmasını engellemek için","Hırsızın SIM'i başka cihaza takıp SMS tabanlı 2FA kodlarını almasını önlemek için","Şebeke ücretlerini durdurmak için","Telefonu kapatmak için"],
+    correct: 1,
+    fb: { wrong: "Asıl tehlike şudur: SIM başka cihaza takılırsa hırsız banka ve e-posta SMS doğrulama kodlarını alabilir ve hesaplarına girebilir.", correct: "Harika! SIM başka cihazda çalışırsa 2FA SMS'leri hırsıza gider. Bu yüzden SIM dondurma kilitleme kadar kritiktir." }
+  },
+  {
+    q: "Halka açık Wi-Fi'de hangi işlemi yapmak güvenlidir?",
+    opts: ["Online bankacılık — HTTPS kullanıyorsa güvenlidir","İş e-postalarını okumak ve yanıtlamak","Haber okumak veya harita bakmak gibi hassas olmayan işlemler","Sosyal medya hesabına giriş yapmak"],
+    correct: 2,
+    fb: { wrong: "HTTPS trafiği şifreler ama halka açık ağlarda oturum çalma, sahte ağ (Evil Twin) ve DNS saldırıları riski devam eder. Hassas işlemler için mobil veri kullan.", correct: "Doğru! Haber okumak, harita bakmak gibi giriş gerektirmeyen işlemler halka açık Wi-Fi'de yapılabilir. Banka, e-posta ve iş uygulamaları için kesinlikle mobil veri kullan." }
+  },
+  {
+    q: "Telefonunda Wi-Fi kapalı ama Bluetooth açık. Kamuya açık bir ortamda bu durumda risk var mı?",
+    opts: ["Hayır, Bluetooth kısa menzilli olduğundan güvenlidir","Evet — 'BlueSnarfing' veya 'Bluebugging' saldırılarıyla rehber, dosya ve mesajlara erişilebilir","Hayır, yalnızca eşleştirilmiş cihazlar risk oluşturur","Evet ama yalnızca Android cihazlarda bu risk vardır"],
+    correct: 1,
+    fb: { wrong: "Bluetooth açıkken ve keşfedilebilir durumdayken yakındaki saldırgan izinsiz bağlantı kurmaya çalışabilir. Kullanmıyorsan kapat.", correct: "Doğru! BlueSnarfing rehbere ve dosyalara erişir; Bluebugging ise mikrofonu ve aramaları ele geçirebilir. Bluetooth kullanılmadığında kapalı tutulmalı." }
+  },
+  {
+    q: "PostNL'den şöyle bir SMS geldi: 'Paketiniz askıya alındı. €1,95 gümrük ücreti için tıklayın → postnl-delivery.me/pay'. Ne yaparsın?",
+    opts: ["Tıklayıp ödeme yaparsın — küçük bir ücret, sorun olmaz","SMS'i yoksayıp doğrudan postnl.nl adresini açar, paketin durumuna bakarsın","SMS'teki linki açar ama kart bilgisi girmeden kontrol edersin","Arkadaşlarına sorup onlar da aynı SMS'i aldıysa ödersin"],
+    correct: 1,
+    fb: { wrong: "Bu klasik bir smishing saldırısıdır. €1,95 gibi küçük ücretler düşünmeden ödemeye iter. Sahte site kart bilgilerini çalar.", correct: "Mükemmel! Meşru kargo firmaları SMS ile ödeme istemez. Her zaman doğrudan resmi URL'ye git — SMS'teki linklere asla tıklama." }
+  },
+  {
+    q: "ING Bank'tan arandın: 'Hesabınızda şüpheli işlem var, güvenliğiniz için tek kullanımlık kodu söyleyin.' Ne yaparsın?",
+    opts: ["Kodu söylersin — gerçekten banka arıyor olabilir","Telefonu kapatır, kartının arkasındaki resmi ING numarasını kendin arayarak doğrularsın","Kodu söylemez ama ad-soyad ve kart numaranı verirsin","Kodu söylemek yerine şifrenle doğrulama yaparsın"],
+    correct: 1,
+    fb: { wrong: "Bankalar telefonda asla güvenlik kodu, şifre veya SMS kodu istemez. Bu bir vishing (sesli kimlik avı) saldırısıdır. AI ile gerçek banka sesi bile taklit edilebiliyor.", correct: "Doğru! Telefonu kapat, bankanın resmi numarasını kendin ara. Gelen aramada hiçbir zaman hassas bilgi verme — kim olursa olsun." }
+  },
+  {
+    q: "Google Play'de bir uygulama indirmeden önce güvenli olduğundan emin olmak için ne kontrol edersin?",
+    opts: ["Sadece uygulamanın adına ve logosuna bakarsın","Geliştirici adını, indirme sayısını, kullanıcı yorumlarını ve istenen izinleri kontrol edersin","Uygulamanın ücretsiz olup olmadığına bakarsın — ücretsizse güvenlidir","Sadece puan sayısına bakarsın — yüksek puanlıysa güvenlidir"],
+    correct: 1,
+    fb: { wrong: "Ad, logo ve puan kolayca manipüle edilebilir. Geliştirici kim? Gerçek yorum var mı? İzinler makul mu? Bu sorular seni korur.", correct: "Harika! 4 kontrol: geliştirici adı + indirme sayısı + gerçek yorumlar + makul izinler. Bu adımlar sahte uygulamaların büyük çoğunluğunu filtreler." }
+  },
+  {
+    q: "Bir fener (torch) uygulaması konum, rehber ve mikrofon izni istiyor. Ne yaparsın?",
+    opts: ["İzinleri verirsin — üretici bu izinlere ihtiyaç duyuyordur","İzinleri reddeder ya da uygulamayı hiç kurmazsın — fener için bu izinler gereksiz ve şüpheli","Sadece konum iznini verirsin, diğerlerini reddedersin","İzinleri verip sonra ayarlardan kaldırırsın — sorun olmaz"],
+    correct: 1,
+    fb: { wrong: "Bir fener uygulamasının bu izinlere kesinlikle ihtiyacı yok. Bu klasik casus yazılım (spyware) davranışıdır.", correct: "Mükemmel! 'Bu izni neden istiyor?' sorusu her kurulumda sorulmalı. İşleviyle uyuşmayan izin isteyen uygulama büyük ihtimalle zararlıdır." }
+  },
+  {
+    q: "Telefon çalınmadan önce hangi önlem veri kaybını en aza indirir?",
+    opts: ["Telefona güçlü bir kılıf takmak","Telefonun hafızasını düzenli temizlemek","Otomatik bulut yedeklemeyi aktif tutmak ve Cihazımı Bul'u etkinleştirmek","Çok sayıda uygulama yüklememek"],
+    correct: 2,
+    fb: { wrong: "Kılıf fiziksel koruma sağlar ama veri kaybını önlemez. Bulut yedek + Cihazımı Bul kombinasyonu en kritik proaktif önlemdir.", correct: "Kesinlikle! Bulut yedek fotoğraf, kişi ve dosyalarını korur. Cihazımı Bul hem kilitleme hem konumlama imkânı verir. İkisi birlikte olmazsa olmaz." }
+  }
+];
+
+
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}window.moduleSceneFeedbacks = [
+  { correct: false, text: "<strong>Yanlış tercih.</strong> Arkadaşından gelen öneriler bile güvenilir değildir — telefonu ele geçirilmiş olabilir. Mağaza dışı APK'lar güvenlik denetiminden geçmez, içinde ne olduğunu bilemezsin. Ücretsiz premium her zaman bir tuzaktır." },
+  { correct: false, text: "<strong>Yanlış tercih.</strong> Zararlı bir uygulama kurulduğu anda sistemde çalışmaya başlar — hangi izinleri verdiğinle değil, yüklü olmasıyla bile hasar verebilir. İzin vermiş olsan bile fileless zararlılar izin sistemini atlayabilir." },
+  { correct: true, text: "<strong>Mükemmel karar!</strong> Hiçbir mağaza dışı APK güvenilir değildir. Güvenilir VPN için ProtonVPN, Mullvad veya ExpressVPN gibi Play Store'da resmi sayfası olan uygulamaları tercih et. Arkadaşını da uyarmak doğruydu — mesajı onun telefonundan değil, ele geçirilmiş bir hesaptan geliyor olabilir." },
+  { correct: false, text: "<strong>Yanlış tercih.</strong> Antivirüs taraması her zararlıyı tespit edemez — özellikle fileless malware ve obfuscated (gizlenmiş) trojanlar çoğu tarayıcıyı atlatır. Resmi mağaza dışından hiçbir şey kurma." }
+];
+
+
+
+
+
+
+
+
+
+
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

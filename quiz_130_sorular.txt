@@ -1,0 +1,1056 @@
+Toplam soru: 130
+
+Modul Bazli Sayim:
+Modul 1: 10
+Modul 2: 10
+Modul 3: 10
+Modul 4: 10
+Modul 5: 10
+Modul 6: 10
+Modul 7: 10
+Modul 8: 10
+Modul 9: 10
+Modul 10: 10
+Modul 11: 10
+Modul 12: 10
+Modul 13: 10
+
+Modul 1 - Soru 1
+Soru: Aşağıdaki şifrelerden hangisi en güvenlidir?
+A) Ahmet1990!
+B) MyDog2023
+C) xK#9mP!vL2@qW7
+D) 123456789
+Dogru: C
+
+Modul 1 - Soru 2
+Soru: 2FA (2 Faktörlü Doğrulama) neden sadece şifreden daha güvenlidir?
+A) Şifreni daha uzun yapar
+B) Saldırganın şifreni bilse bile fiziksel/ikinci bir doğrulama gerektirir
+C) Şifren yoksa da giriş yapabilirsin
+D) Hesabını otomatik olarak kapatır
+Dogru: B
+
+Modul 1 - Soru 3
+Soru: Şifre yöneticisi kullanmanın en büyük avantajı nedir?
+A) Şifreni otomatik olarak değiştirir
+B) Her site için güçlü ve benzersiz şifre oluşturup saklar, sadece bir ana şifre hatırlarsın
+C) İnternetsiz çalışmaz
+D) Şifreni arkadaşlarınla paylaşmanı sağlar
+Dogru: B
+
+Modul 1 - Soru 4
+Soru: Hangi 2FA yöntemi en güvenlidir?
+A) SMS ile kod
+B) E-posta ile kod
+C) Fiziksel güvenlik anahtarı (Nitrokey gibi)
+D) Güvenlik sorusu (annenin kızlık soyadı)
+Dogru: C
+
+Modul 1 - Soru 5
+Soru: Aynı şifreyi birden fazla hesapta kullanmanın en büyük riski nedir?
+A) Şifreyi unutabilirsin
+B) Bir site ihlal edilirse o şifreyi kullanan TÜM hesapların tehlikeye girer
+C) Şifren çok kısa kalır
+D) Sadece sosyal medya hesapların risk altına girer
+Dogru: B
+
+Modul 1 - Soru 6
+Soru: haveibeenpwned.com sitesi ne işe yarar?
+A) Güçlü şifre oluşturur
+B) E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder
+C) Şifreleri şifreli olarak saklar
+D) Virüs taraması yapar
+Dogru: B
+
+Modul 1 - Soru 7
+Soru: Tarayıcıya şifre kaydetmek ne kadar güvenlidir?
+A) Tamamen güvenli, tarayıcılar şifreleri şifreler
+B) Kullanışlıdır ama bilgisayarın ele geçirilirse tüm şifreler çalınabilir — şifre yöneticisi daha güvenlidir
+C) Hiç güvenli değil, şifreler düz metin olarak saklanır
+D) Sadece Chrome güvenlidir, diğer tarayıcılar değil
+Dogru: B
+
+Modul 1 - Soru 8
+Soru: Passphrase (parola cümlesi) neden rastgele harflerden oluşan şifreden üstün olabilir?
+A) Daha kısadır, hatırlaması kolay
+B) Hem uzundur hem hatırlanabilir — 'karpuz·fener·dağ·pijama' gibi 4 kelime 8 karakterli karmaşık şifreden çok daha güçlü olabilir
+C) Özel karakter içermez, bu yüzden daha basittir
+D) Sadece Türkçe kelimeler için çalışır
+Dogru: B
+
+Modul 1 - Soru 9
+Soru: Şifre yöneticisinin ana şifresi (master password) çalınırsa ne olur?
+A) Hiçbir şey, şifre yöneticileri hacklenemez
+B) Tüm şifreler tehlikeye girebilir — bu yüzden ana şifre çok güçlü olmalı ve asla başka yerde kullanılmamalı
+C) Sadece en son eklenen şifre risk altına girer
+D) Şifre yöneticisi otomatik olarak tüm şifreleri değiştirir
+Dogru: B
+
+Modul 1 - Soru 10
+Soru: SIM Swap saldırısı SMS tabanlı 2FA'yı nasıl atlatır?
+A) SMS'leri kopyalayarak
+B) Operatörü kandırarak telefon numarasını kendi SIM kartına aktarır, böylece SMS kodlarını alır
+C) Telefonu fiziksel olarak çalarak
+D) SMS kodlarını tahmin ederek
+Dogru: B
+
+Modul 2 - Soru 1
+Soru: MITM (Man-in-the-Middle) saldırısında saldırgan ne yapar?
+A) Cihazı fiziksel olarak çalar
+B) Senin ile sunucu arasına girip trafiği okur/değiştirir
+C) Sadece Wi-Fi hızını düşürür
+D) Yalnızca modem şifresini sıfırlar
+Dogru: B
+
+Modul 2 - Soru 2
+Soru: Kurumsal cihazla havalimanı/kafe gibi açık alan Wi-Fi'larında en doğru yaklaşım nedir?
+A) Sinyali en güçlü ağa bağlanmak
+B) Sadece HTTPS sitelere girip devam etmek
+C) Mümkünse hiç bağlanmamak; mobil hotspot + VPN kullanmak
+D) Ağ adında Airport/Hotel varsa güvenmek
+Dogru: C
+
+Modul 2 - Soru 3
+Soru: Evil Twin hotspot nedir?
+A) Modemin yedek ağı
+B) Gerçek ağ adı taklit edilerek oluşturulan sahte ağ
+C) Sadece 5GHz çalışan ağ
+D) Şifreli kurumsal ağ
+Dogru: B
+
+Modul 2 - Soru 4
+Soru: Şüpheli bir Wi-Fi'da hassas işlem yapman gerekiyorsa minimum güvenlik önlemi nedir?
+A) Tarayıcıyı gizli sekmede açmak
+B) VPN kullanmak
+C) Sadece telefonla bağlanmak
+D) Wi-Fi adını kaydetmemek
+Dogru: B
+
+Modul 2 - Soru 5
+Soru: Router güvenliği için hangisi doğrudur?
+A) Varsayılan admin şifresi kalabilir
+B) WEP hala yeterince güvenlidir
+C) WPA2/WPA3 tercih edilmeli ve varsayılan şifre değiştirilmeli
+D) Sadece ağ adını gizlemek yeterlidir
+Dogru: C
+
+Modul 2 - Soru 6
+Soru: Bluetooth ve WLAN için güvenli alışkanlık hangisidir?
+A) Her zaman açık tutmak
+B) Yalnızca kullanırken açıp iş bitince kapatmak
+C) Sadece ofiste kapatmak
+D) Pil azsa kapatmak
+Dogru: B
+
+Modul 2 - Soru 7
+Soru: Ücretsiz/demo VPN'ler için en doğru ifade nedir?
+A) Her zaman güvenlidir
+B) Daha hızlıdır, bu yüzden daha güvenlidir
+C) Güvenilir olmayan ücretsiz VPN'ler veri gizliliği riski taşıyabilir
+D) Kurumsal cihazda özellikle önerilir
+Dogru: C
+
+Modul 2 - Soru 8
+Soru: Aşağıdakilerden hangisi sahte hotspot belirtisi olabilir?
+A) Ağ adının beklenenden çok benzer olması
+B) Sinyalin orta seviye olması
+C) Ağın şifre istemesi
+D) Ağın 5GHz olması
+Dogru: A
+
+Modul 2 - Soru 9
+Soru: Açık Wi-Fi'da hangi işlem en risklidir?
+A) Hava durumuna bakmak
+B) Banka/kurumsal oturum açma işlemleri
+C) Harita açmak
+D) Müzik dinlemek
+Dogru: B
+
+Modul 2 - Soru 10
+Soru: Ağdan çıktıktan sonra güvenlik için iyi bir ek adım hangisidir?
+A) Ağı otomatik bağlanmada bırakmak
+B) Bağlı kalıp ekranı kilitlemek
+C) Ağı unutmak ve bağlantıyı kesmek
+D) Aynı ağ adıyla tekrar bağlanmak
+Dogru: C
+
+Modul 3 - Soru 1
+Soru: Sideloading nedir ve neden tehlikelidir?
+A) Uygulamaları güncellemeden kullanmak
+B) Google Play veya App Store dışından uygulama yüklemek — Google/Apple güvenlik denetimini atlatır
+C) Uygulamaları Wi-Fi yerine mobil veriyle indirmek
+D) Çok fazla uygulama yükleyerek telefonu yavaşlatmak
+Dogru: B
+
+Modul 3 - Soru 2
+Soru: Telefon çalındığında ilk yapman gereken adım nedir?
+A) Polisi aramak ve kayıp bildirimi yapmak
+B) Hırsızı aramak ve cihazı geri istemek
+C) Başka bir cihazdan cihazı uzaktan kilitlemek
+D) Bankayı arayıp kartları iptal ettirmek
+Dogru: C
+
+Modul 3 - Soru 3
+Soru: Telefon çalındığında neden SIM kartı kilitlemen gerekir?
+A) Telefon numaranın çalınmasını engellemek için
+B) Hırsızın SIM'i başka cihaza takıp SMS tabanlı 2FA kodlarını almasını önlemek için
+C) Şebeke ücretlerini durdurmak için
+D) Telefonu kapatmak için
+Dogru: B
+
+Modul 3 - Soru 4
+Soru: Halka açık Wi-Fi'de hangi işlemi yapmak güvenlidir?
+A) Online bankacılık — HTTPS kullanıyorsa güvenlidir
+B) İş e-postalarını okumak ve yanıtlamak
+C) Haber okumak veya harita bakmak gibi hassas olmayan işlemler
+D) Sosyal medya hesabına giriş yapmak
+Dogru: C
+
+Modul 3 - Soru 5
+Soru: Telefonunda Wi-Fi kapalı ama Bluetooth açık. Kamuya açık bir ortamda bu durumda risk var mı?
+A) Hayır, Bluetooth kısa menzilli olduğundan güvenlidir
+B) Evet — 'BlueSnarfing' veya 'Bluebugging' saldırılarıyla rehber, dosya ve mesajlara erişilebilir
+C) Hayır, yalnızca eşleştirilmiş cihazlar risk oluşturur
+D) Evet ama yalnızca Android cihazlarda bu risk vardır
+Dogru: B
+
+Modul 3 - Soru 6
+Soru: PostNL'den şöyle bir SMS geldi: 'Paketiniz askıya alındı. €1,95 gümrük ücreti için tıklayın → postnl-delivery.me/pay'. Ne yaparsın?
+A) Tıklayıp ödeme yaparsın — küçük bir ücret, sorun olmaz
+B) SMS'i yoksayıp doğrudan postnl.nl adresini açar, paketin durumuna bakarsın
+C) SMS'teki linki açar ama kart bilgisi girmeden kontrol edersin
+D) Arkadaşlarına sorup onlar da aynı SMS'i aldıysa ödersin
+Dogru: B
+
+Modul 3 - Soru 7
+Soru: ING Bank'tan arandın: 'Hesabınızda şüpheli işlem var, güvenliğiniz için tek kullanımlık kodu söyleyin.' Ne yaparsın?
+A) Kodu söylersin — gerçekten banka arıyor olabilir
+B) Telefonu kapatır, kartının arkasındaki resmi ING numarasını kendin arayarak doğrularsın
+C) Kodu söylemez ama ad-soyad ve kart numaranı verirsin
+D) Kodu söylemek yerine şifrenle doğrulama yaparsın
+Dogru: B
+
+Modul 3 - Soru 8
+Soru: Google Play'de bir uygulama indirmeden önce güvenli olduğundan emin olmak için ne kontrol edersin?
+A) Sadece uygulamanın adına ve logosuna bakarsın
+B) Geliştirici adını, indirme sayısını, kullanıcı yorumlarını ve istenen izinleri kontrol edersin
+C) Uygulamanın ücretsiz olup olmadığına bakarsın — ücretsizse güvenlidir
+D) Sadece puan sayısına bakarsın — yüksek puanlıysa güvenlidir
+Dogru: B
+
+Modul 3 - Soru 9
+Soru: Bir fener (torch) uygulaması konum, rehber ve mikrofon izni istiyor. Ne yaparsın?
+A) İzinleri verirsin — üretici bu izinlere ihtiyaç duyuyordur
+B) İzinleri reddeder ya da uygulamayı hiç kurmazsın — fener için bu izinler gereksiz ve şüpheli
+C) Sadece konum iznini verirsin, diğerlerini reddedersin
+D) İzinleri verip sonra ayarlardan kaldırırsın — sorun olmaz
+Dogru: B
+
+Modul 3 - Soru 10
+Soru: Telefon çalınmadan önce hangi önlem veri kaybını en aza indirir?
+A) Telefona güçlü bir kılıf takmak
+B) Telefonun hafızasını düzenli temizlemek
+C) Otomatik bulut yedeklemeyi aktif tutmak ve Cihazımı Bul'u etkinleştirmek
+D) Çok sayıda uygulama yüklememek
+Dogru: C
+
+Modul 4 - Soru 1
+Soru: WhatsApp'ta tanıdık birinden '6 haneli kodu yanlışlıkla sana gönderdim, atar mısın?' mesajı geldi. Ne yaparsın?
+A) Kodu gönderirsin — tanıdık biri zor durumda
+B) Kodu göndermez, kişiyi doğrudan arayarak durumu teyit edersin
+C) Kodu göndermeden önce biraz beklersin
+D) Kodu göndermeden önce doğrulama sorusu sorarsın
+Dogru: B
+
+Modul 4 - Soru 2
+Soru: Yeni bir numaradan mesaj geliyor: 'Anne, benim! Telefonum bozuldu, bu arkadaşımın numarası. Acil €300 lazım.' Ne yaparsın?
+A) Çocuğun zor durumda, parayı gönderirsin
+B) Eski numarasını arar ve sesini duyarak doğrularsın
+C) Mesajı dikkate almazsın
+D) Kimliğini kanıtlaması için soru sorarsın ve cevabını beklersin
+Dogru: B
+
+Modul 4 - Soru 3
+Soru: Bir site 'ücretsiz Netflix erişimi' sunuyor ve 'sadece doğrulama için' kart bilgilerini istiyor. Ne yaparsın?
+A) Kart bilgilerini girersin — doğrulama için olduğunu söylüyorlar
+B) Bu tuzaktır — kart bilgilerini girmez, siteyi kapatırsın
+C) Sanal kart kullanırsın — böylece güvendesin
+D) Sadece kart numarasını girersin, CVV'yi vermezsin
+Dogru: B
+
+Modul 4 - Soru 4
+Soru: Sosyal medyada 'WhatsApp'ta seni takip edenleri gör!' linki paylaşılmış. Arkadaşların tıklamış bile. Ne yaparsın?
+A) Tıklarsın — arkadaşların tıkladıysa güvenlidir
+B) Tıklamazsın — WhatsApp bu tür verileri üçüncü taraflarla paylaşmaz, bu bir tuzaktır
+C) Tıklarsın ama kişisel bilgi girmezsin
+D) Önce antivirüsle taratırsın, temizse tıklarsın
+Dogru: B
+
+Modul 4 - Soru 5
+Soru: Biri sana 'sadece banka hesabından para ilet, sana %10 komisyon vereyim' teklif etti. Ne yaparsın?
+A) Kabul edersin — kolay para ve risk yok gibi görünüyor
+B) Reddedersin — bu kara para aklamadır, hem mağdur hem suça ortak olursun
+C) Önce küçük bir denemeyaparsin
+D) Yalnızca bir kez yaparsın, sonra bırakırsın
+Dogru: B
+
+Modul 4 - Soru 6
+Soru: Ofis otoparkında 'Maaş Listesi 2024' yazılı bir USB bellek buldun. Ne yaparsın?
+A) İçine bakarsın — belki önemli birinin belgesi
+B) IT departmanına teslim edersin veya çöpe atarsın — asla takmadan
+C) Kendi bilgisayarına değil, iş arkadaşının bilgisayarına takarsın
+D) Antivirüsle taratırsın, temizse içine bakarsın
+Dogru: B
+
+Modul 4 - Soru 7
+Soru: Telefonda biri 'ING güvenlik birimi, hesabınızda şüpheli işlem var' deyip SMS doğrulama kodu istedi. Ne yaparsın?
+A) Kodu söylersin — gerçekten banka arıyor olabilir
+B) Telefonu kapatıp ING'nin kartının arkasındaki resmi numarasını arayarak doğrularsın
+C) Kodu söylemeden adını ve son 4 hane kart numaranı verirsin
+D) Kodu söylemeden önce 'ben mi aradım?' diye sorarsın
+Dogru: B
+
+Modul 4 - Soru 8
+Soru: Sosyal mühendislik saldırılarında 'aciliyet' neden kullanılır?
+A) Kurbanı daha nazik yapmak için
+B) Kurbanın düşünme ve doğrulama sürecini devre dışı bırakmak için
+C) Yasal sorumluluktan kaçmak için
+D) Saldırının daha hızlı tamamlanması için
+Dogru: B
+
+Modul 4 - Soru 9
+Soru: Crack program veya oyun hilesi indirmek neden tehlikelidir?
+A) Sadece telif hakkı ihlali olduğu için
+B) Çoğunlukla trojan, keylogger veya spyware içerdiği için — program çalışırken arka planda bilgilerini çalabilir
+C) Yalnızca eski bilgisayarlarda sorun çıkardığı için
+D) İnternet hızını yavaşlattığı için
+Dogru: B
+
+Modul 4 - Soru 10
+Soru: Sosyal mühendisliğe karşı en etkili üçlü savunma kuralı hangisidir?
+A) Şüphe et, güven, paylaş
+B) Dur, sor, doğrula
+C) Tıkla, kontrol et, devam et
+D) Oku, ara, bildir
+Dogru: B
+
+Modul 5 - Soru 1
+Soru: Bir e-posta 'noreply@netf1ix-billing.com' adresinden geliyor. Bu ne tür bir saldırıdır?
+A) Vishing
+B) E-posta Phishing — sahte domain (netf1ix yerine netf1ix)
+C) CEO Fraud
+D) Ransomware
+Dogru: B
+
+Modul 5 - Soru 2
+Soru: Bir site HTTPS kullanıyor. Bu o sitenin güvenilir olduğu anlamına gelir mi?
+A) Evet, HTTPS şifreleme demektir
+B) Hayır — HTTPS yalnızca bağlantının şifreli olduğunu gösterir, site meşruiyetini kanıtlamaz
+C) Evet ama yalnızca .com uzantılılar için
+D) Evet, sertifikası varsa güvenlidir
+Dogru: B
+
+Modul 5 - Soru 3
+Soru: Spear phishing ile normal phishing arasındaki temel fark nedir?
+A) Spear phishing sadece e-postayla yapılır
+B) Spear phishing belirli bir kişiye özel hazırlanır — adı, şirketi, müdürünün adı kullanılır
+C) Normal phishing daha tehlikelidir
+D) Aralarında fark yoktur
+Dogru: B
+
+Modul 5 - Soru 4
+Soru: Ransomware saldırısına karşı en etkili korunma yöntemi hangisidir?
+A) Fidyeyi hemen ödemek
+B) Antivirüs yazılımı yüklemek
+C) Düzenli çevrimdışı yedek almak (3-2-1 kuralı)
+D) İnterneti kapatmak
+Dogru: C
+
+Modul 5 - Soru 5
+Soru: Trojan (Truva Atı) zararlı yazılımı en çok hangi yolla bulaşır?
+A) Yalnızca e-posta ekleriyle
+B) Meşru görünen ücretsiz yazılım, oyun veya araç — kurulunca arka kapı açar
+C) Bluetooth ile
+D) Sadece virüslü web sitelerini ziyaret ederek
+Dogru: B
+
+Modul 5 - Soru 6
+Soru: QR kod phishing saldırısı neden tehlikelidir?
+A) QR kodlar daha hızlı çalışır
+B) Mobil ekranda URL'nin tamamı görünmez — sahte siteye fark etmeden düşersin
+C) Antivirüs tarafından hiç taranamaz
+D) Yalnızca Android'i etkiler
+Dogru: B
+
+Modul 5 - Soru 7
+Soru: haveibeenpwned.com ne işe yarar?
+A) Şifre üretir
+B) E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder
+C) Antivirüs taraması yapar
+D) VPN hizmeti sunar
+Dogru: B
+
+Modul 5 - Soru 8
+Soru: CEO Fraud (BEC) saldırısı nedir?
+A) CEO'nun bilgisayarına virüs bulaştırmak
+B) Şirket yöneticisi gibi davranarak çalışanı acil para transferine yönlendirmek
+C) CEO'nun e-postasını hacklemek
+D) Şirketin web sitesini ele geçirmek
+Dogru: B
+
+Modul 5 - Soru 9
+Soru: Spyware / Keylogger zararlı yazılımından korunmak için en etkili adım nedir?
+A) Güçlü şifre kullanmak
+B) Sistemi ve uygulamaları güncel tutmak, bilinmeyen program yüklememek
+C) Pahalı antivirüs satın almak
+D) Sadece bilinen siteleri ziyaret etmek
+Dogru: B
+
+Modul 5 - Soru 10
+Soru: Şüpheli bir dosya veya linki açmadan önce ne yapmalısın?
+A) Hızlıca açıp kontrol edersin
+B) virustotal.com'a yükleyerek 70'ten fazla motor ile tara
+C) Güvenilir birine gönderip açmasını iste
+D) Resmi siteden geliyorsa açabilirsin
+Dogru: B
+
+Modul 6 - Soru 1
+Soru: Bir fener uygulaması hangi izni isterse şüphelenmelisin?
+A) İnternet erişimi
+B) Ekran parlaklığı
+C) Depolama alanı
+D) Rehbere erişim
+Dogru: D
+
+Modul 6 - Soru 2
+Soru: iCloud Gelişmiş Veri Koruması (Advanced Data Protection) etkinleştirildiğinde ne olur?
+A) Apple bile verilerinize erişemez — uçtan uca şifreleme kapsamı genişler
+B) Veriler yalnızca Wi-Fi ile aktarılır
+C) Yedeklemeler otomatik durur
+D) Fotoğraflar otomatik silinir
+Dogru: A
+
+Modul 6 - Soru 3
+Soru: Google Drive'ın temel gizlilik sorunu nedir?
+A) Dosyalar şifrelenmez
+B) Dosya boyutu sınırı çok düşük
+C) Google verilerinize erişebilir ve reklam hedefleme için analiz edebilir
+D) 2FA desteklemiyor
+Dogru: C
+
+Modul 6 - Soru 4
+Soru: OneDrive'ın Google Drive'a göre öne çıkan güvenlik özelliği nedir?
+A) Uçtan uca şifreleme
+B) Personal Vault ve fidye yazılımı koruması
+C) Açık kaynak şifreleme
+D) Apple ile entegrasyon
+Dogru: B
+
+Modul 6 - Soru 5
+Soru: GDPR kapsamında 'unutulma hakkı' ne anlama gelir?
+A) Şifreni unutunca sıfırlama hakkı
+B) Hesabını geçici kapatma hakkı
+C) Verilerinin şirketten silinmesini talep etme hakkı
+D) Bildirimleri kapatma hakkı
+Dogru: C
+
+Modul 6 - Soru 6
+Soru: Google Drive'daki eski paylaşımı kaldırdığında o dosya karşı taraftan silinir mi?
+A) Evet, anında silinir
+B) Hayır, indirildiyse karşı tarafın cihazında hâlâ vardır
+C) Evet ama 30 gün sonra
+D) Google Cloud tarafından silinir
+Dogru: B
+
+Modul 6 - Soru 7
+Soru: Bir uygulama izin kontrolü için nereye bakmalısın? (iPhone)
+A) Ayarlar → Gizlilik & Güvenlik → İzinler
+B) Uygulama içi ayarlar
+C) App Store değerlendirmeleri
+D) Safari'de arama
+Dogru: A
+
+Modul 6 - Soru 8
+Soru: GDPR kapsamında şirket verilerini görme talebine kaç günde yanıt vermek zorunda?
+A) 7 gün
+B) 15 gün
+C) 60 gün
+D) 30 gün
+Dogru: D
+
+Modul 6 - Soru 9
+Soru: Buluta yüklenecek hassas bir belge (kimlik fotokopisi gibi) için en doğru yaklaşım hangisidir?
+A) Doğrudan yükle, zaten şifreli
+B) Önce zip ile şifrele veya parola korumalı PDF yap, sonra yükle
+C) Hiçbir belgeyi buluta yükleme
+D) Sadece iCloud'a yükle
+Dogru: B
+
+Modul 6 - Soru 10
+Soru: Google hesabına bağlı üçüncü taraf uygulamaları nerede kontrol edebilirsin?
+A) google.com/apps
+B) Gmail → Ayarlar → Uygulamalar
+C) Chrome → Uzantılar
+D) myaccount.google.com → Güvenlik → Üçüncü Taraf Erişimi
+Dogru: D
+
+Modul 7 - Soru 1
+Soru: GDPR ölçülülük ilkesi sunum bağlamında ne anlama gelir?
+A) Her sunum için GDPR belgesi hazırlanmalıdır
+B) İzin alınmış olsa bile gerekli olandan fazla kişisel veri paylaşmak hatadır
+C) Sunumlar yalnızca şifreli kanaldan yapılmalıdır
+D) Katılımcı sayısı 20'yi geçemez
+Dogru: B
+
+Modul 7 - Soru 2
+Soru: '%17,4 büyüme' rakamını güvenli hale getirmek için hangi teknik kullanılır?
+A) Tamamen çıkarılır
+B) Genelleştirme — '%15–20 arası' gibi aralık verilir
+C) Yıldızlarla maskelenir: %**.* 
+D) Yalnızca sunum sonrası PDF'e eklenir
+Dogru: B
+
+Modul 7 - Soru 3
+Soru: PowerPoint dosyasında hangi gizli içerik paylaşım sırasında risk yaratabilir?
+A) Slayt arka plan rengi
+B) Konuşmacı notları, gizli slaytlar ve yorum geçmişi
+C) Yazı tipi seçimi
+D) Animasyon hızı
+Dogru: B
+
+Modul 7 - Soru 4
+Soru: Zoom toplantısında ekran paylaşımından önce yapılması gereken en önemli adım nedir?
+A) Kamerayı kapatmak
+B) E-posta, mesaj sekmelerini kapatmak ve bildirimleri devre dışı bırakmak
+C) Toplantı linkini katılımcılara tekrar göndermek
+D) Mikrofonu test etmek
+Dogru: B
+
+Modul 7 - Soru 5
+Soru: 'Ahmet Yılmaz, Satış Müdürü' ifadesini sunumda kullanmak yerine ne söylenmeli?
+A) A. Yılmaz, S. Müdürü
+B) Bir ekip yöneticisi
+C) Çalışan #1042
+D) İsim gizlenmiştir
+Dogru: B
+
+Modul 7 - Soru 6
+Soru: Sunum dosyasını harici kişiye göndermeden önce hangi iki versiyon stratejisi uygulanmalı?
+A) Biri renkli biri siyah-beyaz
+B) INTERNAL (detaylı) ve EXTERNAL (sadeleştirilmiş/anonim) olmak üzere iki ayrı versiyon
+C) Biri PDF biri PPT
+D) Biri Türkçe biri İngilizce
+Dogru: B
+
+Modul 7 - Soru 7
+Soru: Bir sunum fotoğrafında arka planda yaka kartı görünüyor. Bu neden risk oluşturur?
+A) Estetik açıdan kötü görünür
+B) Yaka kartındaki ad, şirket veya rozet bilgisi fotoğrafta okunabilir
+C) Fotoğraf telif hakkı ihlali olur
+D) Sadece güvenlik personeli için geçerlidir
+Dogru: B
+
+Modul 7 - Soru 8
+Soru: Sunum sırasında biri detay sorarsa ve bu bilgiyi o ortamda paylaşman uygun değilse ne yapmalısın?
+A) Soruyu görmezden gelirsin
+B) 'Bu bilgiyi bu ortamda detaylandıramam' diyip geçersin — bu doğru bir davranıştır
+C) Toplantıyı bitirirsin
+D) Soruyu sorana özel mesaj atarsın
+Dogru: B
+
+Modul 7 - Soru 9
+Soru: Bir çalışanın performans ve maaş bilgisi neden sunum ortamında paylaşılmamalıdır?
+A) Bu bilgiler yalnızca İngilizce paylaşılabilir
+B) Bunlar GDPR'da özel nitelikli veri sayılır; sunum ortamı bu tür hassas bilgi için uygun değildir
+C) Sadece C-level toplantılarında paylaşılabilir
+D) Maaş bilgisi 100€ altındaysa sorun olmaz
+Dogru: B
+
+Modul 7 - Soru 10
+Soru: Doğaçlama konuşma sırasında sunum güvenliği açısından en kritik kural nedir?
+A) Yavaş konuşmak
+B) İsim vermemek ve net rakamları ağzından kaçırmamak
+C) Her cümleden sonra duraksamak
+D) Slayta bakarak okumak
+Dogru: B
+
+Modul 8 - Soru 1
+Soru: Güvenli iletişimin '3 katmanı' nedir?
+A) Şifre, 2FA ve antivirüs
+B) Transit şifreleme (E2EE), metaveri koruması ve cihazda depolama kontrolü
+C) VPN, firewall ve şifreleme
+D) İçerik şifreleme, bağlantı şifreleme ve yedekleme
+Dogru: B
+
+Modul 8 - Soru 2
+Soru: WhatsApp ile Signal arasındaki en kritik fark nedir?
+A) Signal tamamen ücretsiz, WhatsApp ücretli
+B) WhatsApp mesaj içeriğini şifrelemez, Signal şifreler
+C) WhatsApp metaveri toplar ve Meta'ya aktarır; Signal toplamaz
+D) Signal yalnızca Android'de çalışır
+Dogru: C
+
+Modul 8 - Soru 3
+Soru: Threema'yı diğer uygulamalardan ayıran en önemli özellik nedir?
+A) Tamamen ücretsizdir
+B) Telefon numarası veya e-posta adresi gerektirmez — Threema ID ile çalışır
+C) Yalnızca iOS'ta mevcuttur
+D) Mesajları otomatik olarak siler
+Dogru: B
+
+Modul 8 - Soru 4
+Soru: Süreli mesaj özelliği iletişim güvenliğinde hangi katmanı tamamlar?
+A) Katman 1 — transit şifreleme
+B) Katman 2 — metaveri koruması
+C) Katman 3 — cihazda depolama kontrolü
+D) Hiçbirini — sadece pratik bir özellik
+Dogru: C
+
+Modul 8 - Soru 5
+Soru: Telegram'da E2EE hangi koşulda aktif olur?
+A) Her zaman otomatik aktiftir
+B) Yalnızca grup sohbetlerinde
+C) Yalnızca 'Gizli Sohbet' modunda
+D) Telegram hiçbir zaman E2EE sağlamaz
+Dogru: C
+
+Modul 8 - Soru 6
+Soru: Signal'de IP adresini gizlemek için hangi ayar açılmalıdır?
+A) Ayarlar → Bildirimler → Sessiz mod
+B) Ayarlar → Gizlilik → Gelişmiş → Aramaları Her Zaman Aktar
+C) Ayarlar → Hesap → Telefon numarasını gizle
+D) Ayarlar → Veri kullanımı → VPN
+Dogru: B
+
+Modul 8 - Soru 7
+Soru: ProtonMail ile normal bir Gmail kullanıcısına şifreli e-posta göndermek mümkün müdür?
+A) Hayır, alıcının da ProtonMail kullanması gerekir
+B) Evet — alıcıya şifreli bağlantı gönderilir, bir şifreyle açar
+C) Sadece Tutanota kullanıcılarına gönderilebilir
+D) Hayır, ProtonMail yalnızca kendi sunucusunda çalışır
+Dogru: B
+
+Modul 8 - Soru 8
+Soru: WhatsApp'ta süreli mesajın varsayılan durumu nedir ve nasıl açılır?
+A) Varsayılan açık, kapatmak için Ayarlar → Sohbetler
+B) Varsayılan kapalı — her sohbet için ayrı ayrı açılmalı: Sohbet → İsim → Süreli Mesajlar
+C) Otomatik 90 günde bir temizlenir
+D) Süreli mesaj özelliği WhatsApp'ta mevcut değil
+Dogru: B
+
+Modul 8 - Soru 9
+Soru: Konferansta gördüğün bir posterteki QR kodu taramadan önce hangi kontrolü yapmalısın?
+A) QR kodunun rengi ve kalitesine bak
+B) Domain adresini kontrol et — resmi adres mi (web.whatsapp.com gibi), HTTP mi HTTPS mi
+C) Posterin boyutuna ve matbaa kalitesine bak
+D) Çevrenizdekilere sorun — tanıdık biri koymuş olabilir
+Dogru: B
+
+Modul 8 - Soru 10
+Soru: 'E2EE kullanıyorum yani güvendeyim' ifadesi neden eksik bir yaklaşımdır?
+A) E2EE aslında güvenli değildir
+B) E2EE sadece Katman 1'dir — metaveri toplanabilir, telefonda mesajlar birikir; Katman 2 ve 3 olmadan tam güvenlik sağlanamaz
+C) E2EE yalnızca ücretli uygulamalarda gerçekten çalışır
+D) E2EE yalnızca sesli aramalarda geçerlidir
+Dogru: B
+
+Modul 9 - Soru 1
+Soru: ENISA'ya göre AB'deki hesap ele geçirme (ATO) vakalarının büyük çoğunluğu hangi yöntemle gerçekleşiyor?
+A) Brute force (kaba kuvvet) saldırısı
+B) Credential stuffing — başka platformdan çalınan şifre bilgisinin denenmesi
+C) SIM swap saldırısı
+D) Keylogger yazılımı
+Dogru: B
+
+Modul 9 - Soru 2
+Soru: 2FA türleri arasında phishing'e karşı en dirençli seçenek hangisidir?
+A) SMS ile gelen 6 haneli kod
+B) TOTP authenticator uygulaması (Google Authenticator vb.)
+C) FIDO2 donanım güvenlik anahtarı (YubiKey vb.)
+D) E-posta ile gelen doğrulama kodu
+Dogru: C
+
+Modul 9 - Soru 3
+Soru: Passkey (geçiş anahtarı) teknolojisinin şifreye göre en kritik avantajı nedir?
+A) Daha kısa ve hatırlanması kolay
+B) Şifre olmadığından credential stuffing ve phishing mümkün değil
+C) Yalnızca Apple cihazlarında çalışır
+D) Daha ucuz güvenlik çözümü sunar
+Dogru: B
+
+Modul 9 - Soru 4
+Soru: Hesabının ihlal edildiğini fark ettiğinde doğru adım sırası hangisi?
+A) Oturumları kapat → şifreyi değiştir → 2FA'yı etkinleştir
+B) Şifreyi değiştir → oturumları kapat → 2FA'yı gözden geçir → kurtarma kodlarını yenile
+C) Platformun destek ekibine bildir → şifreyi değiştir
+D) Antivirüs tara → şifreyi değiştir → oturumları kapat
+Dogru: B
+
+Modul 9 - Soru 5
+Soru: GDPR kapsamında bir platform bir hesap ihlalini öğrendiğinde yetkililere ne kadar süre içinde bildirmek zorundadır?
+A) 7 gün
+B) 30 gün
+C) 72 saat
+D) 24 saat
+Dogru: C
+
+Modul 9 - Soru 6
+Soru: SMS ile 2FA'nın en ciddi güvenlik açığı nedir?
+A) SMS mesajları çok hızlı siliyor
+B) SIM swap — saldırgan operatörü arayarak hattı kendi SIM'ine taşıtabilir
+C) SMS mesajı yalnızca 5 dakika geçerli
+D) SMS mesajı şifreli değil
+Dogru: B
+
+Modul 9 - Soru 7
+Soru: LinkedIn güvenlik ayarlarında 2FA için hangi seçenek tercih edilmelidir?
+A) SMS kodu — en hızlı seçenek
+B) Authenticator uygulaması (TOTP) — SMS'den çok daha güvenli
+C) E-posta kodu
+D) Telefon araması
+Dogru: B
+
+Modul 9 - Soru 8
+Soru: Hesabını ihlal eden saldırgan, oturumunu kapatmadan önce ne yapabilir?
+A) Yalnızca profilini görüntüleyebilir
+B) OAuth uygulaması bağlayarak şifren değişse bile erişimini sürdürebilir
+C) Hesabını tamamen silebilir
+D) Yalnızca e-postalarını okuyabilir
+Dogru: B
+
+Modul 9 - Soru 9
+Soru: haveibeenpwned.com sitesi ne için kullanılır?
+A) Güçlü şifre üretmek
+B) E-posta adresinin geçmiş veri ihlallerinde yer alıp almadığını kontrol etmek
+C) 2FA kodunu doğrulamak
+D) VPN bağlantısı kurmak
+Dogru: B
+
+Modul 9 - Soru 10
+Soru: Google Passkey oluşturmak için doğru adım dizisi hangisidir?
+A) Google Play Store → Passkey Uygulaması → İndir
+B) myaccount.google.com → Güvenlik → Passkey'ler → Yeni Passkey Oluştur
+C) Gmail → Ayarlar → Gizlilik → Passkey Etkinleştir
+D) Google → Profil → Güvenlik → 2FA → Passkey Ekle
+Dogru: B
+
+Modul 10 - Soru 1
+Soru: Havaalanındaki 'Airport_Free_WiFi' adlı ağa bağlanmak neden tehlikeli olabilir?
+A) Havaalanı Wi-Fi her zaman yavaştır
+B) Bu ağ saldırgan tarafından kurulmuş sahte bir evil twin noktası olabilir — tüm trafiğiniz izlenebilir
+C) Havaalanı ağları ücretli olduğu için ücretsiz olanlar kısıtlıdır
+D) Ağa bağlanmak pilinizi hızlı tüketir
+Dogru: B
+
+Modul 10 - Soru 2
+Soru: Juice Jacking saldırısı nasıl gerçekleşir?
+A) Saldırgan Wi-Fi üzerinden cihaza bağlanır
+B) Halka açık USB şarj noktası üzerinden veri çalınır veya zararlı yazılım yüklenir
+C) Kötü amaçlı e-posta ekiyle cihaz enfekte edilir
+D) Bluetooth üzerinden dosya gönderilir
+Dogru: B
+
+Modul 10 - Soru 3
+Soru: İngiltere'de sınır güvenliği yasası (Schedule 7) kapsamında şifre vermeyi reddetmek ne anlama gelir?
+A) Cihazına el konulabilir ama serbest bırakılırsın
+B) Suç sayılır ve yasal yaptırımla karşılaşabilirsin
+C) Sadece ek sorgulama yapılır
+D) Hiçbir yaptırım uygulanamaz — insan hakları koruması devrededir
+Dogru: B
+
+Modul 10 - Soru 4
+Soru: Seyahatte 'seyahat modu' uygulamak ne anlama gelir?
+A) Telefonunu uçak moduna almak
+B) Cihazı sınıra minimum veri, maksimum şifrelemeyle taşımak — biometrik yerine PIN kullanmak
+C) Veri tasarrufu modunu açmak
+D) Uygulamaları kapatıp sadece telefon olarak kullanmak
+Dogru: B
+
+Modul 10 - Soru 5
+Soru: Yurt dışı seyahatte en güvenli internet bağlantı yöntemi hangisidir?
+A) Otel Wi-Fi — parola korumalı olduğu için güvenlidir
+B) Kendi telefon mobil verisini hotspot olarak kullanmak
+C) Havaalanı ağı — büyük kurumlar tarafından yönetilir
+D) Kafedeki Wi-Fi — şifre istediği için güvenlidir
+Dogru: B
+
+Modul 10 - Soru 6
+Soru: Laptop'u otel odasında bırakmak neden güvenlik riski oluşturur?
+A) Laptop şarjda yanabilir
+B) Oda personeli, bakım görevlisi veya başka biri fiziksel erişim sağlayabilir — disk şifrelemesi olmadan veri çalınabilir
+C) Oteller çalışanların eşyalarından sorumlu değildir
+D) Yalnızca eski otel modellerinde risk vardır
+Dogru: B
+
+Modul 10 - Soru 7
+Soru: ABD sınırında (CBP) gümrük yetkilisi cihazını incelemek isterse ne olur?
+A) İzin vermeni beklemek zorundalar — reddedebilirsin
+B) Border Search Exception kapsamında mahkeme kararı olmadan cihazını inceleyebilirler, ABD vatandaşı değilsen reddetmek giriş reddine yol açabilir
+C) Yalnızca çanta ve valizi inceleme yetkileri vardır
+D) Konsolosluktan izin almaları gerekir
+Dogru: B
+
+Modul 10 - Soru 8
+Soru: Halka açık ortamda laptopa çalışırken omuz sörfüne karşı en etkili önlem nedir?
+A) Ekranın parlaklığını düşürmek
+B) Privacy screen (ekran gizleme filtresi) kullanmak
+C) Sadece gece çalışmak
+D) Arkaya duvar olan bir yer seçmek
+Dogru: B
+
+Modul 10 - Soru 9
+Soru: Seyahatte cihaz kaybolduğunda doğru ilk adım nedir?
+A) Hemen uzaktan silme komutu gönder — veri güvende olsun
+B) Polis karakoluna git ve kayıp bildirimi yap
+C) Önce uzaktan kilitle ve konumu izle — silme kararını aceleyle verme
+D) Operatörü ara ve SIM kartı iptal et
+Dogru: C
+
+Modul 10 - Soru 10
+Soru: Ücretsiz VPN kullanmak neden önerilmez?
+A) Ücretsiz VPN'lerde hız düşebilir ve bağlantı kararsız olabilir; ancak bu tek başına ana güvenlik riski değildir
+B) Bazı ücretsiz VPN'ler trafik ve kullanım verilerini toplayıp üçüncü taraflarla paylaşabilir; güvenlik aracı verini metaya çevirebilir
+C) Bazı ücretsiz VPN uygulamaları cihazda aşırı izin ister ve reklam/izleme SDK'ları çalıştırabilir; risk yalnızca mobil uyumluluk değildir
+D) Sınırda sorun yaşamak tek başına sebep değildir; asıl mesele sağlayıcının kayıt politikası ve veri işleme şeffaflığıdır
+Dogru: B
+
+Modul 11 - Soru 1
+Soru: Bir öğretmen öğrenci performans verilerini içeren Excel tablosunu ChatGPT'ye yükleyerek analiz yaptırmak istiyor. Bu eylem hangi temel riski doğurur?
+A) Excel dosyaları ChatGPT tarafından okunamaz
+B) Hassas öğrenci verileri güvenliği bilinmeyen sunuculara iletilir ve kul hakkı ihlali oluşur
+C) ChatGPT yanlış analiz yapabilir
+D) Dosya boyutu çok büyük olabilir
+Dogru: B
+
+Modul 11 - Soru 2
+Soru: "Yapay zekayı bir stajyer gibi düşünün" metaforu ne anlama gelir?
+A) YZ çok yavaş çalışır
+B) YZ zeki ve hafızası güçlü — ama neyi gizli tutması gerektiğini bilmez; verdiğiniz bilgiler başkaları tarafından görülebilir
+C) YZ sadece basit işler yapabilir
+D) YZ'nin kendi fikirleri yoktur
+Dogru: B
+
+Modul 11 - Soru 3
+Soru: 10 Altın İlke'ye göre, başkasına ait bir veriyi yapay zeka aracıyla işlemeniz zorunluysa ne yapmalısınız?
+A) En güvenilir YZ aracını seçip doğrudan yükleyin
+B) İsimleri, iletişim bilgilerini ve kimliği belli eden unsurları kaldırarak anonimleştirin
+C) Sadece gece vakti işlem yapın
+D) Hukuk departmanını bekleyin
+Dogru: B
+
+Modul 11 - Soru 4
+Soru: Deepfake ses klonlama saldırısında saldırgan ne yapar?
+A) Kurbanın telefonunu hackler
+B) Kısa bir ses örneğinden kurbanın sesini kopyalayarak "CEO'dan acil para transferi" gibi sahte talepler oluşturur
+C) Sosyal medya hesabını ele geçirir
+D) E-posta şifresini çalar
+Dogru: B
+
+Modul 11 - Soru 5
+Soru: ChatGPT'de en az risk oluşturan kullanım yöntemi hangisidir?
+A) Google hesabıyla giriş yapmak
+B) "Temporary Chat" (Geçici Sohbet) modunu kullanmak
+C) Anonim tarayıcıda açmak
+D) Telefon numarası ile kaydolmak
+Dogru: B
+
+Modul 11 - Soru 6
+Soru: Gizlilik odaklı YZ araçları arasında en yüksek güvenlik seviyesini sunan hangisidir?
+A) ChatGPT (varsayılan ayarlar)
+B) Gemini (Google)
+C) Yerel olarak çalıştırılan açık kaynaklı YZ (Llama, GPT4All)
+D) Perplexity.ai
+Dogru: C
+
+Modul 11 - Soru 7
+Soru: GDPR'ın hangi maddesi YZ araçlarına veri yüklerken en sık çatışma yaşanan alandır?
+A) Madde 1 — GDPR'ın Amacı
+B) Madde 7 — Açık Rıza
+C) Madde 25 — Tasarım Gereği Veri Koruma
+D) Madde 30 — Kayıt Tutma
+Dogru: B
+
+Modul 11 - Soru 8
+Soru: "Veri emanettir" anlayışında bir kurum yöneticisi bağışçı listesini başka bir kuruluşla iyi niyetle paylaşırsa ne olur?
+A) İyi niyet tüm etik riskleri ortadan kaldırır
+B) Veri sahibinin açık rızası alınmadığından kul hakkı ihlali, güven ihlali ve mahremiyet zedelenmesi gerçekleşir
+C) Sadece GDPR para cezası riski oluşur
+D) Bağışçılar zaten kamuya açık kişilerdir
+Dogru: B
+
+Modul 11 - Soru 9
+Soru: Bir deepfake video izliyorsunuz — hangisi sahte olduğunu gösteren bir işaret DEĞİLDİR?
+A) Yüz kenarlarında bulanıklık ve ışık tutarsızlığı
+B) Dudak-ses senkronizasyon bozukluğu
+C) Videonun çok yüksek çözünürlüklü olması
+D) Göz kırpma düzensizliği ve aşırı pürüzsüz cilt
+Dogru: C
+
+Modul 11 - Soru 10
+Soru: "Saklama Süresini Kısalt" ilkesi ne anlama gelir?
+A) Verileri hızlı internet ile yüklemelisiniz
+B) İşi biten veriyi gereksiz yere saklamak emaneti riske atmaktır — verinin amacı kalmadığında güvenli şekilde imha edilmelidir
+C) Sadece küçük dosyalar saklanmalıdır
+D) Veriler 30 günden fazla tutulamaz
+Dogru: B
+
+Modul 12 - Soru 1
+Soru: SIM bypass saldırısında saldırgan ne yapar?
+A) Telefona fiziksel olarak erişir ve SIM kartı çalar
+B) Operatörü kandırarak veya içeriden biriyle anlaşarak telefon numarasını başka bir SIM'e aktarır
+C) SMS mesajlarını havada yakalar (man-in-the-middle)
+D) Telefonun şifresini kırar
+Dogru: B
+
+Modul 12 - Soru 2
+Soru: 2FA için en güvenli yöntem hangisidir?
+A) SMS ile doğrulama kodu almak
+B) E-posta ile doğrulama kodu almak
+C) Google Authenticator veya Authy gibi uygulama tabanlı 2FA
+D) Güvenlik soruları (doğum tarihi, anne kızlık soyadı gibi)
+Dogru: C
+
+Modul 12 - Soru 3
+Soru: Instagram'da aktif oturumları kontrol etmek için doğru yol hangisi?
+A) Profil → Düzenle → Cihazlar
+B) Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği
+C) Keşfet → Güvenlik → Aktif oturumlar
+D) Bildirimler → Güvenlik Uyarıları
+Dogru: B
+
+Modul 12 - Soru 4
+Soru: Telegram hakkında hangisi DOĞRUDUR?
+A) Tüm Telegram sohbetleri varsayılan olarak uçtan uca şifreli
+B) Telegram'da hiç şifreleme yok
+C) Yalnızca 'Gizli Sohbet' özelliği uçtan uca şifreli; normal sohbetler Telegram'ın sunucularında açık metin olarak durur
+D) Telegram, WhatsApp'tan daha az güvenli çünkü açık kaynak değil
+Dogru: C
+
+Modul 12 - Soru 5
+Soru: WhatsApp'ta şifre paylaşmak neden tehlikelidir?
+A) WhatsApp şifreleme kullanmıyor
+B) WhatsApp mesajları Google Drive veya iCloud'a yedeklenebilir — bu yedekler her zaman uçtan uca şifreli değildir. Ayrıca mesaj geçmişi ele geçirilirse şifre de gider
+C) WhatsApp mesajları Meta tarafından okunuyor
+D) WhatsApp yalnızca kısa mesajlara izin veriyor
+Dogru: B
+
+Modul 12 - Soru 6
+Soru: Instagram hesabın ele geçirildiğinde ilk 5 dakikada ne yapmalısın?
+A) Instagram'a şikâyet formu doldur ve cevap bekle
+B) Hesaba hâlâ girebiliyorsan şifreyi hemen değiştir ve tüm diğer oturumları kapat
+C) Ekran görüntüsü al ve sosyal medyada paylaş
+D) Arkadaşlarını ara ve durumu anlat
+Dogru: B
+
+Modul 12 - Soru 7
+Soru: Kurumsal sosyal medya hesaplarında hangi e-posta kullanılmalı?
+A) Yöneticinin kişisel e-postası — pratik olduğu için
+B) Gmail veya Hotmail gibi ücretsiz genel amaçlı e-postalar
+C) Kurumsal e-posta (kurum.org, kurum.com.tr gibi) — problem çıkınca platform ile iletişim kolaylaşır
+D) Şifreli geçici e-postalar
+Dogru: C
+
+Modul 12 - Soru 8
+Soru: 'Credential stuffing' saldırısı nedir?
+A) Saldırganın fiziksel olarak bilgisayarına erişmesi
+B) Sızdırılmış kullanıcı adı-şifre kombinasyonlarının otomatik araçlarla farklı platformlarda denenmesi
+C) Phishing e-postası ile şifre çalınması
+D) Tarayıcıdaki kaydedilmiş şifrelerin kopyalanması
+Dogru: B
+
+Modul 12 - Soru 9
+Soru: WhatsApp'ta 'Bağlı Cihazlar' bölümünü kontrol etmek neden önemli?
+A) Telefonun depolama kapasitesini görmek için
+B) WhatsApp Web veya masaüstü uygulaması üzerinden kim mesajlarını okuyabilir bunu kontrol etmek için
+C) Whatsapp'ın güncel sürümde olup olmadığını anlamak için
+D) Veri kullanımını görmek için
+Dogru: B
+
+Modul 12 - Soru 10
+Soru: Hesap ele geçirildikten sonra saldırgan ilk ne yapar?
+A) İçerikleri inceleyip çıkar
+B) E-posta adresini, telefon numarasını ve şifreyi değiştirerek seni dışarı kilitler
+C) Hesabı kapatır
+D) Yalnızca bazı gönderileri siler
+Dogru: B
+
+Modul 13 - Soru 1
+Soru: Zorbalığa maruz kaldığında yapman gereken ilk şey nedir?
+A) Hemen saldırgana yanıt ver
+B) Ekran görüntüsü al ve kanıtları kaydet
+C) Sosyal medya hesabını kapat
+D) Polise git
+Dogru: B
+
+Modul 13 - Soru 2
+Soru: GDPR'ın "Unutulma Hakkı" hangi maddede yer alır ve ne anlama gelir?
+A) Madde 5 — Veri işleme ilkeleri
+B) Madde 7 — Açık rıza şartı
+C) Madde 17 — İzinsiz paylaşılan içeriklerin kaldırılmasını talep etme hakkı
+D) Madde 32 — Güvenlik önlemleri
+Dogru: C
+
+Modul 13 - Soru 3
+Soru: "Sadece şakaydı" savunması zorbalık bağlamında neden geçerli değildir?
+A) Geçerlidir, niyet her şeydir
+B) Zorbalıkta kriter gönderenin niyeti değil, hedefin yaşadığı acıdır
+C) Şaka yalnızca yüz yüze yapılabilir
+D) Dijital ortamda şaka olmaz
+Dogru: B
+
+Modul 13 - Soru 4
+Soru: Bir ebeveynin, çocuğunun internet trafiğini yönetmek ve sakıncalı içerikleri engellemek için modem/router seviyesinde yapabileceği en etkili teknik ayar nedir?
+A) Güvenli DNS (Family DNS) ayarlarını kullanarak kumar, müstehcenlik ve zararlı yazılım içeren siteleri ağ seviyesinde engellemek.
+B) İnternet kablosunu her akşam sökerek fiziksel erişimi tamamen ortadan kaldırmak.
+C) Bilgisayarın ekran parlaklığını düşürerek çocuğun ekrana bakma süresini dolaylı yoldan azaltmak.
+D) Sadece Google Chrome'un "Gizli Sekme" özelliğini kullanmasına izin vermek.
+Dogru: A
+
+Modul 13 - Soru 5
+Soru: Çocuğunuzun oynadığı çevrimiçi bir oyunda, tanımadığı birinin ona "oyun içi kostüm/para" vaat ederek kişisel bilgilerini veya sizin kredi kartı bilgilerinizi istemesi hangi saldırı türüne girer?
+A) Brute Force (Kaba Kuvvet) saldırısı.
+B) DDoS (Hizmet Engelleme) saldırısı.
+C) SQL Injection saldırısı.
+D) Sosyal Mühendislik / Oltalama (Phishing).
+Dogru: D
+
+Modul 13 - Soru 6
+Soru: Siber zorbalığa (Cyberbullying) maruz kalan bir çocuğun dijital dünyada kendini koruması için atması gereken ilk ve en önemli adım nedir?
+A) Zorbalık yapan kişiye aynı sertlikte cevap vererek onu korkutmak.
+B) Hiçbir işlem yapmadan tüm sosyal medya hesaplarını kalıcı olarak silmek.
+C) Zorbalık içeren mesajların ekran görüntüsünü alıp kanıt topladıktan sonra kişiyi engellemek ve bir yetişkine haber vermek.
+D) Bilgisayarın kamerasını bantla kapatıp bir hafta boyunca internete hiç girmemek.
+Dogru: C
+
+Modul 13 - Soru 7
+Soru: Bir çocuğun sosyal medya profilinde "okulunun adı, formasıyla çekilmiş fotoğrafı ve evinin yakınındaki parkın konumu" olması hangi riskin kapısını aralar?
+A) İnternet hızının yavaşlamasına ve video yükleme hatalarına yol açar.
+B) Çocuğun sadece kendi okul arkadaşlarıyla iletişim kurmasını sağlar.
+C) Uygulamanın çocuk için daha fazla reklam göstermesine neden olur.
+D) Kötü niyetli kişilerin çocuğun fiziksel konumunu tespit etmesine ve takibe (Stalking) olanak sağlar.
+Dogru: D
+
+Modul 13 - Soru 8
+Soru: Oyun platformlarında (Roblox, Minecraft, Discord vb.) çocukların güvenliği için mutlaka yapılması gereken ayar hangisidir?
+A) Mesajlaşma ve arkadaşlık isteklerini "Sadece Tanıdık Kişiler" veya "Kapalı" konumuna getirmek.
+B) Oyunun grafik kalitesini düşürerek zararlı yazılımların bulaşmasını engellemek.
+C) Oyunu her zaman "Misafir" oturumuyla açarak verilerin kaydedilmesini önlemek.
+D) Sadece ücretli oyunları tercih etmek; çünkü ücretsiz oyunlarda şifreleme yoktur.
+Dogru: A
+
+Modul 13 - Soru 9
+Soru: Sosyal medyada tanımadığınız biri size hediye veya para teklif ederse ne yapmalısınız?
+A) Kabul edin, zarar vermez.
+B) Güvenilir görünüyorsa kabul edin.
+C) Reddedip hesabı bildirin; büyük ihtimalle dolandırıcılıktır.
+D) Sadece kişisel bilgilerinizi vermeyin, kalanını kabul edin.
+Dogru: C
+
+Modul 13 - Soru 10
+Soru: Çocuklar için sosyal medyada yaşını ve okulunu paylaşmak neden risklidir?
+A) Arkadaş sayısını azaltır.
+B) Kötü niyetli kişilerin seni hedef almasını kolaylaştırır.
+C) Algoritma tarafından engellenir.
+D) Veri kotasını tüketir.
+Dogru: B

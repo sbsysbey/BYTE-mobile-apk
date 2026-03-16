@@ -114,11 +114,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(192,132,252,.05);border-color:rgba(192,132,252,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -198,7 +199,7 @@
         <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 07 🔊</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 07 🔊</div>
         <h1 class="mod-title">Sunum <span>Güvenliği</span></h1>
         <p class="mod-desc">Slaytındaki o satır fotoğraflanıp paylaşılırsa rahat olur musun? Kimin dinlediğini bilmiyorsun, sunum kaydediliyor olabilir. BYTE ile veriyi koruyarak aynı mesajı ver.</p>
         <div class="mod-stats">
@@ -604,36 +605,36 @@ function toggleCheck(el){
 }
 
 window.moduleQuestions=[
-  {q:"GDPR ölçülülük ilkesi sunum bağlamında ne anlama gelir?",
-   opts:["Her sunum için GDPR belgesi hazırlanmalıdır","İzin alınmış olsa bile gerekli olandan fazla kişisel veri paylaşmak hatadır","Sunumlar yalnızca şifreli kanaldan yapılmalıdır","Katılımcı sayısı 20'yi geçemez"],
-   correct:1,fb:{wrong:"Ölçülülük: gerekli olandan fazlasını paylaşmak, izin olsa bile GDPR ihlalidir. 'İzin alındı' her ortamda paylaşılabileceği anlamına gelmez.",correct:"Doğru! 'İzin alındı' demek kalabalık ortamda paylaşılabileceği anlamına gelmez. Amaç aşılmadan minimum veri ilkesi."}},
-  {q:"'%17,4 büyüme' rakamını güvenli hale getirmek için hangi teknik kullanılır?",
-   opts:["Tamamen çıkarılır","Genelleştirme — '%15–20 arası' gibi aralık verilir","Yıldızlarla maskelenir: %**.* ","Yalnızca sunum sonrası PDF'e eklenir"],
-   correct:1,fb:{wrong:"Genelleştirme: net rakam yerine aralık ver. Mesaj aynı kalır, gizlilik riski azalır.",correct:"Doğru! Aynı mesajı iletirsin — kayıp olmaz. Slayt fotoğraflanırsa hassas veri görünmez."}},
-  {q:"PowerPoint dosyasında hangi gizli içerik paylaşım sırasında risk yaratabilir?",
-   opts:["Slayt arka plan rengi","Konuşmacı notları, gizli slaytlar ve yorum geçmişi","Yazı tipi seçimi","Animasyon hızı"],
-   correct:1,fb:{wrong:"PPT dosyasında konuşmacı notları, gizli slaytlar ve yorum geçmişi — tüm bunlar paylaşılan dosyada görünebilir.",correct:"Doğru! Dosya → Bilgi → Sorunları Denetle ile bunları kaldır. PDF olarak kaydetmek de yetmez — notları ayrıca sil."}},
-  {q:"Zoom toplantısında ekran paylaşımından önce yapılması gereken en önemli adım nedir?",
-   opts:["Kamerayı kapatmak","E-posta, mesaj sekmelerini kapatmak ve bildirimleri devre dışı bırakmak","Toplantı linkini katılımcılara tekrar göndermek","Mikrofonu test etmek"],
-   correct:1,fb:{wrong:"Bir bildirim popup'ı veya açık e-posta sekmesi herkesin görebileceği kişisel bilgiyi ifşa edebilir.",correct:"Doğru! Tüm sekmeleri kapat, bildirimleri durdur, yalnızca sunum penceresini paylaş — tüm ekranı değil."}},
-  {q:"'Ahmet Yılmaz, Satış Müdürü' ifadesini sunumda kullanmak yerine ne söylenmeli?",
-   opts:["A. Yılmaz, S. Müdürü","Bir ekip yöneticisi","Çalışan #1042","İsim gizlenmiştir"],
-   correct:1,fb:{wrong:"Rol bazlı anlatım: 'Bir ekip yöneticisi' veya 'Bir müşteri' gibi. Kişiyi tanımlanabilir kılmadan aynı mesajı verirsin.",correct:"Kesinlikle! Rol bazlı anlatım hem GDPR uyumlu hem de mesajı zayıflatmaz."}},
-  {q:"Sunum dosyasını harici kişiye göndermeden önce hangi iki versiyon stratejisi uygulanmalı?",
-   opts:["Biri renkli biri siyah-beyaz","INTERNAL (detaylı) ve EXTERNAL (sadeleştirilmiş/anonim) olmak üzere iki ayrı versiyon","Biri PDF biri PPT","Biri Türkçe biri İngilizce"],
-   correct:1,fb:{wrong:"İki versiyon: biri iç kullanım (detaylı), biri dış paylaşım (sadeleştirilmiş). Asla iç versiyonu dışarıya gönderme.",correct:"Doğru! INTERNAL ve EXTERNAL etiketleme hayat kurtarır. Yanlış dosyayı göndermek sık yapılan hatadır."}},
-  {q:"Bir sunum fotoğrafında arka planda yaka kartı görünüyor. Bu neden risk oluşturur?",
-   opts:["Estetik açıdan kötü görünür","Yaka kartındaki ad, şirket veya rozet bilgisi fotoğrafta okunabilir","Fotoğraf telif hakkı ihlali olur","Sadece güvenlik personeli için geçerlidir"],
-   correct:1,fb:{wrong:"Arka plandaki yaka kartı kişiyi ve bağlı olduğu kurumu tanımlanabilir kılar. GDPR kapsamında bu bir gizlilik ihlalidir.",correct:"Doğru! Fotoğraf çekmeden önce arka planı kontrol et — ekran, pano, yaka kartı, ayna yansıması."}},
-  {q:"Sunum sırasında biri detay sorarsa ve bu bilgiyi o ortamda paylaşman uygun değilse ne yapmalısın?",
-   opts:["Soruyu görmezden gelirsin","'Bu bilgiyi bu ortamda detaylandıramam' diyip geçersin — bu doğru bir davranıştır","Toplantıyı bitirirsin","Soruyu sorana özel mesaj atarsın"],
-   correct:1,fb:{wrong:"'Bu bilgiyi bu ortamda detaylandıramam' demek profesyonel ve doğru bir davranıştır. Kimse bunu garip karşılamaz.",correct:"Kesinlikle! Bu cümle hem seni hem kurumu korur. Hazırlıklı ol ve gerekirse bu cümleyi kullan."}},
-  {q:"Bir çalışanın performans ve maaş bilgisi neden sunum ortamında paylaşılmamalıdır?",
-   opts:["Bu bilgiler yalnızca İngilizce paylaşılabilir","Bunlar GDPR'da özel nitelikli veri sayılır; sunum ortamı bu tür hassas bilgi için uygun değildir","Sadece C-level toplantılarında paylaşılabilir","Maaş bilgisi 100€ altındaysa sorun olmaz"],
-   correct:1,fb:{wrong:"Performans ve maaş bilgisi GDPR kapsamında hassas veri kategorisindedir. Kalabalık ortam bu bilgi için asla uygun değildir.",correct:"Doğru! Senaryo tam da bu konuyu ele alıyor. Yanlış dosyayı açmak bile ciddi GDPR ihlali doğurabilir."}},
-  {q:"Doğaçlama konuşma sırasında sunum güvenliği açısından en kritik kural nedir?",
-   opts:["Yavaş konuşmak","İsim vermemek ve net rakamları ağzından kaçırmamak","Her cümleden sonra duraksamak","Slayta bakarak okumak"],
-   correct:1,fb:{wrong:"Doğaçlama sırasında en sık yapılan hata: isim kaçırmak veya net bir rakam söylemek. Bunlar kayıt altına alınırsa geri dönüşü zordur.",correct:"Doğru! Slayt temiz olsa bile doğaçlama konuşmada isim veya rakam kaçabilir. Önceden prova yap, bu konuda hazırlıklı ol."}}
+  {q:"Bir sunum hazırlarken 'Ölçülülük' ilkesine uymak, veri güvenliği açısından ne anlama gelir?",
+   opts:["Sunumdaki katılımcı sayısının 20 kişiyi geçmemesi için teknik önlemler almak.","Verileri paylaşmak için izin alınmış olsa bile, sadece amaca hizmet eden gerekli bilgiyi paylaşmak.","Sunum dosyalarını yalnızca kurum içi şifreli ağlar üzerinden katılımcılara iletmek.","Sunumun başında tüm katılımcılara kişisel verilerin korunmasına dair yasal bir belge imzalatmak."],
+   correct:1,fb:{wrong:"Ölçülülük ilkesi, izin olsa bile gereksiz kişisel verinin paylaşılmamasını gerektirir.",correct:"Doğru! Amaç için gerekli minimum veriyi paylaşmak ölçülülük ilkesinin özüdür."}},
+  {q:"Sunumdaki '%17,4 büyüme' gibi çok net bir rakamı rakiplerin görmemesi için 'Genelleştirme' tekniğiyle nasıl paylaşmalısınız?",
+   opts:["Rakamı sunumdan tamamen çıkarıp sadece sözlü olarak ifade ederek.","Rakamı yıldızlarla maskeleyerek (örn: %.) görsel bir engel oluşturarak.","Rakamı doğrudan vermek yerine '%15-20 arası' gibi bir aralık belirterek.","Veriyi sadece sunum bittikten sonra PDF formatında katılımcılara göndererek."],
+   correct:2,fb:{wrong:"Genelleştirme tekniği, hassas net değeri aralık vererek paylaşmaktır.",correct:"Kesinlikle doğru! '%15-20 arası' gibi aralık vermek hem mesajı korur hem riski azaltır."}},
+  {q:"Bir toplantı sırasında ekranınızı yansıtırken, sağ alt köşeden özel bir WhatsApp veya e-posta bildiriminin gelmesi siber güvenlikte ne tür bir sızıntı olarak kabul edilir?",
+   opts:["Veri ihlali (Data Leak); çünkü yetkisiz kişiler görmemesi gereken bir bilgiyi anlık olarak görmüş olur.","Sistem hatası (System Crash); çünkü ekran paylaşımı sırasında diğer uygulamaların çalışması yasaktır.","Donanım arızası (Hardware Failure); çünkü projeksiyon cihazı tüm pencereleri göstermek zorunda değildir.","Ağ saldırısı (Network Attack); çünkü gelen her mesaj dışarıdan yapılan bir sızma girişimi olarak sayılır."],
+   correct:0,fb:{wrong:"Bu durum teknik arıza değil, yetkisiz kişilerin bilgi görmesine neden olan bir veri sızıntısıdır.",correct:"Doğru! Ekran paylaşımı sırasında görünen özel bildirimler anlık veri ihlali sayılır."}},
+  {q:"Online bir toplantıda (Zoom, Teams vb.) ekran paylaşımı yapmadan hemen önce alınması gereken en kritik önlem nedir?",
+   opts:["Kamera açısını kontrol etmek ve arka plandaki tüm fiziksel eşyaları toplamak.","E-posta, mesaj sekmelerini kapatmak ve tüm masaüstü bildirimlerini devre dışı bırakmak.","Toplantı katılım linkini tüm katılımcılara güvenli kanaldan tekrar hatırlatmak.","Mikrofonun ses seviyesini test ederek ortamdaki arka plan gürültüsünü engellemek."],
+   correct:1,fb:{wrong:"Ekran paylaşımında asıl risk, açık sekmeler ve bildirimlerle istemeden veri ifşası yaşamaktır.",correct:"Doğru! Bildirimleri kapatıp sadece gerekli pencereyi paylaşmak en kritik korumadır."}},
+  {q:"'Ahmet Yılmaz, Satış Müdürü' gibi net bir kimlik bilgisi yerine sunumda 'Bir ekip yöneticisi' ifadesini kullanmak hangi güvenlik tekniğidir?",
+   opts:["Veri Şifreleme (Encryption)","Veri Maskeleme (Masking)","Anonimleştirme (Anonymization)","Veri Yedekleme (Back-up)"],
+   correct:2,fb:{wrong:"Kişiyi tanımlayan doğrudan bilgiyi çıkarıp genel ifadeye dönüştürmek anonimleştirme yaklaşımıdır.",correct:"Doğru! Kimliği görünmez hale getirip içerik bağlamını korumak anonimleştirmedir."}},
+  {q:"Sunum dosyalarını paylaşırken PowerPoint (.pptx) veya word (docx) yerine PDF formatını tercih etmenin veri güvenliği açısından en büyük avantajı nedir?",
+   opts:["PDF dosyalarının içindeki metinlerin hiçbir şekilde kopyalanamaz veya başka bir dile çevrilemez olmasıdır.","Dosya boyutunu otomatik olarak %90 oranında küçülterek e-posta sunucularındaki takibi imkansız hale getirmesidir.","Sadece belirli bir şifre girilmeden hiçbir cihazda açılmamasını sağlayan yerleşik bir koruma sunmasıdır.","Dosya düzenini sabitleyerek, silinmesi unutulan yorumların veya küçük değişikliklerin görünme riskini azaltmasıdır."],
+   correct:3,fb:{wrong:"PDF'nin temel avantajı her zaman şifre koruması değil; düzeni sabitleyip istenmeyen düzenleme izi riskini azaltmasıdır.",correct:"Kesinlikle! PDF formatı dosya düzenini sabitler ve yanlışlıkla görünür kalan düzenleme izlerini azaltır."}},
+  {q:"Sunumda kullanılan bir ofis fotoğrafında, arka plandaki masanın üzerinde bir yaka kartının görünmesi neden risklidir?",
+   opts:["Fotoğrafın sanatsal kalitesini düşürür ve kurumsal imaja profesyonel olmayan bir görüntü verir.","Yaka kartındaki isim, şirket unvanı veya giriş rozeti bilgisi büyütülerek okunabilir ve kötüye kullanılabilir.","Ofis içerisinde izinsiz fotoğraf çekildiği için telif hakları yasasına aykırı bir durum oluşturur.","Sadece o personelin o an ofiste olduğu bilgisini paylaştığı için mesai takibi riski yaratır."],
+   correct:1,fb:{wrong:"Asıl risk estetik değil, karttaki kişisel/kurumsal bilgilerin okunup kötüye kullanılabilmesidir.",correct:"Doğru! Arka plandaki yaka kartı gibi detaylar hedefli saldırılara veri sağlayabilir."}},
+  {q:"Sunum sırasında bir katılımcı, paylaşılması uygun olmayan gizli bir detay sorarsa en doğru profesyonel yaklaşım nedir?",
+   opts:["Soruyu duymamazlıktan gelerek hızlıca bir sonraki slayta geçmek ve konuyu kapatmak.","'Bu bilgiyi bu ortamda detaylandırmam güvenlik gereği uygun değil' diyerek soruyu kibarca reddetmek.","Toplantıyı güvenlik gerekçesiyle o an sonlandırmak ve katılımcıları odadan çıkarmak.","Soruyu soran kişiye toplantı sonrasında özel bir mesaj atarak tüm gizli detayları bireysel olarak anlatmak."],
+   correct:1,fb:{wrong:"Doğru yaklaşım, bilgiyi paylaşmadan profesyonel ve net bir dille sınır koymaktır.",correct:"Doğru! Güvenlik gerekçesiyle nazikçe reddetmek hem kurumu hem konuşmacıyı korur."}},
+  {q:"Bir çalışanın performans puanı veya maaş bilgisi gibi verilerin geniş katılımlı bir sunumda paylaşılması neden tehlikelidir?",
+   opts:["Bu bilgiler şirket politikası gereği sadece yabancı dilde paylaşılabilecek verilerdir.","Maaş bilgisi sadece belirli bir tutarın (örneğin 1000€) altındaysa paylaşılması sorun teşkil etmez.","Bunlar GDPR/KVKK kapsamında kişisel veridir ve sunum ortamı bu tür hassas bilgiler için uygun değildir.","Bu veriler paylaşıldığında sunum dosyasının boyutu artar ve internet üzerinden gönderimi zorlaşır."],
+   correct:2,fb:{wrong:"Performans ve maaş bilgileri kişisel veridir; geniş katılımlı sunumlarda paylaşımı ciddi ihlal riski doğurur.",correct:"Kesinlikle doğru! GDPR/KVKK açısından bu veriler kontrollü ve yetkili ortamlarda işlenmelidir."}},
+  {q:"Doğaçlama (slayta bağlı kalmadan) konuşurken sunum güvenliğini korumak için en temel kural hangisidir?",
+   opts:["Cümle aralarında uzun duraksamalar yaparak dinleyicinin odaklanmasını sağlamak.","Özel isim vermekten kaçınmak, net rakamlar veya gizli projelerin isimlerini telaffuz etmemek.","Konuşma boyunca sadece slaytta yazan metinleri okuyarak yorum yapmaktan kaçınmak.","Çok yavaş konuşarak hata yapma riskini azaltmak ve sürekli notları kontrol etmek."],
+   correct:1,fb:{wrong:"Doğaçlamada asıl risk, istemeden özel isim veya hassas detay söylemektir; temel kural bunlardan kaçınmaktır.",correct:"Doğru! Özel isimleri ve net gizli verileri telaffuz etmemek sunum güvenliğinin temelidir."}}
 ];
 
 

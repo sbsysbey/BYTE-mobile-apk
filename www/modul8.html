@@ -1,0 +1,931 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 8: Güvenli İletişim</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 290px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(96,200,240,.07);border:1px solid rgba(96,200,240,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--cyan);letter-spacing:2px;margin:24px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(96,200,240,.2);}
+
+/* 3 KATMAN */
+.three-layers{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.layer-card{background:var(--bg-panel);border-radius:14px;padding:16px 20px;display:flex;gap:16px;align-items:flex-start;border:1px solid transparent;transition:.3s;}
+.layer-card.layer-bad{border-color:rgba(248,113,113,.2);background:rgba(248,113,113,.04);}
+.layer-card.layer-ok{border-color:rgba(74,222,154,.2);background:rgba(74,222,154,.04);}
+.layer-icon{font-size:1.6rem;flex-shrink:0;margin-top:2px;}
+.layer-num{font-family:'Orbitron',sans-serif;font-size:.68rem;color:var(--text-dim);letter-spacing:1px;margin-bottom:3px;}
+.layer-title{font-size:.93rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.layer-desc{font-size:.84rem;color:var(--text-dim);line-height:1.55;}
+.layer-status{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:.76rem;font-weight:600;margin-top:7px;}
+.ls-red{background:rgba(248,113,113,.1);color:var(--red);border:1px solid rgba(248,113,113,.25);}
+.ls-green{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.layer-arrow{display:flex;justify-content:center;align-items:center;color:var(--text-dim);font-size:.8rem;gap:6px;font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1px;}
+
+/* APP TABLE */
+.app-table-wrap{overflow-x:auto;margin-bottom:20px;}
+.app-table{width:100%;border-collapse:collapse;font-size:.83rem;}
+.app-table th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.68rem;letter-spacing:1px;color:var(--text-dim);white-space:nowrap;}
+.app-table td{border:1px solid var(--border);padding:10px 14px;vertical-align:middle;}
+.app-table tr:hover td{background:rgba(255,255,255,.02);}
+.app-name{font-weight:700;color:#fff;}
+.app-rec{font-size:.70rem;padding:2px 7px;border-radius:10px;margin-left:5px;}
+.rec-best{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.rec-ok{background:rgba(251,191,36,.07);color:var(--yellow);border:1px solid rgba(251,191,36,.2);}
+.rec-no{background:rgba(248,113,113,.07);color:var(--red);border:1px solid rgba(248,113,113,.2);}
+.tick{color:var(--green);}
+.cross{color:var(--red);}
+.partial{color:var(--yellow);}
+.app-highlight{background:rgba(74,222,154,.02);}
+
+/* SIGNAL / THREEMA SPOTLIGHT */
+.spotlight-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.spotlight-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;}
+.sp-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.sp-icon{font-size:1.6rem;}
+.sp-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:#fff;letter-spacing:1px;}
+.sp-badge{font-size:.70rem;padding:2px 7px;border-radius:8px;}
+.sp-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.sp-list li{font-size:.84rem;color:var(--text-dim);display:flex;gap:8px;line-height:1.45;}
+.sp-dot{color:var(--green);flex-shrink:0;}
+
+/* SÜRELİ MESAJLAR */
+.timer-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.timer-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.tc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.tc-icon{font-size:1.1rem;}
+.tc-name{font-size:.88rem;font-weight:700;color:#fff;}
+.tc-badge{font-size:.70rem;padding:2px 8px;border-radius:8px;margin-left:auto;}
+.badge-best{background:rgba(74,222,154,.1);color:var(--green);border:1px solid rgba(74,222,154,.25);}
+.badge-manual{background:rgba(251,191,36,.07);color:var(--yellow);border:1px solid rgba(251,191,36,.2);}
+.tc-path{font-size:.80rem;color:var(--cyan);margin-bottom:6px;font-style:italic;}
+.tc-options{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:7px;}
+.to{padding:3px 9px;border-radius:20px;font-size:.76rem;font-family:'Orbitron',sans-serif;}
+.to-active{background:rgba(74,222,154,.12);color:var(--green);border:1px solid rgba(74,222,154,.3);}
+.to-dim{background:rgba(255,255,255,.04);color:var(--text-dim);border:1px solid rgba(255,255,255,.08);}
+.tc-note{font-size:.80rem;color:var(--text-dim);line-height:1.5;}
+.recommend-box{background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(74,222,154,.04));border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;}
+.rb-icon{font-size:1.3rem;flex-shrink:0;}
+.rb-title{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:1px;margin-bottom:5px;}
+.rb-text{font-size:.86rem;color:var(--text);line-height:1.6;}
+
+/* AYAR YOLU */
+.settings-paths{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.sp-row{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;gap:14px;align-items:flex-start;}
+.sp-app-icon{font-size:1.4rem;flex-shrink:0;margin-top:1px;}
+.sp-app-name{font-size:.90rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.sp-path-line{font-size:.82rem;color:var(--text-dim);margin-bottom:3px;}
+.sp-path-line span{color:var(--cyan);font-family:'Orbitron',sans-serif;font-size:.75rem;}
+.sp-warn{font-size:.79rem;color:var(--yellow);margin-top:3px;}
+
+/* E-POSTA */
+.email-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;}
+.email-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.ec-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.ec-icon{font-size:1.3rem;}
+.ec-name{font-size:.90rem;font-weight:700;color:#fff;}
+.ec-badge{font-size:.70rem;padding:2px 7px;border-radius:8px;}
+.ec-list{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.ec-list li{font-size:.83rem;color:var(--text-dim);display:flex;gap:7px;line-height:1.4;}
+.ec-ok{color:var(--green);flex-shrink:0;}
+
+/* ALERT */
+.alert-warn{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;font-size:.86rem;line-height:1.55;color:var(--text);}
+.alert-info{background:rgba(96,200,240,.04);border:1px solid rgba(96,200,240,.18);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;font-size:.86rem;line-height:1.55;color:var(--text);}
+
+/* BYTE TIP */
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.04),rgba(74,222,154,.03));border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--cyan);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.79rem;color:var(--cyan);letter-spacing:2px;margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:7px;}
+.side-item{font-size:.84rem;color:var(--text-dim);display:flex;gap:7px;line-height:1.5;}
+.side-ok{color:var(--green);flex-shrink:0;}
+.side-bad{color:var(--red);flex-shrink:0;}
+.side-arr{color:var(--cyan);flex-shrink:0;}
+
+/* QUIZ */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* SENARYO */
+/* QR MOCKUP */
+.qr-mockup{background:#0a0f1a;border:1px solid rgba(96,200,240,.15);border-radius:10px;margin-top:14px;overflow:hidden;}
+.qm-bar{background:rgba(96,200,240,.06);padding:8px 14px;border-bottom:1px solid rgba(96,200,240,.1);display:flex;align-items:center;gap:8px;}
+.qm-url{font-size:.78rem;color:var(--red);font-family:'Orbitron',sans-serif;letter-spacing:.5px;}
+.qm-ssl{font-size:.70rem;padding:2px 7px;background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:5px;color:var(--red);}
+.qm-body{padding:16px 20px;display:flex;gap:20px;align-items:center;}
+.qm-qr{width:80px;height:80px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;}
+.qm-text-block{flex:1;}
+.qm-title{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:5px;}
+.qm-sub{font-size:.82rem;color:var(--text-dim);line-height:1.5;margin-bottom:8px;}
+.qm-scan-btn{background:rgba(96,200,240,.12);border:1px solid rgba(96,200,240,.3);border-radius:7px;padding:6px 14px;font-size:.82rem;color:var(--cyan);cursor:pointer;}
+.qm-warn{padding:10px 14px;background:rgba(248,113,113,.04);border-top:1px solid rgba(248,113,113,.15);}
+.qw-title{font-family:'Orbitron',sans-serif;font-size:.68rem;color:var(--red);letter-spacing:1px;margin-bottom:5px;}
+.qw-item{font-size:.81rem;color:var(--text-dim);display:flex;gap:6px;margin-bottom:3px;}
+.qw-dot{color:var(--red);}
+
+/* BADGE */
+
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span><span class="xp-label">XP</span>
+      <span id="xp-count">2650</span>
+     <div class="xp-bar-mini"><div class="xp-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span>7</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">✓ Tamamlandı · 300 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul6.html')"><div class="mod-num done">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul7.html')"><div class="mod-num done">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      
+      <div class="module-item active">
+        <div class="mod-num active2">08</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Güvenli İletişim</div><div class="mod-meta">Aktif · 350 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav(8)"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(9)"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(10)"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(11)"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(12)"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        💬
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 08 🔊</div>
+        <h1 class="mod-title">Güvenli <span>İletişim</span></h1>
+        <p class="mod-desc">"Uçtan uca şifreli uygulama kullanıyorum, güvendeyim." — Hayır, değilsin. Mesaj iletildi, ama telefonda hâlâ duruyor. Metaverin gidiyor. BYTE ile gerçek güvenliğin 3 katmanını öğren.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-c"></div>~35 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+40 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+60 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+150 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+50 XP</div></div>
+    </div>
+
+    <!-- PANEL 1: VIDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 08</div>
+          <div class="vs-title">GÜVENLİ İLETİŞİM</div>
+          <div class="vs-sub">Metaveri · 3 Katman · Signal · Threema · Süreli Mesaj · Şifreli E-posta</div>
+          <button class="play-big" onclick="startVideo()">▶</button>
+          <div class="chapters">
+            <div class="ch-pill active">🧱 3 Güvenlik Katmanı</div>
+            <div class="ch-pill">📊 Uygulama Karşılaştırması</div>
+            <div class="ch-pill">⏱ Süreli Mesajlar</div>
+            <div class="ch-pill">📧 Şifreli E-posta</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <span class="vtime" id="vtime">0:00 / 8:40</span>
+          <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>E2EE mesajı yolda korur — ama telefona ulaşınca cihazdaki mesaj tamamen açık halde birikmeye devam eder</li>
+          <li><span class="kp-b">▸</span>Metaveri: içerik şifreli olsa bile "kiminle, ne zaman, kaç kez" bilgisi toplanmaya devam eder — WhatsApp bunu Meta'ya aktarır</li>
+          <li><span class="kp-b">▸</span>Signal ve Threema: hem içerik hem metaveri koruması sağlar, telefon numarası zorunlu değil (Threema)</li>
+          <li><span class="kp-b">▸</span>Süreli mesaj = mesaj okunur, belirlenen süre sonra hem gönderenden hem alıcıdan silinir — en pratik çözüm</li>
+          <li><span class="kp-b">▸</span>Telegram'ın "normal sohbet" modu varsayılan olarak şifresiz — sadece "Gizli Sohbet" E2EE'dir</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;"><button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Video Tamamlandı →</button></div>
+    </div>
+
+    <!-- PANEL 2: READING -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Güvenli İletişim: "Uygulama Güvenli" Yetmez</div>
+          <p class="article-intro">Uçtan uca şifreli bir uygulama kullanmak iyi bir başlangıç. Ama gerçek güvenlik 3 ayrı katmandan oluşuyor — çoğu insan yalnızca birinci katmanda kalıyor.</p>
+
+          <div class="section-head">🧱 BÖLÜM 1 — GÜVENLİĞİN 3 KATMANI</div>
+
+          <div class="three-layers">
+            <div class="layer-card layer-ok">
+              <div class="layer-icon">🔒</div>
+              <div style="flex:1;">
+                <div class="layer-num">KATMAN 1</div>
+                <div class="layer-title">Transit Şifreleme (E2EE)</div>
+                <div class="layer-desc">Mesaj gönderilirken şifrelidir. Yalnızca gönderen ve alıcı okuyabilir. WhatsApp, Signal, Threema, Wire — hepsi bunu sağlar.</div>
+                <div class="layer-status ls-green">✓ Çoğu uygulama sağlıyor</div>
+              </div>
+            </div>
+            <div class="layer-arrow">↓ ama bu yeterli değil</div>
+            <div class="layer-card layer-ok">
+              <div class="layer-icon">👁</div>
+              <div style="flex:1;">
+                <div class="layer-num">KATMAN 2</div>
+                <div class="layer-title">Metaveri Koruması</div>
+                <div class="layer-desc">İçerik şifreli olsa bile: kiminle konuştuğun, ne zaman, kaç kez, hangi cihazdan — bu bilgiler toplanabilir. WhatsApp bu veriyi Meta'ya aktarır. Signal ve Threema toplamaz.</div>
+                <div class="layer-status ls-red">✗ WhatsApp / Telegram sağlamıyor</div>
+              </div>
+            </div>
+            <div class="layer-arrow">↓ ama bu da yeterli değil</div>
+            <div class="layer-card layer-ok">
+              <div class="layer-icon">📱</div>
+              <div style="flex:1;">
+                <div class="layer-num">KATMAN 3</div>
+                <div class="layer-title">Cihazda Depolama Kontrolü</div>
+                <div class="layer-desc">Mesaj karşıya güvenli ulaştı — ama telefonda sonsuza kadar duruyor. Telefon ele geçirilirse tüm geçmiş açık. Süreli mesajlar bu riski ortadan kaldırır.</div>
+                <div class="layer-status ls-red">✗ Varsayılan olarak kapalı çoğu uygulamada</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div><strong>"Signal kullanıyorum, güvendeyim"</strong> — Sadece Katman 1 ve 2 tamam. Süreli mesajı açmadıysan Katman 3 hâlâ açık. Eski yazışmalar telefonda birikmeye devam ediyor.</div>
+          </div>
+
+          <div class="section-head">📊 BÖLÜM 2 — UYGULAMA KARŞILAŞTIRMASI</div>
+
+          <div class="app-table-wrap">
+            <table class="app-table">
+              <tr>
+                <th>Uygulama</th>
+                <th>E2EE</th>
+                <th>Metaveri Korur</th>
+                <th>Açık Kaynak</th>
+                <th>GDPR</th>
+                <th>Tel. No Gerekli</th>
+                <th>Süreli Mesaj</th>
+              </tr>
+              <tr class="app-highlight">
+                <td><span class="app-name">Signal</span><span class="app-rec rec-best">EN İYİ</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="partial">✓*</span></td>
+                <td><span class="tick">✓ Varsayılan</span></td>
+              </tr>
+              <tr class="app-highlight">
+                <td><span class="app-name">Threema</span><span class="app-rec rec-best">EN İYİ</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✗ Gerekmiyor</span></td>
+                <td><span class="tick">✓</span></td>
+              </tr>
+              <tr>
+                <td><span class="app-name">Wire</span><span class="app-rec rec-best">İYİ</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✗ Gerekmiyor</span></td>
+                <td><span class="tick">✓</span></td>
+              </tr>
+              <tr>
+                <td><span class="app-name">Session</span><span class="app-rec rec-best">İYİ</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="tick">✗ Gerekmiyor</span></td>
+                <td><span class="tick">✓</span></td>
+              </tr>
+              <tr>
+                <td><span class="app-name">WhatsApp</span><span class="app-rec rec-no">DİKKAT</span></td>
+                <td><span class="tick">✓</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✓ Zorunlu</span></td>
+                <td><span class="partial">Manuel</span></td>
+              </tr>
+              <tr>
+                <td><span class="app-name">Telegram</span><span class="app-rec rec-no">DİKKAT</span></td>
+                <td><span class="partial">Sadece Gizli Sohbet</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="partial">Kısmen</span></td>
+                <td><span class="cross">✗</span></td>
+                <td><span class="cross">✓ Zorunlu</span></td>
+                <td><span class="partial">Gizli Sohbette</span></td>
+              </tr>
+            </table>
+          </div>
+          <div style="font-size:.78rem;color:var(--text-dim);margin-bottom:20px;">* Signal telefon numarası gerektirir ama "Telefon numaramı gizle" seçeneğiyle sadece kullanıcı adıyla paylaşılabilir.</div>
+
+          <div class="section-head">🔬 BÖLÜM 3 — SIGNAL VE THREEMA NEDEN FARKLI?</div>
+
+          <div class="spotlight-grid">
+            <div class="spotlight-card">
+              <div class="sp-head">
+                <div class="sp-icon">📡</div>
+                <div>
+                  <div class="sp-name">SIGNAL</div>
+                  <span class="sp-badge rec-best">Açık Kaynak · Ücretsiz</span>
+                </div>
+              </div>
+              <ul class="sp-list">
+                <li><span class="sp-dot">✓</span>İçerik + metaveri şifreli — Signal sunucuları bile okuyamaz</li>
+                <li><span class="sp-dot">✓</span>"Aramaları Her Zaman Aktar" → Ayarlar → Gizlilik → Gelişmiş → aramalarda IP gizlenir</li>
+                <li><span class="sp-dot">✓</span>Süreli mesaj global varsayılan olarak ayarlanabilir — tüm yeni sohbetlere otomatik uygulanır</li>
+                <li><span class="sp-dot">✓</span>PIN kilidi + kayıt kilidi: numara çalınsa bile hesap devralınamaz</li>
+                <li><span class="sp-dot">✓</span>Ekran güvenliği: uygulamayı son kullanılanlar listesinde gizler</li>
+                <li><span class="sp-dot">✓</span>Not to Self: kendine şifreli not/dosya gönderme özelliği</li>
+              </ul>
+            </div>
+            <div class="spotlight-card">
+              <div class="sp-head">
+                <div class="sp-icon">🔐</div>
+                <div>
+                  <div class="sp-name">THREEMA</div>
+                  <span class="sp-badge rec-best">Ücretli · İsviçre Sunucu</span>
+                </div>
+              </div>
+              <ul class="sp-list">
+                <li><span class="sp-dot">✓</span>Telefon numarası veya e-posta zorunlu değil — sadece Threema ID ile kullanılır</li>
+                <li><span class="sp-dot">✓</span>Threema ID: rastgele 8 karakterli kimlik, kişisel bilgiye bağlı değil</li>
+                <li><span class="sp-dot">✓</span>İsviçre merkezli sunucular: AB ve İsviçre veri koruma hukuku</li>
+                <li><span class="sp-dot">✓</span>Ekran görüntüsü engelleme: sohbet içeriğinin ekran görüntüsü alınamaz</li>
+                <li><span class="sp-dot">✓</span>Süreli mesaj + sessiz sohbet seçenekleri</li>
+                <li><span class="sp-dot">✓</span>En yüksek anonimlik: kişisel veri bağlantısı minimum</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-head">⏱ BÖLÜM 4 — SÜRELİ MESAJLAR: KATMAN 3'ÜN ÇÖZÜMÜ</div>
+
+          <div class="recommend-box">
+            <div class="rb-icon">💡</div>
+            <div>
+              <div class="rb-title">NEDEN KRİTİK?</div>
+              <div class="rb-text">Uçtan uca şifreli mesajlaştın — mesaj güvenle ulaştı. Ama telefon ele geçirilirse ya da uygulama yetkisiz erişime açılırsa tüm geçmiş yazışmalar okunabilir. Süreli mesaj, belirlenen süre sonunda hem gönderenden hem alıcıdan otomatik silinir. Kanalı korumanın yanı sıra cihazı da korursun.</div>
+            </div>
+          </div>
+
+          <div class="timer-grid">
+            <div class="timer-card">
+              <div class="tc-head">
+                <div class="tc-icon">📡</div>
+                <div class="tc-name">Signal</div>
+                <span class="tc-badge badge-best">Varsayılan Açılabilir</span>
+              </div>
+              <div class="tc-path">Ayarlar → Gizlilik → Varsayılan Zamanlayıcı</div>
+              <div class="tc-options">
+                <span class="to to-active">1 saat</span>
+                <span class="to to-active">1 gün</span>
+                <span class="to to-active">1 hafta</span>
+                <span class="to to-dim">4 hafta</span>
+              </div>
+              <div class="tc-note">Global varsayılan olarak ayarlanabilir — tüm yeni sohbetlere otomatik uygulanır. Hassas yazışmalar için: 1 gün önerilir.</div>
+            </div>
+            <div class="timer-card">
+              <div class="tc-head">
+                <div class="tc-icon">🔐</div>
+                <div class="tc-name">Threema</div>
+                <span class="tc-badge badge-best">Sohbet Bazlı</span>
+              </div>
+              <div class="tc-path">Sohbet → Üç nokta → Süreli Mesajlar</div>
+              <div class="tc-options">
+                <span class="to to-active">1 saat</span>
+                <span class="to to-active">1 gün</span>
+                <span class="to to-active">7 gün</span>
+              </div>
+              <div class="tc-note">Sohbet bazlı ayar + ekran görüntüsü engelleme birlikte kullanılabilir. Ekstra koruma katmanı sağlar.</div>
+            </div>
+            <div class="timer-card">
+              <div class="tc-head">
+                <div class="tc-icon">💬</div>
+                <div class="tc-name">WhatsApp</div>
+                <span class="tc-badge badge-manual">Manuel — Varsayılan Kapalı</span>
+              </div>
+              <div class="tc-path">Sohbet → İsim → Süreli mesajlar</div>
+              <div class="tc-options">
+                <span class="to to-dim">24 saat</span>
+                <span class="to to-dim">7 gün</span>
+                <span class="to to-dim">90 gün</span>
+              </div>
+              <div class="tc-note">Her sohbet için ayrı ayrı açılmalı. Varsayılan kapalı. Metaveri toplanmaya devam eder.</div>
+            </div>
+            <div class="timer-card">
+              <div class="tc-head">
+                <div class="tc-icon">✈️</div>
+                <div class="tc-name">Telegram</div>
+                <span class="tc-badge badge-manual">Sadece Gizli Sohbet</span>
+              </div>
+              <div class="tc-path">Yeni Sohbet → Yeni Gizli Sohbet → Zamanlayıcı</div>
+              <div class="tc-options">
+                <span class="to to-dim">Normal sohbet</span>
+                <span class="to to-active">Gizli Sohbet</span>
+              </div>
+              <div class="tc-note">Normal sohbet şifresiz. Süreli mesaj yalnızca Gizli Sohbet modunda çalışır — her kişiyle ayrıca açılmalı.</div>
+            </div>
+          </div>
+
+          <div class="recommend-box" style="background:linear-gradient(135deg,rgba(74,222,154,.05),rgba(96,200,240,.03));">
+            <div class="rb-icon">🎯</div>
+            <div>
+              <div class="rb-title">ŞİRKET VE HASSAS YAZIŞMALAR İÇİN ÖNERİ</div>
+              <div class="rb-text">Signal veya Threema kullan + süreli mesajı <strong style="color:var(--green)">1 gün</strong> olarak ayarla. Günlük iş yazışmaları için bu yeterli; hafıza birikimine izin vermiyor, eski mesajlar otomatik temizleniyor.</div>
+            </div>
+          </div>
+
+          <div class="section-head">📧 BÖLÜM 5 — ŞİFRELİ E-POSTA</div>
+
+          <div class="alert-info">
+            <span>ℹ️</span>
+            <div>Normal e-posta (Gmail, Outlook) içerik açık halde iletilir ve sunucularda saklanır. Kişisel veri veya hassas bilgi içeren e-postalar için şifreli servisler gerekir.</div>
+          </div>
+
+          <div class="email-grid">
+            <div class="email-card">
+              <div class="ec-head">
+                <div class="ec-icon">📮</div>
+                <div>
+                  <div class="ec-name">ProtonMail</div>
+                  <span class="ec-badge rec-best">İsviçre · Ücretsiz Plan Var</span>
+                </div>
+              </div>
+              <ul class="ec-list">
+                <li><span class="ec-ok">✓</span>Uçtan uca şifreli — Proton sunucuları bile okuyamaz</li>
+                <li><span class="ec-ok">✓</span>Şifre korumalı e-posta: Gmail'e bile şifreli gönderilebilir</li>
+                <li><span class="ec-ok">✓</span>Süreli e-posta: belirlenen süre sonra alıcıda silinir</li>
+                <li><span class="ec-ok">✓</span>İsviçre veri koruma hukuku, AB GDPR uyumlu</li>
+                <li><span class="ec-ok">✓</span>proton.me — ücretsiz 1 GB, ücretli planlar mevcut</li>
+              </ul>
+            </div>
+            <div class="email-card">
+              <div class="ec-head">
+                <div class="ec-icon">📬</div>
+                <div>
+                  <div class="ec-name">Tutanota</div>
+                  <span class="ec-badge rec-best">Almanya · Ücretsiz Plan Var</span>
+                </div>
+              </div>
+              <ul class="ec-list">
+                <li><span class="ec-ok">✓</span>Uçtan uca şifreli mesaj ve takvim</li>
+                <li><span class="ec-ok">✓</span>Alman veri koruma hukuku (en katı AB ülkelerinden)</li>
+                <li><span class="ec-ok">✓</span>Şifreli bağlantı: dışarıya şifreli link gönderilir</li>
+                <li><span class="ec-ok">✓</span>Reklam yok, veri satışı yok</li>
+                <li><span class="ec-ok">✓</span>tutanota.com — ücretsiz 1 GB, ücretli planlar mevcut</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div>ProtonMail/Tutanota kullanan biri <strong>normal Gmail hesabına</strong> şifreli e-posta gönderdiğinde, alıcı bir bağlantı alır ve e-postayı bir şifreyle açar. Bunun için alıcının ProtonMail kullanması şart değil.</div>
+          </div>
+
+          <div class="section-head">⚙️ BÖLÜM 6 — UYGULAMALARDA KRİTİK AYARLAR</div>
+
+          <div class="settings-paths">
+            <div class="sp-row">
+              <div class="sp-app-icon">📡</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Signal</div>
+                <div class="sp-path-line"><span>IP GİZLEME →</span> Ayarlar → Gizlilik → Gelişmiş → "Aramaları Her Zaman Aktar" → Açık</div>
+                <div class="sp-path-line"><span>SÜRELİ MESAJ →</span> Ayarlar → Gizlilik → Varsayılan Zamanlayıcı → 1 gün</div>
+                <div class="sp-path-line"><span>EKRAN GİZLEME →</span> Ayarlar → Gizlilik → Ekran Güvenliği → Açık</div>
+                <div class="sp-path-line"><span>KAYIT KİLİDİ →</span> Ayarlar → Hesap → Kayıt Kilidi → Açık (numara devralınmasını engeller)</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🔐</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Threema</div>
+                <div class="sp-path-line"><span>SÜRELİ MESAJ →</span> Sohbet → İsim tıkla → Süreli Mesajlar → süre seç</div>
+                <div class="sp-path-line"><span>EKRAN GÖR. ENGELLE →</span> Ayarlar → Gizlilik → Ekran Görüntüsü Engelle → Açık</div>
+                <div class="sp-path-line"><span>UYGULAMA KİLİDİ →</span> Ayarlar → Güvenlik → Uygulama Kilidi → biyometrik veya PIN</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">💬</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">WhatsApp</div>
+                <div class="sp-path-line"><span>IP GİZLEME →</span> Ayarlar → Gizlilik → Gelişmiş → "Aramalarda IP Adresini Koru" → Açık</div>
+                <div class="sp-path-line"><span>SÜRELİ MESAJ →</span> Sohbet aç → İsim tıkla → Süreli Mesajlar → 24 saat önerilir</div>
+                <div class="sp-warn">⚠️ Metaveri toplanmaya devam eder. Bu ayarlar minimum koruma sağlar.</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">✈️</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Telegram</div>
+                <div class="sp-path-line"><span>GİZLİ SOHBET →</span> Yeni Sohbet → Yeni Gizli Sohbet → E2EE + süreli mesaj aktif olur</div>
+                <div class="sp-path-line"><span>KENDİ KENDİNE İMHA →</span> Gizli Sohbet → saat ikonu → süre seç</div>
+                <div class="sp-warn">⚠️ Normal sohbet şifresiz. Sadece Gizli Sohbet E2EE sağlar.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head"><div class="byte-mini">🤖</div><div class="byte-name">BYTE'IN ÖZETI</div></div>
+            <div class="byte-tip-text">E2EE → Katman 1. Metaveri koruması → Katman 2. Süreli mesaj → Katman 3. Üçü birden olursa gerçek güvenlik. Signal veya Threema + süreli mesaj = minimum risk.</div>
+          </div>
+
+          <div style="margin-top:20px;"><button class="btn btn-primary" onclick="completeStep(2)">Okumayı Tamamladım →</button></div>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">3 KATMAN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">1</span><div>E2EE — yolda şifreli</div></div>
+              <div class="side-item"><span class="side-ok">2</span><div>Metaveri koruması — kim/ne zaman gizli</div></div>
+              <div class="side-item"><span class="side-ok">3</span><div>Süreli mesaj — cihazda birikmez</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">ÖNERİLEN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>Signal</strong> — ücretsiz, 3 katman</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>Threema</strong> — tel. no gereksiz</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>Wire</strong> — kurumsal uygun</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div><strong>ProtonMail</strong> — şifreli e-posta</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">DİKKAT</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✗</span><div>WhatsApp metaveri toplar</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Telegram normal sohbet şifresiz</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Gmail içerik açık iletilir</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">SÜRELİ MESAJ</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">→</span><div>Signal: Ayarlar → Gizlilik → Varsayılan Zamanlayıcı</div></div>
+              <div class="side-item"><span class="side-arr">→</span><div>Threema: Sohbet → İsim → Süreli Mesajlar</div></div>
+              <div class="side-item"><span class="side-arr">→</span><div>WhatsApp: Sohbet → İsim → Süreli Mesajlar</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label"><span id="q-counter">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div style="flex:1;">
+              <div class="scene-label">BYTE'IN SENARYOSU — SAHTE QR KODU</div>
+              <div class="scene-text">Amsterdam'daki bir konferanstasın. Koridorda "WhatsApp Web — Hızlı Bağlan" yazan bir poster gözdüküyor. QR kodu var. Yanındaki meslektaşın telefonu uzatıyor: <em>"Hızlı bağlansak mı? Sunumu buradan gösteririz."</em> Posterdeki URL'ye bakıyorsun:</div>
+              <div class="qr-mockup">
+                <div class="qm-bar">
+                  <span style="font-size:.80rem;">🌐</span>
+                  <span class="qm-url">whatsapp-web-connect.net/qr</span>
+                  <span class="qm-ssl">⚠️ HTTP</span>
+                </div>
+                <div class="qm-body">
+                  <div class="qm-qr">▣</div>
+                  <div class="qm-text-block">
+                    <div class="qm-title">WhatsApp Web — Hızlı Erişim</div>
+                    <div class="qm-sub">Telefonunuzla bu kodu tarayın. Sohbetlerinize anında erişin.</div>
+                    <button class="qm-scan-btn">QR Kodu Tara →</button>
+                  </div>
+                </div>
+                <div class="qm-warn">
+                  <div class="qw-title">⚠️ SORU İŞARETLERİ</div>
+                  <div class="qw-item"><span class="qw-dot">1</span><span>Domain: <strong>whatsapp-web-connect.net</strong> — resmi adres web.whatsapp.com değil</span></div>
+                  <div class="qw-item"><span class="qw-dot">2</span><span>HTTP bağlantısı — şifreli değil</span></div>
+                  <div class="qw-item"><span class="qw-dot">3</span><span>Konferans koridorunda fiziksel poster — kim koydu?</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)"><span class="s-icon">📷</span><span>Hızlı olsun diye tararsın — WhatsApp'ın resmi QR'ı gibi görünüyor zaten.</span></button>
+            <button class="scene-opt" onclick="pickScene(1)"><span class="s-icon">🛑</span><span>Taramayı reddedersin. Domain resmi değil (web.whatsapp.com değil), bağlantı HTTP, fiziksel ortamda QR — üç red bayrağı bir arada. Meslektaşına açıklarsın.</span></button>
+            <button class="scene-opt" onclick="pickScene(2)"><span class="s-icon">🤔</span><span>Meslektaşın tarıyor, sen seyrediyorsun — o taradı, senin sorumluluğun değil.</span></button>
+            <button class="scene-opt" onclick="pickScene(3)"><span class="s-icon">📞</span><span>WhatsApp'ı açıp normal yolla web.whatsapp.com'a giriyorsun — QR'ı uygulamadan okutuyorsun.</span></button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: BADGE -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">💬</div>
+        </div>
+        <h2 class="badge-title">GÜVENLİ KANAL</h2>
+        <p class="badge-subtitle">3 katman — transit, metaveri, cihaz</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+350 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 08</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">6</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">350</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance('Modül sekiz. Güvenli İletişim. Uçtan uca şifreli uygulama kullanmak yeterli değil. Güvenlik üç katmandan oluşuyor: transit şifreleme, metaveri koruması ve cihazda depolama kontrolü. Signal veya Threema kullan, süreli mesajı aç, gerçek güvenlik bu üçü bir arada.');
+  ut.lang='tr-TR';ut.rate=0.92;ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
+}
+
+let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
+
+window.moduleQuestions=[
+  {q:"Güvenli iletişimin '3 katmanı' nedir?",
+   opts:["Şifre, 2FA ve antivirüs","Transit şifreleme (E2EE), metaveri koruması ve cihazda depolama kontrolü","VPN, firewall ve şifreleme","İçerik şifreleme, bağlantı şifreleme ve yedekleme"],
+   correct:1,fb:{wrong:"3 katman: (1) E2EE — yolda şifreli, (2) Metaveri koruması — kim/ne zaman gizli, (3) Süreli mesaj — cihazda birikmez. Hepsi gerekli.",correct:"Doğru! Bu üç katmanın tümü olmadan 'güvenli iletişim' eksik kalır. Çoğu insan yalnızca ilk katmanda duruyor."}},
+  {q:"WhatsApp ile Signal arasındaki en kritik fark nedir?",
+   opts:["Signal tamamen ücretsiz, WhatsApp ücretli","WhatsApp mesaj içeriğini şifrelemez, Signal şifreler","WhatsApp metaveri toplar ve Meta'ya aktarır; Signal toplamaz","Signal yalnızca Android'de çalışır"],
+   correct:2,fb:{wrong:"İkisi de E2EE sağlar. Fark metaveri: WhatsApp kiminle, ne zaman, kaç kez konuştuğunu toplar ve Meta'ya aktarır. Signal bunu yapmaz.",correct:"Kesinlikle! E2EE her ikisinde de var — asıl fark metaveri. Bu yüzden Signal Katman 1+2'yi sağlarken WhatsApp yalnızca Katman 1'i sağlar."}},
+  {q:"Threema'yı diğer uygulamalardan ayıran en önemli özellik nedir?",
+   opts:["Tamamen ücretsizdir","Telefon numarası veya e-posta adresi gerektirmez — Threema ID ile çalışır","Yalnızca iOS'ta mevcuttur","Mesajları otomatik olarak siler"],
+   correct:1,fb:{wrong:"Threema ID: rastgele 8 karakterli kimlik. Telefon numarası veya e-posta bağlantısı yok — en yüksek anonimlik.",correct:"Doğru! Threema ID sistemi kişisel bilgiye bağlı değil. Tel. numarası olmadan iletişim — özellikle anonimlik gerektiren durumlar için kritik."}},
+  {q:"Süreli mesaj özelliği iletişim güvenliğinde hangi katmanı tamamlar?",
+   opts:["Katman 1 — transit şifreleme","Katman 2 — metaveri koruması","Katman 3 — cihazda depolama kontrolü","Hiçbirini — sadece pratik bir özellik"],
+   correct:2,fb:{wrong:"Süreli mesaj Katman 3'tür: mesaj başarıyla iletildi ama telefonda birikmiyor. Cihaz ele geçirilse bile eski yazışmalar yok.",correct:"Kesinlikle! Uçtan uca şifreli ilettiniz, ama mesaj telefonda birikmeye devam ediyorsa cihaz riski açık kalır. Süreli mesaj bunu kapatır."}},
+  {q:"Telegram'da E2EE hangi koşulda aktif olur?",
+   opts:["Her zaman otomatik aktiftir","Yalnızca grup sohbetlerinde","Yalnızca 'Gizli Sohbet' modunda","Telegram hiçbir zaman E2EE sağlamaz"],
+   correct:2,fb:{wrong:"Telegram'ın normal sohbeti şifresiz — Telegram sunucuları mesajları okuyabilir. Sadece 'Gizli Sohbet' modu E2EE sağlar.",correct:"Doğru! Bu en sık yapılan yanılgılardan biri. Telegram açık, süreli mesaj ikonuna tıklayıp 'Gizli Sohbet' açmak gerekir."}},
+  {q:"Signal'de IP adresini gizlemek için hangi ayar açılmalıdır?",
+   opts:["Ayarlar → Bildirimler → Sessiz mod","Ayarlar → Gizlilik → Gelişmiş → Aramaları Her Zaman Aktar","Ayarlar → Hesap → Telefon numarasını gizle","Ayarlar → Veri kullanımı → VPN"],
+   correct:1,fb:{wrong:"Signal: Ayarlar → Gizlilik → Gelişmiş → 'Aramaları Her Zaman Aktar' açıldığında tüm aramalar Signal sunucusu üzerinden geçer, IP gizlenir.",correct:"Doğru! Bu ayar aramalarda IP adresini karşı tarafa göstermez. Arama kalitesi hafif düşebilir ama gizlilik sağlanır."}},
+  {q:"ProtonMail ile normal bir Gmail kullanıcısına şifreli e-posta göndermek mümkün müdür?",
+   opts:["Hayır, alıcının da ProtonMail kullanması gerekir","Evet — alıcıya şifreli bağlantı gönderilir, bir şifreyle açar","Sadece Tutanota kullanıcılarına gönderilebilir","Hayır, ProtonMail yalnızca kendi sunucusunda çalışır"],
+   correct:1,fb:{wrong:"ProtonMail'den Gmail'e şifreli gönderi mümkün. Alıcı bir link alır ve belirlediğin şifreyle açar — ProtonMail hesabı gerekmez.",correct:"Doğru! Şifreli bağlantı özelliği: gönderici şifre belirler, alıcı linki tıklar ve şifreyi girer. Karşılıklı ProtonMail şartı yok."}},
+  {q:"WhatsApp'ta süreli mesajın varsayılan durumu nedir ve nasıl açılır?",
+   opts:["Varsayılan açık, kapatmak için Ayarlar → Sohbetler","Varsayılan kapalı — her sohbet için ayrı ayrı açılmalı: Sohbet → İsim → Süreli Mesajlar","Otomatik 90 günde bir temizlenir","Süreli mesaj özelliği WhatsApp'ta mevcut değil"],
+   correct:1,fb:{wrong:"WhatsApp'ta süreli mesaj varsayılan kapalı. Her sohbet için ayrı ayrı açılmalı: sohbete gir, karşının ismine tıkla, 'Süreli Mesajlar' seç.",correct:"Doğru! Bu nedenle Signal daha avantajlı — global varsayılan ayarlanabiliyor, yeni tüm sohbetlere otomatik uygulanıyor."}},
+  {q:"Konferansta gördüğün bir posterteki QR kodu taramadan önce hangi kontrolü yapmalısın?",
+   opts:["QR kodunun rengi ve kalitesine bak","Domain adresini kontrol et — resmi adres mi (web.whatsapp.com gibi), HTTP mi HTTPS mi","Posterin boyutuna ve matbaa kalitesine bak","Çevrenizdekilere sorun — tanıdık biri koymuş olabilir"],
+   correct:1,fb:{wrong:"Domain ve protokol kontrolü kritik: resmi adres mi (örn. web.whatsapp.com), bağlantı HTTPS mi? Yanlış domain — sahte QR, hesap ele geçirme riski.",correct:"Kesinlikle! Fiziksel ortamdaki QR kodlar güvenilir değil. Domain + HTTPS + resmi kaynak — bu üçü bir arada değilse tara."}},
+  {q:"'E2EE kullanıyorum yani güvendeyim' ifadesi neden eksik bir yaklaşımdır?",
+   opts:["E2EE aslında güvenli değildir","E2EE sadece Katman 1'dir — metaveri toplanabilir, telefonda mesajlar birikir; Katman 2 ve 3 olmadan tam güvenlik sağlanamaz","E2EE yalnızca ücretli uygulamalarda gerçekten çalışır","E2EE yalnızca sesli aramalarda geçerlidir"],
+   correct:1,fb:{wrong:"E2EE güçlü ama yeterli değil. Metaveri (kim/ne zaman) toplanabilir, mesajlar telefonda birikir. 3 katman birlikte olmadan eksik.",correct:"Tam isabet! Bu modülün özü bu. E2EE Katman 1. Gerçek güvenlik: E2EE + metaveri koruması (Signal/Threema) + süreli mesaj. Üçü birden."}}
+];
+
+function goStep(n){
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('step-btn-'+n).classList.add('active');
+  if(n===3&&moduleCurrentQ===0)renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function completeStep(n){
+  if(!moduleStepsCompleted.has(n)){
+    moduleStepsCompleted.add(n);
+    const earned={1:40,2:60,3:150,4:50,5:50}[n]||0;
+    xp+=earned;
+    document.getElementById('xp-count').textContent=xp;
+    const dot=document.getElementById('dot-'+n);
+    if(dot){dot.classList.remove('active','pending');dot.classList.add('done');dot.textContent='✓';}
+    showToast('xp','⚡ +'+earned+' XP',['','Video Ders','Okuma','Quiz','Senaryo','Rozet'][n]+' tamamlandı!');
+  }
+  goStep(n+1);
+}
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function skipVideo(){if(window.completeStep) window.completeStep(1);}
+
+function renderQuestion(){
+  if(moduleCurrentQ>=10){showResult();return;}
+  const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
+  document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
+  const L=['A','B','C','D'];
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${moduleCurrentQ+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="feedback"></div>
+    </div>
+    <div class="quiz-actions" id="q-actions" style="display:none;"><button class="btn btn-primary" onclick="nextQuestion()">${moduleCurrentQ<9?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
+}
+
+function answerQ(i){
+  if(moduleQuizAnswered)return;moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  if(ok)moduleQuizCorrect++;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
+  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
+  document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
+  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
+  fb.className='feedback-box show '+(ok?'correct':'wrong');
+  document.getElementById('q-actions').style.display='flex';
+}
+
+function nextQuestion(){moduleCurrentQ++;if(moduleCurrentQ<10)renderQuestion();else showResult();}
+
+function showResult(){
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
+  const passed=moduleQuizCorrect>=7;
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3rem;margin-bottom:14px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / 10 doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      <button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>
+      ${!passed?'<button class="btn btn-green" style="margin-left:10px;" onclick="restartQuiz()">Tekrar Dene</button>':''}
+    </div>`;
+}
+
+function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Domain 'whatsapp-web-connect.net' — resmi adres 'web.whatsapp.com'. Bu sahte bir sayfa; QR taranırsa hesap ele geçirilir. Hız güvenliğin önüne geçemez."},
+  {correct:true,text:"<strong>Doğru hamle!</strong> Üç kırmızı bayrak bir arada: yanlış domain, HTTP (şifresiz), fiziksel ortamda tanımsız poster. Meslektaşına da açıklaman önemli — farkındalığı yaymak güvenlik kültürünün parçası."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Meslektaşın taradı — ama aynı ağdasınız, ve paylaştığı cihaz ele geçirilmiş olabilir. Yanındaki kişinin güvenliğini de önemsemek hem etik hem de pratik bir zorunluluktur."},
+  {correct:true,text:"<strong>Akıllıca!</strong> Web tarayıcısında doğrudan 'web.whatsapp.com' yazmak en güvenli yol. Resmi WhatsApp uygulamasından QR okutmak da güvenlidir — ama posterdeki yabancı QR'ı asla tarama."}
+];
+
+function pickScene(i){
+  if(document.querySelector('.scene-opt.chosen-correct,.scene-opt.chosen-wrong'))return;
+  const opts=document.querySelectorAll('.scene-opt'),fb=sceneFeedbacks[i];
+  opts[i].classList.add(fb.correct?'chosen-correct':'chosen-wrong');
+  if(!fb.correct&&i!==3)opts[1].classList.add('chosen-correct');
+  if(i===3)opts[i].classList.remove('chosen-wrong'),opts[i].classList.add('chosen-correct');
+  opts.forEach(o=>o.disabled=true);
+  document.getElementById('byte-fb-text').innerHTML=fb.text;
+  document.getElementById('byte-fb').classList.add('show');
+  document.getElementById('scene-next').style.display='block';
+}
+
+function showToast(type,title,sub){
+  const c=document.getElementById('toast-container'),t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<span class="toast-icon">${{xp:'⚡',info:'💬',warn:'⚠️'}[type]||'ℹ'}</span><div><div class="toast-title">${title}</div><div class="toast-sub">${sub}</div></div>`;
+  c.appendChild(t);setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),400);},3500);
+}
+function tryNav(){showToast('warn','🔒 Kilitli','Önceki modülü tamamla.');}
+function goTo(url){window.location.href=url;}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+

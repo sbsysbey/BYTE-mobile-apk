@@ -1,0 +1,854 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 12: Sosyal Medya Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 290px;gap:24px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px 30px;}
+.article-tag{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--pink);letter-spacing:2px;margin-bottom:10px;}
+.article-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.35;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--pink);letter-spacing:2px;margin:26px 0 14px;padding-bottom:8px;border-bottom:1px solid rgba(244,114,182,.2);}
+.section-head-c{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:2px;margin:26px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--pink);margin-bottom:4px;}
+.stat-lbl{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+.alert-warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-red{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.05);border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-pink{background:rgba(244,114,182,.05);border:1px solid rgba(244,114,182,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+/* ATTACK CHAIN */
+.attack-chain{display:flex;flex-direction:column;gap:0;margin-bottom:18px;}
+.ac-step{display:flex;gap:14px;align-items:flex-start;position:relative;}
+.ac-step:not(:last-child)::after{content:'';position:absolute;left:17px;top:36px;bottom:-14px;width:2px;background:linear-gradient(to bottom,rgba(248,113,113,.4),rgba(248,113,113,.1));border-radius:2px;}
+.ac-num{width:36px;height:36px;border-radius:50%;background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.35);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.72rem;font-weight:700;color:var(--red);flex-shrink:0;}
+.ac-body{padding-bottom:20px;}
+.ac-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.ac-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;}
+/* PLATFORM SETTINGS */
+.platform-block{background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.platform-head{padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
+.platform-icon{font-size:1.6rem;}
+.platform-name{font-family:'Orbitron',sans-serif;font-size:.82rem;color:#fff;letter-spacing:1px;}
+.platform-sub{font-size:.78rem;color:var(--text-dim);}
+.platform-body{padding:16px 18px;}
+.setting-list{display:flex;flex-direction:column;gap:10px;}
+.setting-item{display:flex;gap:10px;align-items:flex-start;}
+.setting-path{font-size:.78rem;color:var(--cyan);font-family:monospace;background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.12);border-radius:5px;padding:2px 7px;flex-shrink:0;margin-top:1px;white-space:nowrap;}
+.setting-text{font-size:.90rem;color:var(--text-dim);line-height:1.5;}
+.setting-text strong{color:#fff;}
+.s-ok{color:var(--green);flex-shrink:0;margin-top:2px;font-weight:700;}
+.s-bad{color:var(--red);flex-shrink:0;margin-top:2px;font-weight:700;}
+/* SIM */
+.sim-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.sim-card{border-radius:12px;padding:16px 18px;}
+.sim-bad{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);}
+.sim-good{background:rgba(74,222,154,.06);border:1px solid rgba(74,222,154,.25);}
+.sim-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.sim-icon{font-size:1.2rem;}
+.sim-title{font-family:'Orbitron',sans-serif;font-size:.72rem;letter-spacing:1px;}
+.sim-bad .sim-title{color:var(--red);}
+.sim-good .sim-title{color:var(--green);}
+.sim-list{display:flex;flex-direction:column;gap:6px;}
+.sim-item{font-size:.82rem;color:var(--text-dim);display:flex;gap:7px;line-height:1.4;}
+/* PASSWORD */
+.pw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.pw-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 15px;}
+.pw-icon{font-size:1.1rem;margin-bottom:6px;}
+.pw-title{font-size:.85rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.pw-text{font-size:.90rem;color:var(--text-dim);line-height:1.5;}
+/* CHECKLIST */
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;}
+.cl-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:9px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;cursor:pointer;transition:.2s;}
+.cl-item:hover{border-color:rgba(74,222,154,.3);}
+.cl-item.checked{background:rgba(74,222,154,.05);border-color:rgba(74,222,154,.3);}
+.cl-box{width:18px;height:18px;border-radius:4px;border:2px solid rgba(255,255,255,.2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:var(--green);transition:.2s;}
+.cl-item.checked .cl-box{background:rgba(74,222,154,.2);border-color:var(--green);}
+.cl-text{font-size:.81rem;color:var(--text-dim);line-height:1.4;}
+/* SIDEBAR */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1.5px;margin-bottom:10px;}
+.side-list{display:flex;flex-direction:column;gap:7px;}
+.side-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-dim);line-height:1.4;}
+.side-ok{color:var(--green);flex-shrink:0;font-weight:700;}
+.side-bad{color:var(--red);flex-shrink:0;font-weight:700;}
+.side-arr{color:var(--cyan);flex-shrink:0;font-weight:700;}
+.quick-numbers{background:linear-gradient(135deg,rgba(244,114,182,.08),rgba(244,114,182,.03));border:1px solid rgba(244,114,182,.25);border-radius:14px;padding:16px 18px;}
+.qn-head{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--pink);letter-spacing:1px;margin-bottom:10px;}
+.qn-item{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+.qn-val{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;color:var(--pink);}
+.qn-lbl{font-size:.78rem;color:var(--text-dim);}
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.byte-mini{font-size:1.2rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;}
+.byte-tip-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+/* ACIL */
+.acil-steps{display:flex;flex-direction:column;gap:0;margin-bottom:18px;}
+.acil-step{display:flex;gap:14px;align-items:flex-start;position:relative;}
+.acil-step:not(:last-child)::after{content:'';position:absolute;left:20px;top:44px;bottom:-8px;width:2px;background:linear-gradient(to bottom,rgba(74,222,154,.3),rgba(74,222,154,.05));}
+.acil-num{width:42px;height:42px;border-radius:50%;background:rgba(74,222,154,.1);border:2px solid rgba(74,222,154,.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:900;color:var(--green);flex-shrink:0;}
+.acil-body{padding-bottom:22px;}
+.acil-time{font-family:'Orbitron',sans-serif;font-size:.68rem;color:var(--yellow);letter-spacing:1px;margin-bottom:4px;}
+.acil-title{font-size:.92rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.acil-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
+/* QUIZ */
+.quiz-wrap{max-width:700px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--pink),var(--purple));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--pink);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;width:100%;}
+.option-btn:hover{background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.3);}
+.option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:10px;padding:11px 15px;font-size:.91rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.3);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span class="xp-label">XP</span>
+      <span id="xp-count">4100</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span>11</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="sidebar-title">MÜFREDAT</div>
+    <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Phishing Saldırıları</div><div class="mod-meta">01 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">02 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">03 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">04 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Phishing (İleri)</div><div class="mod-meta">05 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul6.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Veri Gizliliği</div><div class="mod-meta">06 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul7.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Güvenli Sunum</div><div class="mod-meta">07 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul8.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">08 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul9.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Hesap & Platform Güv.</div><div class="mod-meta">09 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul10.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">10 · Tamamlandı</div></div></div>
+    <div class="module-item" onclick="goTo('modul11.html')"><div class="mod-num done">✓</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">11 · Tamamlandı</div></div></div>
+    <div class="sidebar-divider"></div>
+    <div class="module-item active">
+      <div class="mod-num active2">12</div>
+      <div><div class="mod-name" style="color:var(--pink);">Sosyal Medya Güvenliği</div><div class="mod-meta">Aktif · 350 XP</div></div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">🔒 Kilitli</div></div></div>
+    <div class="sidebar-divider"></div>
+    <a href="rehber.html" style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);color:var(--text-dim);font-size:.85rem;text-decoration:none;transition:.2s;margin:0 0 4px;" onmouseover="this.style.color='var(--cyan)';this.style.borderColor='rgba(96,200,240,.4)'" onmouseout="this.style.color='var(--text-dim)';this.style.borderColor='rgba(255,255,255,.08)'">
+      <span>📚</span><span>Rehber</span>
+    </a>
+  </nav>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        📱
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">▶ BYTE'a tıkla</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 12 · 🔊 Dinle</div>
+        <h1 class="mod-title">Sosyal Medya <span>Güvenliği</span></h1>
+        <p class="mod-desc">Instagram, Facebook, WhatsApp, Telegram — günlük hayatın merkezindeki platformlar, aynı zamanda en çok hedef alınanlar. SIM bypass, hesap ele geçirme, gizlilik ayarları ve acil müdahale protokolü.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-p"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-g"></div>~40 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+70 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+160 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+40 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+30 XP</div></div>
+    </div>
+
+    <!-- ═══ PANEL 1: VIDEO ═══ -->
+    <div class="lesson-panel active" id="panel-1">
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;text-align:center;">
+        <div style="font-size:4rem;margin-bottom:16px;">📱</div>
+        <div style="font-family:'Orbitron',sans-serif;font-size:.85rem;color:var(--pink);letter-spacing:2px;margin-bottom:8px;">VIDEO DERS</div>
+        <div style="font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:12px;">Sosyal Medya Güvenliği</div>
+        <div style="font-size:.88rem;color:var(--text-dim);line-height:1.6;max-width:520px;margin:0 auto 22px;">Bu modülde video için bir YouTube bağlantısı henüz eklenmedi. BYTE sesli anlatımı ile başlayabilir veya doğrudan okuma bölümüne geçebilirsin.</div>
+        <button class="btn btn-primary" onclick="byteSpeak()" style="margin-right:10px;">🔊 BYTE'ı Dinle</button>
+        <button class="btn btn-green" onclick="completeStep(1);goStep(2)">Okumaya Geç →</button>
+      </div>
+      <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;">
+        <div style="font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--pink);letter-spacing:1px;margin-bottom:14px;">📋 BU MODÜLDE ÖĞRENECEKLERIN</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          <div style="background:var(--bg-panel);border-radius:10px;padding:12px 14px;font-size:.84rem;color:var(--text-dim);">🎯 <strong style="color:#fff;">Saldırı Zinciri</strong><br>Hesaplar nasıl ele geçirilir — adım adım</div>
+          <div style="background:var(--bg-panel);border-radius:10px;padding:12px 14px;font-size:.84rem;color:var(--text-dim);">📵 <strong style="color:#fff;">SIM Bypass</strong><br>Türkiye'ye özgü tehdit ve çözümü</div>
+          <div style="background:var(--bg-panel);border-radius:10px;padding:12px 14px;font-size:.84rem;color:var(--text-dim);">⚙️ <strong style="color:#fff;">Gizlilik Ayarları</strong><br>Instagram, Facebook, WhatsApp, Telegram</div>
+          <div style="background:var(--bg-panel);border-radius:10px;padding:12px 14px;font-size:.84rem;color:var(--text-dim);">🚨 <strong style="color:#fff;">Acil Müdahale</strong><br>Hesabın ele geçirilirse ne yaparsın?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 2: READING ═══ -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA · 7 BÖLÜM</div>
+          <div class="article-title">Sosyal Medya Güvenliği: Hesabını Koruma Rehberi</div>
+          <div class="article-intro">Sosyal medya hesapları artık sadece fotoğraf paylaşım yeri değil — kimliğin, itibarın ve çevreni. Bir Instagram hesabının ele geçirilmesi, yıllarca oluşturulmuş bir topluluğu saniyeler içinde mahvedebilir. Ve bu gençler arasında düşündüğünden çok daha sık yaşanıyor.</div>
+
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">%73</div><div class="stat-lbl">Sosyal medya hesabı hacklenenlerin 18-34 yaş arası olduğu oran (Meta 2024)</div></div>
+            <div class="stat-box"><div class="stat-num">3 dk</div><div class="stat-lbl">Zayıf şifreli bir hesabın kırılma süresi — brute force saldırısında</div></div>
+            <div class="stat-box"><div class="stat-num">%91</div><div class="stat-lbl">Hacklenmiş hesapların 2FA kullanmadığı oran</div></div>
+          </div>
+
+          <!-- BÖLÜM 1 -->
+          <div class="section-head">🎯 BÖLÜM 1 — BİR HESAP NASIL ELE GEÇİRİLİR? SALDIRI ZİNCİRİ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:16px;">Hesabının nasıl ele geçirilebileceğini bilmek, onu korumanın ilk adımı. Saldırganlar genellikle aşağıdaki yolları izler — ve bunların büyük çoğunluğu önlenebilir:</p>
+
+          <div class="attack-chain">
+            <div class="ac-step">
+              <div class="ac-num">1</div>
+              <div class="ac-body">
+                <div class="ac-title">Hedef Tespiti — Açık Kaynak İstihbaratı (OSINT)</div>
+                <div class="ac-desc">Saldırgan önce seni araştırır: doğum tarihin, şehrin, evcil hayvanının adı, favori takımın — bunların hepsi sosyal medyanda açık. Çoğu şifre bu bilgilerden oluşturulur.</div>
+              </div>
+            </div>
+            <div class="ac-step">
+              <div class="ac-num">2</div>
+              <div class="ac-body">
+                <div class="ac-title">Kimlik Bilgisi Tespiti — Sızdırılmış Veritabanları</div>
+                <div class="ac-desc">E-posta adresin ve şifren büyük ihtimalle bir veri ihlalinde çoktan sızdı. Saldırgan bunu haveibeenpwned.com benzeri sitelerden veya dark web'den kontrol eder.</div>
+              </div>
+            </div>
+            <div class="ac-step">
+              <div class="ac-num">3</div>
+              <div class="ac-body">
+                <div class="ac-title">Giriş Denemesi — Credential Stuffing</div>
+                <div class="ac-desc">Sızdırılmış kullanıcı adı-şifre kombinasyonları otomatik araçlarla farklı platformlarda denenir. Aynı şifreyi birden fazla yerde kullanıyorsan, biri sızdığında hepsi tehlikede.</div>
+              </div>
+            </div>
+            <div class="ac-step">
+              <div class="ac-num">4</div>
+              <div class="ac-body">
+                <div class="ac-title">2FA Bypass — SIM Kart veya Phishing</div>
+                <div class="ac-desc">2FA varsa iki yol dener: SMS 2FA ise SIM bypass (aşağıda detaylı), veya sahte giriş sayfasıyla tek kullanımlık kodu çalar.</div>
+              </div>
+            </div>
+            <div class="ac-step">
+              <div class="ac-num">5</div>
+              <div class="ac-body">
+                <div class="ac-title">Hesap Kilitleme — Recovery Bilgilerini Değiştirme</div>
+                <div class="ac-desc">İçeri girince ilk yaptığı şey: e-posta, telefon, şifre değişikliği. Artık sen kendi hesabından dışarıdasın. Bunu yapmak 30 saniye alır.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div><strong>Gerçek senaryo:</strong> 2024'te Türkiye'deki bir genç influencer, Instagram hesabını kaybetti. Saldırgan SMS 2FA'yı SIM bypass ile aştı, 12 dakikada tüm recovery bilgilerini değiştirdi. 3 yıllık hesap, 200K takipçi — geri alınması 6 hafta sürdü.</div>
+          </div>
+
+          <!-- BÖLÜM 2 -->
+          <div class="section-head">📵 BÖLÜM 2 — SIM BYPASS: TÜRKİYE'YE ÖZGÜ KRİTİK TEHDİT</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Bu bölüm <strong style="color:var(--red)">özellikle Türkiye'deki kullanıcılar için kritik.</strong> SMS ile gelen 2FA kodlarının ele geçirilmesi — SIM swap veya SS7 protokol açıkları aracılığıyla — ülkemizde belgelenmiş vakalarla gerçek bir tehdit.</p>
+
+          <div class="alert-red">
+            <span>🚨</span>
+            <div><strong>Kurumsal uyarı:</strong> Kurumsal ya da özel hesapların şifrelerinin Türkiye hattı SIM kartlarla eşleştirilmiş olması, bugünün şartlarında ayrı bir güvenlik açığı oluşturmaktadır. SIM kart bypass edilip operatörden doğrulama kodu alınarak hesaplar hacklenebilir.</div>
+          </div>
+
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong style="color:#fff;">SIM Bypass nasıl çalışır?</strong> Saldırgan, operatörü arayarak veya bir içeriden kişi aracılığıyla numaranı farklı bir SIM karta aktarır. Artık senin numarana gelen tüm SMS'ler — 2FA kodları dahil — onun telefonuna gider.</p>
+
+          <div class="sim-compare">
+            <div class="sim-card sim-bad">
+              <div class="sim-head"><div class="sim-icon">📵</div><div class="sim-title">KÖTÜ: SMS 2FA</div></div>
+              <div class="sim-list">
+                <div class="sim-item"><span style="color:var(--red);flex-shrink:0;">✗</span><div>Kod, SIM'e değil numaraya gider</div></div>
+                <div class="sim-item"><span style="color:var(--red);flex-shrink:0;">✗</span><div>SIM bypass ile ele geçirilebilir</div></div>
+                <div class="sim-item"><span style="color:var(--red);flex-shrink:0;">✗</span><div>SS7 protokol açıkları ile savunmasız</div></div>
+                <div class="sim-item"><span style="color:var(--red);flex-shrink:0;">✗</span><div>Kart kaybolursa 2FA da gider</div></div>
+              </div>
+            </div>
+            <div class="sim-card sim-good">
+              <div class="sim-head"><div class="sim-icon">🔐</div><div class="sim-title">İYİ: AUTHENTICATOR APP</div></div>
+              <div class="sim-list">
+                <div class="sim-item"><span style="color:var(--green);flex-shrink:0;">✓</span><div>Google Authenticator, Authy, Aegis</div></div>
+                <div class="sim-item"><span style="color:var(--green);flex-shrink:0;">✓</span><div>Kod cihazda üretilir, ağa gitmez</div></div>
+                <div class="sim-item"><span style="color:var(--green);flex-shrink:0;">✓</span><div>SIM bypass etkisiz kalır</div></div>
+                <div class="sim-item"><span style="color:var(--green);flex-shrink:0;">✓</span><div>İnternet gerektirmez</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert-info">
+            <span>💡</span>
+            <div><strong>Kurumsal hesaplar için ek kural:</strong> 2FA için şahsi e-mailler kullanılmamalı. Gerekiyorsa özel e-mailler açılarak onlar kullanılmalı. Kurumsal sosyal medya hesaplarında <strong>sadece kurum e-maili</strong> kullanılmalı — herhangi bir problemde hesabın kurtarılması çok daha kolay olur.</div>
+          </div>
+
+          <!-- BÖLÜM 3 -->
+          <div class="section-head">🔑 BÖLÜM 3 — SOSYAL MEDYAYA ÖZEL ŞİFRE KURALLARI</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Şifre kurallarını başka modüllerde gördün — burada sosyal medyaya özel olan ek boyutlara odaklanıyoruz:</p>
+
+          <div class="pw-grid">
+            <div class="pw-card">
+              <div class="pw-icon">🚫</div>
+              <div class="pw-title">DM'den Şifre Paylaşımı</div>
+              <div class="pw-text">WhatsApp, Instagram DM, Telegram — bunların hepsi şifreyi saklamak için son derece yanlış yerler. Mesaj geçmişi ele geçirilirse şifre de gider.</div>
+            </div>
+            <div class="pw-card">
+              <div class="pw-icon">👥</div>
+              <div class="pw-title">Kurumsal Şifre Devri</div>
+              <div class="pw-text">Kurumsal şifreleri kimlerin takip ettiği iyi bilinmeli, muhataplarına imza karşılığı verilmeli. Muhatap değişince şifre de değişmeli — herhangi bir ayrılıkta.</div>
+            </div>
+            <div class="pw-card">
+              <div class="pw-icon">🌐</div>
+              <div class="pw-title">Tarayıcıya Kaydetme</div>
+              <div class="pw-text">Sosyal medya şifrelerini tarayıcıya (Chrome, Safari) kaydetme. Tarayıcı senkronize olduğunda şifren buluta da gider. Şifre yöneticisi kullan.</div>
+            </div>
+            <div class="pw-card">
+              <div class="pw-icon">📱</div>
+              <div class="pw-title">Her Cihazda Açma</div>
+              <div class="pw-text">Önemli hesapları her cihazda — özellikle ortak veya güvensiz cihazlarda — açma. Aktif oturumlarını düzenli kontrol et.</div>
+            </div>
+          </div>
+
+          <div class="alert-pink">
+            <span>📌</span>
+            <div><strong>Gençler için önemli:</strong> "Arkadaşım da biliyor olsun" diye şifre paylaşmak çok yaygın — ama bu güven meselesi değil, güvenlik meselesi. Ayrılık, kavga, kaza — o arkadaş artık hayatında olmayabilir ama şifresi hâlâ elinde olabilir.</div>
+          </div>
+
+          <!-- BÖLÜM 4 -->
+          <div class="section-head-c">⚙️ BÖLÜM 4 — INSTAGRAM & FACEBOOK GÜVENLİK AYARLARI</div>
+
+          <div class="platform-block">
+            <div class="platform-head" style="background:linear-gradient(135deg,rgba(131,58,180,.1),rgba(253,29,29,.05));">
+              <div class="platform-icon">📸</div>
+              <div><div class="platform-name">INSTAGRAM</div><div class="platform-sub">Hesap Güvenliği Adım Adım</div></div>
+            </div>
+            <div class="platform-body">
+              <div class="setting-list">
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → İki faktörlü doğrulama</span> — <strong>SMS yerine "Kimlik Doğrulama Uygulaması"</strong> seç. Google Authenticator veya Authy indir, QR kodu tarat.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği</span> — Nerede, hangi cihazdan giriş yapıldığını görir. Tanımadığın cihaz varsa hemen çıkış yaptır.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Hesap gizliliği</span> — Hesabı <strong>Gizli (Private)</strong> yap. Takipçi olmayan kişiler içeriğini göremez.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Etiketler</span> — "Seni etiketleyebilecekler" → <strong>Sadece takip ettiklerim.</strong> Rastgele etiketleme ile spam ve impersonation önlenir.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Hikayeler</span> — Hikayelerini kimin görebileceğini kontrol et. "Gizle" listesi oluşturabilirsin.</div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span class="setting-path">Ayarlar → Güvenlik → Uygulamalar ve web siteleri</span> — Eski ve kullanmadığın üçüncü taraf uygulamaların Instagram erişimini <strong>kaldır.</strong> Bu uygulamalar hesabına kapı açık bırakır.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Profil → Düzenle → İletişim bilgileri</span> — Kamuya açık e-posta veya telefon numarası varsa <strong>gizle.</strong> Bu bilgiler saldırılar için kullanılır.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="platform-block">
+            <div class="platform-head" style="background:linear-gradient(135deg,rgba(24,119,242,.1),rgba(24,119,242,.03));">
+              <div class="platform-icon">👤</div>
+              <div><div class="platform-name">FACEBOOK</div><div class="platform-sub">Hesap Güvenliği Adım Adım</div></div>
+            </div>
+            <div class="platform-body">
+              <div class="setting-list">
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Güvenlik ve giriş → İki faktörlü doğrulama</span> — <strong>Authenticator uygulaması</strong> seç. SMS kullanma.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Güvenlik ve giriş → Nereden giriş yapıldı</span> — Tüm aktif oturumları gör. <strong>"Tüm oturumları kapat"</strong> seçeneğini kullan — özellikle eski cihazlardan.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Güvenlik ve giriş → Güvenilir kişiler</span> — Hesabı kurtarmak için güvendiğin 3-5 arkadaş belirle. Hesabına erişemezsen onlar yardımcı olabilir.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Paylaşımlarını kimin görebileceği</span> — <strong>Arkadaşlar</strong> seç. "Herkese açık" paylaşım saldırganlar için altın maden.</div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span class="setting-path">Ayarlar → Uygulamalar ve web siteleri</span> — Facebook ile giriş yaptığın eski uygulamaları <strong>kaldır.</strong> "Süresi dolmuş" olanlar da dahil — hâlâ erişimleri olabilir.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Profil → Hakkında → İletişim bilgileri</span> — Telefon, e-posta, doğum tarihi — <strong>"Yalnızca ben"</strong> olarak gizle. Bu bilgiler identity theft için kullanılır.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 5 -->
+          <div class="section-head-c">💬 BÖLÜM 5 — WHATSAPP & TELEGRAM GÜVENLİK AYARLARI</div>
+
+          <div class="platform-block">
+            <div class="platform-head" style="background:linear-gradient(135deg,rgba(37,211,102,.1),rgba(37,211,102,.03));">
+              <div class="platform-icon">💬</div>
+              <div><div class="platform-name">WHATSAPP</div><div class="platform-sub">Mesajlaşma Güvenliği</div></div>
+            </div>
+            <div class="platform-body">
+              <div class="setting-list">
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Hesap → İki adımlı doğrulama</span> — <strong>Mutlaka aktif et.</strong> 6 haneli PIN oluştur. Bu PIN, hesabı yeni bir telefona taşıyan kişinin de bilmesi gerekir — bilmiyorsa giremez.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Son görülme ve çevrimiçi</span> — <strong>"Hiç kimse"</strong> veya "Kişilerim" seç. Saldırganlar aktif olduğunuzu takip ederek saldırı zamanlar.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Profil fotoğrafı</span> — <strong>"Kişilerim"</strong> seç. Rastgele kişiler profil fotoğrafını göremez — impersonation ve deepfake için kullanılır.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Gruplara ekleme</span> — <strong>"Kişilerim"</strong> seç. Böylece seni random gruplara ekleyemezler.</div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span class="setting-path">WhatsApp Web → Bağlı cihazlar</span> — Bağlı cihazları düzenli kontrol et. Kullanmadığın oturumları <strong>kapat.</strong> Birinin bilgisayarında oturum açık kaldıysa mesajlarını okuyabilir.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Sohbetler → Sohbet yedekleme</span> — Yedekleme şifrelemesini etkinleştir. Google Drive yedekleri varsayılan olarak uçtan uca şifreli değildir.</div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span style="color:var(--red);font-size:.78rem;">KURAL:</span> <strong>Şifreler, hassas belgeler veya kişisel tanımlayıcı bilgiler WhatsApp üzerinden kesinlikle paylaşılmamalı.</strong> WhatsApp mesajları yedekleme yoluyla buluta çıkabilir.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="platform-block">
+            <div class="platform-head" style="background:linear-gradient(135deg,rgba(0,136,204,.1),rgba(0,136,204,.03));">
+              <div class="platform-icon">✈️</div>
+              <div><div class="platform-name">TELEGRAM</div><div class="platform-sub">Dikkat: Varsayılanlar Güvenli Değil</div></div>
+            </div>
+            <div class="platform-body">
+              <div class="alert-warn" style="margin-bottom:12px;">
+                <span>⚠️</span>
+                <div><strong>Telegram yanılgısı:</strong> Telegram'ın tüm sohbetleri uçtan uca şifreli değildir. Yalnızca "Gizli Sohbet" özelliği uçtan uca şifreli — normal sohbetler Telegram'ın kendi sunucularında açık metin olarak durur.</div>
+              </div>
+              <div class="setting-list">
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik ve Güvenlik → İki adımlı doğrulama</span> — <strong>Aktif et.</strong> Şifre + e-mail recovery belirle.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Yeni sohbet → Yeni Gizli Sohbet</span> — Hassas konuşmalar için <strong>her zaman "Gizli Sohbet"</strong> kullan. Normal sohbet = sunucuda açık.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Telefon numarası</span> — <strong>"Hiç kimse"</strong> seç. Numarana sahip olan kişiler Telegram'da seni bulmasın.</div></div>
+                <div class="setting-item"><span class="s-ok">✓</span><div class="setting-text"><span class="setting-path">Ayarlar → Gizlilik → Son görülme</span> — <strong>"Kişilerim"</strong> veya "Hiç kimse" seç.</div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span class="setting-path">Ayarlar → Güvenlik → Aktif oturumlar</span> — Tüm aktif oturumları gör, bilinmeyenleri <strong>sonlandır.</strong></div></div>
+                <div class="setting-item"><span class="s-bad">✗</span><div class="setting-text"><span style="color:var(--red);font-size:.78rem;">UYARI:</span> Telegram grupları ve kanalları tamamen açık olabilir. <strong>Hassas kurum bilgilerini Telegram gruplarında paylaşma.</strong></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 6 -->
+          <div class="section-head">🚨 BÖLÜM 6 — HESABIM ELE GEÇİRİLDİ! ACİL MÜDAHALE PROTOKOLÜ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Bu olduğunda paniklemek çok normal — ama her dakika önemli. Sakin ol ve bu sırayla hareket et:</p>
+
+          <div class="acil-steps">
+            <div class="acil-step">
+              <div class="acil-num">1</div>
+              <div class="acil-body">
+                <div class="acil-time">İLK 5 DAKİKA</div>
+                <div class="acil-title">Hesaba hâlâ girebiliyorsan — ŞİFREYİ DEĞİŞTİR</div>
+                <div class="acil-desc">Şifreyi hemen değiştir ve <strong>tüm diğer oturumları kapat.</strong> Instagram: Ayarlar → Güvenlik → Giriş etkinliği → Tüm cihazlardan çıkış yap. Bu saldırganı içeriden atacak.</div>
+              </div>
+            </div>
+            <div class="acil-step">
+              <div class="acil-num">2</div>
+              <div class="acil-body">
+                <div class="acil-time">5-15 DAKİKA</div>
+                <div class="acil-title">E-posta ve telefon hesabını kilitle</div>
+                <div class="acil-desc">Sosyal medya hesabıyla bağlantılı e-posta ve telefon numarasının şifresini de değiştir. Saldırgan orayı da ele geçirmeye çalışacak — çünkü recovery oradan gelir.</div>
+              </div>
+            </div>
+            <div class="acil-step">
+              <div class="acil-num">3</div>
+              <div class="acil-body">
+                <div class="acil-time">15-30 DAKİKA</div>
+                <div class="acil-title">Platform destek merkezi — Hesap kurtarma talebi</div>
+                <div class="acil-desc">Instagram: instagram.com/hacked → "Hesabım ele geçirildi" → E-posta + kimlik doğrulama. Facebook: facebook.com/hacked aynı süreç. WhatsApp: Aynı numarayı yeni telefona yükle, 6 haneli SMS kodunu al.</div>
+              </div>
+            </div>
+            <div class="acil-step">
+              <div class="acil-num">4</div>
+              <div class="acil-body">
+                <div class="acil-time">İLK 1 SAAT</div>
+                <div class="acil-title">Takipçileri ve yakın çevreyi bilgilendir</div>
+                <div class="acil-desc">Hesabın ele geçirildiğini duyur — başka bir platform üzerinden. Saldırgan senin adına dolandırıcılık, para isteme, zararlı içerik paylaşabilir. Takipçiler uyarılmalı.</div>
+              </div>
+            </div>
+            <div class="acil-step">
+              <div class="acil-num">5</div>
+              <div class="acil-body">
+                <div class="acil-time">HESAP GERİ ALINDIKTAN SONRA</div>
+                <div class="acil-title">Hasarı değerlendir ve güvenliği yeniden kur</div>
+                <div class="acil-desc">Saldırgan hangi bilgilere erişti? Hangi içerikleri paylaştı? 2FA'yı Authenticator ile yeniden kur. Bağlı tüm üçüncü taraf uygulamaları kaldır. Şifre yöneticisini gözden geçir.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 7 -->
+          <div class="section-head-c">✅ BÖLÜM 7 — SOSYAL MEDYA GÜVENLİK KONTROl LİSTESİ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Aşağıdaki maddeleri tamamladıkça işaretle — kaç tanesini yaptın?</p>
+
+          <div class="checklist-grid" id="checklist">
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Tüm hesaplarda Authenticator ile 2FA aktif</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Her hesapta farklı, güçlü şifre (min. 20 karakter)</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Şifreler DM veya WhatsApp'tan hiç paylaşılmıyor</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Aktif oturumlar aylık kontrol ediliyor</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Instagram hesabı gizli (private) moda alındı</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Facebook profil bilgileri "Yalnızca ben" olarak gizlendi</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">WhatsApp iki adımlı doğrulama (6 haneli PIN) aktif</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">WhatsApp Web bağlı cihazlar kontrol edildi</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Telegram hassas sohbetlerde "Gizli Sohbet" kullanılıyor</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Üçüncü taraf uygulama erişimleri temizlendi</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Cihazlarda otomatik güncelleme aktif</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Sosyal medya hesapları yalnızca güvenilir cihazlarda açık</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Kurumsal hesaplarda kurum e-maili kullanılıyor</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Tüm cihazlarda Firewall ve Antivirus aktif ve güncel</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Profilimde telefon ve e-posta kamuya gizlendi</div></div>
+            <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box"></div><div class="cl-text">Hesap kurtarma için güvenilir kişiler belirlendi (FB)</div></div>
+          </div>
+
+          <div id="cl-progress" style="background:var(--bg-panel);border-radius:10px;padding:12px 16px;text-align:center;margin-bottom:20px;font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--text-dim);">0 / 16 tamamlandı</div>
+
+          <div class="byte-tip-card">
+            <div>
+              <div class="byte-tip-head"><div class="byte-mini">📱</div><div class="byte-name">BYTE'IN ÖZETI</div></div>
+              <div class="byte-tip-text">Sosyal medya güvenliği iki şeye iner: kimsenin kolay giremeyeceği bir giriş (Authenticator 2FA + güçlü şifre), ve içeri girerlerse hemen fark edip çıkarabilmek (aktif oturum takibi + acil protokol). SIM bypass Türkiye'de gerçek — SMS 2FA'dan hemen çık. Ve unutma: WhatsApp DM'i şifre paylaşmak için asla güvenli değil.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;"><button class="btn btn-primary" onclick="completeStep(2);goStep(3)">Okumayı Tamamladım →</button></div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="quick-numbers">
+            <div class="qn-head">📊 RAKAMLAR</div>
+            <div class="qn-item"><span class="qn-val">%73</span><span class="qn-lbl">Hacklenen 18-34 yaş arası</span></div>
+            <div class="qn-item"><span class="qn-val">3 dk</span><span class="qn-lbl">Zayıf şifre kırılma süresi</span></div>
+            <div class="qn-item"><span class="qn-val">%91</span><span class="qn-lbl">Hacklendi, 2FA yoktu</span></div>
+            <div class="qn-item"><span class="qn-val">6 hafta</span><span class="qn-lbl">Ortalama hesap kurtarma</span></div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">7 BÖLÜM</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">1</span><div>Saldırı Zinciri</div></div>
+              <div class="side-item"><span class="side-arr">2</span><div>SIM Bypass (TR)</div></div>
+              <div class="side-item"><span class="side-arr">3</span><div>Sosyal Medya Şifre Kuralları</div></div>
+              <div class="side-item"><span class="side-arr">4</span><div>Instagram & Facebook</div></div>
+              <div class="side-item"><span class="side-arr">5</span><div>WhatsApp & Telegram</div></div>
+              <div class="side-item"><span class="side-arr">6</span><div>Acil Müdahale</div></div>
+              <div class="side-item"><span class="side-arr">7</span><div>Kontrol Listesi (16 madde)</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">ASLA YAPMA</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✗</span><div>SMS 2FA kullanmak</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>DM'den şifre paylaşmak</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Şifreyi tarayıcıya kaydetmek</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Telegram'da normal sohbet (hassas konu)</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Her hesapta aynı şifre</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">MUTLAKA YAP</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span><div>Authenticator 2FA aç</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>Aktif oturumları takip et</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>WA iki adımlı doğrulama</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>Profil bilgilerini gizle</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>3. taraf uygulamaları temizle</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">ACİL PROTOKOL</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--yellow);flex-shrink:0;font-weight:700;">1</span><div>Şifre değiştir (5 dk)</div></div>
+              <div class="side-item"><span style="color:var(--yellow);flex-shrink:0;font-weight:700;">2</span><div>E-mail'i kilitle (15 dk)</div></div>
+              <div class="side-item"><span style="color:var(--yellow);flex-shrink:0;font-weight:700;">3</span><div>Platform destek talebi</div></div>
+              <div class="side-item"><span style="color:var(--yellow);flex-shrink:0;font-weight:700;">4</span><div>Takipçileri uyar</div></div>
+              <div class="side-item"><span style="color:var(--yellow);flex-shrink:0;font-weight:700;">5</span><div>Güvenliği yeniden kur</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 3: QUIZ ═══ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label">
+          <span id="q-counter">Soru 1 / 10</span>
+          <span id="q-score">0 / 10 Doğru</span>
+        </div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 4: SCENARIO ═══ -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">😱</div>
+            <div>
+              <div class="scene-label">SENARYO · MODÜL 12 · SOSYAL MEDYA GÜVENLİĞİ</div>
+              <div class="scene-text">Sabah 07:15. Telefona Instagram bildirimi geldi: <em>"Şifreniz değiştirildi."</em> Hemen uygulamayı açmaya çalışıyorsun — şifren çalışmıyor. Profil fotoğrafın değiştirilmiş, bio'ya garip bir bağlantı eklenmiş. Birisi hesabına girmiş. Gece boyunca ne yaşandı tam bilmiyorsun — ama harekete geçmek zorundasın.</div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">İlk olarak ne yaparsın?</div>
+          <div class="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)">
+              <div class="s-icon">📸</div>
+              <div>Ekran görüntüsü al ve Instagram'a bildir — platform kendisi halleder.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(1)">
+              <div class="s-icon">📧</div>
+              <div>Instagram'ın "Hesabım ele geçirildi" sayfasına git (instagram.com/hacked), e-posta doğrulaması yap. Ardından bağlı e-posta hesabının şifresini değiştir — çünkü saldırgan oraya da gitmiş olabilir.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(2)">
+              <div class="s-icon">📣</div>
+              <div>Hesabı kurtarmadan önce takipçilerine farklı kanaldan hemen duyuru geç ve para taleplerine inanmamalarını söyle.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(3)">
+              <div class="s-icon">⏳</div>
+              <div>Birkaç saat bekle, belki şifre sistemi hatası vardır ve kendiliğinden düzelir.</div>
+            </button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.6rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          
+
+          <div style="display:none;margin-top:16px;text-align:right;" id="scene-next">
+            <button class="btn btn-primary" onclick="completeStep(4)">Rozeti Kazan →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 5: BADGE ═══ -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">📸</div>
+        </div>
+        <h2 class="badge-title">SOSYAL KALKAN</h2>
+        <p class="badge-subtitle">SIM Bypass · Gizlilik Ayarları · Acil Müdahale · Hesap Güvenliği</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+350 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 12</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-p">7</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">350</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance(
+    'Modül on iki. Sosyal Medya Güvenliği. Gençlerin en çok hedef alındığı alan burasıdır. Sosyal medya hesapları nasıl ele geçirilir? Beş adım: Saldırgan önce seni araştırır, sonra sızdırılmış veritabanlarından şifreni bulur, sonra giriş dener, iki faktörlü doğrulamayı bypass eder ve seni kendi hesabından kilitler. Bu zincirin en zayıf halkası SMS ile gelen doğrulama kodu. Türkiye özelinde SIM bypass gerçek bir tehdit — Türkiye hattı SMS iki faktörlü doğrulama için yeterince güvenli değil. Çözüm: Google Authenticator veya Authy kullan. Ve unutma: WhatsApp mesajı şifre paylaşmak için asla güvenli değil.'
+  );
+  ut.lang='tr-TR';ut.rate=0.91;ut.pitch=1.04;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','📱 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}
+  else{window.speechSynthesis.speak(ut);}
+}
+
+let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
+
+window.moduleQuestions=[
+  {q:"SIM bypass saldırısında saldırgan ne yapar?",
+   opts:["Telefona fiziksel olarak erişir ve SIM kartı çalar","Operatörü kandırarak veya içeriden biriyle anlaşarak telefon numarasını başka bir SIM'e aktarır","SMS mesajlarını havada yakalar (man-in-the-middle)","Telefonun şifresini kırar"],
+   correct:1,fb:{wrong:"SIM bypass: Operatör üzerinden numaranın başka bir SIM'e aktarılması. Fiziksel erişim gerekmez. Saldırgan senin numarana gelen tüm SMS'leri kendi telefonunda alır — 2FA kodları dahil.",correct:"Doğru! Bu yüzden Türkiye hattı SMS 2FA güvenli değil. Çözüm: Authenticator uygulaması — kod cihazda üretilir, SMS'e gerek yok, SIM bypass etkisiz kalır."}},
+  {q:"2FA için en güvenli yöntem hangisidir?",
+   opts:["SMS ile doğrulama kodu almak","E-posta ile doğrulama kodu almak","Google Authenticator veya Authy gibi uygulama tabanlı 2FA","Güvenlik soruları (doğum tarihi, anne kızlık soyadı gibi)"],
+   correct:2,fb:{wrong:"SMS 2FA: SIM bypass ile bypass edilebilir. E-posta 2FA: E-posta hesabı ele geçirilirse gider. Güvenlik soruları: Sosyal medyadan öğrenilebilir. En güvenli: Authenticator — kod cihazda üretilir, ağa gitmez.",correct:"Kesinlikle! Authenticator uygulamaları TOTP (Time-based One-Time Password) kullanır — kod 30 saniyede bir değişir, internet gerektirmez, SIM bypass etkisiz. Authy yedekleme desteği ile kaybetme riskini de azaltır."}},
+  {q:"Instagram'da aktif oturumları kontrol etmek için doğru yol hangisi?",
+   opts:["Profil → Düzenle → Cihazlar","Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği","Keşfet → Güvenlik → Aktif oturumlar","Bildirimler → Güvenlik Uyarıları"],
+   correct:1,fb:{wrong:"Doğru yol: Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği. Buradan nerede, hangi cihazdan, ne zaman giriş yapıldığını görebilir ve tanımadığın cihazları çıkarabilirsin.",correct:"Doğru! Bu sayfayı ayda en az bir kez kontrol et. Tanımadığın bir cihaz veya konum görürsen hemen 'Çıkış yaptır' seç ve şifreni değiştir."}},
+  {q:"Telegram hakkında hangisi DOĞRUDUR?",
+   opts:["Tüm Telegram sohbetleri varsayılan olarak uçtan uca şifreli","Telegram'da hiç şifreleme yok","Yalnızca 'Gizli Sohbet' özelliği uçtan uca şifreli; normal sohbetler Telegram'ın sunucularında açık metin olarak durur","Telegram, WhatsApp'tan daha az güvenli çünkü açık kaynak değil"],
+   correct:2,fb:{wrong:"Telegram yanılgısı: Normal sohbetler Telegram'ın bulut sunucularında açık metin olarak saklanır. Yalnızca 'Gizli Sohbet' (Secret Chat) uçtan uca şifreli. Hassas konuşmalar için her zaman Gizli Sohbet kullan.",correct:"Doğru! Pek çok kişi Telegram'ın tamamen şifreli olduğunu sanıyor — bu yanlış. Normal sohbet başlatmak yerine 'Yeni Gizli Sohbet' seç. Ayrıca Telegram grupları ve kanalları tamamen açık olabilir — kurumsal hassas bilgileri paylaşma."}},
+  {q:"WhatsApp'ta şifre paylaşmak neden tehlikelidir?",
+   opts:["WhatsApp şifreleme kullanmıyor","WhatsApp mesajları Google Drive veya iCloud'a yedeklenebilir — bu yedekler her zaman uçtan uca şifreli değildir. Ayrıca mesaj geçmişi ele geçirilirse şifre de gider","WhatsApp mesajları Meta tarafından okunuyor","WhatsApp yalnızca kısa mesajlara izin veriyor"],
+   correct:1,fb:{wrong:"WhatsApp mesajları uçtan uca şifreli ama yedeklemeler varsayılan olarak değil. Google Drive'daki WhatsApp yedeği okunabilir durumda olabilir. Şifreler için şifre yöneticisi kullan, DM'yi değil.",correct:"Doğru! Ek risk: Bir gün o arkadaşla yolunuz ayrılabilir veya telefonunu kaybedebilir. Şifre paylaşmanın tek güvenli yolu: şifre yöneticisi üzerinden (Bitwarden, 1Password gibi) güvenli paylaşım özelliği."}},
+  {q:"Instagram hesabın ele geçirildiğinde ilk 5 dakikada ne yapmalısın?",
+   opts:["Instagram'a şikâyet formu doldur ve cevap bekle","Hesaba hâlâ girebiliyorsan şifreyi hemen değiştir ve tüm diğer oturumları kapat","Ekran görüntüsü al ve sosyal medyada paylaş","Arkadaşlarını ara ve durumu anlat"],
+   correct:1,fb:{wrong:"İlk 5 dakika hayati: Hesaba hâlâ girebiliyorsan şifreyi değiştir ve tüm oturumları kapat. Bu saldırganı içeriden atar. Şikâyet formu günler alabilir — önce saldırganı kendin çıkar.",correct:"Doğru! Sıra önemli: 1) Şifreyi değiştir + tüm oturumları kapat. 2) Bağlı e-posta şifresini değiştir. 3) Platform destek talebi. 4) Takipçileri uyar. Her dakika saldırganın daha fazla hasar verebileceği dakikadır."}},
+  {q:"Kurumsal sosyal medya hesaplarında hangi e-posta kullanılmalı?",
+   opts:["Yöneticinin kişisel e-postası — pratik olduğu için","Gmail veya Hotmail gibi ücretsiz genel amaçlı e-postalar","Kurumsal e-posta (kurum.org, kurum.com.tr gibi) — problem çıkınca platform ile iletişim kolaylaşır","Şifreli geçici e-postalar"],
+   correct:2,fb:{wrong:"Kurumsal hesaplarda kurumsal e-posta şart. Kişisel e-posta: kişi kurumdan ayrılırsa hesap takılı kalır. Genel e-posta: platform destek süreçlerinde kurum kimliğini kanıtlamak zorlaşır. Kurumsal e-posta ile kurtarma çok daha hızlı.",correct:"Doğru! Kurum e-maili ile iki avantaj: 1) Yetkili kişi değişince hesap kilitlenmez, e-posta erişimi devredilebilir. 2) Meta/Instagram'ın destek ekibi kurumsal e-posta ile kurtarma taleplerini daha hızlı işler."}},
+  {q:"'Credential stuffing' saldırısı nedir?",
+   opts:["Saldırganın fiziksel olarak bilgisayarına erişmesi","Sızdırılmış kullanıcı adı-şifre kombinasyonlarının otomatik araçlarla farklı platformlarda denenmesi","Phishing e-postası ile şifre çalınması","Tarayıcıdaki kaydedilmiş şifrelerin kopyalanması"],
+   correct:1,fb:{wrong:"Credential stuffing: 'X platformundan sızdı' + 'aynı şifreyi Y platformunda da kullanıyorum' = Y platformu da tehlikede. Bu yüzden her platformda farklı şifre kritik. haveibeenpwned.com'dan e-posta adresinin sızdırılıp sızdırılmadığını kontrol edebilirsin.",correct:"Doğru! Bu saldırı çok yaygın çünkü çoğu insan şifrelerini tekrar kullanıyor. Çözüm: Her platform için farklı, güçlü şifre + şifre yöneticisi. Şifrelerinden birinin sızdığında diğerleri güvende kalır."}},
+  {q:"WhatsApp'ta 'Bağlı Cihazlar' bölümünü kontrol etmek neden önemli?",
+   opts:["Telefonun depolama kapasitesini görmek için","WhatsApp Web veya masaüstü uygulaması üzerinden kim mesajlarını okuyabilir bunu kontrol etmek için","Whatsapp'ın güncel sürümde olup olmadığını anlamak için","Veri kullanımını görmek için"],
+   correct:1,fb:{wrong:"WhatsApp Web: Birinin bilgisayarında oturum açıp unutursan veya başkası erişirse tüm mesajlarını gerçek zamanlı okuyabilir. Ayarlar → Bağlı Cihazlar'dan aktif oturumları gör ve tanımadıklarını kapat.",correct:"Kesinlikle! Bu özellikle ortak bilgisayar kullandıktan sonra kritik. Ayda bir Bağlı Cihazlar'ı kontrol et. Tanımadığın bir cihaz görürsen hemen sonlandır — o cihazdan biri konuşmalarını anlık takip ediyor demek."}},
+  {q:"Hesap ele geçirildikten sonra saldırgan ilk ne yapar?",
+   opts:["İçerikleri inceleyip çıkar","E-posta adresini, telefon numarasını ve şifreyi değiştirerek seni dışarı kilitler","Hesabı kapatır","Yalnızca bazı gönderileri siler"],
+   correct:1,fb:{wrong:"Saldırganın önceliği: recovery bilgilerini değiştirmek. E-posta + telefon + şifre = 30 saniye. Artık sen kurtarma kodunu da alamıyorsun. Bu yüzden saldırı başlar başlamaz saniyeler içinde harekete geçmek şart.",correct:"Doğru! Bu yüzden 'bekleyeyim belki düzelir' seçeneği felaket olur. Her geçen dakika recovery bilgileri değişiyor olabilir. instagram.com/hacked → hemen git."}}
+];
+
+function goStep(n){
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('step-btn-'+n).classList.add('active');
+  if(n===3&&moduleCurrentQ===0)renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function completeStep(n){
+  if(!moduleStepsCompleted.has(n)){
+    moduleStepsCompleted.add(n);
+    const earned={1:50,2:70,3:160,4:40,5:30}[n]||0;
+    xp+=earned;
+    document.getElementById('xp-count').textContent=xp;
+    const dot=document.getElementById('dot-'+n);
+    if(dot){dot.classList.remove('active','pending');dot.classList.add('done');dot.textContent='✓';}
+    showToast('xp','⚡ +'+earned+' XP',['','Video Ders','Okuma','Quiz','Senaryo','Rozet'][n]+' tamamlandı!');
+  }
+  if(n<5)goStep(n+1);
+}
+
+function renderQuestion(){
+  if(moduleCurrentQ>=10){showResult();return;}
+  const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
+  document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
+  const L=['A','B','C','D'];
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${moduleCurrentQ+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="feedback"></div>
+    </div>
+    <div class="quiz-actions" id="q-actions" style="display:none;">
+      <button class="btn btn-primary" onclick="nextQuestion()">${moduleCurrentQ<9?'Sonraki Soru →':'Sonucu Gör →'}</button>
+    </div>`;
+}
+
+function answerQ(i){
+  if(moduleQuizAnswered)return;moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  if(ok)moduleQuizCorrect++;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
+  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
+  document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
+  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
+  fb.className='feedback-box show '+(ok?'correct':'wrong');
+  document.getElementById('q-actions').style.display='flex';
+}
+
+function nextQuestion(){moduleCurrentQ++;if(moduleCurrentQ<10)renderQuestion();else showResult();}
+
+function showResult(){
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
+  const passed=moduleQuizCorrect>=7;
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3rem;margin-bottom:14px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.88rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / 10 doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      <button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>
+      ${!passed?'<button class="btn btn-green" style="margin-left:10px;" onclick="restartQuiz()">Tekrar Dene</button>':''}
+    </div>`;
+}
+
+function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong style='color:var(--red)'>Bu yeterli değil.</strong> Ekran görüntüsü almak izleme açısından iyi ama birincil adım olmamalı. Platform şikayeti günler alabilir. Bu sürede saldırgan recovery bilgilerini değiştirip seni tamamen dışarı kilitler. Önce kendini harekete geçirmek zorundasın."},
+  {correct:true,text:"<strong style='color:var(--green)'>Doğru protokol!</strong> instagram.com/hacked → e-posta doğrulama → şifre değiştir + tüm oturumları kapat. Ardından e-posta hesabını kilitle — çünkü saldırgan recovery kodunu oradan alacak. Sıra önemli: önce kanalları kes, sonra platform desteği."},
+  {correct:false,text:"<strong style='color:var(--yellow)'>Doğru ama önce değil.</strong> Takipçileri uyarmak önemli — özellikle saldırgan senin adına dolandırıcılık yapıyorsa. Ama önce hesabı kurtarmaya odaklanmak gerekiyor. Duyuru 4. adım, 1. adım değil."},
+  {correct:false,text:"<strong style='color:var(--red)'>Kesinlikle hayır!</strong> Her geçen dakika saldırgan recovery bilgilerini değiştiriyor. 1 saat bekledikten sonra e-posta + telefon + şifre tamamen ele geçirilmiş olabilir ve hesabı geri almanız haftalar alır. Saniyeler içinde harekete geçmek zorundasın."}
+];
+
+const phase2Fb=[
+  {correct:false,text:"<strong style='color:var(--red)'>Bu yanlış.</strong> Sessiz kalmak hem etik değil hem de hukuki risk. Zarar görenler sana güvendi. Hızlıca şeffaf olmak hem doğru hem de itibarını korur — utanılacak olan senin değil, saldırganın yaptığı."},
+  {correct:true,text:"<strong style='color:var(--green)'>Doğru yaklaşım!</strong> Şeffaflık ve hız kritik. 'Hesabım ele geçirildi, benden gelen para talepleri sahte, kimse göndermesin' mesajı herkese ulaşmalı. Zarara uğrayanlardan özür ve bilgi iletmek — bu bir emanet sorumluluğu. Daha sonra güvenliği yeniden kur."},
+  {correct:false,text:"<strong style='color:var(--yellow)'>Şikayet iyi ama yeterli değil.</strong> Polise şikâyet uzun vadeli önemli ama anlık zarar devam ediyor. Önce takipçileri uyar, para gönderimi durdur. Polise şikâyet ve KVKK bildirimi paralel yapılabilir ama önce acil önlem."}
+];
+
+function pickScene(i){
+  if(document.querySelector('.scene-opt.chosen-correct,.scene-opt.chosen-wrong'))return;
+  const opts=document.querySelectorAll('.scene-opts .scene-opt'),fb=window.moduleSceneFeedbacks[i];
+  opts.forEach(o=>{o.disabled=true;});
+  opts[i].classList.add(fb.correct?'chosen-correct':'chosen-wrong');
+  if(!fb.correct)opts[1].classList.add('chosen-correct');
+  const fbText = document.getElementById('byte-fb-text');
+  const fbBox = document.getElementById('byte-fb');
+  if(fbText) fbText.innerHTML = fb.text;
+  if(fbBox) fbBox.classList.add('show');
+  const nextBtn = document.getElementById('scene-next');
+  if(nextBtn) nextBtn.style.display='block';
+}
+
+function awardChecklistXP(amount){
+  const xpEl=document.getElementById('xp-count');
+  if(typeof xp==='number'){
+    xp+=amount;
+    if(xpEl)xpEl.textContent=xp;
+  }else if(xpEl){
+    const current=parseInt(xpEl.textContent||'0',10)||0;
+    xpEl.textContent=String(current+amount);
+  }
+  showToast('xp','⚡ +'+amount+' XP','Kontrol listesi işaretlendi!');
+}
+
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  if(el.classList.contains('checked')&&el.dataset.xpAwarded!=='1'){
+    el.dataset.xpAwarded='1';
+    awardChecklistXP(5);
+  }
+  const box=el.querySelector('.cl-box');
+  box.textContent=el.classList.contains('checked')?'✓':'';
+  const total=document.querySelectorAll('.cl-item').length;
+  const done=document.querySelectorAll('.cl-item.checked').length;
+  const prog=document.getElementById('cl-progress');
+  prog.textContent=done+' / '+total+' tamamlandı';
+  prog.style.color=done===total?'var(--green)':done>total/2?'var(--yellow)':'var(--text-dim)';
+}
+
+function showToast(type,title,msg){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<div class="toast-icon">${type==='xp'?'⚡':type==='warn'?'⚠️':'ℹ️'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .4s';setTimeout(()=>t.remove(),400);},3200);
+}
+
+function tryNav(){showToast('warn','🔒 Kilitli','Bu modülü tamamlamadan devam edemezsin.');}
+function goTo(p){window.location.href=p;}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+

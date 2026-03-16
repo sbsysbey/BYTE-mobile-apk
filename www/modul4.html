@@ -1,0 +1,827 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 4: Sosyal Mühendislik</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+<style>
+
+/* ── READING ── */
+.reading-grid{display:grid;grid-template-columns:1fr 310px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--purple);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:24px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--purple);letter-spacing:2px;margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(192,132,252,.2);}
+
+/* Theme blocks */
+.theme-block{margin-bottom:32px;}
+.theme-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:14px 18px;border-radius:12px;border-left:3px solid;}
+.theme-header.identity{background:rgba(248,113,113,.06);border-color:var(--red);}
+.theme-header.youth{background:rgba(251,191,36,.06);border-color:var(--yellow);}
+.theme-header.baiting{background:rgba(251,146,60,.06);border-color:var(--orange);}
+.theme-header.psych{background:rgba(192,132,252,.06);border-color:var(--purple);}
+.theme-icon{font-size:1.8rem;flex-shrink:0;}
+.theme-title{font-family:'Orbitron',sans-serif;font-size:.88rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.theme-sub{font-size:.83rem;color:var(--text-dim);}
+
+/* Trick cards */
+.trick-list{display:flex;flex-direction:column;gap:12px;margin-bottom:16px;}
+.trick-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.trick-card:hover{border-color:rgba(192,132,252,.3);}
+.tc-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.tc-icon{font-size:1.3rem;}
+.tc-title{font-size:.90rem;font-weight:700;color:#fff;}
+.tc-tag{margin-left:auto;font-size:.70rem;padding:2px 8px;border-radius:4px;font-family:'Orbitron',sans-serif;letter-spacing:.5px;}
+.tc-tag.high{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25);}
+.tc-tag.new{background:rgba(192,132,252,.12);color:var(--purple);border:1px solid rgba(192,132,252,.25);}
+.tc-tag.mid{background:rgba(251,191,36,.1);color:var(--yellow);border:1px solid rgba(251,191,36,.25);}
+.tc-desc{font-size:.86rem;color:var(--text-dim);line-height:1.6;margin-bottom:8px;}
+.tc-example{background:rgba(0,0,0,.2);border-left:2px solid rgba(192,132,252,.4);border-radius:4px;padding:8px 12px;font-size:.83rem;color:var(--text-dim);font-style:italic;margin-bottom:8px;}
+.tc-rule{font-size:.83rem;color:var(--green);display:flex;gap:6px;align-items:flex-start;}
+
+/* WhatsApp mockup */
+.wa-mockup{background:#0d1f0e;border:1px solid rgba(37,211,102,.2);border-radius:12px;padding:14px 16px;margin:10px 0;}
+.wa-header{display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:10px;}
+.wa-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#25d366,#128c7e);display:flex;align-items:center;justify-content:center;font-size:.9rem;}
+.wa-name{font-size:.86rem;font-weight:700;color:#fff;}
+.wa-status{font-size:.74rem;color:#25d366;}
+.wa-bubble{background:#1e3a20;border-radius:0 10px 10px 10px;padding:9px 13px;margin-bottom:6px;max-width:85%;font-size:.86rem;color:var(--text);line-height:1.55;position:relative;}
+.wa-bubble.right{background:#0b4f23;border-radius:10px 0 10px 10px;margin-left:auto;}
+.wa-time{font-size:.70rem;color:rgba(255,255,255,.4);margin-top:4px;text-align:right;}
+.wa-warning{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:8px;padding:8px 12px;font-size:.82rem;color:var(--red);margin-top:10px;display:flex;gap:6px;align-items:flex-start;}
+
+/* Psych triggers */
+.trigger-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.trigger-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.trig-icon{font-size:1.3rem;margin-bottom:6px;}
+.trig-name{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.trig-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
+.trig-ex{font-size:.80rem;color:var(--purple);margin-top:5px;font-style:italic;}
+
+/* Defense steps */
+.defense-steps{display:flex;flex-direction:column;gap:0;margin-bottom:14px;}
+.ds-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ds-item:last-child{border-bottom:none;}
+.ds-num{width:36px;height:36px;border-radius:10px;background:rgba(192,132,252,.1);border:1px solid rgba(192,132,252,.3);color:var(--purple);font-family:'Orbitron',sans-serif;font-size:.74rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ds-title{font-size:.90rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.ds-desc{font-size:.86rem;color:var(--text-dim);line-height:1.55;}
+
+/* Alert */
+.alert-box{border-radius:10px;padding:13px 16px;margin:12px 0;display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.55;}
+.alert-box.warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);color:var(--text);}
+.alert-box.danger{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2);color:var(--text);}
+.alert-box.info{background:rgba(96,200,240,.06);border:1px solid rgba(96,200,240,.2);color:var(--text);}
+.alert-icon{flex-shrink:0;}
+
+/* BYTE tip */
+.byte-tip-card{background:linear-gradient(135deg,rgba(192,132,252,.04),rgba(96,200,240,.03));border:1px solid rgba(192,132,252,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--purple);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+/* Reading sidebar */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:8px;}
+.side-item{font-size:.85rem;color:var(--text-dim);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+.side-item strong{color:var(--text);}
+.si-dot{color:var(--purple);flex-shrink:0;}
+
+/* ── QUIZ ── */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(192,132,252,.05);border-color:rgba(192,132,252,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;transition:.2s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span>
+      <span class="xp-label">XP</span>
+      <span id="xp-count">1050</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" id="xp-mini-fill" style="width:72%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span id="badge-count">3</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul2.html')">
+        <div class="mod-num done">01</div>
+        <div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div>
+      </div>
+      <div class="module-item" onclick="goTo('modul4.html')">
+        <div class="mod-num done">02</div>
+        <div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div>
+      </div>
+      <div class="module-item" onclick="goTo('modul5.html')">
+        <div class="mod-num done">03</div>
+        <div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">✓ Tamamlandı · 300 XP</div></div>
+      </div>
+      <div class="module-item active">
+        <div class="mod-num active2">04</div>
+        <div><div class="mod-name" style="color:var(--purple)">Sosyal Mühendislik</div><div class="mod-meta">Aktif · 400 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav(4)"><div class="mod-num locked">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(5)"><div class="mod-num locked">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(6)"><div class="mod-num locked">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(7)"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(8)"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(9)"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(10)"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(11)"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav(12)"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+
+    <!-- MODULE HEADER -->
+    <div class="mod-header">
+      <!-- BYTE AVATAR — tıkla ve dinle -->
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="">
+        🤖
+        <div class="byte-rings">
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 04 🔊</div>
+        <h1 class="mod-title">Sosyal <span>Mühendislik</span></h1>
+        <p class="mod-desc">Seni hacklemek için kod yazmıyorlar — sadece konuşuyorlar. BYTE ile manipülasyon tuzaklarını tanı, psikolojik tetikleyicileri öğren ve bir sonraki saldırıya hazır ol.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>400 XP</div>
+          <div class="stat-chip"><div class="dot dot-p"></div>~40 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP NAV -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">01</div>
+        <div class="step-label">Video Ders</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">02</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">03</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+150 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">04</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+100 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">05</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+    </div>
+
+    <!-- ───── PANEL 1: VIDEO ───── -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 04</div>
+          <div class="vs-title">SOSYAL MÜHENDİSLİK</div>
+          <div class="vs-sub">Kimlik taklidi · WhatsApp tuzakları · Gençleri hedef alan hileler · Psikoloji</div>
+          <button class="play-big" onclick="startVideo()">▶</button>
+          <div class="chapters">
+            <div class="ch-pill active">🎭 Kimlik Taklidi</div>
+            <div class="ch-pill">📱 WhatsApp Tuzakları</div>
+            <div class="ch-pill">🎯 Gençlere Yönelik</div>
+            <div class="ch-pill">🧠 Psikoloji & Savunma</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <span class="vtime" id="vtime">0:00 / 10:15</span>
+          <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span style="font-size:1rem;">🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Siber saldırıların %98'i bir insan hatasıyla başlar — teknik değil, psikolojik bir açıkla</li>
+          <li><span class="kp-b">▸</span>WhatsApp 6 haneli kod tuzağı Avrupa'da en hızlı büyüyen dolandırıcılık yöntemi</li>
+          <li><span class="kp-b">▸</span>"Hi Mom/Hi Dad" dolandırıcılığı — yeni numara + acil para isteği</li>
+          <li><span class="kp-b">▸</span>Ücretsiz film/müzik siteleri ve crack programlar gençleri nasıl tuzağa çekiyor</li>
+          <li><span class="kp-b">▸</span>6 psikolojik tetikleyici: aciliyet, otorite, korku, merak, güven, karşılıklılık</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;">
+        <button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Video Tamamlandı →</button>
+      </div>
+    </div>
+
+    <!-- ───── PANEL 2: READING ───── -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Sosyal Mühendislik: İnsanı Hacklemek</div>
+          <p class="article-intro">Güvenlik duvarları, antivirüsler, güçlü şifreler — hepsi birlikte çalışıyor. Ama saldırgan seni arayıp "kodu söyle" derse, tüm bu sistemler devre dışı kalır. Sosyal mühendislik teknik değil, psikolojik bir saldırıdır.</p>
+
+          <!-- TEMA 1 -->
+          <div class="theme-block">
+            <div class="theme-header identity">
+              <div class="theme-icon">🎭</div>
+              <div>
+                <div class="theme-title">1. Kimlik Taklidi — "Annem mi, Dolandırıcı mı?"</div>
+                <div class="theme-sub">Tanıdık biri gibi davranarak güveni kötüye kullanmak</div>
+              </div>
+            </div>
+
+            <div class="trick-list">
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">👩‍👦</div>
+                  <div class="tc-title">"Hi Mom / Hi Dad" Dolandırıcılığı</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">WhatsApp veya SMS ile yeni bir numaradan mesaj geliyor: <em>"Anne, ben! Telefonum bozuldu, bu arkadaşımın numarası. Acil €200 lazım, faturamı ödeyemiyorum."</em> Ses tanıdık, durum acil — ama arayan senin çocuğun değil.</div>
+                <div class="tc-example">"Merhaba anne, benim! Yeni numaram bu. Çok acil yardıma ihtiyacım var, sormadan önce para gönderebilir misin?" — Hollanda'da 2024'te bu yöntemle 25 milyon € çalındı.</div>
+                <div class="tc-rule">✅ <span>Her zaman eski numaradan veya başka bir kanaldan doğrula. Para gönderme — önce konuş.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">📱</div>
+                  <div class="tc-title">WhatsApp 6 Haneli Kod Tuzağı</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">Tanıdık bir numaradan (veya ele geçirilmiş bir hesaptan) mesaj geliyor: <em>"Yanlışlıkla sana SMS kodu gönderdim, çok acil ihtiyacım var, atar mısın?"</em> O kodu atarsan WhatsApp hesabın anında onlara geçiyor.</div>
+                <div class="wa-mockup">
+                  <div class="wa-header">
+                    <div class="wa-avatar">👤</div>
+                    <div><div class="wa-name">Kerem (Arkadaş)</div><div class="wa-status">çevrimiçi</div></div>
+                  </div>
+                  <div class="wa-bubble">Selam! Yanlışlıkla sana SMS gönderdim, 6 haneli bir kod. Çok acil lazım, bana atar mısın? 🙏</div>
+                  <div class="wa-bubble right">Göndereyim, kod geliyor zaten</div>
+                  <div class="wa-bubble">Teşekkürler! [Hesap ele geçirildi ✗]</div>
+                  <div class="wa-warning">⚠️ Bu kod WhatsApp giriş kodudur. Gönderirsen hesabın karşı tarafa geçer. Kerem'in hesabı zaten çalınmış ve seni tuzağa çekiyor olabilir.</div>
+                </div>
+                <div class="tc-rule">✅ <span>WhatsApp kodu asla ve hiç kimseyle paylaşma. WhatsApp 2 adımlı doğrulamayı etkinleştir.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">📞</div>
+                  <div class="tc-title">Sahte Banka / Polis Araması</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">Caller ID spoofing ile gerçek banka numarasından arayabilirler. "Hesabınızda şüpheli işlem tespit ettik. Güvenliğiniz için tek kullanımlık kodu söyleyin." — Gerçek banka asla bu kodu telefonda istemez.</div>
+                <div class="tc-example">Europol 2024: AB genelinde telefon dolandırıcılığı 1,2 milyar €'ya ulaştı. Kurbanların %40'ı 18-35 yaş arası.</div>
+                <div class="tc-rule">✅ <span>Telefonu kapat. Bankanın resmi numarasını kendin ara. Gelen aramada asla şifre veya kod verme.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 2 -->
+          <div class="theme-block">
+            <div class="theme-header youth">
+              <div class="theme-icon">🎯</div>
+              <div>
+                <div class="theme-title">2. Gençleri Hedef Alan Tuzaklar</div>
+                <div class="theme-sub">Ücretsiz içerik, crack programlar ve sosyal medya hileleri</div>
+              </div>
+            </div>
+
+            <div class="alert-box warn">
+              <div class="alert-icon">📊</div>
+              <div>ENISA 2024: Dijital dolandırıcılık mağdurlarının <strong>%47'si 16-30 yaş arası</strong>. Gençler teknolojiyi daha çok kullanıyor ama sosyal mühendislik tuzaklarını daha az tanıyor.</div>
+            </div>
+
+            <div class="trick-list">
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">🎬</div>
+                  <div class="tc-title">Ücretsiz Netflix / Spotify / Film Sitesi</div>
+                  <span class="tc-tag mid">YAYGIN</span>
+                </div>
+                <div class="tc-desc">"Ücretsiz kayıt ol, premium içerik izle!" Kredi kartı numarasını "doğrulama için" istiyorlar. İptal etmek imkânsız hale geliyor — müşteri hizmeti yok, e-posta cevap vermiyor, ücret her ay çekiliyor.</div>
+                <div class="tc-example">Senaryo: "Sadece €0,99 deneme süresi" diyorlar. 3 gün sonra €29,99/ay abonelik başlıyor. Türkiye'den AB'ye taşınan pek çok genç bu tuzağa düşüyor.</div>
+                <div class="tc-rule">✅ <span>Kart bilgisi isteyen her ücretsiz site şüphelidir. Yalnızca bilinen platformları kullan. Deneme öncesi iptal koşullarını oku.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">🎮</div>
+                  <div class="tc-title">Crack Program / Oyun Hilesi İndirme</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">Adobe Photoshop, Office, oyun hilesi — "ücretsiz full sürüm" diye internetten indirilen programların büyük çoğunluğu trojan veya keylogger içerir. Kurulunca görünmez, arka planda çalışır.</div>
+                <div class="tc-example">Gerçek vaka: 2023'te Avrupa'da "CS2 Cheat" adıyla yayılan dosya 80.000+ gençten banka bilgisi çaldı. Program gerçekten çalışıyordu — ama arka planda her tuş vuruşu kaydediliyordu.</div>
+                <div class="tc-rule">✅ <span>Crack = casus yazılım kapısı. Adobe, Spotify, Office'in öğrenci indirimleri var — meşru yolu tercih et.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">👁️</div>
+                  <div class="tc-title">"WhatsApp'ta Seni Kim Takip Ediyor?"</div>
+                  <span class="tc-tag new">YENİ TREND</span>
+                </div>
+                <div class="tc-desc">Sosyal medyada veya arkadaştan gelen link: "Profil görüntüleyenlerini gör!", "Seni engelli kişileri öğren!", "WhatsApp izleyicini bul!" — Bunlar gerçek bir uygulama değil; tıklanınca hesabını ele geçiriyorlar.</div>
+                <div class="tc-example">Nasıl çalışır: Link sahte bir giriş sayfasına götürüyor → Google/Meta ile giriş yap → Hesabın çalınıyor. Ya da bir uygulama kurduruyorlar → tüm bildirimlerine erişiyorlar.</div>
+                <div class="tc-rule">✅ <span>WhatsApp, Instagram veya TikTok bu tür verileri asla üçüncü taraflarla paylaşmaz. Bu linkler dolandırıcılıktır.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">💸</div>
+                  <div class="tc-title">Sahte İş İlanı / Kolay Para Teklifi</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">"Evden çalış, günde €50-100 kazan, sadece para transferi yap." Aslında seni kara para aklamanın aracı yapıyorlar. Hesabına para geliyor, sen de başkasına gönderiyor ama çalıntı para aklıyorsun — hem mağdur hem suça ortak oluyorsun.</div>
+                <div class="tc-example">Hukuki risk: AB ülkelerinde "money mule" (para katırı) olarak kullanılmak suç sayılır. Banka hesabın kalıcı kapatılabilir, savcılığa sevk edilebilirsin.</div>
+                <div class="tc-rule">✅ <span>Kolay para yoktur. Başkasının parasını iletmeni isteyen her teklifi reddet.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 3 -->
+          <div class="theme-block">
+            <div class="theme-header baiting">
+              <div class="theme-icon">🎁</div>
+              <div>
+                <div class="theme-title">3. Baiting — Merak ve Açgözlülük Tuzakları</div>
+                <div class="theme-sub">USB bellekler, sahte ödüller ve çekiliş dolandırıcılığı</div>
+              </div>
+            </div>
+
+            <div class="trick-list">
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">💾</div>
+                  <div class="tc-title">USB Tuzağı — "Bulunan Bellek"</div>
+                  <span class="tc-tag high">YÜKSEK RİSK</span>
+                </div>
+                <div class="tc-desc">Saldırgan zararlı yazılım yüklü USB bellekleri ofis otoparkına, lobiye veya toplantı masasına bırakır. "Merak" içgüdüsü devreye girer — birisi takıp bakar. Tak ve — sistem ele geçirilir.</div>
+                <div class="tc-example">Gerçek vaka: 2008'de ABD Savunma Bakanlığı, otoparka bırakılan USB bellekler aracılığıyla hacklendi. Gizli askeri ağlara 14 ay boyunca erişildi.</div>
+                <div class="tc-rule">✅ <span>Bulduğun USB'yi asla takma. IT'ye ya da çöpe teslim et. Etiketli olsa bile ("Maaş Listesi 2024") — özellikle o zaman şüphelen.</span></div>
+              </div>
+
+              <div class="trick-card">
+                <div class="tc-top">
+                  <div class="tc-icon">🏆</div>
+                  <div class="tc-title">Sahte Çekiliş / Ödül SMS'i</div>
+                  <span class="tc-tag mid">YAYGIN</span>
+                </div>
+                <div class="tc-desc">"Tebrikler! KLM çekilişinde Business Class kazandınız. 48 saat içinde → klm-prize.net" veya "Vodafone müşterisinden iPhone 15 çekilişi — tıklayın!" Katılmadığın çekilişte kazanamazsın.</div>
+                <div class="tc-example">Linke tıklayınca kişisel bilgilerin, kart numaranı veya bir ücret isterler. "Ödülünüzü almak için €9,99 kargo ücreti." — Kargo ücreti ödenir, ödül asla gelmez.</div>
+                <div class="tc-rule">✅ <span>Katılmadığın çekilişte kazanamazsın. Doğrulamak istersen kurumun resmi sitesine git — linke değil.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TEMA 4 -->
+          <div class="theme-block">
+            <div class="theme-header psych">
+              <div class="theme-icon">🧠</div>
+              <div>
+                <div class="theme-title">4. Psikolojik Tetikleyiciler — Savunma</div>
+                <div class="theme-sub">Saldırganların kullandığı 6 silah ve nasıl karşı durulur</div>
+              </div>
+            </div>
+
+            <div class="trigger-grid">
+              <div class="trigger-card">
+                <div class="trig-icon">⏰</div>
+                <div class="trig-name">Aciliyet</div>
+                <div class="trig-desc">"Son 2 saat!", "Hemen tıkla!", "Yarın geç olacak!" — Panik yarat, düşünme fırsatı verme.</div>
+                <div class="trig-ex">"Acil görünen her mesaja yavaşça bak."</div>
+              </div>
+              <div class="trigger-card">
+                <div class="trig-icon">👮</div>
+                <div class="trig-name">Otorite</div>
+                <div class="trig-desc">"Banka yöneticisiyim", "Europol'den arıyorum", "CEO acil istiyor." Otorite korkusu itaat ettirir.</div>
+                <div class="trig-ex">"Otorite kim olursa olsun doğrula."</div>
+              </div>
+              <div class="trigger-card">
+                <div class="trig-icon">😨</div>
+                <div class="trig-name">Korku</div>
+                <div class="trig-desc">"Hesabınız kapatılacak", "Tutuklanacaksınız", "Virüs var!" — Korku mantıklı düşünceyi devre dışı bırakır.</div>
+                <div class="trig-ex">"Korkutunca dur ve nefes al."</div>
+              </div>
+              <div class="trigger-card">
+                <div class="trig-icon">🎁</div>
+                <div class="trig-name">Açgözlülük/Merak</div>
+                <div class="trig-desc">"Ücretsiz iPhone", "Bulunan USB", "Seni kim takip ediyor?" — İnsan merak eder ve fırsatı kaçırmak istemez.</div>
+                <div class="trig-ex">"Bedavayı sorgula — hep bir bedeli var."</div>
+              </div>
+              <div class="trigger-card">
+                <div class="trig-icon">🤝</div>
+                <div class="trig-name">Güven</div>
+                <div class="trig-desc">Tanıdık bir isim, logo veya numara kullanmak. "Arkadaşın Kerem gönderdi." Ele geçirilmiş hesaplar bu yüzden tehlikelidir.</div>
+                <div class="trig-ex">"Tanıdıktan gelse de bağımsız doğrula."</div>
+              </div>
+              <div class="trigger-card">
+                <div class="trig-icon">🔄</div>
+                <div class="trig-name">Karşılıklılık</div>
+                <div class="trig-desc">"Size ücretsiz bir şey verdik, siz de bize bilgilerinizi verin." Küçük bir iyilik karşılık verme isteği uyandırır.</div>
+                <div class="trig-ex">"Karşılıksız iyilik şüphe uyandırsın."</div>
+              </div>
+            </div>
+
+            <div class="section-head">🛡️ ÜÇLÜ SAVUNMA KURALI</div>
+            <div class="defense-steps">
+              <div class="ds-item">
+                <div class="ds-num">DUR</div>
+                <div><div class="ds-title">Acele etme — saldırı bunu istiyor</div><div class="ds-desc">Mesaj ne kadar acil görünürse, o kadar yavaş hareket et. Birkaç dakika beklemek seni korur. Panik anında verilen kararların %80'i yanlıştır.</div></div>
+              </div>
+              <div class="ds-item">
+                <div class="ds-num">SOR</div>
+                <div><div class="ds-title">Kendine sor: Bu mantıklı mı?</div><div class="ds-desc">Banka telefonda kod ister mi? Katılmadığım çekilişte kazanabilir miyim? Bu arkadaşım gerçekten böyle yazar mı? Bir saniye şüphecilik, tüm tuzakları çözer.</div></div>
+              </div>
+              <div class="ds-item">
+                <div class="ds-num">DOĞRULA</div>
+                <div><div class="ds-title">Başka bir kanaldan doğrula</div><div class="ds-desc">Annen mi yazdı? Eski numarasından ara. Banka mı aradı? Kapat, resmi numarayı kendin çevir. Mesajdaki link değil, tarayıcıya kendin yaz. Doğrulama ağı her zaman kırar.</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head">
+              <div class="byte-mini">🤖</div>
+              <div class="byte-name">BYTE'DAN İPUCU</div>
+            </div>
+            <div class="byte-tip-text">"Sosyal mühendislik saldırıları zekâya değil, dikkate karşı çalışır. En akıllı insanlar da kandırılıyor — çünkü saldırgan tam stres anını seçiyor. Dur, sor, doğrula. Bu üç kelime seni %90 oranında korur."</div>
+          </div>
+
+          <button class="btn btn-primary" style="margin-top:24px" onclick="completeStep(2)">Okumayı Tamamladım →</button>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🚨 ASLA YAPMA</div>
+            <div class="side-list">
+              <div class="side-item"><div class="si-dot">✗</div><div>WhatsApp <strong>6 haneli kodu</strong> kimseyle paylaşma</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>Yeni numaradan gelen "<strong>Annem/Babam</strong>" mesajına para gönderme</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>Bulunan <strong>USB belleği</strong> takma</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>Telefonda <strong>şifre veya OTP kodu</strong> söyleme</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>Crack program veya <strong>oyun hilesi</strong> indirme</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>"<strong>Seni takip eden</strong>" link veya uygulama</div></div>
+              <div class="side-item"><div class="si-dot">✗</div><div>Başkasının parasını <strong>iletme</strong> (money mule)</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🧠 6 TETİKLEYİCİ</div>
+            <div class="side-list">
+              <div class="side-item"><div class="si-dot">⏰</div><div><strong>Aciliyet</strong> — dur, yavaşla</div></div>
+              <div class="side-item"><div class="si-dot">👮</div><div><strong>Otorite</strong> — doğrula</div></div>
+              <div class="side-item"><div class="si-dot">😨</div><div><strong>Korku</strong> — nefes al</div></div>
+              <div class="side-item"><div class="si-dot">🎁</div><div><strong>Açgözlülük</strong> — sorgula</div></div>
+              <div class="side-item"><div class="si-dot">🤝</div><div><strong>Güven</strong> — doğrula</div></div>
+              <div class="side-item"><div class="si-dot">🔄</div><div><strong>Karşılıklılık</strong> — şüpheyle bak</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">✅ SAVUNMA</div>
+            <div style="text-align:center;padding:10px 0;">
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--purple);margin-bottom:6px;">DUR</div>
+              <div style="color:var(--text-dim);font-size:.78rem;margin-bottom:12px;">Acele etme</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--yellow);margin-bottom:6px;">SOR</div>
+              <div style="color:var(--text-dim);font-size:.78rem;margin-bottom:12px;">Mantıklı mı?</div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:var(--green);margin-bottom:6px;">DOĞRULA</div>
+              <div style="color:var(--text-dim);font-size:.78rem;">Başka kanaldan</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───── PANEL 3: QUIZ ───── -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label">
+          <span id="q-counter">Soru 1 / 10</span>
+          <span id="q-score">0 / 10 Doğru</span>
+        </div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ───── PANEL 4: SENARYO ───── -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div>
+              <div class="scene-label">BYTE'IN SENARYOSU — WHATSAPP KOD TUZAĞI</div>
+              <div class="scene-text">
+                Akşam 22:30'da telefona mesaj geliyor. Yakın arkadaşın Elif'in numarasından:
+              </div>
+              <div class="wa-mockup" style="margin-top:14px;">
+                <div class="wa-header">
+                  <div class="wa-avatar">👩</div>
+                  <div><div class="wa-name">Elif 🌸</div><div class="wa-status">çevrimiçi</div></div>
+                </div>
+                <div class="wa-bubble">Selam! Çok utanıyorum sormaya ama çok acil 😣</div>
+                <div class="wa-bubble">WhatsApp'ı yeni telefona taşımaya çalışıyorum. Sana yanlışlıkla doğrulama kodu geldi sanırım 6 haneli.</div>
+                <div class="wa-bubble">Gelebilir mi? 10 dakikam var, süresi dolacak 🙏🙏</div>
+              </div>
+              <div style="margin-top:12px;font-size:.86rem;color:var(--text-dim);line-height:1.7;">
+                Tam bu sırada telefonuna SMS geliyor: <strong style="color:var(--text);">"WhatsApp doğrulama kodunuz: 847-293. Bu kodu kimseyle paylaşmayın."</strong><br>
+                Elif gerçekten arkadaşın ve normalde güvenilir biri. Saat geç, yorgunsun.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)">
+              <span class="s-icon">📤</span>
+              <span>Kodu Elif'e gönderirsin — arkadaşın ve gerçekten zor durumda görünüyor.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(1)">
+              <span class="s-icon">⏳</span>
+              <span>Kodu göndermeden önce biraz beklersin — belki kendiliğinden çözer.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(2)">
+              <span class="s-icon">✅</span>
+              <span>Kodu göndermezsin. Elif'i eski numarasından arayıp sesini duyarak durumu doğrularsın. Kod sahteyse onu da uyarırsın.</span>
+            </button>
+            <button class="scene-opt" onclick="pickScene(3)">
+              <span class="s-icon">🔒</span>
+              <span>Kodu göndermezsin ama SMS'i görmezden gelirsin — Elif isterse kendisi halleder.</span>
+            </button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───── PANEL 5: BADGE ───── -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🎭</div>
+        </div>
+        <h2 class="badge-title">İKNA KALKANI</h2>
+        <p class="badge-subtitle">Manipülasyon tuzaklarını artık tanıyorsun — ve dur, sor, doğrulayabiliyorsun</p>
+        <div class="xp-celebrate">
+          <div>
+            <div class="xp-big">+400 XP</div>
+            <div class="xp-lbl">KAZANILDI<br>MODÜL 04</div>
+          </div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-p">4</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">400</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+// ── BYTE SPEAK — Web Speech API ──
+function byteSpeak() {
+  if (!('speechSynthesis' in window)) {
+    showToast('warn', '🔇 Desteklenmiyor', 'Tarayıcın ses sentezini desteklemiyor.');
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const avatar = document.getElementById('byteAvatar');
+
+  const text = 'Modül dört. Sosyal Mühendislik. Seni hacklemek için kod yazmıyorlar — sadece konuşuyorlar. Bu modülde kimlik taklidi tuzaklarını, WhatsApp dolandırıcılığını, gençleri hedef alan hileleri ve psikolojik savunmayı öğreneceksin.';
+
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'tr-TR';
+  utter.rate = 0.92;
+  utter.pitch = 1.05;
+
+  // Türkçe ses varsa seç
+  const voices = window.speechSynthesis.getVoices();
+  const trVoice = voices.find(v => v.lang.startsWith('tr'));
+  if (trVoice) utter.voice = trVoice;
+
+  utter.onstart = () => {
+    avatar.classList.add('speaking');
+    showToast('info', '🤖 BYTE Konuşuyor', 'Modül tanıtımı başladı...');
+  };
+  utter.onend = () => {
+    avatar.classList.remove('speaking');
+  };
+  utter.onerror = () => {
+    avatar.classList.remove('speaking');
+    showToast('warn', '🔇 Ses Hatası', 'Türkçe ses paketi yüklü olmayabilir.');
+  };
+
+  // Sesler yüklenmediyse bekle
+  if (voices.length === 0) {
+    window.speechSynthesis.onvoiceschanged = () => {
+      const v2 = window.speechSynthesis.getVoices();
+      const tr2 = v2.find(v => v.lang.startsWith('tr'));
+      if (tr2) utter.voice = tr2;
+      window.speechSynthesis.speak(utter);
+    };
+  } else {
+    window.speechSynthesis.speak(utter);
+  }
+}
+
+
+
+// ── QUIZ QUESTIONS ──
+window.moduleQuestions = [
+  {
+    q: "WhatsApp'ta tanıdık birinden '6 haneli kodu yanlışlıkla sana gönderdim, atar mısın?' mesajı geldi. Ne yaparsın?",
+    opts: ["Kodu gönderirsin — tanıdık biri zor durumda","Kodu göndermez, kişiyi doğrudan arayarak durumu teyit edersin","Kodu göndermeden önce biraz beklersin","Kodu göndermeden önce doğrulama sorusu sorarsın"],
+    correct: 1,
+    fb: { wrong: "Bu Avrupa'da en yaygın WhatsApp dolandırıcılığıdır. Arkadaşının hesabı çalınmış olabilir. Kodu gönderirsen kendi hesabın ele geçirilir.", correct: "Mükemmel! Kodu asla gönderme. Arayarak sesini duy ve durumu doğrula. WhatsApp giriş kodu başkasına verilecek bir şey değildir." }
+  },
+  {
+    q: "Yeni bir numaradan mesaj geliyor: 'Anne, benim! Telefonum bozuldu, bu arkadaşımın numarası. Acil €300 lazım.' Ne yaparsın?",
+    opts: ["Çocuğun zor durumda, parayı gönderirsin","Eski numarasını arar ve sesini duyarak doğrularsın","Mesajı dikkate almazsın","Kimliğini kanıtlaması için soru sorarsın ve cevabını beklersin"],
+    correct: 1,
+    fb: { wrong: "Bu 'Hi Mom/Hi Dad' dolandırıcılığıdır. Hollanda'da 2024'te bu yöntemle 25 milyon € çalındı. Soru sormak da yetmez — cevapları sosyal medyadan öğrenmiş olabilirler.", correct: "Doğru! Eski numarayı ara, sesini duy. Para göndermeden önce başka bir kanaldan %100 doğrula. Hiçbir gerçek acil durum bu doğrulamayı bekleyemeyecek kadar acil değildir." }
+  },
+  {
+    q: "Bir site 'ücretsiz Netflix erişimi' sunuyor ve 'sadece doğrulama için' kart bilgilerini istiyor. Ne yaparsın?",
+    opts: ["Kart bilgilerini girersin — doğrulama için olduğunu söylüyorlar","Bu tuzaktır — kart bilgilerini girmez, siteyi kapatırsın","Sanal kart kullanırsın — böylece güvendesin","Sadece kart numarasını girersin, CVV'yi vermezsin"],
+    correct: 1,
+    fb: { wrong: "Kart bilgilerini isteyen her 'ücretsiz' site şüphelidir. 'Doğrulama için' bahanesi klasik bir tuzaktır — bilgiler çalınır veya aylık ücret başlar.", correct: "Kesinlikle! Gerçek ücretsiz hizmetler kart bilgisi istemez. Netflix, Spotify gibi hizmetlerin resmi sitelerini kullan." }
+  },
+  {
+    q: "Sosyal medyada 'WhatsApp'ta seni takip edenleri gör!' linki paylaşılmış. Arkadaşların tıklamış bile. Ne yaparsın?",
+    opts: ["Tıklarsın — arkadaşların tıkladıysa güvenlidir","Tıklamazsın — WhatsApp bu tür verileri üçüncü taraflarla paylaşmaz, bu bir tuzaktır","Tıklarsın ama kişisel bilgi girmezsin","Önce antivirüsle taratırsın, temizse tıklarsın"],
+    correct: 1,
+    fb: { wrong: "Arkadaşların tıklamış olması güvenli olduğu anlamına gelmez — zincir saldırıdır. Ele geçirilen hesaplar aynı linki yayıyor.", correct: "Doğru! WhatsApp, Instagram veya TikTok bu tür verileri üçüncü taraf sitelere asla vermez. Bu linkler hesap çalmak veya zararlı yazılım bulaştırmak içindir." }
+  },
+  {
+    q: "Biri sana 'sadece banka hesabından para ilet, sana %10 komisyon vereyim' teklif etti. Ne yaparsın?",
+    opts: ["Kabul edersin — kolay para ve risk yok gibi görünüyor","Reddedersin — bu kara para aklamadır, hem mağdur hem suça ortak olursun","Önce küçük bir denemeyaparsin","Yalnızca bir kez yaparsın, sonra bırakırsın"],
+    correct: 1,
+    fb: { wrong: "Bu 'money mule' (para katırı) dolandırıcılığıdır. AB ülkelerinde suç sayılır. Banka hesabın kalıcı kapatılabilir, savcılığa sevk edilebilirsin.", correct: "Kesinlikle! Başkasının parasını iletmek kara para aklamadır. 'Kolay para' her zaman büyük bir riskin işaretidir." }
+  },
+  {
+    q: "Ofis otoparkında 'Maaş Listesi 2024' yazılı bir USB bellek buldun. Ne yaparsın?",
+    opts: ["İçine bakarsın — belki önemli birinin belgesi","IT departmanına teslim edersin veya çöpe atarsın — asla takmadan","Kendi bilgisayarına değil, iş arkadaşının bilgisayarına takarsın","Antivirüsle taratırsın, temizse içine bakarsın"],
+    correct: 1,
+    fb: { wrong: "Cazip bir etiket, baiting saldırısının en bilinen taktiğidir. Etiketi ne olursa olsun — özellikle 'Maaş Listesi' gibi merak uyandıran etiketler şüphe uyandırmalı.", correct: "Doğru! Bulduğun USB'yi asla takma. IT'ye teslim et veya çöp. ABD Savunma Bakanlığı bile bu yöntemle hacklendi." }
+  },
+  {
+    q: "Telefonda biri 'ING güvenlik birimi, hesabınızda şüpheli işlem var' deyip SMS doğrulama kodu istedi. Ne yaparsın?",
+    opts: ["Kodu söylersin — gerçekten banka arıyor olabilir","Telefonu kapatıp ING'nin kartının arkasındaki resmi numarasını arayarak doğrularsın","Kodu söylemeden adını ve son 4 hane kart numaranı verirsin","Kodu söylemeden önce 'ben mi aradım?' diye sorarsın"],
+    correct: 1,
+    fb: { wrong: "Caller ID spoofing ile gerçek banka numarasından bile arayabilirler. Bankalar telefonda asla OTP kodu, şifre veya CVV istemez.", correct: "Mükemmel! Gelen aramalarda asla kod verme. Kapat, resmi numarayı kendin ara. Bu kural hayat kurtarır." }
+  },
+  {
+    q: "Sosyal mühendislik saldırılarında 'aciliyet' neden kullanılır?",
+    opts: ["Kurbanı daha nazik yapmak için","Kurbanın düşünme ve doğrulama sürecini devre dışı bırakmak için","Yasal sorumluluktan kaçmak için","Saldırının daha hızlı tamamlanması için"],
+    correct: 1,
+    fb: { wrong: "Aciliyet bir psikolojik silahtır. 'Hemen yapmazsan kötü bir şey olur' mesajı mantıklı düşünceyi engeller.", correct: "Tam olarak! 'Son 2 saat', 'hesabın silinecek', 'acil' — bunlar düşünmeni önlemek için. Ne kadar acil görünürse o kadar yavaş hareket et." }
+  },
+  {
+    q: "Crack program veya oyun hilesi indirmek neden tehlikelidir?",
+    opts: ["Sadece telif hakkı ihlali olduğu için","Çoğunlukla trojan, keylogger veya spyware içerdiği için — program çalışırken arka planda bilgilerini çalabilir","Yalnızca eski bilgisayarlarda sorun çıkardığı için","İnternet hızını yavaşlattığı için"],
+    correct: 1,
+    fb: { wrong: "Telif ihlali de sorun ama asıl tehlike zararlı yazılımdır. 2023'te 'CS2 Cheat' adlı dosya 80.000+ gençten banka bilgisi çaldı.", correct: "Kesinlikle! Crack = casus yazılım kapısı. Adobe ve Spotify'ın öğrenci indirimleri, Photoshop'un ücretsiz alternatifleri (GIMP, Canva) meşru seçeneklerdir." }
+  },
+  {
+    q: "Sosyal mühendisliğe karşı en etkili üçlü savunma kuralı hangisidir?",
+    opts: ["Şüphe et, güven, paylaş","Dur, sor, doğrula","Tıkla, kontrol et, devam et","Oku, ara, bildir"],
+    correct: 1,
+    fb: { wrong: "Doğru sıra kritik: önce dur (acele etme), sonra sor (mantıklı mı?), sonra doğrula (başka kanaldan).", correct: "Mükemmel! DUR — SOR — DOĞRULA. Bu üç adım sosyal mühendislik saldırılarının büyük çoğunluğunu engeller." }
+  }
+];
+
+
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}window.moduleSceneFeedbacks = [
+  { correct: false, text: "<strong class='bad'>Yanlış tercih.</strong> Arkadaşının hesabı zaten çalınmış olabilir. Bu kodu gönderirsen kendi WhatsApp hesabın saniyeler içinde ele geçirilir. Saldırgan ardından senin listendeki herkese aynı mesajı gönderir." },
+  { correct: false, text: "<strong class='bad'>Yeterlice doğru değil.</strong> Beklemek hesabını korur ama Elif'in hesabının çalındığını fark etmez ve ona yardım edemezsin. En doğrusu aktif olarak doğrulamak ve uyarmaktır." },
+  { correct: true, text: "<strong>Mükemmel karar!</strong> WhatsApp kodu hiçbir zaman kimseyle paylaşılmaz — nedenini sormadan. Ayrıca Elif'i arayarak hem kendi hesabını korudun hem de onu uyardın. Zincir kırıldı." },
+  { correct: false, text: "<strong class='bad'>Neredeyse doğru ama eksik.</strong> Kodu göndermemek doğru, ama Elif'i uyarmazsan hesabı ele geçirilmiş kalmaya devam eder ve başkalarını tuzağa düşürür. Aramak gerekir." }
+];
+
+
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,1108 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Hızlı Güvenlik Rehberi</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#1a2230;--bg-card:rgba(255,255,255,0.09);--bg-panel:rgba(255,255,255,0.13);
+  --cyan:#00e5ff;--green:#00ff88;--red:#ff4d6a;--yellow:#ffd600;
+  --purple:#b97dff;--orange:#ff9a2e;--blue:#5ba3f5;
+  --text:#edf3ff;--text-dim:#9cb0d2;--border:rgba(255,255,255,0.16);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Exo 2',sans-serif;background:linear-gradient(180deg,#1d2737 0%, #1a2230 100%);color:var(--text);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(96,200,240,.06) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(96,200,240,.06) 1px,transparent 1px);
+  background-size:44px 44px;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 40% at 50% 0%,rgba(0,229,255,.08) 0%,transparent 70%),
+  radial-gradient(ellipse 40% 30% at 90% 90%,rgba(185,125,255,.07) 0%,transparent 60%);}
+
+/* TOPBAR */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(24,31,44,.78);backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 1px 0 rgba(255,255,255,.04),0 8px 32px rgba(0,0,0,.4);
+  padding:0 28px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;
+  color:var(--cyan);letter-spacing:3px;text-decoration:none;}
+.logo span{color:#fff;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.back-btn{padding:7px 16px;border-radius:8px;border:1px solid var(--border);
+  background:transparent;color:var(--text);font-family:'Exo 2',sans-serif;
+  font-size:.78rem;cursor:pointer;transition:all .2s;text-decoration:none;
+  display:flex;align-items:center;gap:6px;}
+.back-btn:hover{color:var(--cyan);border-color:rgba(0,229,255,.3);}
+.print-btn{padding:7px 16px;border-radius:8px;
+  background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);
+  color:var(--cyan);font-family:'Exo 2',sans-serif;font-size:.78rem;
+  cursor:pointer;transition:all .2s;}
+.print-btn:hover{background:rgba(0,229,255,.2);}
+
+/* LAYOUT */
+.page{display:flex;padding-top:60px;min-height:100vh;position:relative;z-index:1;}
+
+/* SIDEBAR NAV */
+.side-nav{width:240px;position:sticky;top:60px;height:calc(100vh - 60px);
+  overflow-y:auto;padding:20px 12px;flex-shrink:0;
+  background:rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);}
+.sn-section{margin-bottom:6px;}
+.sn-title{font-family:'Orbitron',sans-serif;font-size:.55rem;
+  letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;
+  padding:0 8px;margin:14px 0 6px;}
+.sn-item{display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:8px;cursor:pointer;transition:all .18s;
+  font-size:.78rem;color:var(--text-dim);border:1px solid transparent;
+  text-decoration:none;}
+.sn-item:hover{background:rgba(255,255,255,.04);color:var(--text);}
+.sn-item.active{background:rgba(0,229,255,.08);color:var(--cyan);
+  border-color:rgba(0,229,255,.2);}
+.sn-icon{font-size:.95rem;flex-shrink:0;}
+.sn-divider{height:1px;background:var(--border);margin:8px 4px;}
+.progress-mini{padding:10px 10px 4px;}
+.pm-label{font-size:.65rem;color:var(--text-dim);margin-bottom:5px;
+  font-family:'Orbitron',sans-serif;letter-spacing:1px;}
+.pm-bar{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;}
+.pm-fill{height:100%;background:var(--cyan);border-radius:2px;width:0%;
+  transition:width .6s ease;}
+.pm-pct{font-size:.65rem;color:var(--cyan);font-family:'Orbitron',sans-serif;
+  text-align:right;margin-top:3px;}
+
+/* MAIN */
+.main-content{flex:1;padding:32px 40px;max-width:900px;}
+
+/* HERO */
+.rehber-hero{background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(168,85,247,.04));
+  border:1px solid rgba(0,229,255,.18);border-radius:20px;
+  padding:28px 32px;margin-bottom:32px;
+  display:flex;align-items:center;gap:24px;}
+.rh-byte{width:90px;height:90px;object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 16px rgba(0,229,255,.35));
+  animation:float 3s ease infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.rh-tag{font-family:'Orbitron',sans-serif;font-size:.6rem;
+  color:var(--cyan);letter-spacing:2px;margin-bottom:8px;}
+.rh-title{font-family:'Orbitron',sans-serif;font-size:1.3rem;
+  font-weight:900;color:#fff;margin-bottom:8px;}
+.rh-title span{color:var(--cyan);}
+.rh-desc{font-size:.85rem;color:var(--text-dim);line-height:1.7;}
+.rh-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.chip{display:flex;align-items:center;gap:5px;padding:4px 10px;
+  border-radius:20px;font-size:.68rem;border:1px solid;}
+.chip-cyan{background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.25);color:var(--cyan);}
+.chip-green{background:rgba(0,255,136,.08);border-color:rgba(0,255,136,.25);color:var(--green);}
+.chip-yellow{background:rgba(255,214,0,.08);border-color:rgba(255,214,0,.25);color:var(--yellow);}
+.chip-purple{background:rgba(168,85,247,.08);border-color:rgba(168,85,247,.25);color:var(--purple);}
+.chip-orange{background:rgba(255,140,0,.08);border-color:rgba(255,140,0,.25);color:var(--orange);}
+
+/* DEVICE TABS */
+.device-tabs{display:flex;gap:6px;margin-bottom:24px;flex-wrap:wrap;}
+.dtab{padding:9px 18px;border-radius:10px;border:1px solid var(--border);
+  background:var(--bg-card);color:var(--text-dim);
+  font-family:'Exo 2',sans-serif;font-size:.8rem;font-weight:600;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:7px;}
+.dtab:hover{border-color:rgba(0,229,255,.25);color:var(--text);}
+.dtab.active{background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.4);color:var(--cyan);}
+
+/* DEVICE PANELS */
+.device-panel{display:none;}
+.device-panel.active{display:block;animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION */
+.guide-section{margin-bottom:28px;}
+.gs-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;
+  padding-bottom:10px;border-bottom:1px solid var(--border);}
+.gs-icon{font-size:1.4rem;}
+.gs-title{font-family:'Orbitron',sans-serif;font-size:.78rem;
+  color:#fff;letter-spacing:1px;}
+.gs-badge{font-size:.62rem;padding:2px 8px;border-radius:10px;
+  font-family:'Orbitron',sans-serif;}
+.badge-must{background:rgba(255,59,92,.1);color:var(--red);border:1px solid rgba(255,59,92,.25);}
+.badge-rec{background:rgba(255,214,0,.1);color:var(--yellow);border:1px solid rgba(255,214,0,.25);}
+.badge-tip{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25);}
+
+/* SETTING CARDS */
+.setting-cards{display:flex;flex-direction:column;gap:10px;}
+.setting-card{
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;overflow:hidden;transition:all .22s;cursor:pointer;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.setting-card:hover{border-color:rgba(0,229,255,.3);
+  background:rgba(255,255,255,.12);}
+.sc-head{display:flex;align-items:center;gap:12px;padding:14px 16px;}
+.sc-status{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sc-status.do{background:var(--green);box-shadow:0 0 6px var(--green);}
+.sc-status.dont{background:var(--red);box-shadow:0 0 6px var(--red);}
+.sc-status.warn{background:var(--yellow);box-shadow:0 0 6px var(--yellow);}
+.sc-main{flex:1;}
+.sc-title{font-size:.85rem;font-weight:600;color:#fff;margin-bottom:2px;}
+.sc-desc{font-size:.75rem;color:var(--text-dim);line-height:1.5;}
+.sc-tag{font-size:.62rem;padding:2px 8px;border-radius:6px;flex-shrink:0;
+  font-family:'Orbitron',sans-serif;}
+.tag-do{background:rgba(0,255,136,.1);color:var(--green);border:1px solid rgba(0,255,136,.2);}
+.tag-dont{background:rgba(255,59,92,.1);color:var(--red);border:1px solid rgba(255,59,92,.2);}
+.tag-warn{background:rgba(255,214,0,.1);color:var(--yellow);border:1px solid rgba(255,214,0,.2);}
+.sc-expand{display:none;padding:0 16px 14px 36px;border-top:1px solid rgba(255,255,255,.04);}
+.sc-expand.open{display:block;animation:fadeUp .2s ease;}
+.sc-path{background:var(--bg-panel);border-radius:8px;padding:10px 14px;
+  font-size:.75rem;color:var(--cyan);margin-bottom:8px;
+  font-family:'Orbitron',sans-serif;letter-spacing:.5px;line-height:1.7;
+  border-left:3px solid var(--cyan);}
+.sc-steps{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.sc-steps li{display:flex;align-items:flex-start;gap:8px;font-size:.78rem;
+  color:var(--text);line-height:1.5;}
+.step-num{width:18px;height:18px;border-radius:50%;
+  background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.6rem;font-weight:700;color:var(--cyan);flex-shrink:0;margin-top:1px;}
+.sc-warn-box{background:rgba(255,59,92,.06);border:1px solid rgba(255,59,92,.2);
+  border-radius:8px;padding:10px 14px;font-size:.76rem;color:var(--red);
+  line-height:1.6;margin-top:8px;}
+.sc-tip-box{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.2);
+  border-radius:8px;padding:10px 14px;font-size:.76rem;color:var(--green);
+  line-height:1.6;margin-top:8px;}
+
+/* DONT LIST */
+.dont-section{background:rgba(255,59,92,.04);border:1px solid rgba(255,59,92,.15);
+  border-radius:14px;padding:20px 22px;margin-bottom:20px;}
+.dont-title{font-family:'Orbitron',sans-serif;font-size:.7rem;
+  color:var(--red);letter-spacing:2px;margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;}
+.dont-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.dont-list li{display:flex;align-items:flex-start;gap:10px;font-size:.82rem;
+  color:var(--text);line-height:1.5;}
+.dont-x{color:var(--red);flex-shrink:0;font-weight:700;margin-top:1px;}
+
+/* INSTALL SECTION */
+.install-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.install-card{
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+  border-radius:12px;padding:16px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.ic-title{font-size:.78rem;font-weight:700;color:#fff;margin-bottom:10px;
+  display:flex;align-items:center;gap:7px;}
+.ic-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.ic-list li{display:flex;align-items:flex-start;gap:8px;font-size:.76rem;
+  color:var(--text-dim);line-height:1.5;}
+.ic-do{color:var(--green);flex-shrink:0;}
+.ic-dont{color:var(--red);flex-shrink:0;}
+
+/* BYTE TIP FLOATING */
+.byte-tip-float{background:linear-gradient(135deg,rgba(0,229,255,.05),rgba(0,229,255,.02));
+  border:1px solid rgba(0,229,255,.2);border-radius:14px;
+  padding:16px 18px;margin-bottom:20px;display:flex;gap:14px;align-items:flex-start;}
+.btf-img{width:44px;height:44px;object-fit:contain;flex-shrink:0;}
+.btf-name{font-family:'Orbitron',sans-serif;font-size:.6rem;color:var(--cyan);
+  letter-spacing:1px;margin-bottom:4px;}
+.btf-text{font-size:.8rem;color:var(--text);line-height:1.6;font-style:italic;}
+
+/* CHECKLIST */
+.checklist-wrap{
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);
+  border-radius:16px;padding:22px;margin-bottom:24px;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+.cl-title{font-family:'Orbitron',sans-serif;font-size:.72rem;
+  color:#fff;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
+.cl-progress{height:5px;background:rgba(255,255,255,.08);border-radius:3px;
+  overflow:hidden;margin-bottom:16px;}
+.cl-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));
+  border-radius:3px;transition:width .5s ease;}
+.cl-items{display:flex;flex-direction:column;gap:8px;}
+.cl-item{display:flex;align-items:center;gap:10px;padding:9px 12px;
+  background:rgba(255,255,255,.04);border-radius:8px;cursor:pointer;
+  transition:all .2s;border:1px solid rgba(255,255,255,.09);}
+.cl-item:hover{border-color:rgba(0,229,255,.25);background:rgba(255,255,255,.08);}
+.cl-item.checked{background:rgba(0,255,136,.06);border-color:rgba(0,255,136,.22);}
+.cl-checkbox{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--text-dim);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .2s;}
+.cl-item.checked .cl-checkbox{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(0,255,136,.3);}
+.cl-check-icon{color:#000;font-size:.7rem;font-weight:700;display:none;}
+.cl-item.checked .cl-check-icon{display:block;}
+.cl-text{font-size:.8rem;color:var(--text);}
+.cl-item.checked .cl-text{color:var(--text-dim);text-decoration:line-through;}
+.cl-count{font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--cyan);}
+
+/* TOAST */
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;
+  display:flex;flex-direction:column;gap:8px;}
+.toast{display:flex;align-items:center;gap:10px;
+  background:rgba(32,40,56,.88);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:11px 16px;
+  min-width:220px;box-shadow:0 8px 28px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.06);
+  animation:toastIn .3s ease;}
+@keyframes toastIn{from{transform:translateX(80px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.toast.out{animation:toastOut .3s ease forwards;}
+@keyframes toastOut{to{transform:translateX(80px);opacity:0;}}
+.t-icon{font-size:1rem;}
+.t-title{font-weight:600;color:#fff;font-size:.76rem;}
+.t-sub{color:var(--text-dim);font-size:.68rem;}
+.toast.success{border-left:3px solid var(--green);}
+.toast.info{border-left:3px solid var(--cyan);}
+.toast.warn{border-left:3px solid var(--orange);}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(0,229,255,.15);border-radius:3px;}
+
+@media print{
+  .topbar,.side-nav,.device-tabs{display:none!important;}
+  .device-panel{display:block!important;}
+  body{background:#fff;color:#000;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="logo" href="index.html">BYTE<span>ACADEMY</span></a>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">← Dashboard'a Dön</a>
+    <button class="print-btn" onclick="window.print()">🖨️ Yazdır / PDF</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <nav class="side-nav">
+    <div class="progress-mini">
+      <div class="pm-label">KONTROL LİSTESİ</div>
+      <div class="pm-bar"><div class="pm-fill" id="side-prog"></div></div>
+      <div class="pm-pct" id="side-pct">0 / 30</div>
+    </div>
+    <div class="sn-divider"></div>
+
+    <div class="sn-title">Cihazlar</div>
+    <a class="sn-item active" onclick="switchDevice('android',this)"><span class="sn-icon">🤖</span>Android</a>
+    <a class="sn-item" onclick="switchDevice('ios',this)"><span class="sn-icon">🍎</span>iPhone / iOS</a>
+    <a class="sn-item" onclick="switchDevice('windows',this)"><span class="sn-icon">🪟</span>Windows</a>
+    <a class="sn-item" onclick="switchDevice('mac',this)"><span class="sn-icon">🍏</span>Mac</a>
+    <a class="sn-item" onclick="switchDevice('tablet',this)"><span class="sn-icon">📱</span>Tablet</a>
+
+    <div class="sn-divider"></div>
+    <div class="sn-title">Genel Konular</div>
+    <a class="sn-item" onclick="switchDevice('install',this)"><span class="sn-icon">💿</span>Kurulum Güvenliği</a>
+    <a class="sn-item" onclick="switchDevice('apps',this)"><span class="sn-icon">📲</span>Uygulama İzinleri</a>
+    <a class="sn-item" onclick="switchDevice('messaging',this)"><span class="sn-icon">💬</span>Mesajlaşma Güvenliği</a>
+    <a class="sn-item" onclick="switchDevice('checklist',this)"><span class="sn-icon">✅</span>Kontrol Listesi</a>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main-content">
+
+    <!-- HERO -->
+    <div class="rehber-hero">
+      <img src="videos/byte.gif" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+      <div>
+        <div class="rh-tag">⚡ HIZLI GÜVENLİK REHBERİ</div>
+        <h1 class="rh-title">Cihazlarını <span>Şu An</span> Güvenli Hale Getir</h1>
+        <p class="rh-desc">Teorik değil, pratik. Her cihaz için adım adım ayarlar. Şu an yanında telefon veya bilgisayar varsa — açık tut, birlikte yapalım!</p>
+        <div class="rh-chips">
+          <div class="chip chip-cyan">🤖 Android</div>
+          <div class="chip chip-green">🍎 iOS</div>
+          <div class="chip chip-yellow">🪟 Windows</div>
+          <div class="chip chip-purple">🍏 Mac</div>
+          <div class="chip chip-orange">📱 Tablet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEVICE TABS -->
+    <div class="device-tabs">
+      <button class="dtab active" onclick="switchDevice('android',this)">🤖 Android</button>
+      <button class="dtab" onclick="switchDevice('ios',this)">🍎 iPhone</button>
+      <button class="dtab" onclick="switchDevice('windows',this)">🪟 Windows</button>
+      <button class="dtab" onclick="switchDevice('mac',this)">🍏 Mac</button>
+      <button class="dtab" onclick="switchDevice('tablet',this)">📱 Tablet</button>
+      <button class="dtab" onclick="switchDevice('install',this)">💿 Kurulum</button>
+      <button class="dtab" onclick="switchDevice('apps',this)">📲 Uygulama İzinleri</button>
+      <button class="dtab" onclick="switchDevice('messaging',this)">💬 Mesajlaşma</button>
+      <button class="dtab" onclick="switchDevice('checklist',this)">✅ Liste</button>
+    </div>
+
+    <!-- ═══════ ANDROID ═══════ -->
+    <div class="device-panel active" id="panel-android">
+
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — ANDROID REHBERİ</div>
+        <p class="btf-text">"Android çok güçlü bir sistem ama varsayılan ayarları güvenlik için optimize edilmemiş. Şu an telefonunu yanında al, sırayla yapalım!"</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🔒</span><span class="gs-title">EKRAN KİLİDİ & BİYOMETRİK</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Güçlü PIN veya şifre tanımla</div><div class="sc-desc">En az 6 haneli PIN ya da harf+rakam karışık şifre. Doğum tarihi YASAK.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Güvenlik → Ekran Kilidi → PIN / Şifre</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Ayarlar'ı aç</li>
+                <li><span class="step-num">2</span>"Güvenlik" veya "Kilit Ekranı" menüsüne gir</li>
+                <li><span class="step-num">3</span>"Ekran Kilidi Türü" seç → PIN veya Şifre</li>
+                <li><span class="step-num">4</span>En az 6 haneli, tahmin edilemez bir kod oluştur</li>
+              </ul>
+              <div class="sc-warn-box">⚠️ "1234", "0000", doğum tarihi veya telefon numarası KESİNLİKLE kullanma!</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Parmak izi veya yüz tanıma ekle</div><div class="sc-desc">Hızlı ve güvenli giriş için biyometrik doğrulama aktif et.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Güvenlik → Parmak İzi / Yüz Tanıma</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>"Biyometrik" veya "Parmak İzi" bölümüne gir</li>
+                <li><span class="step-num">2</span>En az 2 parmak izi kaydet (bir parmağın kesilmesine karşı)</li>
+                <li><span class="step-num">3</span>Yüz tanıma varsa ekle ama tek başına yetmez</li>
+              </ul>
+              <div class="sc-tip-box">✅ Her iki yöntemi birlikte kullanmak en güvenli seçenek.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Kilit süresini çok uzun bırakma</div><div class="sc-desc">Ekran 30 saniye hareketsiz kaldığında kilitlensin.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Ekran → Ekran Zaman Aşımı → 30 saniye</div>
+              <div class="sc-warn-box">⚠️ "Hiçbir Zaman" veya "5 Dakika" seçimi; telefonunu masaya bıraktığında herkese açık bırakmak demektir.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🔄</span><span class="gs-title">GÜNCELLEMELER</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Otomatik sistem güncellemelerini aç</div><div class="sc-desc">Android güvenlik yamaları aylık gelir — hepsini yükle.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Telefon Hakkında → Yazılım Güncellemesi → Otomatik İndir</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>"Otomatik indirme" seçeneğini aç</li>
+                <li><span class="step-num">2</span>"Wi-Fi'dayken indir" tercihini seç (veri tasarrufu)</li>
+                <li><span class="step-num">3</span>Bekleyen güncelleme varsa hemen yükle</li>
+              </ul>
+              <div class="sc-tip-box">✅ Güncellemeler; bilinen açıkları kapatır. Ertelemek = açık kapı bırakmak.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Uygulama güncellemelerini otomatik yap</div><div class="sc-desc">Play Store uygulamalarını otomatik güncelle.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">📱 Play Store → Profil → Ayarlar → Ağ Tercihleri → Uygulamaları Otomatik Güncelle</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">📡</span><span class="gs-title">BLUETOOTH & WI-FI GÜVENLİĞİ</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Bluetooth'u gereksiz yere açık bırakma</div><div class="sc-desc">Kullanmıyorsan kapat. BlueSnarfing ve BlueBorne gibi saldırılar gerçek.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Bağlantılar → Bluetooth → KAPALI</div>
+              <div class="sc-warn-box">⚠️ Kalabalık yerlerde (AVM, metro, havalimanı) Bluetooth açıksa cihazın taranabilir ve saldırıya açık olabilir.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Herkese açık Wi-Fi'ye otomatik bağlanma</div><div class="sc-desc">"Free WiFi" ağları çoğunlukla tuzaktır.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Bağlantılar → Wi-Fi → Kayıtlı Ağlar → Otomatik Bağlanmayı Kapat</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Daha önce bağlandığın ağları listele</li>
+                <li><span class="step-num">2</span>Güvenmediğin ağları sil</li>
+                <li><span class="step-num">3</span>"Otomatik Bağlan" seçeneğini kapat</li>
+              </ul>
+              <div class="sc-warn-box">⚠️ Sahte bir "Starbucks_WiFi" ağına bağlanırsan tüm trafiğin izlenebilir. Şüpheli ağlarda VPN kullan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">👁️</span><span class="gs-title">GİZLİLİK AYARLARI</span><span class="gs-badge badge-rec">ÖNERİLİR</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Reklam takibini kapat</div><div class="sc-desc">Google reklam kimliğini sıfırla ve kişiselleştirmeyi kapat.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Gizlilik → Reklamlar → Reklam Kimliğini Sıfırla + İlgi Alanına Göre Reklamları Kapat</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status warn"></div>
+              <div class="sc-main"><div class="sc-title">Konum servislerini gözden geçir</div><div class="sc-desc">Her uygulamanın konum erişimine ihtiyacı yok.</div></div>
+              <span class="sc-tag tag-warn">DİKKAT</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Konum → Uygulama İzinleri</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Her uygulamayı tek tek gözden geçir</li>
+                <li><span class="step-num">2</span>Gereksiz uygulamalarda "Yalnızca Kullanırken" veya "Reddet" seç</li>
+                <li><span class="step-num">3</span>"Her Zaman İzin Ver" yalnızca harita gibi uygulamalar için olmalı</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-section">
+        <div class="dont-title">🚫 ANDROID'DE KESİNLİKLE YAPMA</div>
+        <ul class="dont-list">
+          <li><span class="dont-x">✕</span>Bilinmeyen kaynaklardan APK dosyası indirme (Play Store dışından)</li>
+          <li><span class="dont-x">✕</span>Telefonu root'lama (garanti ve güvenlik koruması sona erer)</li>
+          <li><span class="dont-x">✕</span>Şarj olurken halka açık USB portlarına bağlanma (juice jacking)</li>
+          <li><span class="dont-x">✕</span>Google Play Protect'i kapatma</li>
+          <li><span class="dont-x">✕</span>Eski Android sürümünde kalmayı kabul etme — güncelle veya cihazı değiştir</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════ iOS ═══════ -->
+    <div class="device-panel" id="panel-ios">
+
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — iPHONE REHBERİ</div>
+        <p class="btf-text">"iOS Android'den daha kısıtlı ama 'kapalı sistem = güvenli' diye bir kural yok! Ayarlarını kontrol etmezsen Apple bile seni koruyamaz."</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🔒</span><span class="gs-title">TEMEL GÜVENLİK AYARLARI</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Face ID / Touch ID + 6 haneli kod</div><div class="sc-desc">4 haneli yerine 6 haneli alphanumeric kod çok daha güvenli.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Face ID ve Parola → Parolayı Değiştir → Özel Alfanümerik Kod</div>
+              <div class="sc-tip-box">✅ "Özel Alfanümerik Kod" seçerek hem harf hem rakam içeren şifre oluştur.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">10 yanlış denemede veri silmeyi aç</div><div class="sc-desc">Telefonun çalınırsa verilerin korunsun.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Face ID ve Parola → Verileri Sil → AÇ</div>
+              <div class="sc-warn-box">⚠️ Bu ayarı açarsan iCloud yedeklemen güncel olsun! Yoksa tüm verilerini kaybedebilirsin.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">iOS'u güncel tut</div><div class="sc-desc">Otomatik güncellemeyi aç.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Genel → Yazılım Güncellemesi → Otomatik Güncellemeler → AÇ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">👁️</span><span class="gs-title">GİZLİLİK & KONUM</span><span class="gs-badge badge-rec">ÖNERİLİR</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">App Tracking Transparency — İzlemeyi Reddet</div><div class="sc-desc">Uygulamaların seni diğer uygulamalarda izlemesine izin verme.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Gizlilik ve Güvenlik → İzleme → Uygulamaların İzlemesine İzin Ver → KAPAT</div>
+              <div class="sc-tip-box">✅ Bu ayarla uygulamalar seni internette takip edemez.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Apple Reklam Takibini Kapat</div><div class="sc-desc">Kişiselleştirilmiş reklamları devre dışı bırak.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Gizlilik ve Güvenlik → Apple Reklamları → Kişiselleştirilmiş Reklamlar → KAPAT</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status warn"></div>
+              <div class="sc-main"><div class="sc-title">Bluetooth & Wi-Fi otomatik bağlanma</div><div class="sc-desc">Kullanmadığında kapat.</div></div>
+              <span class="sc-tag tag-warn">DİKKAT</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Kontrol Merkezi → Bluetooth / Wi-Fi ikonuna uzun bas → Kapat</div>
+              <div class="sc-warn-box">⚠️ Not: Kontrol Merkezi'nden kapatmak tam kapatma değildir! Tam kapatma için Ayarlar'a gir.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-section">
+        <div class="dont-title">🚫 iPHONE'DA KESİNLİKLE YAPMA</div>
+        <ul class="dont-list">
+          <li><span class="dont-x">✕</span>Jailbreak yapma — Apple'ın tüm güvenlik katmanları devre dışı kalır</li>
+          <li><span class="dont-x">✕</span>App Store dışından uygulama kurma</li>
+          <li><span class="dont-x">✕</span>Bilinmeyen kalıpların Wi-Fi şifreni paylaşma isteğini kabul etme</li>
+          <li><span class="dont-x">✕</span>Kilit ekranında mesaj önizlemesini "Her Zaman Göster" olarak bırakma</li>
+          <li><span class="dont-x">✕</span>iCloud'u zayıf şifreyle kullanma — 2FA şart!</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════ WINDOWS ═══════ -->
+    <div class="device-panel" id="panel-windows">
+
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — WINDOWS REHBERİ</div>
+        <p class="btf-text">"Windows dünyanın en çok hedeflenen işletim sistemi. Neden? Çünkü en yaygın kullanılan sistem. Şu an bilgisayarında şu ayarları kontrol et!"</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🛡️</span><span class="gs-title">WINDOWS DEFENDER & GÜVENLİK</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Windows Defender gerçek zamanlı korumayı aç</div><div class="sc-desc">Ücretsiz, etkili, her zaman açık olmalı.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🪟 Başlat → Windows Güvenliği → Virüs ve Tehdit Koruması → Gerçek Zamanlı Koruma → AÇ</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Windows Güvenliği uygulamasını aç</li>
+                <li><span class="step-num">2</span>"Virüs ve Tehdit Koruması" tıkla</li>
+                <li><span class="step-num">3</span>"Koruma Ayarları" altında tüm seçenekleri AÇ</li>
+                <li><span class="step-num">4</span>Hızlı tarama yap</li>
+              </ul>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Windows Update otomatik güncellemeyi aç</div><div class="sc-desc">Güvenlik yamaları kritik. Erteleme alışkanlığından vazgeç.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Windows Update → Güncelleştirmeleri Otomatik İndir → AÇ</div>
+              <div class="sc-tip-box">✅ "Etkin Saatler" ayarla ki güncelleme seni çalışırken rahatsız etmesin.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Windows Güvenlik Duvarı'nı aç</div><div class="sc-desc">Gelen bağlantıları filtreler.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🪟 Windows Güvenliği → Güvenlik Duvarı ve Ağ Koruması → Her ağ profili için AÇ</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">👤</span><span class="gs-title">HESAP & KULLANICI AYARLARI</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Günlük kullanımda Yönetici hesabı kullanma</div><div class="sc-desc">Standart kullanıcı hesabı oluştur, günlük işleri orada yap.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">⚙️ Ayarlar → Hesaplar → Aile ve Diğer Kullanıcılar → Hesap Ekle → Standart Kullanıcı</div>
+              <div class="sc-warn-box">⚠️ Yönetici hesabıyla kullanırken zararlı yazılım çalışırsa tüm sisteme erişebilir. Standart hesapta bu risk çok daha düşük.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Kullanıcı Hesabı Denetimi'ni (UAC) maksimumda tut</div><div class="sc-desc">Program yükleme izinlerini sorgulasın.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🪟 Başlat → "UAC" ara → Kullanıcı Hesabı Denetimi Ayarlarını Değiştir → En üst seviyeye getir</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-section">
+        <div class="dont-title">🚫 WINDOWS'TA KESİNLİKLE YAPMA</div>
+        <ul class="dont-list">
+          <li><span class="dont-x">✕</span>Crack/lisanssız yazılım indirme — %90'ı zararlı yazılım içerir</li>
+          <li><span class="dont-x">✕</span>Windows Defender'ı "yavaşlatıyor" diye kapatma</li>
+          <li><span class="dont-x">✕</span>Torrent sitelerinden program indirme</li>
+          <li><span class="dont-x">✕</span>Destek süresi biten Windows versiyonu kullanmaya devam etme (Windows 7 gibi)</li>
+          <li><span class="dont-x">✕</span>Her program kurulumunda "İleri İleri İleri" tıklama — ek yazılımları gözden geçir!</li>
+          <li><span class="dont-x">✕</span>Rastgele bulunan USB bellekleri takma</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════ MAC ═══════ -->
+    <div class="device-panel" id="panel-mac">
+
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — MAC REHBERİ</div>
+        <p class="btf-text">"Mac kullananlar 'virüs almam' diye düşünür. Bu büyük bir yanılgı! Mac hedefleri son yıllarda dramatik biçimde arttı. Şu ayarları mutlaka kontrol et."</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🛡️</span><span class="gs-title">MAC TEMEL GÜVENLİK</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">FileVault disk şifrelemesini aç</div><div class="sc-desc">Mac çalınsa bile veriler okunamaz olur.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🍎 Sistem Ayarları → Gizlilik ve Güvenlik → FileVault → Aç</div>
+              <div class="sc-tip-box">✅ Kurtarma anahtarını güvenli bir yere yaz veya iCloud'da sakla.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Gatekeeper — Yalnızca App Store ve tanımlı geliştiriciler</div><div class="sc-desc">Bilinmeyen kaynaklardan gelen uygulamaları engelle.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🍎 Sistem Ayarları → Gizlilik ve Güvenlik → Güvenlik → "App Store ve tanımlı geliştiriciler"</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">macOS otomatik güncellemelerini aç</div><div class="sc-desc">Her güncelleme güvenlik yamalarını içerir.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">🍎 Sistem Ayarları → Genel → Yazılım Güncellemesi → Otomatik Güncellemeler → Tümünü Aç</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-section">
+        <div class="dont-title">🚫 MAC'TE KESİNLİKLE YAPMA</div>
+        <ul class="dont-list">
+          <li><span class="dont-x">✕</span>"Sadece Mac kullanıyorum, virüs almam" diye düşünme</li>
+          <li><span class="dont-x">✕</span>Torrent ile indirilen .dmg dosyalarını çalıştırma</li>
+          <li><span class="dont-x">✕</span>Sistem tercihlerine erişim isteyen bilinmeyen uygulamalara izin verme</li>
+          <li><span class="dont-x">✕</span>Güvenlik duvarını kapatma (Sistem Ayarları → Ağ → Güvenlik Duvarı)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════ TABLET ═══════ -->
+    <div class="device-panel" id="panel-tablet">
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — TABLET REHBERİ</div>
+        <p class="btf-text">"Tabletler çoğunlukla çocuklar veya tüm aile tarafından kullanılır. Bu yüzden ekstra dikkat gerekir!"</p></div>
+      </div>
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">📱</span><span class="gs-title">TABLET ÖZEL AYARLAR</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Çocuk profili / Ebeveyn denetimi oluştur</div><div class="sc-desc">Çocukların tablet kullanması için ayrı kısıtlı profil.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">Android: Ayarlar → Kullanıcılar → Kısıtlı Profil Ekle<br>iPad: Ayarlar → Ekran Süresi → Kısıtlamalar</div>
+              <div class="sc-tip-box">✅ Çocuğun erişebileceği uygulamaları, içerikleri ve ekran süresini sınırla.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">İçerik filtreleme aç</div><div class="sc-desc">Uygunsuz web içeriklerini engelle.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">iPad: Ayarlar → Ekran Süresi → İçerik ve Gizlilik Kısıtlamaları → Web İçeriği → Yalnızca Yetişkin Olmayan Web Siteleri</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Tableti şarjsız bırakma — güncelleme erteleme</div><div class="sc-desc">Tabletler çoğu zaman güncellemeleri erteler. Düzenli kontrol et.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-warn-box">⚠️ Tabletler yıllarca güncellenmeden kullanılabiliyor. Bu ciddi bir güvenlik açığı.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ KURULUM ═══════ -->
+    <div class="device-panel" id="panel-install">
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — KURULUM GÜVENLİĞİ</div>
+        <p class="btf-text">"Program kurarken 'İleri İleri İleri' refleksi en tehlikeli alışkanlıktır. Her ekranı oku. Bir dakikalık dikkat, saatlik temizlikten iyidir!"</p></div>
+      </div>
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">💿</span><span class="gs-title">İŞLETİM SİSTEMİ KURULUMU</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="install-grid">
+          <div class="install-card">
+            <div class="ic-title"><span>✅</span> YAPILMALI</div>
+            <ul class="ic-list">
+              <li><span class="ic-do">✓</span>Resmi kaynaktan indir (microsoft.com, apple.com)</li>
+              <li><span class="ic-do">✓</span>SHA256 hash doğrulaması yap</li>
+              <li><span class="ic-do">✓</span>Kurulum sonrası ilk iş: tüm güncellemeleri yükle</li>
+              <li><span class="ic-do">✓</span>Standart kullanıcı hesabı oluştur</li>
+              <li><span class="ic-do">✓</span>Güvenlik duvarını aktif et</li>
+              <li><span class="ic-do">✓</span>Disk şifrelemesini (BitLocker/FileVault) aç</li>
+            </ul>
+          </div>
+          <div class="install-card" style="border-color:rgba(255,59,92,.15)">
+            <div class="ic-title"><span>🚫</span> YAPILMAMALI</div>
+            <ul class="ic-list">
+              <li><span class="ic-dont">✕</span>Torrent veya 3. parti siteden ISO indirme</li>
+              <li><span class="ic-dont">✕</span>Aktivasyon crack'i kullanma</li>
+              <li><span class="ic-dont">✕</span>Kurulumda güvenlik bileşenlerini atlama</li>
+              <li><span class="ic-dont">✕</span>Gizlilik ayarlarını atlamak için "Hızlı Kurulum" seçme</li>
+              <li><span class="ic-dont">✕</span>Windows 7/8 gibi destek bitmiş sürüm yükleme</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section" style="margin-top:20px">
+        <div class="gs-header"><span class="gs-icon">📦</span><span class="gs-title">OFFICE & ÜÇÜNCÜ PARTI PROGRAMLAR</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="install-grid">
+          <div class="install-card">
+            <div class="ic-title"><span>✅</span> YAPILMALI</div>
+            <ul class="ic-list">
+              <li><span class="ic-do">✓</span>Office'i microsoft.com'dan indir</li>
+              <li><span class="ic-do">✓</span>Her program kurulumunda "Özel Kurulum" seç</li>
+              <li><span class="ic-do">✓</span>Kurulum sırasında tüm ekranları tek tek oku</li>
+              <li><span class="ic-do">✓</span>Ek yazılım tekliflerini (toolbar vb.) reddet</li>
+              <li><span class="ic-do">✓</span>Programları düzenli güncelle</li>
+            </ul>
+          </div>
+          <div class="install-card" style="border-color:rgba(255,59,92,.15)">
+            <div class="ic-title"><span>🚫</span> YAPILMAMALI</div>
+            <ul class="ic-list">
+              <li><span class="ic-dont">✕</span>Crack Office kullanma — içinde trojan olabilir</li>
+              <li><span class="ic-dont">✕</span>Macroları otomatik çalıştırmayı aç (Office)</li>
+              <li><span class="ic-dont">✕</span>E-postayla gelen Office dosyasındaki macroyu etkinleştir</li>
+              <li><span class="ic-dont">✕</span>"Hızlı Kur" seçeneğiyle gelen ek araç çubuklarını kur</li>
+              <li><span class="ic-dont">✕</span>Lisanssız Adobe, AutoCAD gibi programlar kullanma</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dont-section" style="margin-top:16px">
+          <div class="dont-title">⚠️ OFFICE MACRO SALDIRISI — GERÇEK TEHLİKE</div>
+          <ul class="dont-list">
+            <li><span class="dont-x">!</span><strong style="color:#fff">Senaryo:</strong> E-postayla "Fatura_Ocak.docx" geldi. Açınca "Güvenli görüntülemeden çık ve makroları etkinleştir" diyor.</li>
+            <li><span class="dont-x">✕</span>Makroyu ETKİNLEŞTİRME. Bu klasik bir saldırı vektörüdür. Makro çalışınca arka planda zararlı kod indirilip çalıştırılır.</li>
+            <li><span class="dont-x">✓</span><span style="color:var(--green)">Dosyayı kapat, göndereni telefon ile ara ve doğrula.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ UYGULAMA İZİNLERİ ═══════ -->
+    <div class="device-panel" id="panel-apps">
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — UYGULAMA İZİNLERİ</div>
+        <p class="btf-text">"Bir fener uygulamasının konum, mikrofon ve rehber erişimi istemesi normal değil! İzinleri düzenli gözden geçirmek dijital hijyenin temelidir."</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">📲</span><span class="gs-title">İZİN KURALLARI</span><span class="gs-badge badge-must">ZORUNLU</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status warn"></div>
+              <div class="sc-main"><div class="sc-title">Konum — Yalnızca kullanırken ver</div><div class="sc-desc">"Her Zaman" seçeneği nadiren gereklidir.</div></div>
+              <span class="sc-tag tag-warn">DİKKAT</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">Android: Ayarlar → Uygulamalar → İzinler → Konum<br>iOS: Ayarlar → Gizlilik → Konum Servisleri</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Her uygulamayı listede gör</li>
+                <li><span class="step-num">2</span>Harita, yemek sipariş uygulamaları: "Kullanırken"</li>
+                <li><span class="step-num">3</span>Oyunlar, alışveriş uygulamaları: "Reddet"</li>
+                <li><span class="step-num">4</span>Hiçbir oyun veya sosyal medya uygulamasına "Her Zaman" izni verme</li>
+              </ul>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Mikrofon ve Kamera — Gereksiz uygulamalara verme</div><div class="sc-desc">Oyunların, alışveriş uygulamalarının kameraya ihtiyacı yok.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">Android: Ayarlar → Gizlilik → İzin Yöneticisi → Kamera / Mikrofon<br>iOS: Ayarlar → Gizlilik → Kamera / Mikrofon</div>
+              <div class="sc-warn-box">⚠️ Kamera veya mikrofon iznini yalnızca video konferans, fotoğraf uygulamaları gibi açık ihtiyacı olan uygulamalara ver.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Rehber erişimini sınırla</div><div class="sc-desc">Rehberine erişen uygulama tüm kişilerini sunucularına yükleyebilir.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-warn-box">⚠️ WhatsApp, Signal gibi mesajlaşma uygulamaları için gerekli, ama oyunlar veya alışveriş uygulamaları için kesinlikle gereksiz.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ MESAJLAŞMA ═══════ -->
+    <div class="device-panel" id="panel-messaging">
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — MESAJLAŞMA GÜVENLİĞİ</div>
+        <p class="btf-text">"Mesajlaşma uygulamaları hayatımızın her yerinde. Ama yanlış ayarlarla gönderdiğin mesajlar sonsuza kadar kalabilir. Süreli mesajlar bunu çözer!"</p></div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">💬</span><span class="gs-title">SÜRELİ MESAJLAR (Disappearing Messages)</span><span class="gs-badge badge-rec">ÖNERİLİR</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">WhatsApp — Süreli Mesajları Aç</div><div class="sc-desc">Mesajlar belirli süre sonra otomatik silinir.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">WhatsApp → Sohbet → Sohbet Bilgisi → Süreli Mesajlar → 7 gün / 90 gün</div>
+              <ul class="sc-steps">
+                <li><span class="step-num">1</span>Sohbeti aç, kişi/grup adına tıkla</li>
+                <li><span class="step-num">2</span>"Süreli Mesajlar" seçeneğini bul</li>
+                <li><span class="step-num">3</span>7 gün veya 90 gün seç</li>
+                <li><span class="step-num">4</span>Tüm sohbetler için: Ayarlar → Gizlilik → Varsayılan Mesaj Süresi</li>
+              </ul>
+              <div class="sc-tip-box">✅ Kişisel konuşmaların eski mesajları telefonda sonsuza kadar kalmasın.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Signal — Süreli Mesajlar (en güvenli seçenek)</div><div class="sc-desc">Signal zaten uçtan uca şifreli + süreli mesaj özelliği var.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">Signal → Sohbet → Sohbet Adı → Süreli Mesajlar → İstediğin süreyi ayarla</div>
+              <div class="sc-tip-box">✅ Signal; gizlilik konusunda endişesi olan herkes için WhatsApp'a tercih edilmeli. Ücretsiz ve açık kaynaklı.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">Telegram — Gizli Sohbet kullan</div><div class="sc-desc">Normal Telegram sohbetleri sunucuda şifresiz saklanır!</div></div>
+              <span class="sc-tag tag-warn">DİKKAT</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">Telegram → Yeni Mesaj → Yeni Gizli Sohbet</div>
+              <div class="sc-warn-box">⚠️ Telegram'ın normal sohbetleri uçtan uca şifreli DEĞİL. Kişisel veya hassas konuşmalar için mutlaka "Gizli Sohbet" kullan.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="guide-section">
+        <div class="gs-header"><span class="gs-icon">🔐</span><span class="gs-title">MESAJLAŞMA UYGULAMA AYARLARI</span><span class="gs-badge badge-rec">ÖNERİLİR</span></div>
+        <div class="setting-cards">
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status do"></div>
+              <div class="sc-main"><div class="sc-title">WhatsApp iki adımlı doğrulamayı aç</div><div class="sc-desc">Hesabın başka cihaza taşınmasını engeller.</div></div>
+              <span class="sc-tag tag-do">YAPILMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">WhatsApp → Ayarlar → Hesap → İki Adımlı Doğrulama → Etkinleştir</div>
+              <div class="sc-tip-box">✅ 6 haneli PIN belirle. SIM çalınsa bile hesabına erişilemez.</div>
+            </div>
+          </div>
+          <div class="setting-card" onclick="toggleCard(this)">
+            <div class="sc-head">
+              <div class="sc-status dont"></div>
+              <div class="sc-main"><div class="sc-title">Son görülme ve profil fotoğrafını herkese açma</div><div class="sc-desc">Yabancıların seni takip etmesini zorlaştır.</div></div>
+              <span class="sc-tag tag-dont">YAPILMAMALI</span>
+            </div>
+            <div class="sc-expand">
+              <div class="sc-path">WhatsApp → Ayarlar → Gizlilik → Son Görülme, Profil Fotoğrafı → "Kişilerim"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dont-section">
+        <div class="dont-title">🚫 MESAJLAŞMADA KESİNLİKLE YAPMA</div>
+        <ul class="dont-list">
+          <li><span class="dont-x">✕</span>SMS ile gelen doğrulama kodlarını kimseyle paylaşma — banka bile istemez!</li>
+          <li><span class="dont-x">✕</span>Tanımadığın numaralardan gelen linklere tıklama (smishing)</li>
+          <li><span class="dont-x">✕</span>Grup sohbetlerinde kişisel bilgi (TC, hesap no, şifre) paylaşma</li>
+          <li><span class="dont-x">✕</span>WhatsApp Web'i başkasının bilgisayarında açık bırakma</li>
+          <li><span class="dont-x">✕</span>"Acil para lazım" diyen mesajları doğrulamadan para gönderme</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ═══════ CHECKLIST ═══════ -->
+    <div class="device-panel" id="panel-checklist">
+      <div class="byte-tip-float">
+        <img src="videos/byte1.png" alt="BYTE" style="width:56px;height:56px;object-fit:contain;">
+        <div><div class="btf-name">BYTE — KONTROL LİSTESİ</div>
+        <p class="btf-text">"Bu listedeki her kutucuğu işaretlediğinde dijital güvenliğinin %80'ini tamamlamış olursun. Hadi başlayalım! Tamamladıkça işaretle."</p></div>
+      </div>
+
+      <div class="checklist-wrap">
+        <div class="cl-title">
+          <span>📋 KİŞİSEL GÜVENLİK KONTROL LİSTESİ</span>
+          <span class="cl-count" id="cl-count">0 / 20</span>
+        </div>
+        <div class="cl-progress"><div class="cl-prog-fill" id="cl-prog" style="width:0%"></div></div>
+        <div class="cl-items" id="cl-items">
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">📱 Telefon ekran kilidi PIN/şifre ile korumalı</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🔐 Biyometrik (parmak izi / yüz) tanıma aktif</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🔄 Telefon işletim sistemi güncel</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🔄 Bilgisayar işletim sistemi güncel</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">📡 Bluetooth gereksiz yere açık değil</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">📶 Otomatik Wi-Fi bağlanma kapalı</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">👁️ Reklam takibi kapalı</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">📍 Uygulama konum izinleri gözden geçirildi</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🎙️ Mikrofon/kamera izinleri temizlendi</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🛡️ Windows Defender veya antivirüs aktif</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🔥 Güvenlik duvarı açık</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">💬 WhatsApp iki adımlı doğrulama aktif</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">⏱️ WhatsApp/Signal süreli mesajlar açık</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🔑 E-posta hesabında 2FA aktif</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🗝️ Şifre yöneticisi kullanıyorum</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">💾 Önemli verilerimin yedeği alınıyor</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🍎 Mac'te FileVault şifrelemesi açık</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">💿 Crack/lisanssız yazılım yok</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">📦 Office macro otomatik çalıştırma kapalı</div></div>
+          <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"><span class="cl-check-icon">✓</span></div><div class="cl-text">🧹 Kullanmadığım uygulamaları sildim</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+// Device switching
+function switchDevice(name, el) {
+  document.querySelectorAll('.device-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  document.querySelectorAll('.dtab, .sn-item').forEach(b => b.classList.remove('active'));
+  if(el) el.classList.add('active');
+  window.scrollTo({top:120, behavior:'smooth'});
+}
+
+// Expand/collapse setting cards
+function toggleCard(card) {
+  const exp = card.querySelector('.sc-expand');
+  if(exp) exp.classList.toggle('open');
+}
+
+// Checklist
+let checked = 0;
+const total = 20;
+function toggleCheck(item) {
+  item.classList.toggle('checked');
+  checked = document.querySelectorAll('.cl-item.checked').length;
+  const pct = Math.round(checked / total * 100);
+  document.getElementById('cl-prog').style.width = pct + '%';
+  document.getElementById('cl-count').textContent = checked + ' / ' + total;
+  document.getElementById('side-prog').style.width = pct + '%';
+  document.getElementById('side-pct').textContent = checked + ' / ' + total;
+  if(checked === total) {
+    toast('🎉','Tamamlandı!','Tüm güvenlik adımlarını tamamladın!','success');
+  } else if(checked === 10) {
+    toast('🤖','BYTE Tebrik Ediyor!','Yarısını tamamladın — harika gidiyorsun!','info');
+  }
+}
+
+// Toast
+function toast(icon, title, sub, type='info') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<div class="t-icon">${icon}</div><div><div class="t-title">${title}</div><div class="t-sub">${sub}</div></div>`;
+  c.appendChild(t);
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 300); }, 3500);
+}
+
+toast('🤖','BYTE Hoş Geldin!','Cihazlarını güvenli hale getirmeye hazır mısın?','info');
+</script>
+<script>if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
+</body>
+</html>
+

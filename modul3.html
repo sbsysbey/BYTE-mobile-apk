@@ -104,11 +104,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{display:block;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;transition:.2s;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -197,9 +198,17 @@
 
     <!-- MODULE HEADER -->
     <div class="mod-header">
-      <div class="byte-avatar">📱</div>
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="">
+        📱
+        <div class="byte-rings">
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
       <div class="mod-title-block">
-        <div class="mod-tag">◆ MODÜL 03</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 03 <span style="font-family:'Segoe UI Emoji','Noto Color Emoji',sans-serif">🔊</span></div>
         <h1 class="mod-title">Mobil <span>Güvenlik</span></h1>
         <p class="mod-desc">Telefon artık sadece bir telefon değil — banka, e-posta, kimlik, kamera, konum hepsi bir arada. BYTE ile cebindeki en değerli cihazı nasıl koruyacağını öğren.</p>
         <div class="mod-stats">
@@ -666,64 +675,144 @@ const totalSteps = 5;
 // ── QUESTIONS ──
 window.moduleQuestions = [
   {
-    q: "Sideloading nedir ve neden tehlikelidir?",
-    opts: ["Uygulamaları güncellemeden kullanmak","Google Play veya App Store dışından uygulama yüklemek — Google/Apple güvenlik denetimini atlatır","Uygulamaları Wi-Fi yerine mobil veriyle indirmek","Çok fazla uygulama yükleyerek telefonu yavaşlatmak"],
+    q: "Sideloading kavramı nedir ve mobil cihaz güvenliği açısından neden büyük bir risk teşkil eder?",
+    opts: [
+      "Mobil uygulamaların güncel sürümlerini beklemek yerine eski sürümleriyle kullanmaya devam etmektir.",
+      "Uygulamaları resmi mağazalar dışındaki kaynaklardan yükleyerek güvenlik denetimlerini devre dışı bırakmaktır.",
+      "Cihazdaki uygulamaları Wi-Fi yerine mobil veri üzerinden indirerek hücresel ağ trafiğini riske atmaktır.",
+      "Telefona çok sayıda gereksiz uygulama yükleyerek işlemci performansını ve batarya ömrünü ciddi oranda düşürmektir."
+    ],
     correct: 1,
-    fb: { wrong: "Sideloading, resmi mağaza dışından .apk veya .ipa dosyası yüklemektir. Mağaza denetimini atladığı için zararlı kod içerme riski çok yüksektir.", correct: "Kesinlikle! Resmi mağazalar uygulamaları güvenlik kontrolünden geçirir. Mağaza dışı kaynaklar bu denetimi atlatır — içinde ne olduğunu bilemezsin." }
+    fb: {
+      wrong: "Sideloading performans tercihi değil, resmi mağaza denetimlerini bypass eden bir kurulum modelidir.",
+      correct: "Doğru! Resmi mağaza dışı APK/IPA yüklemeleri zararlı yazılım ve veri sızıntısı riskini ciddi biçimde artırır."
+    }
   },
   {
-    q: "Telefon çalındığında ilk yapman gereken adım nedir?",
-    opts: ["Polisi aramak ve kayıp bildirimi yapmak","Hırsızı aramak ve cihazı geri istemek","Başka bir cihazdan cihazı uzaktan kilitlemek","Bankayı arayıp kartları iptal ettirmek"],
+    q: "Akıllı telefonunuzun çalındığını veya kaybolduğunu fark ettiğinizde yapmanız gereken ilk kritik adım nedir?",
+    opts: [
+      "En yakın polis merkezine giderek cihazın fiziksel özelliklerini içeren resmi bir kayıp bildirimi oluşturmak.",
+      "Çalınan telefon numaranızı başka bir hattan arayarak hırsızla iletişim kurmaya ve cihazı geri istemeye çalışmak.",
+      "Başka bir güvenilir cihaz üzerinden Cihazımı Bul servisine girerek telefonunuzu uzaktan kilitlemek ve verileri silmek.",
+      "Bankanızın müşteri hizmetlerini arayarak mobil bankacılıkta kayıtlı olan tüm kredi kartlarınızı kullanıma kapatmak."
+    ],
     correct: 2,
-    fb: { wrong: "Polis ve banka önemli ama cihaz kilitlenmeden önce her şeye erişilebilir. Önce kilitle — diğer adımlar sonra gelir.", correct: "Doğru sıra! Cihazı kilitle → SIM'i dondur → Şifreleri değiştir → Bankayı ara. Kilit her erişimi durduran ilk savunmadır." }
+    fb: {
+      wrong: "İlk dakikalarda kritik olan saldırganın cihaz erişimini kesmektir; diğer adımlar bunun ardından gelmelidir.",
+      correct: "Evet! Uzak kilitleme ve gerekirse uzaktan silme, hesap ele geçirme zincirini erken aşamada kırar."
+    }
   },
   {
-    q: "Telefon çalındığında neden SIM kartı kilitlemen gerekir?",
-    opts: ["Telefon numaranın çalınmasını engellemek için","Hırsızın SIM'i başka cihaza takıp SMS tabanlı 2FA kodlarını almasını önlemek için","Şebeke ücretlerini durdurmak için","Telefonu kapatmak için"],
+    q: "Dışarıdayken cihazınızı şarj etmeniz gerektiğinde Juice Jacking riskinden korunmak için en güvenli yöntem hangisidir?",
+    opts: [
+      "Şarj işlemi sırasında telefonu tamamen kapatmak; cihaz kapalıyken USB portu üzerinden veri transferinin imkansız olduğunu varsaymak.",
+      "Herkese açık USB portlarını kullanmak yerine, kendi duvar adaptörünüzü kullanarak doğrudan bir elektrik prizine bağlanmak.",
+      "Telefonun ayarlar kısmından Geliştirici Seçeneklerini açarak sadece şarj modunun aktif olduğundan emin olduktan sonra USB'ye bağlamak.",
+      "Şarj istasyonuna bağlanmadan önce ekran kilidini en karmaşık hale getirmek ve şarj süresi boyunca ekranın hiç açılmamasını sağlamak."
+    ],
     correct: 1,
-    fb: { wrong: "Asıl tehlike şudur: SIM başka cihaza takılırsa hırsız banka ve e-posta SMS doğrulama kodlarını alabilir ve hesaplarına girebilir.", correct: "Harika! SIM başka cihazda çalışırsa 2FA SMS'leri hırsıza gider. Bu yüzden SIM dondurma kilitleme kadar kritiktir." }
+    fb: {
+      wrong: "Juice Jacking riski USB veri hattından gelir; sadece ekran kilidi veya cihazı kapatmak her zaman yeterli koruma sağlamaz.",
+      correct: "Doğru! Kendi adaptorunuzla priz kullanmak, bilinmeyen USB portlardan veri kanalını fiilen devre dışı bırakır."
+    }
   },
   {
-    q: "Halka açık Wi-Fi'de hangi işlemi yapmak güvenlidir?",
-    opts: ["Online bankacılık — HTTPS kullanıyorsa güvenlidir","İş e-postalarını okumak ve yanıtlamak","Haber okumak veya harita bakmak gibi hassas olmayan işlemler","Sosyal medya hesabına giriş yapmak"],
+    q: "Mobil cihazlarda mikrofon ve kamera gibi hassas donanımların güvenliğini sağlamak için uygulama izinleri nasıl yönetilmelidir?",
+    opts: [
+      "Uygulamaların en yüksek performansta çalışabilmesi için tüm erişim izinlerini Her zaman izin ver şeklinde ayarlayarak arka planda kısıtlanmasını önlemek.",
+      "Cihaz güvenliğini riske atmamak adına, telefonun temel işlevleri dışındaki tüm uygulamaların mikrofon ve kamera erişimlerini kalıcı olarak tamamen kapatmak.",
+      "Uygulamaların güncel kalabilmesi için sadece kurulum aşamasında tüm izinleri onaylamak ve sonrasında sistem güncellemeleri gelene kadar bu ayarları değiştirmemek.",
+      "Hassas izinleri sadece uygulama açıkken kullanılacak şekilde sınırlandırmak ve Yalnızca uygulama kullanılırken izin ver seçeneğini tercih etmek."
+    ],
+    correct: 3,
+    fb: {
+      wrong: "İzinleri toptan açmak veya körü körüne bırakmak saldırı yüzeyini büyütür; amaç en az ayrıcalık ilkesini uygulamaktır.",
+      correct: "Harika! Hassas izinleri kullanım anıyla sınırlamak, veri toplama ve arka plan suistimal riskini önemli ölçüde düşürür."
+    }
+  },
+  {
+    q: "Quishing (QR Kod Phishing) saldırılarında siber saldırganlar kurbanlarını ağa düşürmek için genellikle hangi yöntemi kullanırlar?",
+    opts: [
+      "Akıllı telefonların kamera lensine uzaktan sızarak kullanıcının izni olmadan gizlice fotoğraf ve video kaydı alırlar.",
+      "Restoran, otopark veya reklam panolarındaki yasal QR kodların üzerine, zararlı sitelere yönlendiren sahte etiketler yapıştırırlar.",
+      "Telefonun QR kod okuma hızını yazılımsal olarak yavaşlatarak cihazın işletim sistemini geçici bir süre için tamamen kilitlerler.",
+      "Sadece karanlık ortamlarda çalışan özel kodlar tasarlayarak kullanıcının ekran parlaklığını en üst seviyeye çıkartıp veri çalarlar."
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Quishing'in temel vektoru cihaz hacki değil, kullanıcıyı sahte QR hedeflerine yönlendiren sosyal mühendisliktir.",
+      correct: "Doğru! Fiziksel ortamlardaki QR etiket değiştirme saldırıları kullanıcıyı sahte giriş sayfalarına düşürmede çok etkilidir."
+    }
+  },
+  {
+    q: "PostNL'den gelen bir SMS'te gumruk ücreti için şüpheli bir linke (postnl-delivery.me) tıklamanız istenirse ne yapmalısınız?",
+    opts: [
+      "Linke tıklayıp istenen küçük tutarı hemen ödersiniz; düşük bir ücret olduğu için finansal bir risk oluşturmayacağını varsayarsınız.",
+      "SMS'i tamamen yoksayıp doğrudan kurumun resmi web adresini manuel yazarak paketin gerçek durumunu kontrol edersiniz.",
+      "SMS içindeki linki güvenli bir tarayıcıda açar ancak herhangi bir kredi kartı veya kişisel bilgi girişi yapmadan sadece sayfayı incelersiniz.",
+      "Yakın çevrenize veya iş arkadaşlarınıza danışarak onların da benzer bir mesaj alıp almadığını teyit eder, toplu hareket etmeye karar verirsiniz."
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Smishing saldırılarında küçük ücret bahanesiyle kart ve kimlik verisi toplanır; bağlantıyı açmak bile riski artırır.",
+      correct: "Mükemmel! Resmi alan adını manuel girip kontrol etmek, SMS içi link kaynaklı kimlik avını etkili biçimde engeller."
+    }
+  },
+  {
+    q: "Dışarıdayken veya kamuya açık alanlarda Bluetooth ve Wi-Fi özelliklerini kullanmadığınız halde açık tutmanın yaratacağı en büyük risk nedir?",
+    opts: [
+      "Cihazın sadece batarya ömrünü hızla tüketerek acil durumlarda iletişiminizin kesilmesine neden olmasıdır.",
+      "Telefonunuzun çevredeki rastgele ağlara bağlanmaya çalışırken internet paketinizdeki veriyi gizlice bitirmesidir.",
+      "Saldırganların cihaz sinyallerini izleyerek konumunuzu takip etmesine veya sahte ağlara otomatik bağlanmanıza yol açmasıdır.",
+      "Cihazın işlemci yükünü artırarak arka planda çalışan diğer güvenlik uygulamalarının yavaşlamasına sebep olmasıdır."
+    ],
     correct: 2,
-    fb: { wrong: "HTTPS trafiği şifreler ama halka açık ağlarda oturum çalma, sahte ağ (Evil Twin) ve DNS saldırıları riski devam eder. Hassas işlemler için mobil veri kullan.", correct: "Doğru! Haber okumak, harita bakmak gibi giriş gerektirmeyen işlemler halka açık Wi-Fi'de yapılabilir. Banka, e-posta ve iş uygulamaları için kesinlikle mobil veri kullan." }
+    fb: {
+      wrong: "Asıl risk sadece pil veya performans değildir; açık kalan kablosuz arayüzler keşif, takip ve sahte ağ bağlantısı gibi güvenlik açıkları oluşturur.",
+      correct: "Doğru! Kullanılmayan Bluetooth ve Wi-Fi'nin açık kalması, cihazın izlenmesi ve sahte erişim noktalarına otomatik bağlanması riskini artırır."
+    }
   },
   {
-    q: "Telefonunda Wi-Fi kapalı ama Bluetooth açık. Kamuya açık bir ortamda bu durumda risk var mı?",
-    opts: ["Hayır, Bluetooth kısa menzilli olduğundan güvenlidir","Evet — 'BlueSnarfing' veya 'Bluebugging' saldırılarıyla rehber, dosya ve mesajlara erişilebilir","Hayır, yalnızca eşleştirilmiş cihazlar risk oluşturur","Evet ama yalnızca Android cihazlarda bu risk vardır"],
+    q: "Uygulama mağazasından (Google Play veya App Store) yeni bir uygulama indirmeden önce güvenliği nasıl teyit edersiniz?",
+    opts: [
+      "Uygulamanın isminin popülerliği, logosu ve mağaza sayfasındaki profesyonel görünümlü tanıtım görsellerine odaklanarak karar verirsiniz.",
+      "Geliştiricinin kimliğini, indirme istatistiklerini, kullanıcı geri bildirimlerini ve uygulamanın talep ettiği erişim izinlerini detaylıca incelersiniz.",
+      "Uygulamanın tamamen ücretsiz olup olmadığını kontrol edersiniz; ücretli olmayan uygulamaların genellikle daha güvenli ve denetlenmiş olduğunu varsayarsınız.",
+      "Sadece uygulamanın aldığı toplam yıldız puanına bakarsınız; yüksek puana sahip uygulamaların siber güvenlik riski taşımayacağını kabul edersiniz."
+    ],
     correct: 1,
-    fb: { wrong: "Bluetooth açıkken ve keşfedilebilir durumdayken yakındaki saldırgan izinsiz bağlantı kurmaya çalışabilir. Kullanmıyorsan kapat.", correct: "Doğru! BlueSnarfing rehbere ve dosyalara erişir; Bluebugging ise mikrofonu ve aramaları ele geçirebilir. Bluetooth kullanılmadığında kapalı tutulmalı." }
+    fb: {
+      wrong: "Sadece logo veya puan değerlendirmesi yetersizdir; saldırganlar mağaza sayfalarını görsel olarak ikna edici şekilde taklit edebilir.",
+      correct: "Harika! Geliştirici geçmişi, indirme trendi, yorum kalitesi ve izin kapsamı birlikte incelendiğinde riskli uygulamalar ayıklanabilir."
+    }
   },
   {
-    q: "PostNL'den şöyle bir SMS geldi: 'Paketiniz askıya alındı. €1,95 gümrük ücreti için tıklayın → postnl-delivery.me/pay'. Ne yaparsın?",
-    opts: ["Tıklayıp ödeme yaparsın — küçük bir ücret, sorun olmaz","SMS'i yoksayıp doğrudan postnl.nl adresini açar, paketin durumuna bakarsın","SMS'teki linki açar ama kart bilgisi girmeden kontrol edersin","Arkadaşlarına sorup onlar da aynı SMS'i aldıysa ödersin"],
+    q: "Basit bir fener (torch) uygulamasının konum, rehber ve mikrofon erişimi istemesi durumunda en doğru yaklaşım nedir?",
+    opts: [
+      "Gerekli izinleri onaylarsınız; uygulama üreticisinin bu verileri uygulamanın performansını iyileştirmek için topladığını kabul edersiniz.",
+      "İstenen tüm izinleri reddeder veya uygulamayı hiç kurmazsınız; basit bir fener için bu izin talepleri son derece şüpheli ve gereksizdir.",
+      "Sadece konum bilgisini paylaşmaya onay verir, rehber ve mikrofon gibi daha hassas olduğunu düşündüğünüz diğer erişim taleplerini ise reddedersiniz.",
+      "Tüm izinleri vererek kurulumu tamamlarsınız ve uygulama kurulduktan sonra ayarlardan bu izinleri manuel olarak kaldırmanın yeterli olacağını düşünürsünüz."
+    ],
     correct: 1,
-    fb: { wrong: "Bu klasik bir smishing saldırısıdır. €1,95 gibi küçük ücretler düşünmeden ödemeye iter. Sahte site kart bilgilerini çalar.", correct: "Mükemmel! Meşru kargo firmaları SMS ile ödeme istemez. Her zaman doğrudan resmi URL'ye git — SMS'teki linklere asla tıklama." }
+    fb: {
+      wrong: "Fonksiyonla ilgisiz izin talepleri, veri toplama veya spyware davranışının güçlü bir göstergesidir.",
+      correct: "Kesinlikle! En az yetki prensibine aykırı izin isteyen uygulamalardan uzak durmak mobil güvenliğin temel kuralıdır."
+    }
   },
   {
-    q: "ING Bank'tan arandın: 'Hesabınızda şüpheli işlem var, güvenliğiniz için tek kullanımlık kodu söyleyin.' Ne yaparsın?",
-    opts: ["Kodu söylersin — gerçekten banka arıyor olabilir","Telefonu kapatır, kartının arkasındaki resmi ING numarasını kendin arayarak doğrularsın","Kodu söylemez ama ad-soyad ve kart numaranı verirsin","Kodu söylemek yerine şifrenle doğrulama yaparsın"],
-    correct: 1,
-    fb: { wrong: "Bankalar telefonda asla güvenlik kodu, şifre veya SMS kodu istemez. Bu bir vishing (sesli kimlik avı) saldırısıdır. AI ile gerçek banka sesi bile taklit edilebiliyor.", correct: "Doğru! Telefonu kapat, bankanın resmi numarasını kendin ara. Gelen aramada hiçbir zaman hassas bilgi verme — kim olursa olsun." }
-  },
-  {
-    q: "Google Play'de bir uygulama indirmeden önce güvenli olduğundan emin olmak için ne kontrol edersin?",
-    opts: ["Sadece uygulamanın adına ve logosuna bakarsın","Geliştirici adını, indirme sayısını, kullanıcı yorumlarını ve istenen izinleri kontrol edersin","Uygulamanın ücretsiz olup olmadığına bakarsın — ücretsizse güvenlidir","Sadece puan sayısına bakarsın — yüksek puanlıysa güvenlidir"],
-    correct: 1,
-    fb: { wrong: "Ad, logo ve puan kolayca manipüle edilebilir. Geliştirici kim? Gerçek yorum var mı? İzinler makul mu? Bu sorular seni korur.", correct: "Harika! 4 kontrol: geliştirici adı + indirme sayısı + gerçek yorumlar + makul izinler. Bu adımlar sahte uygulamaların büyük çoğunluğunu filtreler." }
-  },
-  {
-    q: "Bir fener (torch) uygulaması konum, rehber ve mikrofon izni istiyor. Ne yaparsın?",
-    opts: ["İzinleri verirsin — üretici bu izinlere ihtiyaç duyuyordur","İzinleri reddeder ya da uygulamayı hiç kurmazsın — fener için bu izinler gereksiz ve şüpheli","Sadece konum iznini verirsin, diğerlerini reddedersin","İzinleri verip sonra ayarlardan kaldırırsın — sorun olmaz"],
-    correct: 1,
-    fb: { wrong: "Bir fener uygulamasının bu izinlere kesinlikle ihtiyacı yok. Bu klasik casus yazılım (spyware) davranışıdır.", correct: "Mükemmel! 'Bu izni neden istiyor?' sorusu her kurulumda sorulmalı. İşleviyle uyuşmayan izin isteyen uygulama büyük ihtimalle zararlıdır." }
-  },
-  {
-    q: "Telefon çalınmadan önce hangi önlem veri kaybını en aza indirir?",
-    opts: ["Telefona güçlü bir kılıf takmak","Telefonun hafızasını düzenli temizlemek","Otomatik bulut yedeklemeyi aktif tutmak ve Cihazımı Bul'u etkinleştirmek","Çok sayıda uygulama yüklememek"],
+    q: "Popüler oyunlar için Bedava Elmas veya Sınırsız Can vaat eden hileli (Cheat) APK dosyalarının taşıdığı en büyük gizli risk nedir?",
+    opts: [
+      "Oyunun hileli versiyonunun orijinaline göre daha yavaş çalışması ve cihazın bataryasının normalden biraz daha hızlı tükenmesidir.",
+      "Hilenin oyun sunucuları tarafından fark edilmesi durumunda, oyuncunun sadece o oyundaki mevcut skorlarının ve seviyesinin silinmesidir.",
+      "Oyun arka planda çalışırken mikrofon, kamera, SMS ve rehber gibi hassas verilere gizlice erişerek kişisel bilgilerinizi saldırganlara sızdırmasıdır.",
+      "Uygulamanın kurulum dosyasının çok büyük olması nedeniyle telefonun depolama alanını doldurması ve diğer uygulamaların güncellenmesini engellemesidir."
+    ],
     correct: 2,
-    fb: { wrong: "Kılıf fiziksel koruma sağlar ama veri kaybını önlemez. Bulut yedek + Cihazımı Bul kombinasyonu en kritik proaktif önlemdir.", correct: "Kesinlikle! Bulut yedek fotoğraf, kişi ve dosyalarını korur. Cihazımı Bul hem kilitleme hem konumlama imkânı verir. İkisi birlikte olmazsa olmaz." }
+    fb: {
+      wrong: "Asıl tehdit performans kaybı değil, trojanlaştırılmış APK'ların arka planda hassas izinleri suistimal etmesidir.",
+      correct: "Doğru! Hileli APK'lar çoğu zaman casus moduller içerir ve cihazdan kamera, rehber, SMS gibi kritik verileri dışarı aktarabilir."
+    }
   }
 ];
 

@@ -1,0 +1,932 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 10: Seyahat Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px 30px;}
+.article-tag{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.article-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.35;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:2px;margin:26px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:4px;}
+.stat-lbl{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+.alert-warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-red{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.05);border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+/* READING SIDEBAR */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.enisa-badge{background:linear-gradient(135deg,rgba(96,200,240,.08),rgba(96,200,240,.03));border:1px solid rgba(96,200,240,.25);border-radius:14px;padding:16px 18px;}
+.enisa-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.enisa-icon{font-size:1.2rem;}
+.enisa-label{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1px;}
+.enisa-text{font-size:.81rem;color:var(--text-dim);line-height:1.55;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1.5px;margin-bottom:10px;}
+.side-list{display:flex;flex-direction:column;gap:7px;}
+.side-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-dim);line-height:1.4;}
+.side-ok{color:var(--green);flex-shrink:0;font-weight:700;}
+.side-bad{color:var(--red);flex-shrink:0;font-weight:700;}
+.side-arr{color:var(--cyan);flex-shrink:0;font-weight:700;}
+/* TRAVEL-SPECIFIC COMPONENTS */
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.check-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:11px 14px;display:flex;gap:10px;align-items:flex-start;}
+.check-icon{font-size:1.1rem;flex-shrink:0;}
+.check-text{font-size:.83rem;color:var(--text-dim);line-height:1.45;}
+.check-text strong{color:var(--text);display:block;margin-bottom:2px;}
+.wifi-threat-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.wt-card{background:var(--bg-panel);border-radius:12px;padding:15px 18px;display:flex;gap:14px;border:1px solid var(--border);}
+.wt-danger{border-color:rgba(248,113,113,.25);background:rgba(248,113,113,.03);}
+.wt-icon{font-size:1.5rem;flex-shrink:0;}
+.wt-name{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:4px;}
+.wt-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;}
+.wt-fix{font-size:.80rem;color:var(--green);margin-top:5px;}
+.juice-visual{background:linear-gradient(135deg,rgba(248,113,113,.08),rgba(248,113,113,.03));border:1px solid rgba(248,113,113,.25);border-radius:14px;padding:20px 22px;margin-bottom:18px;}
+.jv-head{font-family:'Orbitron',sans-serif;font-size:.82rem;color:var(--red);letter-spacing:1px;margin-bottom:12px;}
+.jv-steps{display:flex;flex-direction:column;gap:8px;}
+.jv-step{display:flex;gap:10px;align-items:flex-start;font-size:.84rem;color:var(--text-dim);}
+.jv-num{width:22px;height:22px;border-radius:50%;background:rgba(248,113,113,.15);border:1px solid rgba(248,113,113,.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.62rem;color:var(--red);flex-shrink:0;}
+.physical-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;}
+.ph-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:15px 16px;}
+.ph-icon{font-size:1.5rem;margin-bottom:6px;}
+.ph-name{font-family:'Orbitron',sans-serif;font-size:.74rem;color:var(--cyan);letter-spacing:.5px;margin-bottom:7px;}
+.ph-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;}
+.ph-tip{font-size:.79rem;color:var(--green);margin-top:6px;background:rgba(74,222,154,.06);border-radius:6px;padding:4px 8px;}
+.border-country-cards{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.bc-card{background:var(--bg-panel);border-radius:12px;padding:15px 18px;display:flex;gap:14px;border:1px solid var(--border);}
+.bc-flag{font-size:1.6rem;flex-shrink:0;}
+.bc-country{font-family:'Orbitron',sans-serif;font-size:.78rem;color:#fff;margin-bottom:4px;}
+.bc-law{font-size:.75rem;color:var(--cyan);margin-bottom:6px;}
+.bc-desc{font-size:.81rem;color:var(--text-dim);line-height:1.5;}
+.bc-warn{font-size:.78rem;color:var(--red);margin-top:5px;}
+.travel-mode-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.tm-step{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:flex-start;}
+.tm-num{width:24px;height:24px;border-radius:50%;background:rgba(96,200,240,.12);border:1px solid rgba(96,200,240,.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.64rem;color:var(--cyan);flex-shrink:0;margin-top:1px;}
+.tm-title{font-size:.87rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.tm-desc{font-size:.81rem;color:var(--text-dim);line-height:1.45;}
+.device-lost-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.dl-step{background:var(--bg-panel);border-left:3px solid var(--cyan);border-radius:0 10px 10px 0;padding:12px 16px;display:flex;gap:12px;}
+.dl-step.dl-warn{border-left-color:var(--orange);}
+.dl-num{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--cyan);font-weight:700;flex-shrink:0;min-width:20px;}
+.dl-step.dl-warn .dl-num{color:var(--orange);}
+.dl-title{font-size:.87rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.dl-desc{font-size:.81rem;color:var(--text-dim);line-height:1.45;}
+.dl-time{font-size:.75rem;color:var(--text-dim);margin-top:4px;}
+.recommend-box{background:var(--bg-panel);border:1px solid rgba(74,222,154,.2);border-radius:14px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.rb-icon{font-size:1.8rem;flex-shrink:0;}
+.rb-title{font-family:'Orbitron',sans-serif;font-size:.74rem;color:var(--green);letter-spacing:1px;margin-bottom:6px;}
+.rb-text{font-size:.85rem;color:var(--text-dim);line-height:1.55;}
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.byte-mini{font-size:1.2rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;}
+.byte-tip-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+/* QUIZ */
+.quiz-wrap{max-width:700px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:10px;padding:11px 15px;font-size:.91rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.3);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+.quiz-actions .btn{background:rgba(0,200,255,.12);color:var(--accent);border:1px solid rgba(0,200,255,.35);}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span class="xp-label">XP</span>
+      <span id="xp-count">3400</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill"></div></div>
+    </div>
+    <div class="mod-badge-top">MODÜL 10 / 13</div>
+  </div>
+</div>
+
+<div id="app">
+  <!-- SIDEBAR -->
+    <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 300 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul6.html')"><div class="mod-num done">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul7.html')"><div class="mod-num done">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul8.html')"><div class="mod-num done">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 350 XP</div></div></div>
+      <div class="module-item" onclick="goTo('modul9.html')"><div class="mod-num done">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; &middot; 400 XP</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">10</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Seyahat Güvenliği</div><div class="mod-meta">Aktif &middot; 350 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli &middot; 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli &middot; 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">&#x1F4CB;</div>
+        <div><div class="mod-name" style="color:var(--yellow)">H&#x131;zl&#x131; Rehber</div><div class="mod-meta">&#xD6;zet &middot; Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="Tıkla, BYTE anlatsın">
+        🤖
+        <div class="byte-rings">
+          <div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">▶ BYTE'a tıkla</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 10 · 🔊 Dinle</div>
+        <h1 class="mod-title">Seyahat <span>Güvenliği</span></h1>
+        <p class="mod-desc">Havaalanı Wi-Fi tuzakları, juice jacking, fiziksel gözetleme, sınırda cihaz arama yasaları ve kayıp cihaz protokolü. İş seyahati odaklı, gerçek tehdit senaryolarıyla.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-c"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-g"></div>~40 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEPS -->
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)">
+        <div class="step-dot active" id="dot-1">01</div>
+        <div class="step-label">Video Ders</div>
+        <div class="step-xp">+50 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)">
+        <div class="step-dot pending" id="dot-2">02</div>
+        <div class="step-label">Okuma</div>
+        <div class="step-xp">+70 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)">
+        <div class="step-dot pending" id="dot-3">03</div>
+        <div class="step-label">Quiz</div>
+        <div class="step-xp">+160 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)">
+        <div class="step-dot pending" id="dot-4">04</div>
+        <div class="step-label">Senaryo</div>
+        <div class="step-xp">+40 XP</div>
+      </div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)">
+        <div class="step-dot pending" id="dot-5">05</div>
+        <div class="step-label">Rozet</div>
+        <div class="step-xp">+30 XP</div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 1: VIDEO ═══════════════ -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-player">
+        <div class="video-screen">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 10</div>
+          <div class="vs-title">Seyahat Güvenliği</div>
+          <div class="vs-sub">Wi-Fi Tuzakları · Juice Jacking · Sınır Araması · Kayıp Cihaz</div>
+          <div class="play-big" id="play-btn" onclick="startVideo()">▶</div>
+          <div class="chapters">
+            <div class="ch-pill active" id="ch0">Seyahat = Artan Risk</div>
+            <div class="ch-pill" id="ch1">Cihaz Hazırlığı</div>
+            <div class="ch-pill" id="ch2">Wi-Fi & Şarj Tehlikeleri</div>
+            <div class="ch-pill" id="ch3">Fiziksel Güvenlik</div>
+            <div class="ch-pill" id="ch4">Sınır & Kayıp Protokolü</div>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button class="ctrl-btn primary" id="play-ctrl" onclick="startVideo()">▶ Oynat</button>
+          <button class="ctrl-btn" onclick="skipVideo()">⏭ Atla</button>
+          <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
+          <div class="vtime" id="vtime">0:00 / 8:45</div>
+          <button class="ctrl-btn">⚙</button>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🔑</span><span class="kp-title">Ders Öncesi Anahtar Noktalar</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Havaalanı ve otel Wi-Fi ağları saldırganlar için en kolay hedef — "Airport_Free_WiFi" adlı ağı saldırgan da kurabilir.</li>
+          <li><span class="kp-b">▸</span>Halka açık USB şarj noktaları veri çalabilir (juice jacking) — kendi adaptörün ve powerbank'in olmazsa olmaz.</li>
+          <li><span class="kp-b">▸</span>ABD, İngiltere, Avustralya ve Çin sınırlarında gümrük yetkilileri cihazını <strong>yasal olarak</strong> inceleyebilir ve şifreni isteyebilir.</li>
+          <li><span class="kp-b">▸</span>Seyahat için "seyahat modu" uygula: minimum veri, maksimum şifreleme.</li>
+          <li><span class="kp-b">▸</span>Cihaz kaybolursa önce kilitle, konumu izle — silme komutu geri alınamaz.</li>
+        </ul>
+      </div>
+      <div style="text-align:right;margin-top:16px;">
+        <button class="btn btn-primary" onclick="window.completeStep && window.completeStep(1)">Videoyu Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 2: READING ═══════════════ -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ · 7 BÖLÜM</div>
+          <div class="article-title">Seyahatte Güvenlik: Evden Uzakta Her Şey Farklı Çalışır</div>
+          <div class="article-intro">Ofiste güvende hissedersiniz: kurumsal ağ, IT koruması, fiziksel kontrol. Seyahate çıktığınız an bu katmanlar ortadan kalkar. Havaalanı, otel, konferans salonu — her ortam yeni bir saldırı yüzeyi. Bu modül iş seyahatini güvenli hale getirmenin tam haritasını çıkarıyor.</div>
+
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">%42</div><div class="stat-lbl">Kurumsal veri ihlallerinin seyahat sırasında gerçekleştiği oran (IBM 2024)</div></div>
+            <div class="stat-box"><div class="stat-num">%68</div><div class="stat-lbl">İş seyahati yapanların halka açık Wi-Fi'ya bağlandığı oran (ENISA)</div></div>
+            <div class="stat-box"><div class="stat-num">6 ülke</div><div class="stat-lbl">Sınırda cihaz aramaya yasal yetkisi olan ülke sayısı (ABD dahil)</div></div>
+          </div>
+
+          <!-- BÖLÜM 1 -->
+          <div class="section-head">💼 BÖLÜM 1 — SEYAHAT ÖNCESİ CİHAZ HAZIRLIĞI</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Seyahate en az hassas veriyle çıkmak en temel kural. Gereksiz dosyalar, seyahat dönüşünde temizlenecek şeyler değil — gitmeden temizlenecek şeyler.</p>
+
+          <div class="checklist-grid">
+            <div class="check-item">
+              <div class="check-icon">🗂️</div>
+              <div class="check-text"><strong>Minimum Veri</strong>Yanında olmayan dosya çalınamaz. Seyahate gerekli olanları al, kritik arşivi kurumsal sunucuda bırak.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon">🔐</div>
+              <div class="check-text"><strong>Tam Disk Şifreleme</strong>Laptop için BitLocker (Windows) veya FileVault (Mac) açık olmalı. Cihaz çalınsa bile veriye erişilemez.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon">🔒</div>
+              <div class="check-text"><strong>Güçlü Ekran Kilidi</strong>PIN veya şifre — parmak izi tek başına yeterli değil. Sınırda parmak izi zorla açtırılabilir, şifre açtırılamaz.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon">☁️</div>
+              <div class="check-text"><strong>Bulut Yedek</strong>Cihaz kaybolursa verilerin kaybolmaması için güncel yedek şart. Seyahat öncesi son yedeklemeyi kontrol et.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon">🔄</div>
+              <div class="check-text"><strong>Güncellemeler</strong>Seyahat öncesi tüm güncellemeleri tamamla. Havaalanında güncelleme indirme — güvensiz ağ riski.</div>
+            </div>
+            <div class="check-item">
+              <div class="check-icon">🛂</div>
+              <div class="check-text"><strong>Seyahat Cihazı</strong>Yüksek riskli ülkelere mümkünse kurumsal "seyahat laptop"u — minimum kurulu, minimum veri.</div>
+            </div>
+          </div>
+
+          <div class="alert-info">
+            <span>💡</span>
+            <div><strong>İpucu:</strong> Seyahate çıkmadan hesaplarındaki aktif oturumları gözden geçir. Tanımadığın cihazları kapat — cihazın kaybolursa saldırganın işi zorlaşır.</div>
+          </div>
+
+          <!-- BÖLÜM 2 -->
+          <div class="section-head">🔌 BÖLÜM 2 — JUICE JACKING: USB ŞARJ TUZAĞI</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong>Juice Jacking</strong>: Havaalanı, tren garı veya kafedeki USB şarj noktasına bağlandığında cihazına zararlı yazılım yüklenebilir veya veriler kopyalanabilir. USB hem enerji hem veri taşır — bunları ayırt etmek kullanıcıya bırakılmıştır.</p>
+
+          <div class="juice-visual">
+            <div class="jv-head">⚠️ JUICE JACKING NASIL ÇALIŞIR?</div>
+            <div class="jv-steps">
+              <div class="jv-step"><div class="jv-num">1</div><div>Saldırgan, havaalanındaki USB şarj noktasını modifiye edilmiş bir cihazla değiştirir <strong>veya</strong> yanıltıcı bir şarj kablosu bırakır</div></div>
+              <div class="jv-step"><div class="jv-num">2</div><div>Telefonu takarsın — görünürde normal şarj başlar</div></div>
+              <div class="jv-step"><div class="jv-num">3</div><div>Arka planda USB veri bağlantısı açılır; fotoğraflar, kişiler, dosyalar kopyalanabilir</div></div>
+              <div class="jv-step"><div class="jv-num">4</div><div>Bazı versiyonlarda zararlı yazılım cihaza yüklenir — ve sen hiçbir şey fark etmezsin</div></div>
+            </div>
+          </div>
+
+          <div class="checklist-grid">
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">✅</div>
+              <div class="check-text"><strong>Kendi adaptörünü kullan</strong>USB yerine standart elektrik prizine kendi şarj adaptörünü tak — veri bağlantısı olmaz.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">🔋</div>
+              <div class="check-text"><strong>Powerbank taşı</strong>En güvenli yöntem: kendi powerbank'in. Şarj kısıtlaması olan uçuşlarda kabin bagajında taşı.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">🛡️</div>
+              <div class="check-text"><strong>USB Data Blocker</strong>"USB kondom" da denir — şarj akımını geçirir, veri pinlerini fiziksel olarak engeller. ~10€.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(248,113,113,.2);">
+              <div class="check-icon">❌</div>
+              <div class="check-text"><strong>Yabancı kablo kullanma</strong>Havaalanında "yardımsever" biri kablo uzatırsa kabul etme — trojan kablo gerçek bir tehdit.</div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 3 -->
+          <div class="section-head">📶 BÖLÜM 3 — HAVAALANI & OTEL Wi-Fi TUZAKLARI</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Halka açık Wi-Fi ağları saldırganlar için en kolay avlanma zemini. İki temel tehdit var: ağı dinlemek (sniffing) ve sahte ağ kurmak (evil twin).</p>
+
+          <div class="wifi-threat-cards">
+            <div class="wt-card wt-danger">
+              <div class="wt-icon">👿</div>
+              <div>
+                <div class="wt-name">Evil Twin (Sahte Erişim Noktası)</div>
+                <div class="wt-desc">Saldırgan "Airport_Free_WiFi" veya "Hilton_Guest" gibi gerçekmiş gibi görünen bir ağ kurar. Bağlandığında tüm trafiğin üzerinden geçer — şifreler, oturum token'ları, dosyalar.</div>
+                <div class="wt-fix">✓ Çözüm: VPN her zaman açık. VPN olmadan hassas işlem yapma.</div>
+              </div>
+            </div>
+            <div class="wt-card wt-danger">
+              <div class="wt-icon">🕵️</div>
+              <div>
+                <div class="wt-name">Packet Sniffing (Trafik Dinleme)</div>
+                <div class="wt-desc">Aynı ağdaki saldırgan şifrelenmemiş trafiği okuyabilir. HTTP siteler tamamen açık; HTTPS bile meta veri sızdırabilir. Aynı otel ağındaki başka biri potansiyel tehdit.</div>
+                <div class="wt-fix">✓ Çözüm: Yalnızca HTTPS siteler + VPN. Önemli işlemler için mobil veri.</div>
+              </div>
+            </div>
+            <div class="wt-card wt-danger">
+              <div class="wt-icon">🍯</div>
+              <div>
+                <div class="wt-name">Captive Portal Saldırısı</div>
+                <div class="wt-desc">Otelde "Kabul Et ve Bağlan" ekranı çıkar — bu sayfa sahte olabilir ve oturum açma bilgilerini toplar. Ya da meşru görünüp arka planda zararlı içerik yükler.</div>
+                <div class="wt-fix">✓ Çözüm: Captive portal'dan sonra mutlaka VPN aç. Şifre gerektirmeyen ağlara dikkat.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="recommend-box">
+            <div class="rb-icon">📱</div>
+            <div>
+              <div class="rb-title">EN GÜVENLİ YÖNTEM: MOBİL VERİ</div>
+              <div class="rb-text">Hassas iş işlemleri için halka açık Wi-Fi yerine telefonun mobil verisini hotspot olarak kullan. Yurt dışında pahalı olabilir ama kurumsal veri ihlalinin bedeli çok daha yüksek. Yüksek riskli seyahatler için yerel SIM kart veya uluslararası paket al.</div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 4 -->
+          <div class="section-head">👁️ BÖLÜM 4 — FİZİKSEL GÜVENLİK: GÖZDEN KAÇAN TEHDİTLER</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Siber saldırılar kadar dijital değil ama sonuçları aynı derecede ciddi. Omuz sörfü, gözetimsiz cihaz ve fiziksel hırsızlık — bunlar yazılım değil, dikkat meselesi.</p>
+
+          <div class="physical-grid">
+            <div class="ph-card">
+              <div class="ph-icon">👀</div>
+              <div class="ph-name">OMUZ SÖRFÜ</div>
+              <div class="ph-desc">Uçakta, kafede veya toplantı odasında yanındaki kişi ekranını okuyabilir. Şifreler, müşteri verileri, stratejik belgeler — hepsi görünür.</div>
+              <div class="ph-tip">✓ Ekran gizleme filtresi (privacy screen) — ~30€, her laptop'a uyar</div>
+            </div>
+            <div class="ph-card">
+              <div class="ph-icon">🚪</div>
+              <div class="ph-name">OTEL ODASI RİSKİ</div>
+              <div class="ph-desc">Laptop otel odasında gözetimsiz bırakılmamalı. Oda temizlik personeli, bakım görevlisi, hatta hızlı bir misafir bile fiziksel erişim sağlayabilir.</div>
+              <div class="ph-tip">✓ Kasaya kilitle veya yanında tut. Ekranı kilitli bırak, kapalı tutma yeterli değil.</div>
+            </div>
+            <div class="ph-card">
+              <div class="ph-icon">🧳</div>
+              <div class="ph-name">BAGAJ & TAŞIMA</div>
+              <div class="ph-desc">Havaalanında kontrol bagajına laptop konmamalı. Hem fiziksel hasar hem de güvenlik kontrolü sırasında erişim riski var. El bagajında tut.</div>
+              <div class="ph-tip">✓ El bagajı — kontrol bagajına asla laptop koyma</div>
+            </div>
+            <div class="ph-card">
+              <div class="ph-icon">☕</div>
+              <div class="ph-name">KAFE & LOUNGE</div>
+              <div class="ph-desc">Kafeye gidip "bir dakika" tuvalet için kalktığında laptop yalnız kalır. Hırsızlık saniyeler sürer. Kalabalık ortamlarda cihazı hiç gözetimsiz bırakma.</div>
+              <div class="ph-tip">✓ Hızlı kilit: Windows: Win+L / Mac: Ctrl+Cmd+Q</div>
+            </div>
+          </div>
+
+          <div class="alert-warn">
+            <span>🎙️</span>
+            <div><strong>Toplantılarda dikkat:</strong> Hassas bir toplantı yaparken laptoptaki kamera ve mikrofonu kapatmak ya da bantlamak yeterli değil — açık uygulamalar konuşmayı kaydedebilir. Toplantı odasında konuşulanlar için cihazları tamamen kapat veya odadan çıkar.</div>
+          </div>
+
+          <!-- BÖLÜM 5 -->
+          <div class="section-head">🌐 BÖLÜM 5 — VPN & SIM KART: İNTERNETE GÜVENLİ BAĞLAN</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">VPN (Sanal Özel Ağ) seyahatte en temel güvenlik katmanı. Tüm internet trafiğini şifreler, konum bilgisini gizler ve halka açık ağlarda dinlenmeyi engeller.</p>
+
+          <div class="checklist-grid">
+            <div class="check-item" style="border-color:rgba(96,200,240,.2);">
+              <div class="check-icon">🔒</div>
+              <div class="check-text"><strong>Kurumsal VPN</strong>Şirketin VPN'i varsa mutlaka kullan. Tüm trafiği kurumsal sunucu üzerinden geçirir — IT izleyebilir, saldırgan izleyemez.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(96,200,240,.2);">
+              <div class="check-icon">🛡️</div>
+              <div class="check-text"><strong>Kişisel VPN</strong>ProtonVPN (İsviçre), Mullvad — güvenilir, ücretli. Ücretsiz VPN'ler veri toplayabilir — kaçın.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(96,200,240,.2);">
+              <div class="check-icon">📡</div>
+              <div class="check-text"><strong>Yurt Dışı SIM Kart</strong>Seyahat öncesi yerel SIM veya eSIM al (Airalo, Holafly). Güvenilir mobil veri bağlantısı — pahalı roaming yerine güvenli alternatif.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(248,113,113,.2);">
+              <div class="check-icon">❌</div>
+              <div class="check-text"><strong>Çin'de VPN</strong>Çin, onaylanmamış VPN kullanımını yasaklar. Seyahat öncesi kurumsal IT'den onaylı çözüm al — orada kurmaya çalışma.</div>
+            </div>
+          </div>
+
+          <!-- BÖLÜM 6 -->
+          <div class="section-head">🌍 BÖLÜM 6 — SINIRDA CİHAZ ARAMASI: YASAL YETKİLER</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Birçok ülkede gümrük ve sınır yetkilileri <strong>cihazını inceleme, kopyalama ve şifre isteme</strong> yasal yetkisine sahip. Bu normal arama kurallarından farklı — şüphe aranmaz, mahkeme kararı gerekmez.</p>
+
+          <div class="border-country-cards">
+            <div class="bc-card">
+              <div class="bc-flag">🇺🇸</div>
+              <div>
+                <div class="bc-country">Amerika Birleşik Devletleri</div>
+                <div class="bc-law">Border Search Exception · CBP (Customs and Border Protection)</div>
+                <div class="bc-desc">4. Anayasa değişikliği sınır kapılarında tam geçerli değil. CBP herhangi bir şüphe olmaksızın cihazı inceleyebilir, şifre isteyebilir ve cihazı geçici olarak alıkoyabilir. ABD vatandaşı bile olsan şifre vermeyi reddedebilirsin — ama cihazına el konabilir. Yabancı uyruklu için ret, giriş reddi anlamına gelebilir.</div>
+                <div class="bc-warn">⚠️ ABD'ye her yıl binlerce cihaz bu kapsamda inceleniyor</div>
+              </div>
+            </div>
+            <div class="bc-card">
+              <div class="bc-flag">🇬🇧</div>
+              <div>
+                <div class="bc-country">Birleşik Krallık</div>
+                <div class="bc-law">Terrorism Act 2000 · Schedule 7</div>
+                <div class="bc-desc">Havalimanı, liman ve sınır kapılarında sınır görevlileri herhangi bir şüphe olmaksızın kişiyi durdurabilir, sorgulayabilir ve cihazını inceleyebilir. Şifre vermeyi reddetmek Schedule 7 kapsamında <strong style="color:var(--red)">suç</strong> sayılır ve hapis cezasına kadar gidebilir. Gazeteciler ve avukatlar özel koruma talep edebilir.</div>
+                <div class="bc-warn">⚠️ Reddetmek suç — avukat ile önceden danışın</div>
+              </div>
+            </div>
+            <div class="bc-card">
+              <div class="bc-flag">🇦🇺</div>
+              <div>
+                <div class="bc-country">Avustralya</div>
+                <div class="bc-law">Australian Border Force Act 2015</div>
+                <div class="bc-desc">ABF yetkilileri cihazları inceleyebilir ve şifre talep edebilir. 2018 tarihli Assistance and Access Act ile şifre çözme yardımı yasal zorunluluk haline getirildi. Reddetmek ciddi para cezası veya hapis cezasına yol açabilir.</div>
+                <div class="bc-warn">⚠️ Yasal zorunluluk — uyumsuzluk ağır yaptırım</div>
+              </div>
+            </div>
+            <div class="bc-card">
+              <div class="bc-flag">🇨🇳</div>
+              <div>
+                <div class="bc-country">Çin</div>
+                <div class="bc-law">Çin Siber Güvenlik Yasası 2017 + Ulusal İstihbarat Yasası</div>
+                <div class="bc-desc">Çin sınır yetkilileri cihazları inceleyebilir, arama geçmişini tarayabilir. VPN kullanımı kontrol edilebilir — onaylı olmayan VPN bulunması sorun yaratabilir. Sosyal medya içerikleri, mesajlar taranabilir. Çin'e hassas kurumsal veriyle gitmek yüksek risk.</div>
+                <div class="bc-warn">⚠️ En yüksek risk — kurumsal IT ile önceden plan yap</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head" style="margin-top:10px;">🧳 SINIR GEÇİŞİ İÇİN HAZIRLIK: SEYAHAT MODU</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">"Seyahat modu" cihazı sınıra minimum veriyle taşımak anlamına gelir. İncelense bile kurumsal veya kişisel hassas veri bulunmaz.</p>
+
+          <div class="travel-mode-steps">
+            <div class="tm-step">
+              <div class="tm-num">1</div>
+              <div><div class="tm-title">Hassas Verileri Temizle veya Buluta Taşı</div><div class="tm-desc">Müşteri verileri, stratejik belgeler, şirket dosyaları — bunları yerel depodan kaldır, buluta al. Varışta tekrar indir.</div></div>
+            </div>
+            <div class="tm-step">
+              <div class="tm-num">2</div>
+              <div><div class="tm-title">Tarayıcı & Uygulama Geçmişini Temizle</div><div class="tm-desc">Arama geçmişi, oturum açık uygulamalar, mesaj geçmişi — seyahat öncesi temizle veya uygulamaları kaldır.</div></div>
+            </div>
+            <div class="tm-step">
+              <div class="tm-num">3</div>
+              <div><div class="tm-title">Parmak İzi Yerine PIN/Şifre</div><div class="tm-desc">Parmak izi zorla açtırılabilir; şifre zorla açtırılamaz. Sınır geçişi öncesi biometrik kimlik doğrulamayı devre dışı bırak, PIN'e geç.</div></div>
+            </div>
+            <div class="tm-step">
+              <div class="tm-num">4</div>
+              <div><div class="tm-title">Kurumsal IT'yi Bilgilendir</div><div class="tm-desc">Cihazınıza el konulursa şirket protokolü devreye girmeli. Seyahat öncesi IT'ye bildirmek uzaktan silme için hazırlık sağlar.</div></div>
+            </div>
+            <div class="tm-step">
+              <div class="tm-num">5</div>
+              <div><div class="tm-title">Seyahat Cihazı Kullan (Yüksek Risk İçin)</div><div class="tm-desc">Çin, Rusya gibi yüksek riskli ülkeler için kurumsal "seyahat laptop" — minimum kurulu, minimum veri, dönüşte sıfırlanır.</div></div>
+            </div>
+          </div>
+
+          <div class="alert-red">
+            <span>⚖️</span>
+            <div><strong>Hukuki Not:</strong> Sınırda şifre vermek ya da vermemek ülkeye göre farklı sonuçlar doğurur. ABD'de reddetme giriş reddine, İngiltere'de suç isnadına yol açabilir. Hassas veri taşıyorsanız seyahat öncesi hukuk danışmanına başvurun.</div>
+          </div>
+
+          <!-- BÖLÜM 7 -->
+          <div class="section-head">📵 BÖLÜM 7 — CİHAZ KAYBOLDU: SEYAHATTE ACİL PROTOKOL</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Yurt dışında cihaz kaybolduğunda panik doğal — ama protokol soğukkanlılık ister. Yanlış sıra hasarı büyütür.</p>
+
+          <div class="device-lost-steps">
+            <div class="dl-step">
+              <div class="dl-num">1</div>
+              <div><div class="dl-title">Hemen Uzaktan Kilitle</div><div class="dl-desc">Android: myaccount.google.com → Cihazlarımı Bul. iOS: icloud.com → Kayıp Modu. Güvenli bir ağdan (mobil veri veya VPN) yap.</div><div class="dl-time">⏱ İlk 5 dakika</div></div>
+            </div>
+            <div class="dl-step">
+              <div class="dl-num">2</div>
+              <div><div class="dl-title">Konumu İzle</div><div class="dl-desc">Cihaz internete bağlanırsa konum görünür. 24-48 saat bekle — unutulmuş veya teslim edilmemiş olabilir. Silme kararını aceleyle verme.</div><div class="dl-time">⏱ İlk 1 saat</div></div>
+            </div>
+            <div class="dl-step">
+              <div class="dl-num">3</div>
+              <div><div class="dl-title">Kurumsal IT'yi Bilgilendir</div><div class="dl-desc">Şirkete bildir — uzaktan silme, hesap dondurma, VPN erişimini kesme kararı IT'nin. Tek başına yönetme.</div><div class="dl-time">⏱ İlk 1 saat</div></div>
+            </div>
+            <div class="dl-step">
+              <div class="dl-num">4</div>
+              <div><div class="dl-title">Kritik Hesapların Şifrelerini Değiştir</div><div class="dl-desc">Cihazda kayıtlı şifreler risk altında. E-posta, kurumsal hesaplar, bankacılık — başka bir cihazdan şifreleri değiştir.</div><div class="dl-time">⏱ İlk 2 saat</div></div>
+            </div>
+            <div class="dl-step dl-warn">
+              <div class="dl-num">5</div>
+              <div><div class="dl-title">Son Çare: Uzaktan Sil</div><div class="dl-desc">Cihaz bulunamıyorsa ve hassas veri taşıyorsa uzaktan sil. Geri alınamaz — bu kararı IT ile birlikte ver. Silme sonrası konum izleme de durur.</div><div class="dl-time">⏱ 24-48 saat sonra karar</div></div>
+            </div>
+          </div>
+
+          <div class="recommend-box">
+            <div class="rb-icon">🎯</div>
+            <div>
+              <div class="rb-title">SEYAHAT GÜVENLİĞİ ÖZET KONTROL LİSTESİ</div>
+              <div class="rb-text">
+                <strong style="color:var(--green)">Gitmeden önce:</strong> Disk şifreleme ✓ · Güncellemeler ✓ · Minimum veri ✓ · Yedek ✓ · VPN kurulu ✓ · PIN aktif ✓<br>
+                <strong style="color:var(--cyan)">Seyahatte:</strong> VPN her zaman açık · Kendi adaptör/powerbank · Ekran gizleme filtresi · Cihazı gözetimsiz bırakma · Yabancı USB/kablo kullanma<br>
+                <strong style="color:var(--yellow)">Sınırda:</strong> Minimum veri · Biometrik kapat, PIN kullan · Kurumsal IT haberdar
+              </div>
+            </div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div>
+              <div class="byte-tip-head"><div class="byte-mini">🤖</div><div class="byte-name">BYTE'IN ÖZETI</div></div>
+              <div class="byte-tip-text">Seyahat = ofis koruması yok. Her bağlandığın ağ, her taktığın kablo, her bıraktığın cihaz potansiyel tehdit. Kuralı basit: VPN her zaman açık, USB'ye kendi adaptörünle bağlan, cihazı gözetimsiz bırakma. Sınırda ise en az veriyle git — incelense bile kaybedeceğin bir şey olmasın.</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;"><button class="btn btn-primary" onclick="completeStep(2)">Okumayı Tamamladım →</button></div>
+        </div>
+
+        <!-- READING SIDEBAR -->
+        <div class="reading-sidebar">
+          <div class="enisa-badge">
+            <div class="enisa-head"><div class="enisa-icon">🇪🇺</div><div class="enisa-label">ENISA REFERANSI</div></div>
+            <div class="enisa-text">ENISA "Remote Work" ve "Travel Security" kılavuzları: Halka açık ağlar kurumsal tehdit seviyesi 'Yüksek'. VPN zorunlu, cihaz şifrelemesi standart, minimum veri prensibi uygulanmalı.</div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">7 BÖLÜM</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">1</span><div>Cihaz Hazırlığı</div></div>
+              <div class="side-item"><span class="side-arr">2</span><div>Juice Jacking</div></div>
+              <div class="side-item"><span class="side-arr">3</span><div>Wi-Fi Tuzakları</div></div>
+              <div class="side-item"><span class="side-arr">4</span><div>Fiziksel Güvenlik</div></div>
+              <div class="side-item"><span class="side-arr">5</span><div>VPN & SIM Kart</div></div>
+              <div class="side-item"><span class="side-arr">6</span><div>Sınır Araması Yasaları</div></div>
+              <div class="side-item"><span class="side-arr">7</span><div>Kayıp Cihaz Protokolü</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">SINIR YASALARI</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">⚠</span><div>🇺🇸 Border Search Exception</div></div>
+              <div class="side-item"><span class="side-bad">⚠</span><div>🇬🇧 Schedule 7 — ret = suç</div></div>
+              <div class="side-item"><span class="side-bad">⚠</span><div>🇦🇺 ABF Act — zorunluluk</div></div>
+              <div class="side-item"><span class="side-bad">⚠</span><div>🇨🇳 En yüksek risk</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">SEYAHAT ÖNCE</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span><div>Disk şifreleme aç</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>Güncellemeleri tamamla</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>Minimum veri bırak</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>VPN kur ve test et</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>PIN / şifre aktif</div></div>
+              <div class="side-item"><span class="side-ok">✓</span><div>Bulut yedek al</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">SEYAHATTE KAÇIN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✗</span><div>Halka açık USB şarj</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>VPN'siz Wi-Fi kullanımı</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Yabancı kablo kabul etme</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Cihazı gözetimsiz bırakma</div></div>
+              <div class="side-item"><span class="side-bad">✗</span><div>Ücretsiz VPN kullanımı</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">CİHAZ KAYBOLDU</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">1</span><div><strong>Kilitle</strong></div></div>
+              <div class="side-item"><span class="side-ok">2</span><div>Konumu izle</div></div>
+              <div class="side-item"><span class="side-ok">3</span><div>IT'yi bilgilendir</div></div>
+              <div class="side-item"><span class="side-ok">4</span><div>Şifreleri değiştir</div></div>
+              <div class="side-item"><span class="side-bad">5</span><div>Son çare: Sil</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 3: QUIZ ═══════════════ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label">
+          <span id="q-counter">Soru 1 / 10</span>
+          <span id="q-score">0 / 10 Doğru</span>
+        </div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 4: SCENARIO ═══════════════ -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">✈️</div>
+            <div>
+              <div class="scene-label">SENARYO · MODÜL 10 · SEYAHAT GÜVENLİĞİ</div>
+              <div class="scene-text">
+                Londra Heathrow Havalimanı'ndasın — İstanbul bağlantısını beklerken 3 saat boş vaktin var. Laptopunu çıkardın, kritik bir müşteri sunumu üzerinde çalışman gerekiyor. Lounge'da ücretsiz <strong>"Heathrow_Business_WiFi"</strong> ağı görüyorsun. Aynı zamanda yanındaki koltuktaki kişi sana bir USB kablo uzatıyor: "Benimki şarjı çok hızlı yapıyor, kullanmak ister misin?" Laptopun pili %15'te.
+              </div>
+              <div class="notif-mockup" style="margin-top:14px;max-width:340px;">
+                <div class="nm-bar">
+                  <div class="nm-icon">📶</div>
+                  <div>
+                    <div class="nm-app">Wi-Fi · Heathrow Airport</div>
+                    <div class="nm-time">şimdi</div>
+                  </div>
+                </div>
+                <div class="nm-title">Heathrow_Business_WiFi</div>
+                <div class="nm-body">Ücretsiz · Şifresiz · Güçlü sinyal</div>
+                <div class="nm-location"><div class="nm-loc-dot"></div><div class="nm-loc-text">Bağlanılmadı — şifresiz ağ</div></div>
+                <div class="nm-flags">
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Evil twin olabilir</div>
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Yanındaki kişi yabancı kablo teklif etti</div>
+                  <div class="nm-flag"><div class="nm-flag-dot"></div>Pil %15</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">Ne yaparsın?</div>
+          <div class="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)">
+              <div class="s-icon">📶</div>
+              <div>"Heathrow_Business_WiFi"ne bağlan, VPN aç, sunumu bitir. Lounge'da bu ağ güvenlidir.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(1)">
+              <div class="s-icon">✅</div>
+              <div>Kabloyu nazikçe reddet. Kendi adaptörünü çıkar ve priz ara. Sunum için telefon hotspot'unu kullan veya lounge resepsiyonundan ethernet iste. Wi-Fi'ya bağlanmak zorundaysan önce VPN aç.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(2)">
+              <div class="s-icon">🔋</div>
+              <div>Kabloyu kullan — pil biterse sunum yapılamaz. Wi-Fi'ya bağlanma, yalnızca çevrimdışı çalış.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(3)">
+              <div class="s-icon">⏳</div>
+              <div>Hem kabloyu kullan hem Wi-Fi'ya bağlan ama hassas dosyaları açma, sadece internette gezin.</div>
+            </button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.6rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="display:none;margin-top:16px;text-align:right;" id="scene-next">
+            <button class="btn btn-primary" onclick="completeStep(4)">Rozeti Kazan →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PANEL 5: BADGE ═══════════════ -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">✈️</div>
+        </div>
+        <h2 class="badge-title">SEYAHAT KALKANI</h2>
+        <p class="badge-subtitle">Juice Jacking · Evil Twin · Sınır Araması · Kayıp Cihaz Protokolü</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+350 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 10</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">7</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">350</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance(
+    'Modül on. Seyahat Güvenliği. Evden çıktığın an koruma katmanları değişir. Havaalanındaki ücretsiz Wi-Fi ağı saldırganın kurduğu sahte ağ olabilir. USB şarj noktası veri çalabilir — buna juice jacking denir. Yabancının uzattığı kablo trojan taşıyabilir. Sınırda ise Amerika, İngiltere ve Avustralya gümrüğü şifreni yasal olarak isteyebilir. Reddetmek giriş reddi veya suç anlamına gelebilir. Çözüm: VPN her zaman açık, kendi adaptörün yanında, minimum veriyle git, PIN kullan. Cihaz kaybolursa önce kilitle — silme kararını aceleyle verme.'
+  );
+  ut.lang='tr-TR';ut.rate=0.91;ut.pitch=1.04;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}
+  else{window.speechSynthesis.speak(ut);}
+}
+
+let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
+
+window.moduleQuestions=[
+  {q:"Havaalanındaki 'Airport_Free_WiFi' adlı ağa bağlanmak neden tehlikeli olabilir?",
+   opts:["Havaalanı Wi-Fi her zaman yavaştır","Bu ağ saldırgan tarafından kurulmuş sahte bir evil twin noktası olabilir — tüm trafiğiniz izlenebilir","Havaalanı ağları ücretli olduğu için ücretsiz olanlar kısıtlıdır","Ağa bağlanmak pilinizi hızlı tüketir"],
+   correct:1,fb:{wrong:"Evil twin saldırısı: Saldırgan meşru görünen bir ağ adı kullanır, bağlandığınızda tüm trafiğiniz üzerinden geçer. Şifreler, oturum token'ları, dosyalar — hepsi risk altında.",correct:"Kesinlikle! Evil twin en yaygın havaalanı saldırısı. Çözüm: VPN olmadan hassas işlem yapma, mümkünse mobil hotspot kullan."}},
+  {q:"Juice Jacking saldırısı nasıl gerçekleşir?",
+   opts:["Saldırgan Wi-Fi üzerinden cihaza bağlanır","Halka açık USB şarj noktası üzerinden veri çalınır veya zararlı yazılım yüklenir","Kötü amaçlı e-posta ekiyle cihaz enfekte edilir","Bluetooth üzerinden dosya gönderilir"],
+   correct:1,fb:{wrong:"Juice Jacking: USB hem enerji hem veri taşır. Manipüle edilmiş şarj noktası veya kablo, şarj yaparken arka planda verilerinizi kopyalayabilir veya zararlı yazılım yükleyebilir.",correct:"Doğru! Çözüm basit: kendi adaptörünle elektrik prizini kullan. USB data blocker (USB kondom) da işe yarar. Yabancı kablo asla."}},
+  {q:"İngiltere'de sınır güvenliği yasası (Schedule 7) kapsamında şifre vermeyi reddetmek ne anlama gelir?",
+   opts:["Cihazına el konulabilir ama serbest bırakılırsın","Suç sayılır ve yasal yaptırımla karşılaşabilirsin","Sadece ek sorgulama yapılır","Hiçbir yaptırım uygulanamaz — insan hakları koruması devrededir"],
+   correct:1,fb:{wrong:"İngiltere'de Terrorism Act Schedule 7: Sınır yetkililerine şifre vermeyi reddetmek suç sayılır. Avukat bile olsan bu kural geçerli. Gazeteciler özel koruma talep edebilir.",correct:"Doğru! Bu yüzden İngiltere sınırını hassas kurumsal veriyle geçerken hukuki danışmanlık almak gerekir. Minimum veri prensibi burada hayati."}},
+  {q:"Seyahatte 'seyahat modu' uygulamak ne anlama gelir?",
+   opts:["Telefonunu uçak moduna almak","Cihazı sınıra minimum veri, maksimum şifrelemeyle taşımak — biometrik yerine PIN kullanmak","Veri tasarrufu modunu açmak","Uygulamaları kapatıp sadece telefon olarak kullanmak"],
+   correct:1,fb:{wrong:"Seyahat modu: Hassas verileri temizle veya buluta taşı, biometriği kapat PIN'e geç, tarayıcı geçmişini temizle, kurumsal IT'yi bilgilendir. İncelenirse kaybedeceğin bir şey olmasın.",correct:"Kesinlikle! Özellikle parmak izi önemli: parmak izi zorla açtırılabilir, şifre/PIN zorla açtırılamaz. Bu küçük ama kritik fark."}},
+  {q:"Yurt dışı seyahatte en güvenli internet bağlantı yöntemi hangisidir?",
+   opts:["Otel Wi-Fi — parola korumalı olduğu için güvenlidir","Kendi telefon mobil verisini hotspot olarak kullanmak","Havaalanı ağı — büyük kurumlar tarafından yönetilir","Kafedeki Wi-Fi — şifre istediği için güvenlidir"],
+   correct:1,fb:{wrong:"Şifre korumalı olması ağın güvenli olduğu anlamına gelmez — aynı şifreyi bilen herkes o ağda. En güvenli yöntem kendi mobil verindir: yalnızca sen kullanırsın.",correct:"Doğru! Mobil hotspot = sadece sana ait ağ. Pahalı olabilir ama iş verisi için bedele değer. Yüksek riskli seyahatler için yerel SIM veya uluslararası paket al."}},
+  {q:"Laptop'u otel odasında bırakmak neden güvenlik riski oluşturur?",
+   opts:["Laptop şarjda yanabilir","Oda personeli, bakım görevlisi veya başka biri fiziksel erişim sağlayabilir — disk şifrelemesi olmadan veri çalınabilir","Oteller çalışanların eşyalarından sorumlu değildir","Yalnızca eski otel modellerinde risk vardır"],
+   correct:1,fb:{wrong:"Fiziksel erişim = potansiyel tehdit. Otel odası güvenli değildir — oda anahtarı birden fazla kişide olabilir. Disk şifrelemesi (BitLocker/FileVault) bu riski azaltır ama en iyisi yanında taşımak.",correct:"Doğru! Tam disk şifreleme zorunlu. Kasaya kilitle veya yanında tut. Ekranı kilitli bırakmak yeterli değil — fiziksel erişimde bypass yöntemleri var."}},
+  {q:"ABD sınırında (CBP) gümrük yetkilisi cihazını incelemek isterse ne olur?",
+   opts:["İzin vermeni beklemek zorundalar — reddedebilirsin","Border Search Exception kapsamında mahkeme kararı olmadan cihazını inceleyebilirler, ABD vatandaşı değilsen reddetmek giriş reddine yol açabilir","Yalnızca çanta ve valizi inceleme yetkileri vardır","Konsolosluktan izin almaları gerekir"],
+   correct:1,fb:{wrong:"ABD Border Search Exception: Sınır kapısında 4. Anayasa değişikliği tam geçerli değil. CBP şüphe olmaksızın cihazı inceleyebilir. Yabancı uyruklu reddetmek = giriş reddi riski.",correct:"Doğru! Bu yüzden hassas kurumsal veriyle ABD sınırını geçmek önceden planlanmalı. Minimum veri, bulut depolama, kurumsal IT koordinasyonu şart."}},
+  {q:"Halka açık ortamda laptopa çalışırken omuz sörfüne karşı en etkili önlem nedir?",
+   opts:["Ekranın parlaklığını düşürmek","Privacy screen (ekran gizleme filtresi) kullanmak","Sadece gece çalışmak","Arkaya duvar olan bir yer seçmek"],
+   correct:1,fb:{wrong:"Ekran gizleme filtresi (privacy screen): Yan açılardan ekran görünmez — yalnızca doğrudan karşısındaki görebilir. ~30€, her laptop için mevcut. Uçak ve kafede olmazsa olmaz.",correct:"Kesinlikle! Arkaya duvar seçmek de iyi ama tam çözüm değil. Privacy screen hem ucuz hem etkili — iş laptopları için standart aksesuar olmalı."}},
+  {q:"Seyahatte cihaz kaybolduğunda doğru ilk adım nedir?",
+   opts:["Hemen uzaktan silme komutu gönder — veri güvende olsun","Polis karakoluna git ve kayıp bildirimi yap","Önce uzaktan kilitle ve konumu izle — silme kararını aceleyle verme","Operatörü ara ve SIM kartı iptal et"],
+   correct:2,fb:{wrong:"Silme komutu geri alınamaz! Sildikten sonra konum da izlenemez — cihazı bulsan bile içi boş gelir. Önce kilitle, konumu izle, 24-48 saat bekle. Silme son çare.",correct:"Doğru protokol! Kilitleme + konum izleme çoğu zaman yeterli. Unutulmuş, teslim edilmemiş veya kaybedilmiş olabilir. Aceleyle silme kararı verme."}},
+  {q:"Ücretsiz VPN kullanmak neden önerilmez?",
+   opts:["Ücretsiz VPN'ler daha yavaştır","Ücretsiz VPN'ler kullanıcı verilerini toplayıp üçüncü taraflara satabilir — güvenlik amacıyla kullanılan araç bizzat veri toplama aracı olur","Ücretsiz VPN'ler yalnızca mobil cihazlarda çalışır","Ücretsiz VPN'ler sınırda sorun yaratır"],
+   correct:1,fb:{wrong:"Ücretsiz VPN paradoksu: Ürün sensin. VPN sağlayıcısı altyapıyı ücretsiz sunarken gelirini senden — yani verilerinden — elde eder. Güvenilir ücretli VPN: ProtonVPN, Mullvad.",correct:"Tam isabet! ProtonVPN (İsviçre), Mullvad (İsveç) — denetimli, güvenilir, ücretli. Kurumsal VPN varsa onu kullan. Ücretsiz seçeneklerden uzak dur."}}
+];
+
+function goStep(n){
+  document.querySelectorAll('.lesson-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('step-btn-'+n).classList.add('active');
+  if(n===3&&moduleCurrentQ===0)renderQuestion();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function completeStep(n){
+  if(!moduleStepsCompleted.has(n)){
+    moduleStepsCompleted.add(n);
+    const earned={1:50,2:70,3:160,4:40,5:30}[n]||0;
+    xp+=earned;
+    document.getElementById('xp-count').textContent=xp;
+    const dot=document.getElementById('dot-'+n);
+    if(dot){dot.classList.remove('active','pending');dot.classList.add('done');dot.textContent='✓';}
+    showToast('xp','⚡ +'+earned+' XP',['','Video Ders','Okuma','Quiz','Senaryo','Rozet'][n]+' tamamlandı!');
+  }
+  if(n<5)goStep(n+1);
+}
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function skipVideo(){if(window.completeStep) window.completeStep(1);}
+
+function renderQuestion(){
+  if(moduleCurrentQ>=10){showResult();return;}
+  const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
+  document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
+  const L=['A','B','C','D'];
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${moduleCurrentQ+1}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="feedback"></div>
+    </div>
+    <div class="quiz-actions" id="q-actions" style="display:none;">
+      <button class="btn btn-primary" onclick="nextQuestion()">${moduleCurrentQ<9?'Sonraki Soru →':'Sonucu Gör →'}</button>
+    </div>`;
+}
+
+function answerQ(i){
+  if(moduleQuizAnswered)return;moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  if(ok)moduleQuizCorrect++;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
+  document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
+  document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
+  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  const fb=document.getElementById('feedback');
+  fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
+  fb.className='feedback-box show '+(ok?'correct':'wrong');
+  document.getElementById('q-actions').style.display='flex';
+}
+
+function nextQuestion(){moduleCurrentQ++;if(moduleCurrentQ<10)renderQuestion();else showResult();}
+
+function showResult(){
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
+  const passed=moduleQuizCorrect>=7;
+  document.getElementById('quiz-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3rem;margin-bottom:14px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.88rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / 10 doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      <button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>
+      ${!passed?'<button class="btn btn-green" style="margin-left:10px;" onclick="restartQuiz()">Tekrar Dene</button>':''}
+    </div>`;
+}
+
+function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> 'Heathrow_Business_WiFi' saldırgan tarafından kurulmuş bir evil twin olabilir — 'Business' etiketi güveni artırmak için kullanılan bir taktik. Lounge'da bile bu ağın meşruiyetini doğrulayamazsın. VPN açmak riski azaltır ama evil twin üzerinden bağlanmak başlı başına tehlike. Ayrıca kablo önerisini reddetmedin."},
+  {correct:true,text:"<strong>Mükemmel karar!</strong> İki tehlikeyi doğru tespit ettin: yabancı kablo (juice jacking riski) ve sahte olabilecek Wi-Fi (evil twin). Kendi adaptörünü kullanmak ve mobil hotspot'a geçmek en doğru hamle. Wi-Fi zorunluysa VPN önce açılmalı. Lounge resepsiyonundan ethernet sormak da zekice — kablolu bağlantı çok daha güvenli."},
+  {correct:false,text:"<strong class='bad'>Kısmi doğru, ama yetersiz.</strong> Wi-Fi'ya bağlanmamak iyi ama yabancının kablosunu kabul etmek kritik hata — trojan kablo gerçek bir tehdittir, USB hem şarj hem veri taşır. Pil durumu kararını etkilememeli: güvenlik riski her zaman önceliklidir. Kendi adaptörünü çıkar, priz bul."},
+  {correct:false,text:"<strong class='bad'>İki tehlikeyi birden kucakladın.</strong> Hem juice jacking riski (yabancı kablo) hem evil twin riski (sahte Wi-Fi) aktif. 'Hassas dosyaları açmamak' korunma sağlamaz — trafik izleme bağlantı kurulduğu anda başlar, hangi dosyayı açtığınla ilgilenmez. Hiçbir zaman bu ikisini aynı anda kabul etme."}
+];
+
+function pickScene(i){
+  if(document.querySelector('.scene-opt.chosen-correct,.scene-opt.chosen-wrong'))return;
+  const opts=document.querySelectorAll('.scene-opt'),fb=window.moduleSceneFeedbacks[i];
+  opts.forEach(o=>{o.disabled=true;});
+  opts[i].classList.add(fb.correct?'chosen-correct':'chosen-wrong');
+  if(!fb.correct)opts[1].classList.add('chosen-correct');
+  document.getElementById('byte-fb-text').innerHTML=fb.text;
+  document.getElementById('byte-fb').classList.add('show');
+  document.getElementById('scene-next').style.display='block';
+}
+
+function showToast(type,title,msg){
+  const c=document.getElementById('toast-container');
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  t.innerHTML=`<div class="toast-icon">${type==='xp'?'⚡':type==='warn'?'⚠️':'ℹ️'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  c.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity .4s';setTimeout(()=>t.remove(),400);},3200);
+}
+
+function tryNav(){showToast('warn','🔒 Kilitli','Bu modülü tamamlamadan devam edemezsin.');}
+function goTo(p){window.location.href=p;}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+
+
+
+
+

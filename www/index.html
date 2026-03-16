@@ -1,0 +1,460 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Dijital Güvenlik Platformu</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- ════════════════════════════════════
+     SCREEN 1: LANDING
+════════════════════════════════════ -->
+<div class="screen active" id="screen-landing">
+
+  <nav class="nav">
+    <div class="nav-logo">BYTE<span>ACADEMY</span></div>
+    <div class="nav-links">
+      <button class="nav-btn nav-btn-ghost" onclick="showScreen('login','register')">Kayıt Ol</button>
+      <button class="nav-btn nav-btn-primary" onclick="showScreen('login','login')">Giriş Yap</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">🛡️ &nbsp; DİJİTAL GÜVENLİK EĞİTİM PLATFORMU</div>
+      <h1 class="hero-title">
+        Teknolojiyi <span class="accent">bilinçli</span> kullan,<br>
+        tehlikelerden <span class="accent2">uzak</span> kal.
+      </h1>
+      <p class="hero-desc">
+        BYTE ile 13 modüllük interaktif dijital güvenlik eğitimini tamamla.
+Gerçek senaryolar, quizler ve görevlerle dijital güvenlik uzmanı ol.. Sertifikanı kazan.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-hero btn-hero-primary" onclick="showScreen('login','register')">
+          🚀 Hemen Başla — Ücretsiz
+        </button>
+        <button class="btn-hero btn-hero-ghost" onclick="document.querySelector('.features').scrollIntoView({behavior:'smooth'})">
+          Nasıl Çalışır? ↓
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="padding-left: 6px;">13</div>
+          <div class="hero-stat-label">Modül</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">4800</div>
+          <div class="hero-stat-label" style="padding-left: 4px;">Toplam XP</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" style="padding-left: 31px;">13</div>
+          <div class="hero-stat-label">Rozet & Sertifika</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="byte-visual">
+        <div class="byte-glow-ring"></div>
+
+        <!-- Video modal overlay -->
+        <div id="hero-video-modal" style="display:none;position:fixed;inset:0;z-index:9999;
+          background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
+          align-items:center;justify-content:center;flex-direction:column;gap:16px;">
+          <div style="position:relative;width:min(680px,95vw);">
+            <video id="hero-video" controls autoplay
+              style="width:100%;border-radius:16px;border:1px solid rgba(0,229,255,.3);
+              box-shadow:0 0 60px rgba(0,229,255,.2);">
+              <source id="hero-video-src" src="" type="video/mp4">
+            </video>
+            <button onclick="closeVideo()" style="position:absolute;top:-14px;right:-14px;
+              width:32px;height:32px;border-radius:50%;background:var(--bg-card);
+              border:1px solid var(--border);color:#fff;font-size:1rem;
+              cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+          </div>
+          <p style="font-size:.75rem;color:rgba(255,255,255,.4);">ESC veya ✕ ile kapat</p>
+        </div>
+
+        <div class="byte-card" onclick="openVideo()" style="cursor:pointer;transition:all .3s;"
+          onmouseover="this.style.boxShadow='0 0 150px rgba(0,229,255,.25)'"
+          onmouseout="this.style.boxShadow=''">
+          <img src="videos/byte.gif" style="width:180px;height:180px;object-fit:contain;
+            object-position:center top;filter:drop-shadow(0 0 20px rgba(0,229,255,.4));" alt="BYTE">
+          <div class="byte-name-tag">BYTE</div>
+          <!-- Play hint -->
+          <div style="display:flex;align-items:center;gap:6px;margin-top:6px;
+            background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);
+            border-radius:20px;padding:4px 12px;">
+            <span style="font-size:.7rem;">▶</span>
+            <span style="font-family:'Orbitron',sans-serif;font-size:.58rem;
+              color:var(--cyan);letter-spacing:1px;">TANITIM VİDEOSU</span>
+          </div>
+        </div>
+
+        <div class="byte-speech">
+          Merhaba! Ben BYTE. Seni dijital tehditlere karşı eğitmek için buradayım! 🛡️
+        </div>
+        <div class="floating-badge fb1">
+          <div class="fb-icon">🏅</div>
+          <div class="fb-text">
+            <div class="fb-title">Phishing Dedektifi</div>
+            <div class="fb-sub">Modül 1 Rozeti</div>
+          </div>
+        </div>
+        <div class="floating-badge fb2">
+          <div class="fb-icon">⚡</div>
+          <div class="fb-text">
+            <div class="fb-title">+50 XP Kazandı!</div>
+            <div class="fb-sub">Video tamamlandı</div>
+          </div>
+        </div>
+        <div class="floating-badge fb3">
+          <div class="fb-icon">🎓</div>
+          <div class="fb-text">
+            <div class="fb-title">Sertifika Hazır</div>
+            <div class="fb-sub">13/13 Modül</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <h2 class="section-title">Neden BYTE Academy?</h2>
+    <p class="section-sub">Sadece okumak değil — öğrenmek, pratik yapmak ve kanıtlamak.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon">🎬</div>
+          <div class="feat-title">Video + Okuma + Quiz</div>
+        </div>
+        <div class="feat-desc">Her modülde 5 adımlı öğrenme akışı: video ders, okuma materyali, quiz, gerçek senaryo ve rozet kazanımı.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon"><img src="videos/byte1.png" alt="BYTE" style="width:1.5em;height:1.5em;object-fit:contain;vertical-align:middle;"></div>
+          <div class="feat-title">BYTE Karakteri</div>
+        </div>
+        <div class="feat-desc">Eğlenceli, dikkat çekici ve uyarıcı yapay zeka karakteri BYTE, her adımda rehberlik eder ve geri bildirim verir.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-title">XP & Rozet Sistemi</div>
+        </div>
+        <div class="feat-desc">Her tamamlanan adım XP kazandırır. Rozet topla, seviye atla. Motivasyon hiç düşmez.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon">🎯</div>
+          <div class="feat-title">Gerçek Senaryolar</div>
+        </div>
+        <div class="feat-desc">Phishing tuzakları, şifre krizleri, sosyal mühendislik — gerçek hayat senaryolarıyla pratik yap.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon">📈</div>
+          <div class="feat-title">İlerleme Takibi</div>
+        </div>
+        <div class="feat-desc">Dashboard'dan tüm modüllerin ilerlemesini takip et. Kaldığın yerden devam et.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feat-head">
+          <div class="feat-icon">🎓</div>
+          <div class="feat-title">Dijital Sertifika</div>
+        </div>
+        <div class="feat-desc">13 modülü tamamlayana özel dijital sertifika. LinkedIn'de paylaş, portföyüne ekle.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULES PREVIEW -->
+  <section class="modules-preview">
+    <div class="section-head">
+      <h2 class="section-title" style="text-align:left">13 Modül, 13 Rozet</h2>
+      <button class="nav-btn nav-btn-primary" onclick="showScreen('login','register')">Tüm Modülleri Gör →</button>
+    </div>
+    <div class="modules-grid">
+      <div class="mod-prev-card completed" onclick="window.location.href='modul1.html'"><div class="mp-num done">01</div><div class="mp-info"><div class="mp-name">🔑 Şifre Güvenliği</div><div class="mp-xp">⚡ 300 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul2.html'"><div class="mp-num done">02</div><div class="mp-info"><div class="mp-name">🌐 Ağ Güvenliği</div><div class="mp-xp">⚡ 350 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul3.html'"><div class="mp-num done">03</div><div class="mp-info"><div class="mp-name">📲 Mobil Güvenlik</div><div class="mp-xp">⚡ 400 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul4.html'"><div class="mp-num done">04</div><div class="mp-info"><div class="mp-name">🎭 Sosyal Mühendislik</div><div class="mp-xp">⚡ 350 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul5.html'"><div class="mp-num done">05</div><div class="mp-info"><div class="mp-name">🎣 Phishing & Zararlı Yazılımlar</div><div class="mp-xp">⚡ 300 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul6.html'"><div class="mp-num done">06</div><div class="mp-info"><div class="mp-name">☁️ Veri Gizliliği & Bulut</div><div class="mp-xp">⚡ 400 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul7.html'"><div class="mp-num done">07</div><div class="mp-info"><div class="mp-name">🎤 Sunum Güvenliği</div><div class="mp-xp">⚡ 450 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul8.html'"><div class="mp-num done">08</div><div class="mp-info"><div class="mp-name">📡 Güvenli İletişim</div><div class="mp-xp">⚡ 350 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul9.html'"><div class="mp-num done">09</div><div class="mp-info"><div class="mp-name">🪪 Hesap & Platform Güvenliği</div><div class="mp-xp">⚡ 500 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul10.html'"><div class="mp-num done">10</div><div class="mp-info"><div class="mp-name">✈️ Seyahat Güvenliği</div><div class="mp-xp">⚡ 400 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul11.html'"><div class="mp-num done">11</div><div class="mp-info"><div class="mp-name">🤖 Yapay Zeka Güvenliği</div><div class="mp-xp">⚡ 300 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul12.html'"><div class="mp-num done">12</div><div class="mp-info"><div class="mp-name">📸 Sosyal Medya Güvenliği</div><div class="mp-xp">⚡ 400 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+      <div class="mod-prev-card completed" onclick="window.location.href='modul13.html'"><div class="mp-num done">13</div><div class="mp-info"><div class="mp-name">💬 Siber Zorbalık</div><div class="mp-xp">⚡ 300 XP</div></div><span class="mp-lock" style="color:var(--green)">✓</span></div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div style="padding:0 48px 80px;max-width:1200px;margin:0 auto;width:100%;">
+    <div class="cta-banner" style="background:linear-gradient(135deg,rgba(0,229,255,.30),rgba(0,255,136,.24));border-color:rgba(0,229,255,.68);">
+      <div class="cta-text">
+        <h3>BYTE seni bekliyor! <img src="videos/byte1.png" alt="BYTE" style="width:3.5em;height:7.5em;object-fit:contain;vertical-align:middle;transition:filter .25s ease,transform .25s ease;cursor:zoom-in;" 
+          onmouseover="this.style.filter='drop-shadow(0 10px 24px rgba(0,229,255,.35))';this.style.transform='translateY(-2px)'" onmouseout="this.style.filter='';this.style.transform=''" onclick="openImageZoom(this.src,this.alt)"></h3>
+        <p>13 modül, 3920 XP, tam koruma. </p>
+         </p> Hemen kayıt ol ve dijital güvenlik sertifikanı al!</p>
+      </div>
+      <button class="btn-hero btn-hero-primary" onclick="showScreen('login','register')">
+        🚀 Ücretsiz Başla
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 2: LOGIN
+════════════════════════════════════ -->
+<div class="screen" id="screen-login">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="login-logo">BYTE<span>ACADEMY</span></div>
+      <img src="videos/byte.gif"    style="width:90px;height:90px;object-fit:contain;display:block;margin:16px auto;" alt="BYTE">
+
+      <div class="tab-group">
+        <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Giriş Yap</button>
+        <button class="tab-btn" id="tab-register" onclick="switchTab('register')">Kayıt Ol</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="form-login">
+        <div class="login-title">TEKRAR HOŞ GELDİN!</div>
+        <p class="login-sub">BYTE seni özledi. Kaldığın yerden devam et.</p>
+        <div class="login-error" id="login-error">Kullanıcı adı veya şifre hatalı.</div>
+        <div class="form-group">
+          <label class="form-label">KULLANICI ADI</label>
+          <input type="text" class="form-input" id="login-user" placeholder="kullaniciadiniz">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ŞİFRE</label>
+          <input type="password" class="form-input" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button class="btn-login" onclick="doLogin()">Giriş Yap →</button>
+        <p class="login-footer">Hesabın yok mu? <span onclick="switchTab('register')">Kayıt Ol</span></p>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="form-register" style="display:none">
+        <div class="login-title">ARAMIZA KATIL!</div>
+        <p class="login-sub">Hesap oluştur, BYTE ile öğrenmeye başla.</p>
+        <div class="login-error" id="register-error"></div>
+        <div class="form-group">
+          <label class="form-label">KULLANICI ADI</label>
+          <input type="text" class="form-input" id="reg-user" placeholder="kullaniciadiniz">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ŞİFRE</label>
+          <input type="password" class="form-input" id="reg-pass" placeholder="En az 6 karakter">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ŞİFRE TEKRAR</label>
+          <input type="password" class="form-input" id="reg-pass2" placeholder="Şifreni tekrar gir" onkeydown="if(event.key==='Enter')doRegister()">
+        </div>
+        <button class="btn-login" onclick="doRegister()">Kayıt Ol & Başla →</button>
+        <p class="login-footer">Zaten hesabın var mı? <span onclick="switchTab('login')">Giriş Yap</span></p>
+      </div>
+
+    </div>
+    <div class="login-back"><a onclick="showScreen('landing')">← Ana sayfaya dön</a></div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     SCREEN 3: DASHBOARD
+════════════════════════════════════ -->
+<div class="screen" id="screen-dashboard">
+
+  <div class="dash-topbar">
+    <div class="dash-logo">BYTE<span>ACADEMY</span></div>
+    <div class="dash-right">
+      <div class="xp-pill">
+        <span>⚡</span>
+        <span class="xp-pill-val" id="dash-xp">770</span>
+        <div class="xp-pill-bar"><div class="xp-pill-fill" id="dash-xp-fill" style="width:54%"></div></div>
+      </div>
+      <div class="dash-user-btn">
+        <div class="dash-avatar">👤</div>
+        <div class="dash-username" id="dash-username">Kullanıcı</div>
+      </div>
+      <button class="dash-logout" onclick="doLogout()">Çıkış</button>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- ICON SIDEBAR -->
+    <div class="dash-side">
+      <div class="side-icon active" title="Dashboard">🏠</div>
+      <div class="side-icon" title="Rozetler">🏅</div>
+      <div class="side-icon" title="Sertifika">🎓</div>
+      <div class="side-icon" title="Hızlı Rehber" onclick="window.location.href='rehber.html'" style="cursor:pointer;">🛡️</div>
+      <div class="side-divider"></div>
+      <div class="side-icon" title="Ayarlar">⚙️</div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div class="dash-main">
+
+      <!-- WELCOME -->
+      <div class="welcome-strip">
+        <div class="ws-left">
+          <img src="videos/byte.gif" style="width:56px;height:108px;object-fit:contain;" alt="BYTE">
+          <div>
+            <div class="ws-title" id="ws-greeting">Hoş geldin, Kahraman! 👋</div>
+            <div class="ws-sub">2 modül tamamladın. Harika gidiyorsun! Modül 3 seni bekliyor — sosyal mühendisliğin karanlık dünyasına hazır mısın?</div>
+          </div>
+        </div>
+        <div class="ws-right">
+          <div class="level-badge">
+            <div class="level-num" id="dash-level">Lv.3</div>
+            <div class="level-label">SEVİYE</div>
+          </div>
+          <div class="streak-badge">
+            <div class="streak-num">🔥 2</div>
+            <div class="level-label" style="color:var(--text-dim)">GÜN</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <!-- HIZLI REHBER BANNER -->
+      <div onclick="window.location.href='rehber.html'" style="background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,229,255,.04));border:1px solid rgba(0,255,136,.2);border-radius:14px;padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='rgba(0,255,136,.4)'" onmouseout="this.style.borderColor='rgba(0,255,136,.2)'">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <div style="font-size:2rem;">🛡️</div>
+          <div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:.7rem;color:var(--green);letter-spacing:2px;margin-bottom:4px;">HIZLI GÜVENLİK REHBERİ</div>
+            <div style="font-size:.82rem;color:var(--text);">Telefon, bilgisayar ve tablet ayarlarını şimdi güvenli hale getir</div>
+            <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green);">🤖 Android</span>
+              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);">🍎 iPhone</span>
+              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,214,0,.08);border:1px solid rgba(255,214,0,.2);color:var(--yellow);">🪟 Windows</span>
+              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);color:var(--purple);">🍏 Mac</span>
+              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);color:var(--orange);">📱 Tablet</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <div style="text-align:right;">
+            <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--green);">20 KONTROL</div>
+            <div style="font-size:.7rem;color:var(--text-dim);">Adım adım ayar rehberi</div>
+          </div>
+          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">→</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="sc-top"><span class="sc-icon">⚡</span><span class="sc-trend" id="sc-xp-trend">+350</span></div>
+          <div class="sc-val" id="sc-xp">3920</div>
+          <div class="sc-label">Toplam XP</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-top"><span class="sc-icon">📚</span><span class="sc-trend" id="sc-mod-trend">0/13</span></div>
+          <div class="sc-val" id="sc-mods">0</div>
+          <div class="sc-label">Tamamlanan Modül</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-top"><span class="sc-icon">🏅</span><span class="sc-trend" style="color:var(--yellow)">+1</span></div>
+          <div class="sc-val" id="sc-badges">0</div>
+          <div class="sc-label">Kazanılan Rozet</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-top"><span class="sc-icon">🎯</span><span class="sc-trend" id="sc-quiz-trend">%0</span></div>
+          <div class="sc-val" id="sc-quiz">0/0</div>
+          <div class="sc-label">Quiz Sorusu</div>
+        </div>
+      </div>
+
+      <!-- PROGRESS MAP -->
+      <div class="section-head">
+        <div>
+          <div class="sh-title">📍 MODÜL İLERLEME HARİTASI</div>
+        </div>
+        <div class="sh-sub" id="map-progress-label">0 / 13 tamamlandı</div>
+      </div>
+
+      <div class="progress-map" id="progress-map-list">
+      </div>
+
+      <!-- BOTTOM: BADGES + CERTIFICATE -->
+      <div class="bottom-grid">
+
+        <div class="badges-card">
+          <div class="section-head" style="margin-bottom:14px">
+            <div class="sh-title">🏅 ROZETLER</div>
+            <div class="sh-sub" id="badge-count-label">0 / 13 kazanıldı</div>
+          </div>
+          <div class="badges-grid" id="badges-grid"></div>
+        </div>
+
+        <div class="cert-card">
+          <div class="sh-title" style="margin-bottom:14px">🎓 SERTİFİKA ÖNİZLEME</div>
+          <div class="cert-preview">
+            <div class="cert-seal">🏆</div>
+            <div class="cert-title-text">DİJİTAL GÜVENLİK SERTİFİKASI</div>
+            <div class="cert-name" id="cert-name">— Kullanıcı —</div>
+            <div class="cert-sub" id="cert-sub">BYTE Academy tarafından verilmiştir.<br>13 Modül · 3920 XP</div>
+          </div>
+          <div class="cert-progress-line">
+            <div class="cert-bar"><div class="cert-bar-fill" id="cert-bar-fill" style="width:0%"></div></div>
+            <div class="cert-pct" id="cert-pct">%0</div>
+          </div>
+          <div class="cert-info">
+            <span id="cert-info-text">Sertifika için <strong style="color:var(--yellow)">13 modülün tamamını</strong> bitirmen gerekiyor.</span><br>
+            <span id="cert-progress-text" style="color:var(--green)">0/13</span> modül tamamlandı
+          </div>
+          <div style="margin-top:10px;text-align:center;">
+            <button id="cert-open-btn" class="pm-action-btn start" onclick="window.location.href='certificate.html'">Sertifikayı Aç</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE ZOOM MODAL -->
+<div id="image-zoom-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <img id="image-zoom-target" src="" alt="" style="max-width:min(92vw,980px);max-height:88vh;object-fit:contain;border-radius:16px;border:1px solid rgba(0,229,255,.35);box-shadow:0 18px 48px rgba(0,229,255,.28);background:rgba(8,14,25,.65);padding:10px;cursor:zoom-out;" onclick="closeImageZoom()">
+</div>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+<script>
+function openImageZoom(src, alt) {
+  const modal = document.getElementById('image-zoom-modal');
+  const target = document.getElementById('image-zoom-target');
+  if (!modal || !target) return;
+  target.src = src;
+  target.alt = alt || 'BYTE';
+  modal.style.display = 'flex';
+}
+
+function closeImageZoom() {
+  const modal = document.getElementById('image-zoom-modal');
+  if (!modal) return;
+  modal.style.display = 'none';
+}
+</script>
+<script src="js/index1.js"></script>
+</body>
+</html>

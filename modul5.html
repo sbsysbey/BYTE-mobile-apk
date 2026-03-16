@@ -91,11 +91,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--red);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(248,113,113,.05);border-color:rgba(248,113,113,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -177,7 +178,7 @@
         <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 05 🔊</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 05 🔊</div>
         <h1 class="mod-title">Phishing & <span>Zararlı Yazılımlar</span></h1>
         <p class="mod-desc">Saldırganlar seni kandırıyor ya da sisteme gizlice giriyor — çoğunlukla ikisi birden. BYTE ile oltalama tuzaklarını ve 4 temel zararlı yazılım türünü tanı, korun.</p>
         <div class="mod-stats">
@@ -505,36 +506,36 @@ function byteSpeak() {
 
 // ── MODÜL 5 QUIZ VERİLERİ ──────────────────────────────
 window.moduleQuestions=[
-  { q:"Bir e-posta 'noreply@netf1ix-billing.com' adresinden geliyor. Bu ne tür bir saldırıdır?",
-    opts:["Vishing","E-posta Phishing — sahte domain (netf1ix yerine netf1ix)","CEO Fraud","Ransomware"],
-    correct:1, fb:{wrong:"Sahte domain: 'l' yerine '1' kullanılmış. Gönderen adresini her zaman dikkatlice oku.",correct:"Doğru! 'Netf1ix' gerçek Netflix değil. Tek karakter değişikliği büyük fark yaratır."} },
-  { q:"Bir site HTTPS kullanıyor. Bu o sitenin güvenilir olduğu anlamına gelir mi?",
-    opts:["Evet, HTTPS şifreleme demektir","Hayır — HTTPS yalnızca bağlantının şifreli olduğunu gösterir, site meşruiyetini kanıtlamaz","Evet ama yalnızca .com uzantılılar için","Evet, sertifikası varsa güvenlidir"],
-    correct:1, fb:{wrong:"Sahte phishing siteleri de HTTPS sertifikası alabilir. HTTPS + doğru domain = güvenli.",correct:"Kesinlikle! HTTPS ≠ güvenilir site. Domain adresini ayrıca kontrol etmek şart."} },
-  { q:"Spear phishing ile normal phishing arasındaki temel fark nedir?",
-    opts:["Spear phishing sadece e-postayla yapılır","Spear phishing belirli bir kişiye özel hazırlanır — adı, şirketi, müdürünün adı kullanılır","Normal phishing daha tehlikelidir","Aralarında fark yoktur"],
-    correct:1, fb:{wrong:"Normal phishing herkese aynı mesajı atar; spear phishing sana özel hazırlanır.",correct:"Doğru! LinkedIn'den bilgi toplanıp kişiselleştirilmiş saldırı yapılır. Bu yüzden çok daha inandırıcıdır."} },
-  { q:"Ransomware saldırısına karşı en etkili korunma yöntemi hangisidir?",
-    opts:["Fidyeyi hemen ödemek","Antivirüs yazılımı yüklemek","Düzenli çevrimdışı yedek almak (3-2-1 kuralı)","İnterneti kapatmak"],
-    correct:2, fb:{wrong:"Fidye ödemek dosyaların geri geleceğini garantilemez. Offline yedek — tek gerçek sigorta.",correct:"Harika! 3-2-1: 3 kopya, 2 farklı ortam, 1 çevrimdışı. Ransomware yedeğe ulaşamazsa elini kolunu sallayarak gider."} },
-  { q:"Trojan (Truva Atı) zararlı yazılımı en çok hangi yolla bulaşır?",
-    opts:["Yalnızca e-posta ekleriyle","Meşru görünen ücretsiz yazılım, oyun veya araç — kurulunca arka kapı açar","Bluetooth ile","Sadece virüslü web sitelerini ziyaret ederek"],
-    correct:1, fb:{wrong:"Trojanlar farklı yollarla bulaşabilir ama en yaygını 'ücretsiz premium' yazılım tuzağıdır.",correct:"Doğru! İçinde ne olduğunu bilemezsin. Yalnızca resmi sitelerden indir."} },
-  { q:"QR kod phishing saldırısı neden tehlikelidir?",
-    opts:["QR kodlar daha hızlı çalışır","Mobil ekranda URL'nin tamamı görünmez — sahte siteye fark etmeden düşersin","Antivirüs tarafından hiç taranamaz","Yalnızca Android'i etkiler"],
-    correct:1, fb:{wrong:"Asıl tehlike URL görünürlüğüdür. E-postada fareyle üzerine gelebilirsin ama QR'de göremezsin.",correct:"Kesinlikle! QR tarınca tarayıcı açılır — ama o ana kadar nereye gittiğini bilemezsin."} },
-  { q:"haveibeenpwned.com ne işe yarar?",
-    opts:["Şifre üretir","E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder","Antivirüs taraması yapar","VPN hizmeti sunar"],
-    correct:1, fb:{wrong:"haveibeenpwned.com e-posta veya şifreni milyarlarca çalınan veriyle karşılaştırır.",correct:"Doğru! Ücretsiz, kayıt gerektirmez. Hemen kontrol et."} },
-  { q:"CEO Fraud (BEC) saldırısı nedir?",
-    opts:["CEO'nun bilgisayarına virüs bulaştırmak","Şirket yöneticisi gibi davranarak çalışanı acil para transferine yönlendirmek","CEO'nun e-postasını hacklemek","Şirketin web sitesini ele geçirmek"],
-    correct:1, fb:{wrong:"BEC: saldırgan CEO gibi davranır, muhasebeden acil havale ister. Milyarlarca Euro zarara yol açıyor.",correct:"Kesinlikle! 'Müdür acil para istiyor' e-postaları her zaman doğrulama gerektirir."} },
-  { q:"Spyware / Keylogger zararlı yazılımından korunmak için en etkili adım nedir?",
-    opts:["Güçlü şifre kullanmak","Sistemi ve uygulamaları güncel tutmak, bilinmeyen program yüklememek","Pahalı antivirüs satın almak","Sadece bilinen siteleri ziyaret etmek"],
-    correct:1, fb:{wrong:"Güncellemeler güvenlik yamalarıdır. Spyware çoğunlukla güncellenmemiş açıklardan veya bilinmeyen yazılımdan girer.",correct:"Doğru! Güncel sistem + kaynağı doğrulanmış yazılım = en temel savunma."} },
-  { q:"Şüpheli bir dosya veya linki açmadan önce ne yapmalısın?",
-    opts:["Hızlıca açıp kontrol edersin","virustotal.com'a yükleyerek 70'ten fazla motor ile tara","Güvenilir birine gönderip açmasını iste","Resmi siteden geliyorsa açabilirsin"],
-    correct:1, fb:{wrong:"Tek bir antivirüs motoru her zararlıyı tespit edemez. VirusTotal 70+ motor kullanır.",correct:"Mükemmel! virustotal.com ücretsiz. Dosyayı veya linki yükle — saniyeler içinde sonuç alırsın."} }
+  { q:"Bir e-posta \"noreply@netf1ix-billing.com\" adresinden geliyor. Buradaki \"1\" (bir) rakamı siber güvenlikte neyi ifade eder?",
+    opts:["Şirketin e-posta gönderim kotasını aşmamak için kullandığı teknik bir karakter kodlamasıdır.","Netflix şirketinin faturalama birimi için kullandığı resmi ve güvenli bir alt birim numarasıdır.","\"Typosquatting\" adı verilen, sahte bir alan adı (domain) üzerinden yapılan oltalama saldırısıdır.","E-posta servisinin yüksek güvenlikli bir sunucudan gönderildiğini temsil eden dijital bir koddur."],
+    correct:2, fb:{wrong:"Bu kullanım teknik bir kod değil; \"l\" harfi yerine \"1\" yazılarak sahte domain oluşturulmuş.",correct:"Doğru! Bu, typosquatting yöntemidir ve kullanıcıyı sahte adrese yönlendirmeyi hedefler."} },
+  { q:"Bir web sitesinin adres çubuğunda \"HTTPS\" protokolünün olması o sitenin kesinlikle güvenli olduğu anlamına gelir mi?",
+    opts:["Hayır; HTTPS sadece bağlantının şifreli olduğunu gösterir, sitenin kötü niyetli olup olmadığını kanıtlamaz.","Evet, HTTPS sertifikası sadece yasal ve devlet onaylı web sitelerine verilen özel bir güvenlik mührüdür.","Evet, bu protokol sayesinde sitede paylaştığınız tüm veriler siber saldırganlar tarafından asla görülemez.","Hayır; ancak sadece \".edu\" veya \".gov\" uzantılı siteler HTTPS kullanıyorsa bu siteler tamamen güvenlidir."],
+    correct:0, fb:{wrong:"HTTPS bağlantıyı şifreler ama sitenin meşru olup olmadığını tek başına doğrulamaz.",correct:"Kesinlikle doğru! HTTPS var diye körü körüne güvenmek yerine domaini ayrıca doğrulamak gerekir."} },
+  { q:"İnternetten indirilen ücretsiz araçlarla birlikte gelen ve tarayıcıda sürekli istenmeyen pencereler açan \"Adware\" (Reklam Yazılımı) türlerinden korunmak için en etkili yol hangisidir?",
+    opts:["Bilgisayarın ekran parlaklığını ve tarayıcı çözünürlüğünü en yüksek seviyeye getirerek reklamların otomatik kapanmasını sağlamak.","Tarayıcı uzantılarını (eklentileri) düzenli olarak denetlemek ve kaynağını bilmediğiniz ücretsiz araçları cihazınıza yüklememek.","Reklamların her gün belirli bir saatte kendiliğinden geçmesini beklemek ve reklam pencerelerine sadece \"Tamam\" diyerek ilerlemek.","İnternet hızını düşürerek reklam içeriklerinin yüklenmesini teknik olarak engellemek ve sadece metin tabanlı siteleri ziyaret etmek."],
+    correct:1, fb:{wrong:"Adware riskini azaltmanın yolu teknik parlaklık/hız ayarları değil; güvenilmeyen yazılım ve eklentilerden kaçınmaktır.",correct:"Doğru! Kaynağı belirsiz araçları kurmamak ve uzantıları düzenli denetlemek adware'e karşı en etkili önlemdir."} },
+  { q:"Telefonunuza veya bilgisayarınıza gelen \"Sisteminizde virüs bulundu, temizlemek için hemen tıklayın!\" uyarısı karşısında ne yapmalısınız?",
+    opts:["Cihazın tamamen kilitlenmesini önlemek için vakit kaybetmeden uyarıdaki \"Temizle\" butonuna tıklarım.","Bu tür panik uyarılarının genellikle zararlı yazılım yükletme tuzağı olduğunu bilip pencereyi kapatırım.","Tarayıcı geçmişini temizleyerek virüsün yayılmasını durdurmaya çalışır, sonra cihazı yeniden başlatırım.","Uyarıyı ciddiye alıp hemen en yakın teknik servise gider, cihazın işletim sistemini yeniden kurdururum."],
+    correct:1, fb:{wrong:"Bu tarz korkutma mesajları çoğu zaman sahte yönlendirmedir; butona tıklamak zararlı indirtebilir.",correct:"Doğru yaklaşım! Panik uyarı penceresini kapatmak ve resmi güvenlik aracından tarama yapmak en güvenlisidir."} },
+  { q:"Bir \"Trojan\" (Truva Atı) zararlı yazılımı cihazınıza genellikle hangi yöntemle bulaşır?",
+    opts:["Meşru görünen ücretsiz bir yazılım veya oyunun içine gizlenerek, kurulduğunda sistemde arka kapı açmasıyla.","Cihazınızın Bluetooth özelliği açıkken, yakın çevredeki yabancı bir cihazdan gelen otomatik dosya aktarımıyla.","Sadece resmi e-posta adreslerinden gelen metin mesajlarının okunması ve görsellerin görüntülenmesiyle.","İnternet hızının çok yavaş olduğu durumlarda tarayıcının güvenlik duvarını otomatik olarak kapatmasıyla."],
+    correct:0, fb:{wrong:"Trojanlar en sık güvenilir görünen yazılımların içine gizlenir; kurulumla birlikte sisteme yerleşir.",correct:"Aynen öyle! Truva atı, masum görünen kurulum dosyalarıyla gelip arka kapı açabilir."} },
+  { q:"QR kod üzerinden yapılan oltalama (Quishing) saldırıları neden kullanıcılar için daha büyük risk taşır?",
+    opts:["QR kodlar kamera tarafından okutulduğu an telefonun tüm donanımını otomatik olarak kilitleme gücüne sahiptir.","QR kodlar içindeki gömülü linkler, hiçbir mobil antivirüs yazılımı tarafından teknik olarak taranamaz.","Mobil ekranlarda URL adresinin tamamı net görünmeyebilir ve kullanıcı sahte siteyi fark etmeden açabilir.","Bu saldırı türü sadece belirli marka cihazların güvenlik protokollerini hedef alarak sistemi devre dışı bırakır."],
+    correct:2, fb:{wrong:"Asıl risk, kullanıcı linki açmadan önce tam adresi net göremeyebildiği için sahte siteyi fark etmemesidir.",correct:"Doğru! Quishing'de görünürlük sorunu nedeniyle kullanıcılar sahte domaine kolayca yönlendirilebilir."} },
+  { q:"\"Kargonuz adres yetersizliği nedeniyle teslim edilemedi, güncellemek için tıklayın\" mesajındaki linke tıklamadan önce neye dikkat etmelisiniz?",
+    opts:["Mesajın geldiği telefon numarasının kurumsal olup olmadığına ve linkin resmi site adresiyle uyuşup uyuşmadığına.","Mesajın gönderildiği saate dikkat ederim; mesai saatleri dışında gelen kargo mesajlarını güvenli kabul ederim.","Mesajda kullanılan dilin ne kadar profesyonel olduğuna bakarım; nazik bir dil kullanılmışsa linke güvenle tıklarım.","Kargonun beklediğim bir sipariş olup olmadığını kontrol ederim; eğer bir siparişim varsa linki doğrudan açarım."],
+    correct:0, fb:{wrong:"Saat veya üslup tek başına güven göstergesi değildir; resmi domain ve gönderici bilgisi doğrulanmalıdır.",correct:"Doğru! Önce gönderici ve linkin resmi alan adıyla eşleşip eşleşmediğini kontrol etmek gerekir."} },
+  { q:"E-posta ile gelen \"Maaş_Listesi.pdf.exe\" isimli bir dosya hakkında aşağıdakilerden hangisi doğrudur?",
+    opts:["Dosyanın sonunda .exe uzantısı olduğu için bu bir PDF belgesi değil, çalıştırılabilir bir yazılım dosyasıdır.","Windows sistemlerde çift uzantı kullanımı dosyanın iki kat daha güçlü şifrelendiğini ve güvenli olduğunu gösterir.","İlk uzantı .pdf olduğu için dosya açıldığında sadece bir belge görüntülenir ve sisteme herhangi bir veri girişi yapmaz.","Bu tür dosyalar sadece eski nesil bilgisayarlar için risk taşır; modern işletim sistemleri bu dosyaları otomatik engeller."],
+    correct:0, fb:{wrong:"Çift uzantı aldatmacasında gerçek dosya türü sondaki uzantıdır; burada .exe çalıştırılabilir dosyadır.",correct:"Kesinlikle doğru! .pdf.exe dosyaları belge gibi görünse de aslında program çalıştırır."} },
+  { q:"\"Spyware\" (Casus Yazılım) ve \"Keylogger\" (Klavye İzleyici) tehditlerine karşı en etkili korunma yöntemi nedir?",
+    opts:["Sistemi ve tüm uygulamaları her zaman güncel tutmak, kaynağı belirsiz olan hiçbir yazılımı kurmamak.","Bilgisayarda sadece en bilinen web sitelerini ziyaret etmek ve sosyal medya hesaplarını hiç kullanmamak.","İnternet üzerinden alışveriş yaparken her zaman en pahalı ve lisanslı antivirüs paketlerini tercih etmek.","Şifreleri her hafta düzenli olarak değiştirmek ve şifrelerde hiçbir özel karakter veya sayı kullanmamak."],
+    correct:0, fb:{wrong:"En etkili savunma güncel sistem ve güvenilmeyen yazılımlardan kaçınmadır; tek başına diğer alışkanlıklar yeterli değildir.",correct:"Doğru! Güncellemeler ve güvenilir kaynak politikası, spyware/keylogger riskini ciddi biçimde azaltır."} },
+  { q:"Şüpheli bir dosya veya web bağlantısını (link) açmadan önce doğrulamak için hangi profesyonel adım atılmalıdır?",
+    opts:["Dosyayı hızlıca açıp içeriğini kontrol ettikten sonra, bir anormallik sezilirse antivirüs taraması yapmak.","İçerik resmi bir kurumun adıyla geliyorsa, gönderen adresin doğruluğuna bakmadan doğrudan dosyayı açmak.","Dosyayı veya linki \"virustotal.com\" gibi platformlara yükleyerek onlarca güvenlik motoruyla analiz ettirmek.","Şüpheli içeriği teknik bilgisi yüksek bir iş arkadaşına e-posta ile gönderip onun açarak test etmesini istemek."],
+    correct:2, fb:{wrong:"Şüpheli içerik önce açılmaz; önce güvenli analiz platformlarında kontrol edilmelidir.",correct:"Mükemmel! VirusTotal benzeri servislerle dosya veya linki çoklu motorla taramak doğru profesyonel adımdır."} }
 ];
 
 

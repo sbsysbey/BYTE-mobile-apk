@@ -102,8 +102,38 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 .mod-meta{font-size:.90rem;color:var(--text-dim);}
 .sidebar-divider{height:1px;background:var(--border);margin:14px 14px;}
 #app { display: flex; min-height: 100vh; }
-#sidebar { width: 280px; background: var(--bg-card); border-right: 1px solid var(--border); }
+#sidebar { width: 280px; background: var(--bg-card); border-right: 1px solid var(--border); transition: width .3s ease, min-width .3s ease, padding .3s ease; overflow: hidden; }
+#sidebar.collapsed { width: 0 !important; min-width: 0 !important; padding: 0 !important; border-right: none !important; }
 #main { flex: 1; padding: 30px; }
+
+/* SIDEBAR TOGGLE BUTTON */
+#sidebar-toggle {
+  position: fixed;
+  top: 50%;
+  left: 280px;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 52px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cyan);
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+  transition: left .3s ease;
+  box-shadow: 2px 0 8px rgba(0,0,0,.25);
+}
+#sidebar.no-anim { transition: none !important; }
+#sidebar-toggle:hover { background: rgba(0,229,255,.08); }
+#sidebar-toggle.collapsed { left: 0; }
 
 /* Adım Navigasyonu (Video, Okuma, Quiz) */
 .step-nav { display: flex; gap: 10px; margin-bottom: 20px; }

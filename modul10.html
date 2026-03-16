@@ -105,7 +105,8 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
 .question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:flex-start;gap:11px;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
@@ -177,7 +178,7 @@
         <div class="byte-tooltip">▶ BYTE'a tıkla</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 10 · 🔊 Dinle</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 10 🔊</div>
         <h1 class="mod-title">Seyahat <span>Güvenliği</span></h1>
         <p class="mod-desc">Havaalanı Wi-Fi tuzakları, juice jacking, fiziksel gözetleme, sınırda cihaz arama yasaları ve kayıp cihaz protokolü. İş seyahati odaklı, gerçek tehdit senaryolarıyla.</p>
         <div class="mod-stats">
@@ -260,7 +261,7 @@
     <div class="lesson-panel" id="panel-2">
       <div class="reading-grid">
         <div class="article-card">
-          <div class="article-tag">📖 OKUMA MATERYALİ · 7 BÖLÜM</div>
+          <div class="article-tag">📖 OKUMA MATERYALİ · 8 BÖLÜM</div>
           <div class="article-title">Seyahatte Güvenlik: Evden Uzakta Her Şey Farklı Çalışır</div>
           <div class="article-intro">Ofiste güvende hissedersiniz: kurumsal ağ, IT koruması, fiziksel kontrol. Seyahate çıktığınız an bu katmanlar ortadan kalkar. Havaalanı, otel, konferans salonu — her ortam yeni bir saldırı yüzeyi. Bu modül iş seyahatini güvenli hale getirmenin tam haritasını çıkarıyor.</div>
 
@@ -538,6 +539,34 @@
             </div>
           </div>
 
+          <!-- BÖLÜM 8 -->
+          <div class="section-head">💡 BÖLÜM 8 — SEYAHAT GÜVENLİĞİ İÇİN "ALTIN" TAVSİYELER</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Küçük görünen bu önlemler, seyahatte en sık yaşanan veri sızıntısı senaryolarını ciddi oranda azaltır. Teknik tedbir + davranış disiplini birlikte uygulanmalı.</p>
+
+          <div class="checklist-grid">
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">🔌</div>
+              <div class="check-text"><strong>USB Condom (Veri Engelleyici)</strong>Halka açık yerde şarj gerekirse USB kablonun ucuna veri engelleyici aparat tak. Enerji geçer, veri pinleri fiziksel olarak kapanır; juice jacking riski düşer.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">🧬</div>
+              <div class="check-text"><strong>Biyometrik Kapatma</strong>Sınıra gelmeden cihazı bir kez kapatıp aç. Birçok cihaz açılış sonrası parmak izi yerine PIN ister; fiziksel baskı durumlarına karşı kritik bir güvenlik tamponu sağlar.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">🚗</div>
+              <div class="check-text"><strong>Kiralık Araç Uyarısı</strong>CarPlay/Android Auto bağlantısı rehber ve çağrı geçmişi bırakabilir. Aracı teslim etmeden önce "Cihazı Unut" ve sistemdeki kişisel verileri temizle.</div>
+            </div>
+            <div class="check-item" style="border-color:rgba(74,222,154,.2);">
+              <div class="check-icon">💽</div>
+              <div class="check-text"><strong>Tam Disk Şifreleme</strong>Laptopta BitLocker (Windows) veya FileVault (Mac) aktif olmalı. Cihaz çalınsa bile disk sökülüp başka sisteme takıldığında veriler okunamaz.</div>
+            </div>
+          </div>
+
+          <div class="alert-info">
+            <span>✅</span>
+            <div><strong>60 Saniyelik Hızlı Kontrol:</strong> (1) USB data blocker yanında mı? (2) Sınırdan önce cihaz restart + PIN hazır mı? (3) Kiralık araçta CarPlay/Android Auto verileri temizlendi mi? (4) BitLocker/FileVault açık mı?</div>
+          </div>
+
           <div class="recommend-box">
             <div class="rb-icon">🎯</div>
             <div>
@@ -567,7 +596,7 @@
             <div class="enisa-text">ENISA "Remote Work" ve "Travel Security" kılavuzları: Halka açık ağlar kurumsal tehdit seviyesi 'Yüksek'. VPN zorunlu, cihaz şifrelemesi standart, minimum veri prensibi uygulanmalı.</div>
           </div>
           <div class="side-card">
-            <div class="side-title">7 BÖLÜM</div>
+            <div class="side-title">8 BÖLÜM</div>
             <div class="side-list">
               <div class="side-item"><span class="side-arr">1</span><div>Cihaz Hazırlığı</div></div>
               <div class="side-item"><span class="side-arr">2</span><div>Juice Jacking</div></div>
@@ -576,6 +605,7 @@
               <div class="side-item"><span class="side-arr">5</span><div>VPN & SIM Kart</div></div>
               <div class="side-item"><span class="side-arr">6</span><div>Sınır Araması Yasaları</div></div>
               <div class="side-item"><span class="side-arr">7</span><div>Kayıp Cihaz Protokolü</div></div>
+              <div class="side-item"><span class="side-arr">8</span><div>Altın Tavsiyeler</div></div>
             </div>
           </div>
           <div class="side-card">
@@ -710,7 +740,7 @@
         </div>
         <div class="summary-grid">
           <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
-          <div class="sum-card"><div class="sum-val sv-r">7</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">8</div><div class="sum-label">Konu Alanı</div></div>
           <div class="sum-card"><div class="sum-val sv-y">350</div><div class="sum-label">Toplam XP</div></div>
         </div>
 
@@ -744,35 +774,35 @@ function byteSpeak(){
 let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
 
 window.moduleQuestions=[
-  {q:"Havaalanındaki 'Airport_Free_WiFi' adlı ağa bağlanmak neden tehlikeli olabilir?",
-   opts:["Havaalanı Wi-Fi her zaman yavaştır","Bu ağ saldırgan tarafından kurulmuş sahte bir evil twin noktası olabilir — tüm trafiğiniz izlenebilir","Havaalanı ağları ücretli olduğu için ücretsiz olanlar kısıtlıdır","Ağa bağlanmak pilinizi hızlı tüketir"],
+  {q:"Havaalanındaki 'Airport_Free_WiFi' adlı ağa bağlanmak neden büyük bir risk taşır?",
+   opts:["Havaalanı Wi-Fi ağları genellikle ücretli olduğu için ücretsiz olanlar teknik destek sunmaz.","Bu ağ bir saldırgan tarafından kurulmuş sahte bir 'Evil Twin' (Kötü İkiz) noktası olabilir; tüm trafiğiniz izlenebilir.","Halka açık ağlara bağlanmak telefonun pilini normalden 3 kat daha hızlı tüketerek cihazı ısıtır.","Ücretsiz ağlar sadece belirli web sitelerine erişime izin verdiği için iş verimliliğini düşürür."],
    correct:1,fb:{wrong:"Evil twin saldırısı: Saldırgan meşru görünen bir ağ adı kullanır, bağlandığınızda tüm trafiğiniz üzerinden geçer. Şifreler, oturum token'ları, dosyalar — hepsi risk altında.",correct:"Kesinlikle! Evil twin en yaygın havaalanı saldırısı. Çözüm: VPN olmadan hassas işlem yapma, mümkünse mobil hotspot kullan."}},
-  {q:"Juice Jacking saldırısı nasıl gerçekleşir?",
-   opts:["Saldırgan Wi-Fi üzerinden cihaza bağlanır","Halka açık USB şarj noktası üzerinden veri çalınır veya zararlı yazılım yüklenir","Kötü amaçlı e-posta ekiyle cihaz enfekte edilir","Bluetooth üzerinden dosya gönderilir"],
-   correct:1,fb:{wrong:"Juice Jacking: USB hem enerji hem veri taşır. Manipüle edilmiş şarj noktası veya kablo, şarj yaparken arka planda verilerinizi kopyalayabilir veya zararlı yazılım yükleyebilir.",correct:"Doğru! Çözüm basit: kendi adaptörünle elektrik prizini kullan. USB data blocker (USB kondom) da işe yarar. Yabancı kablo asla."}},
-  {q:"İngiltere'de sınır güvenliği yasası (Schedule 7) kapsamında şifre vermeyi reddetmek ne anlama gelir?",
-   opts:["Cihazına el konulabilir ama serbest bırakılırsın","Suç sayılır ve yasal yaptırımla karşılaşabilirsin","Sadece ek sorgulama yapılır","Hiçbir yaptırım uygulanamaz — insan hakları koruması devrededir"],
-   correct:1,fb:{wrong:"İngiltere'de Terrorism Act Schedule 7: Sınır yetkililerine şifre vermeyi reddetmek suç sayılır. Avukat bile olsan bu kural geçerli. Gazeteciler özel koruma talep edebilir.",correct:"Doğru! Bu yüzden İngiltere sınırını hassas kurumsal veriyle geçerken hukuki danışmanlık almak gerekir. Minimum veri prensibi burada hayati."}},
-  {q:"Seyahatte 'seyahat modu' uygulamak ne anlama gelir?",
-   opts:["Telefonunu uçak moduna almak","Cihazı sınıra minimum veri, maksimum şifrelemeyle taşımak — biometrik yerine PIN kullanmak","Veri tasarrufu modunu açmak","Uygulamaları kapatıp sadece telefon olarak kullanmak"],
-   correct:1,fb:{wrong:"Seyahat modu: Hassas verileri temizle veya buluta taşı, biometriği kapat PIN'e geç, tarayıcı geçmişini temizle, kurumsal IT'yi bilgilendir. İncelenirse kaybedeceğin bir şey olmasın.",correct:"Kesinlikle! Özellikle parmak izi önemli: parmak izi zorla açtırılabilir, şifre/PIN zorla açtırılamaz. Bu küçük ama kritik fark."}},
+  {q:"'Juice Jacking' adı verilen saldırı yöntemi seyahat sırasında nasıl gerçekleşir?",
+   opts:["Saldırganın cihazınıza Bluetooth üzerinden izinsiz olarak büyük boyutlu dosyalar göndermesiyle.","Otel odasındaki televizyonun akıllı özelliklerini kullanarak telefonunuza sızılmasıyla.","Kötü amaçlı bir e-posta ekinin sadece uçak modundayken açılması sonucunda cihazın enfekte olmasıyla.","Havaalanı veya kafelerdeki halka açık USB şarj noktaları üzerinden veri çalınması veya zararlı yazılım yüklenmesiyle."],
+   correct:3,fb:{wrong:"Juice Jacking: USB hem enerji hem veri taşır. Manipüle edilmiş şarj noktası veya kablo, şarj yaparken arka planda verilerinizi kopyalayabilir veya zararlı yazılım yükleyebilir.",correct:"Doğru! Çözüm basit: kendi adaptörünle elektrik prizini kullan. USB data blocker (USB kondom) da işe yarar. Yabancı kablo asla."}},
+  {q:"İngiltere gibi bazı ülkelerin sınır güvenliği yasaları (örn. Schedule 7) kapsamında, görevliye cihaz şifresini vermeyi reddetmenin sonucu ne olabilir?",
+   opts:["Bu durum bir suç sayılabilir; gözaltı, para cezası veya hapis gibi ciddi yasal yaptırımlarla karşılaşabilirsiniz.","Cihazınıza geçici olarak el konulabilir ancak herhangi bir yasal sicil kaydı oluşmadan serbest bırakılırsınız.","Sadece ek bir mülakata alınırsınız ancak cihazınıza dokunulması uluslararası insan hakları gereği yasaktır.","Ülkeye girişiniz onaylanır fakat cihazınızın sim kartı yerel operatörler tarafından kalıcı olarak bloke edilir."],
+   correct:0,fb:{wrong:"İngiltere'de Terrorism Act Schedule 7: Sınır yetkililerine şifre vermeyi reddetmek suç sayılır. Avukat bile olsan bu kural geçerli. Gazeteciler özel koruma talep edebilir.",correct:"Doğru! Bu yüzden İngiltere sınırını hassas kurumsal veriyle geçerken hukuki danışmanlık almak gerekir. Minimum veri prensibi burada hayati."}},
+  {q:"Seyahat sırasında uygulanan 'Seyahat Modu' (Travel Mode) stratejisinin temel amacı nedir?",
+   opts:["Telefonu sadece uçak modunda tutarak roaming (dolaşım) ücretlerinden tasarruf etmek.","Cihazın sadece acil durum aramaları yapabilecek şekilde kısıtlı bir kullanıcı profiline geçirilmesi.","Biyometrik kilitleri (yüz/parmak izi) kapatıp PIN kullanmak ve cihazı minimum veriyle sınırdan geçirmek.","Arka planda çalışan uygulamaları kapatarak cihazın GPS takibi yapmasını tamamen engellemek."],
+   correct:2,fb:{wrong:"Seyahat modu: Hassas verileri temizle veya buluta taşı, biometriği kapat PIN'e geç, tarayıcı geçmişini temizle, kurumsal IT'yi bilgilendir. İncelenirse kaybedeceğin bir şey olmasın.",correct:"Kesinlikle! Özellikle parmak izi önemli: parmak izi zorla açtırılabilir, şifre/PIN zorla açtırılamaz. Bu küçük ama kritik fark."}},
   {q:"Yurt dışı seyahatte en güvenli internet bağlantı yöntemi hangisidir?",
-   opts:["Otel Wi-Fi — parola korumalı olduğu için güvenlidir","Kendi telefon mobil verisini hotspot olarak kullanmak","Havaalanı ağı — büyük kurumlar tarafından yönetilir","Kafedeki Wi-Fi — şifre istediği için güvenlidir"],
-   correct:1,fb:{wrong:"Şifre korumalı olması ağın güvenli olduğu anlamına gelmez — aynı şifreyi bilen herkes o ağda. En güvenli yöntem kendi mobil verindir: yalnızca sen kullanırsın.",correct:"Doğru! Mobil hotspot = sadece sana ait ağ. Pahalı olabilir ama iş verisi için bedele değer. Yüksek riskli seyahatler için yerel SIM veya uluslararası paket al."}},
-  {q:"Laptop'u otel odasında bırakmak neden güvenlik riski oluşturur?",
-   opts:["Laptop şarjda yanabilir","Oda personeli, bakım görevlisi veya başka biri fiziksel erişim sağlayabilir — disk şifrelemesi olmadan veri çalınabilir","Oteller çalışanların eşyalarından sorumlu değildir","Yalnızca eski otel modellerinde risk vardır"],
-   correct:1,fb:{wrong:"Fiziksel erişim = potansiyel tehdit. Otel odası güvenli değildir — oda anahtarı birden fazla kişide olabilir. Disk şifrelemesi (BitLocker/FileVault) bu riski azaltır ama en iyisi yanında taşımak.",correct:"Doğru! Tam disk şifreleme zorunlu. Kasaya kilitle veya yanında tut. Ekranı kilitli bırakmak yeterli değil — fiziksel erişimde bypass yöntemleri var."}},
+   opts:["Parola korumalı olduğu için otel lobisindeki Wi-Fi ağını kullanmak.","Büyük ve resmi kurumlar tarafından yönetildiği için havaalanı ortak ağlarını tercih etmek.","Şifre ile girilen ve bilinen markalara ait (Starbucks vb.) kafe Wi-Fi ağlarına bağlanmak.","Kendi telefonunuzun hücresel verisini (Roaming veya yerel SIM) kullanmak ve gerekirse hotspot açmak."],
+   correct:3,fb:{wrong:"Şifre korumalı olması ağın güvenli olduğu anlamına gelmez — aynı şifreyi bilen herkes o ağda. En güvenli yöntem kendi mobil verindir: yalnızca sen kullanırsın.",correct:"Doğru! Mobil hotspot = sadece sana ait ağ. Pahalı olabilir ama iş verisi için bedele değer. Yüksek riskli seyahatler için yerel SIM veya uluslararası paket al."}},
+  {q:"Laptopunuzu otel odasında bırakmak siber güvenlik açısından neden riskli kabul edilir?",
+   opts:["Oda personeli veya yetkisiz bir kişi cihaza fiziksel erişim sağlayabilir; disk şifrelemesi yoksa verileriniz çalınabilir.","Laptoplar otel odasındaki yüksek voltajlı prizlerde şarj edilirken donanımsal arıza riski taşır.","Otel yönetimi, odada bırakılan elektronik eşyaların yazılımsal güncellemelerinden sorumlu değildir.","Oda içindeki Wi-Fi sinyalleri laptop kapalı olsa bile cihazın konumunu dışarıya sızdırabilir."],
+   correct:0,fb:{wrong:"Fiziksel erişim = potansiyel tehdit. Otel odası güvenli değildir — oda anahtarı birden fazla kişide olabilir. Disk şifrelemesi (BitLocker/FileVault) bu riski azaltır ama en iyisi yanında taşımak.",correct:"Doğru! Tam disk şifreleme zorunlu. Kasaya kilitle veya yanında tut. Ekranı kilitli bırakmak yeterli değil — fiziksel erişimde bypass yöntemleri var."}},
   {q:"ABD sınırında (CBP) gümrük yetkilisi cihazını incelemek isterse ne olur?",
-   opts:["İzin vermeni beklemek zorundalar — reddedebilirsin","Border Search Exception kapsamında mahkeme kararı olmadan cihazını inceleyebilirler, ABD vatandaşı değilsen reddetmek giriş reddine yol açabilir","Yalnızca çanta ve valizi inceleme yetkileri vardır","Konsolosluktan izin almaları gerekir"],
+   opts:["Kişisel mahremiyet gereği mahkeme kararı olmadan cihazınızı incelemelerine yasal olarak izin verilmez.","'Border Search Exception' kapsamında mahkeme kararı olmadan inceleme yapabilirler; reddetmek giriş yasağına yol açabilir.","Gümrük yetkilileri sadece valiz ve çanta içeriğinden sorumludur; dijital cihazları inceleme yetkileri yoktur.","İnceleme yapılabilmesi için ilgili ülkenin konsolosluğundan yazılı izin alınması gerekir."],
    correct:1,fb:{wrong:"ABD Border Search Exception: Sınır kapısında 4. Anayasa değişikliği tam geçerli değil. CBP şüphe olmaksızın cihazı inceleyebilir. Yabancı uyruklu reddetmek = giriş reddi riski.",correct:"Doğru! Bu yüzden hassas kurumsal veriyle ABD sınırını geçmek önceden planlanmalı. Minimum veri, bulut depolama, kurumsal IT koordinasyonu şart."}},
-  {q:"Halka açık ortamda laptopa çalışırken omuz sörfüne karşı en etkili önlem nedir?",
-   opts:["Ekranın parlaklığını düşürmek","Privacy screen (ekran gizleme filtresi) kullanmak","Sadece gece çalışmak","Arkaya duvar olan bir yer seçmek"],
-   correct:1,fb:{wrong:"Ekran gizleme filtresi (privacy screen): Yan açılardan ekran görünmez — yalnızca doğrudan karşısındaki görebilir. ~30€, her laptop için mevcut. Uçak ve kafede olmazsa olmaz.",correct:"Kesinlikle! Arkaya duvar seçmek de iyi ama tam çözüm değil. Privacy screen hem ucuz hem etkili — iş laptopları için standart aksesuar olmalı."}},
-  {q:"Seyahatte cihaz kaybolduğunda doğru ilk adım nedir?",
-   opts:["Hemen uzaktan silme komutu gönder — veri güvende olsun","Polis karakoluna git ve kayıp bildirimi yap","Önce uzaktan kilitle ve konumu izle — silme kararını aceleyle verme","Operatörü ara ve SIM kartı iptal et"],
+  {q:"Uçak, tren veya kafe gibi halka açık ortamlarda 'Omuz Sörfüne' (ekranınızın başkaları tarafından izlenmesi) karşı en etkili teknik önlem nedir?",
+   opts:["Ekran parlaklığını en düşük seviyeye çekerek sadece karanlıkta görünür hale getirmek.","Sadece akşam saatlerinde çalışarak çevredeki insan sayısının azalmasını beklemek.","Ekran üzerine takılan ve sadece karşıdan bakıldığında görüntü veren 'Gizlilik Filtresi' (Privacy Screen) kullanmak.","Laptopun kamerasını bir bantla kapatarak dışarıya görüntü sızmasını engellemek."],
+   correct:2,fb:{wrong:"Ekran gizleme filtresi (privacy screen): Yan açılardan ekran görünmez — yalnızca doğrudan karşısındaki görebilir. ~30€, her laptop için mevcut. Uçak ve kafede olmazsa olmaz.",correct:"Kesinlikle! Arkaya duvar seçmek de iyi ama tam çözüm değil. Privacy screen hem ucuz hem etkili — iş laptopları için standart aksesuar olmalı."}},
+  {q:"Seyahat sırasında telefonunuzun çalındığını veya kaybolduğunu fark ettiğinizde yapmanız gereken ilk adım ne olmalıdır?",
+   opts:["Paniğe kapılmadan hemen cihazdaki tüm verileri 'Uzaktan Sil' komutuyla kalıcı olarak yok etmek.","En yakın polis merkezine giderek kayıp tutanağı tutturmak ve raporun bir kopyasını almak.","Cihazı uzaktan kilitlemek, konumunu izlemek ve silme kararı öncesi durumu analiz etmek.","Yerel bir GSM operatörüne giderek yeni bir SIM kart çıkartmak ve eski hattı iptal etmek."],
    correct:2,fb:{wrong:"Silme komutu geri alınamaz! Sildikten sonra konum da izlenemez — cihazı bulsan bile içi boş gelir. Önce kilitle, konumu izle, 24-48 saat bekle. Silme son çare.",correct:"Doğru protokol! Kilitleme + konum izleme çoğu zaman yeterli. Unutulmuş, teslim edilmemiş veya kaybedilmiş olabilir. Aceleyle silme kararı verme."}},
-  {q:"Ücretsiz VPN kullanmak neden önerilmez?",
-   opts:["Ücretsiz VPN'ler daha yavaştır","Ücretsiz VPN'ler kullanıcı verilerini toplayıp üçüncü taraflara satabilir — güvenlik amacıyla kullanılan araç bizzat veri toplama aracı olur","Ücretsiz VPN'ler yalnızca mobil cihazlarda çalışır","Ücretsiz VPN'ler sınırda sorun yaratır"],
+  {q:"Seyahatte güvenliği artırmak için kullanılan 'Ücretsiz VPN' servislerinin en büyük riski nedir?",
+    opts:["Ücretsiz oldukları için internet hızını yavaşlatmaları ve video izleme kalitesini düşürmeleri.","Kullanım verilerinizi toplayıp üçüncü taraflara satabilirler; güvenlik aracı bizzat takip aracına dönüşebilir.","Sadece mobil cihazlarda çalışıp laptoplarda çalışmadıkları için tam koruma sağlayamamaları.","Uçak moduna geçildiğinde bağlantıyı otomatik kestikleri için sınır geçişlerinde etkisiz kalmaları."],
    correct:1,fb:{wrong:"Ücretsiz VPN paradoksu: Ürün sensin. VPN sağlayıcısı altyapıyı ücretsiz sunarken gelirini senden — yani verilerinden — elde eder. Güvenilir ücretli VPN: ProtonVPN, Mullvad.",correct:"Tam isabet! ProtonVPN (İsviçre), Mullvad (İsveç) — denetimli, güvenilir, ücretli. Kurumsal VPN varsa onu kullan. Ücretsiz seçeneklerden uzak dur."}}
 ];
 
@@ -842,9 +872,52 @@ function startVideo(){
   }, 200);
 }function skipVideo(){if(window.completeStep) window.completeStep(1);}
 
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
+
+function getBalancedDisplayOpts(q){
+  const src = (Array.isArray(q._displayOpts) ? q._displayOpts : q.opts).slice();
+  const correctIdx = (typeof q._displayCorrect==='number' ? q._displayCorrect : q.correct);
+  const lens = src.map(s => String(s||'').replace(/\s+/g,' ').trim().length);
+  const maxLen = Math.max.apply(null, lens);
+  const maxIdxs = lens.map((v,i)=>v===maxLen?i:-1).filter(i=>i!==-1);
+  if (!(maxIdxs.length===1 && maxIdxs[0]===correctIdx)) return src;
+
+  const target = Math.max(0, maxLen - 6);
+  const tails = [
+    ' pratikte de sık konuşulur',
+    ' ilk bakışta makul görünebilir',
+    ' sahada sık duyulan bir tercihtir',
+    ' çoğu kullanıcı bunu da düşünür'
+  ];
+  let t = 0;
+
+  for(let i=0;i<src.length;i++){
+    if(i===correctIdx) continue;
+    let out = String(src[i]);
+    while(String(out).replace(/\s+/g,' ').trim().length < target){
+      out += (/[.!?]$/.test(out) ? '' : '.') + tails[t % tails.length];
+      t++;
+    }
+    src[i] = out;
+  }
+  return src;
+}
+
 function renderQuestion(){
   if(moduleCurrentQ>=10){showResult();return;}
   const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  prepareModuleQuestion(q);
+  const displayOpts=getBalancedDisplayOpts(q);
   document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
   document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
   const L=['A','B','C','D'];
@@ -852,7 +925,7 @@ function renderQuestion(){
     <div class="question-card">
       <div class="question-num">SORU ${moduleCurrentQ+1}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="feedback"></div>
     </div>
     <div class="quiz-actions" id="q-actions" style="display:none;">
@@ -862,12 +935,12 @@ function renderQuestion(){
 
 function answerQ(i){
   if(moduleQuizAnswered)return;moduleQuizAnswered=true;
-  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  const q=window.moduleQuestions[moduleCurrentQ],correctIdx=(typeof q._displayCorrect==='number'?q._displayCorrect:q.correct),ok=i===correctIdx;
   if(ok)moduleQuizCorrect++;
   document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
   document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
   document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
-  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  if(!ok)document.getElementById('opt-'+correctIdx).classList.add('correct');
   const fb=document.getElementById('feedback');
   fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
   fb.className='feedback-box show '+(ok?'correct':'wrong');
@@ -889,7 +962,7 @@ function showResult(){
     </div>`;
 }
 
-function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
 
 window.moduleSceneFeedbacks=[
   {correct:false,text:"<strong class='bad'>Yanlış.</strong> 'Heathrow_Business_WiFi' saldırgan tarafından kurulmuş bir evil twin olabilir — 'Business' etiketi güveni artırmak için kullanılan bir taktik. Lounge'da bile bu ağın meşruiyetini doğrulayamazsın. VPN açmak riski azaltır ama evil twin üzerinden bağlanmak başlı başına tehlike. Ayrıca kablo önerisini reddetmedin."},

@@ -1,0 +1,767 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 7: Sunum Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+
+<style>
+
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px;}
+.article-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(192,132,252,.07);border:1px solid rgba(192,132,252,.25);border-radius:20px;padding:4px 10px;font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--purple);letter-spacing:1px;margin-bottom:12px;}
+.article-title{font-family:'Orbitron',sans-serif;font-size:1rem;color:#fff;margin-bottom:6px;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--purple);letter-spacing:2px;margin:24px 0 14px;padding-bottom:6px;border-bottom:1px solid rgba(192,132,252,.2);}
+/* NELER PAYLAŞILMAZ */
+.no-share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.ns-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;border-left:3px solid;}
+.ns-red{border-left-color:var(--red);}
+.ns-orange{border-left-color:var(--orange);}
+.ns-yellow{border-left-color:var(--yellow);}
+.ns-top{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+.ns-icon{font-size:1.2rem;}
+.ns-title{font-size:.88rem;font-weight:700;color:#fff;}
+.ns-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.ns-list li{font-size:.82rem;color:var(--text-dim);display:flex;gap:6px;}
+.ns-dot{color:var(--red);flex-shrink:0;}
+/* DÖNÜŞÜM TABLOSU */
+.transform-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:.85rem;}
+.transform-table th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1px;color:var(--text-dim);}
+.transform-table td{border:1px solid var(--border);padding:10px 14px;vertical-align:top;line-height:1.5;}
+.transform-table tr:hover td{background:rgba(255,255,255,.02);}
+.td-before{color:var(--red);}
+.td-method{color:var(--purple);font-style:italic;}
+.td-after{color:var(--green);}
+/* GÖRSEL RİSKLER */
+.visual-cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;}
+.vc-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px;}
+.vc-icon{font-size:1.4rem;margin-bottom:7px;}
+.vc-title{font-size:.87rem;font-weight:700;color:#fff;margin-bottom:5px;}
+.vc-risk{font-size:.80rem;color:var(--red);margin-bottom:5px;}
+.vc-fix{font-size:.80rem;color:var(--green);}
+/* METADATA */
+.meta-steps{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.ms-item{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.ms-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+.ms-title{font-size:.89rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.ms-desc{font-size:.83rem;color:var(--text-dim);line-height:1.55;}
+.ms-tip{font-size:.80rem;color:var(--purple);margin-top:4px;}
+/* ZOOM/EKRAN */
+.zoom-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.zoom-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:14px 16px;}
+.zc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.zc-icon{font-size:1.1rem;}
+.zc-title{font-size:.88rem;font-weight:700;color:#fff;}
+.zc-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.zc-list li{font-size:.82rem;color:var(--text-dim);display:flex;gap:6px;line-height:1.4;}
+.zc-ok{color:var(--green);flex-shrink:0;}
+.zc-no{color:var(--red);flex-shrink:0;}
+/* ALTIN KURAL */
+.golden-box{background:linear-gradient(135deg,rgba(192,132,252,.06),rgba(251,191,36,.04));border:1px solid rgba(192,132,252,.25);border-radius:14px;padding:20px 24px;margin-bottom:20px;}
+.gb-title{font-family:'Orbitron',sans-serif;font-size:.82rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;}
+.gb-questions{display:flex;flex-direction:column;gap:9px;}
+.gb-q{display:flex;gap:10px;font-size:.88rem;color:var(--text);line-height:1.5;}
+.gb-num{font-family:'Orbitron',sans-serif;font-size:.74rem;color:var(--purple);width:20px;flex-shrink:0;padding-top:2px;}
+/* İNTERAKTİF CHECKLIST */
+.checklist-wrap{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;}
+.cl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.cl-title{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--purple);letter-spacing:2px;}
+.cl-progress{font-family:'Orbitron',sans-serif;font-size:.80rem;color:var(--yellow);}
+.cl-bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin-bottom:18px;overflow:hidden;}
+.cl-bar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--green));border-radius:3px;transition:width .4s ease;}
+.cl-section{margin-bottom:14px;}
+.cl-sec-title{font-size:.78rem;font-family:'Orbitron',sans-serif;color:var(--text-dim);letter-spacing:2px;margin-bottom:8px;padding:4px 0;border-bottom:1px solid var(--border);}
+.cl-items{display:flex;flex-direction:column;gap:5px;}
+.cl-item{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border-radius:8px;cursor:pointer;transition:.2s;border:1px solid transparent;}
+.cl-item:hover{background:rgba(192,132,252,.04);border-color:rgba(192,132,252,.1);}
+.cl-item.checked{background:rgba(74,222,154,.04);border-color:rgba(74,222,154,.15);}
+.cl-checkbox{width:18px;height:18px;border-radius:4px;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;margin-top:1px;}
+.cl-item.checked .cl-checkbox{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.cl-text{font-size:.85rem;color:var(--text-dim);line-height:1.5;transition:.2s;}
+.cl-item.checked .cl-text{color:var(--text);text-decoration:line-through;opacity:.7;}
+.cl-done{display:none;text-align:center;padding:16px;background:rgba(74,222,154,.06);border:1px solid rgba(74,222,154,.2);border-radius:10px;margin-top:10px;}
+.cl-done.show{display:block;}
+/* BYTE TIP */
+.byte-tip-card{background:linear-gradient(135deg,rgba(192,132,252,.04),rgba(96,200,240,.03));border:1px solid rgba(192,132,252,.2);border-radius:12px;padding:16px 20px;margin-top:20px;}
+.byte-tip-head{display:flex;align-items:center;gap:9px;margin-bottom:10px;}
+.byte-mini{width:34px;height:34px;border-radius:8px;background:var(--bg-panel);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.byte-name{font-family:'Orbitron',sans-serif;font-size:.84rem;color:var(--purple);letter-spacing:1px;}
+.byte-tip-text{font-size:.87rem;color:var(--text);line-height:1.6;font-style:italic;}
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:12px;}
+.side-list{display:flex;flex-direction:column;gap:8px;}
+.side-item{font-size:.85rem;color:var(--text-dim);display:flex;gap:8px;line-height:1.5;}
+.side-item strong{color:var(--text);}
+.alert-warn{background:rgba(251,191,36,.05);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:12px 16px;margin:12px 0;display:flex;gap:10px;font-size:.86rem;line-height:1.55;color:var(--text);}
+/* QUIZ */
+.quiz-wrap{max-width:680px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:7px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:50px;transition:width .6s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-dim);margin-bottom:18px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:16px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:10px;}
+.question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn:hover{background:rgba(192,132,252,.05);border-color:rgba(192,132,252,.25);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
+.option-btn:disabled{cursor:default;}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:9px;padding:11px 15px;font-size:.87rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.25);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.25);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+/* SENARYO */
+.slide-mockup{background:#0a0a14;border:1px solid rgba(192,132,252,.2);border-radius:10px;margin-top:14px;overflow:hidden;}
+.sm-titlebar{background:rgba(192,132,252,.08);padding:8px 14px;border-bottom:1px solid rgba(192,132,252,.12);display:flex;align-items:center;gap:8px;}
+.sm-dot{width:10px;height:10px;border-radius:50%;}
+.sm-file{font-size:.78rem;color:var(--text-dim);margin-left:auto;}
+.sm-slide{padding:18px 20px;}
+.sm-slide-title{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:8px;}
+.sm-table{width:100%;font-size:.79rem;border-collapse:collapse;}
+.sm-table th{text-align:left;color:var(--text-dim);padding:4px 8px;border-bottom:1px solid rgba(255,255,255,.06);}
+.sm-table td{padding:5px 8px;color:var(--text);}
+.sm-table tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.sm-hl{color:var(--yellow);}
+.sm-warn{padding:10px 14px;background:rgba(251,191,36,.04);border-top:1px solid rgba(251,191,36,.15);}
+.sw-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--yellow);letter-spacing:1px;margin-bottom:6px;}
+.sw-item{font-size:.81rem;color:var(--text-dim);display:flex;gap:6px;margin-bottom:4px;}
+.sw-dot{color:var(--yellow);}
+
+
+</style>
+</head>
+<body>
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span>⚡</span><span class="xp-label">XP</span>
+      <span id="xp-count">2250</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill" style="width:88%"></div></div>
+    </div>
+    <div class="mod-badge-top">🏅 <span>6</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+  <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="window.location.href='modul1.html'"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="window.location.href='modul2.html'"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">✓ Tamamlandı · 350 XP</div></div></div>
+      <div class="module-item" onclick="window.location.href='modul3.html'"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">✓ Tamamlandı · 300 XP</div></div></div>
+      <div class="module-item" onclick="window.location.href='modul4.html'"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="window.location.href='modul5.html'"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item" onclick="window.location.href='modul6.html'"><div class="mod-num done">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">✓ Tamamlandı · 400 XP</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">07</div>
+        <div><div class="mod-name" style="color:var(--purple)">Sunum Güvenliği</div><div class="mod-meta">Aktif · 400 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">Kilitli · 350 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">11</div><div><div class="mod-name">Yapay Zeka Güvenliği</div><div class="mod-meta">Kilitli · 450 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli · 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">📋</div>
+        <div><div class="mod-name" style="color:var(--yellow)">Hızlı Rehber</div><div class="mod-meta">Özet · Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        🎤
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 07 🔊</div>
+        <h1 class="mod-title">Sunum <span>Güvenliği</span></h1>
+        <p class="mod-desc">Slaytındaki o satır fotoğraflanıp paylaşılırsa rahat olur musun? Kimin dinlediğini bilmiyorsun, sunum kaydediliyor olabilir. BYTE ile veriyi koruyarak aynı mesajı ver.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-g"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>400 XP</div>
+          <div class="stat-chip"><div class="dot dot-p"></div>~35 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+150 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+100 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+50 XP</div></div>
+    </div>
+
+    <!-- PANEL 1: VIDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-wrapper">
+        <iframe class="video-yt" id="yt-frame"
+          src="https://www.youtube.com/embed/RTj7vA3a2BE"
+          title="Sunum Güvenliği - Ne Paylaşılmaz, Anonimleştirme, Metadata, Ekran Paylaşımı"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+        <div class="video-overlay" id="vid-overlay" onclick="startVideo()">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 07</div>
+          <div class="vs-title">SUNUM GÜVENLİĞİ</div>
+          <div class="vs-sub">Ne paylaşılmaz · Anonimleştirme · Metadata · Ekran paylaşımı · GDPR</div>
+          <button class="play-big">▶</button>
+          <div class="play-hint">Oynamaya basla</div>
+        </div>
+      </div>
+      <div class="video-controls">
+        <button class="ctrl-btn primary" onclick="skipVideo()">⏭ Video Tamamlandı</button>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Kalabalık ortamda kimin dinlediğini bilemezsin — slayt fotoğraflanabilir, sunum kaydedilebilir</li>
+          <li><span class="kp-b">▸</span>"İzin alındı" demek her ortamda paylaşılabileceği anlamına gelmez — GDPR ölçülülük ilkesi</li>
+          <li><span class="kp-b">▸</span>Aynı mesajı isim vermeden, rakam genelleştirerek verebilirsin — içerik değer kaybetmez</li>
+          <li><span class="kp-b">▸</span>PDF ve PPT dosyaları içinde gizli metadata var: yazar adı, düzenleme geçmişi, silinmiş içerik</li>
+          <li><span class="kp-b">▸</span>Zoom'da ekran paylaşmadan önce diğer sekme ve bildirimlerini kapat — bir anlık hata yeter</li>
+        </ul>
+      </div>
+      <div style="margin-top:20px;"><button id="video-complete-btn" type="button" class="btn btn-primary" onclick="completeVideoStep()">Video Tamamlandı →</button></div>
+    </div>
+
+    <!-- PANEL 2: READING -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ</div>
+          <div class="article-title">Sunum Güvenliği: Aynı Mesajı, Daha Az Riskle Ver</div>
+          <p class="article-intro">Sunum salonunda kimin oturduğunu bilmiyorsun. Slaytın fotoğraflanabiliyor, kaydedilebiliyor, sosyal medyada paylaşılabiliyor. Bu bir kısıtlama değil — risk yönetimidir.</p>
+
+          <div class="section-head">🚫 BÖLÜM 1 — SUNUMDA YER ALMAMASI GEREKENLER</div>
+
+          <div class="no-share-grid">
+            <div class="ns-card ns-red">
+              <div class="ns-top"><div class="ns-icon">👤</div><div class="ns-title">Kimlik & İletişim Bilgileri</div></div>
+              <ul class="ns-list">
+                <li><span class="ns-dot">✗</span>Ad–soyad (çalışan, müşteri, üye)</li>
+                <li><span class="ns-dot">✗</span>Kimlik no, telefon, e-posta</li>
+                <li><span class="ns-dot">✗</span>Adres, plaka, IP adresi</li>
+                <li><span class="ns-dot">✗</span>İmza veya dolaylı tanımlayıcılar</li>
+              </ul>
+            </div>
+            <div class="ns-card ns-red">
+              <div class="ns-top"><div class="ns-icon">🏥</div><div class="ns-title">Hassas / Özel Nitelikli Veriler</div></div>
+              <ul class="ns-list">
+                <li><span class="ns-dot">✗</span>Sağlık, disiplin, performans bilgisi</li>
+                <li><span class="ns-dot">✗</span>Maaş ve ücret detayları</li>
+                <li><span class="ns-dot">✗</span>Üyelik ve inanç bilgileri</li>
+                <li><span class="ns-dot">✗</span>Sunum ortamı bunlar için uygun değil</li>
+              </ul>
+            </div>
+            <div class="ns-card ns-orange">
+              <div class="ns-top"><div class="ns-icon">📊</div><div class="ns-title">Stratejik & Gizli Bilgiler</div></div>
+              <ul class="ns-list">
+                <li><span class="ns-dot">✗</span>Güncel veya hedef rakamlar (detaylı)</li>
+                <li><span class="ns-dot">✗</span>Açıklanmamış projeler veya planlar</li>
+                <li><span class="ns-dot">✗</span>Fotoğrafı şirkete zarar verecek tablolar</li>
+                <li><span class="ns-dot">✗</span>Yer isimleri stratejik bağlamda</li>
+              </ul>
+            </div>
+            <div class="ns-card ns-yellow">
+              <div class="ns-top"><div class="ns-icon">📸</div><div class="ns-title">Görsel & İşitsel Riskler</div></div>
+              <ul class="ns-list">
+                <li><span class="ns-dot">✗</span>Net yüz görüntüsü içeren fotoğraflar</li>
+                <li><span class="ns-dot">✗</span>Arka planda ekran/evrak/pano görünüyor</li>
+                <li><span class="ns-dot">✗</span>Yaka kartı veya monitör yansıması</li>
+                <li><span class="ns-dot">✗</span>Ses kaydı: doğaçlama isim kaçırma</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div><strong>"İzin alındı" demek her ortamda paylaşılabileceği anlamına gelmez.</strong> GDPR ölçülülük ilkesi: gerekli olandan fazlasını paylaşmak, izin olsa bile hatadır.</div>
+          </div>
+
+          <div class="section-head">🔄 BÖLÜM 2 — AYNI MESAJI GÜVENLİ VERME</div>
+
+          <table class="transform-table">
+            <tr><th>Riskli İfade</th><th>Yöntem</th><th>Güvenli Alternatif</th></tr>
+            <tr><td class="td-before">Ahmet Yılmaz, Satış Müdürü</td><td class="td-method">Rol bazlı anlatım</td><td class="td-after">Bir ekip yöneticisi</td></tr>
+            <tr><td class="td-before">%17,4 büyüme (2024 Q3)</td><td class="td-method">Genelleştirme</td><td class="td-after">Yaklaşık %15–20 arası</td></tr>
+            <tr><td class="td-before">a.yilmaz@firma.com</td><td class="td-method">Maskeleme</td><td class="td-after">a***@firma.com</td></tr>
+            <tr><td class="td-before">Amsterdam Merkez Ofisi stratejisi</td><td class="td-method">Numaralandırma</td><td class="td-after">Ofis A'nın stratejisi</td></tr>
+            <tr><td class="td-before">Gerçek müşteri tablosu (2024)</td><td class="td-method">Zamanı geriye al</td><td class="td-after">Temsili senaryo · 2021 verisi</td></tr>
+            <tr><td class="td-before">Yüzlerin net göründüğü ofis fotoğrafı</td><td class="td-method">Görsel alternatif</td><td class="td-after">İllüstrasyon / stok görsel</td></tr>
+          </table>
+
+          <div class="byte-tip-card">
+            <div class="byte-tip-head"><div class="byte-mini">🤖</div><div class="byte-name">BYTE'IN ALTIN SORUSU</div></div>
+            <div class="byte-tip-text">"Bu slaytın fotoğrafı çekilip sosyal medyada paylaşılsa — ben rahat olur muyum? Rahat değilsem, durmalıyım."</div>
+          </div>
+
+          <div class="section-head">📸 BÖLÜM 3 — GÖRSEL RİSKLER</div>
+
+          <div class="visual-cards">
+            <div class="vc-card">
+              <div class="vc-icon">🪪</div>
+              <div class="vc-title">Yaka Kartı & Ekran</div>
+              <div class="vc-risk">Risk: Arka planda ad/şirket okunabilir</div>
+              <div class="vc-fix">✅ Fotoğraf çekmeden önce arka planı kontrol et</div>
+            </div>
+            <div class="vc-card">
+              <div class="vc-icon">😶</div>
+              <div class="vc-title">Net Yüz Görüntüsü</div>
+              <div class="vc-risk">Risk: Onaysız kişi kamuya açık olur</div>
+              <div class="vc-fix">✅ Yüzleri bulanıklaştır veya illüstrasyon kullan</div>
+            </div>
+            <div class="vc-card">
+              <div class="vc-icon">🪞</div>
+              <div class="vc-title">Ayna & Cam Yansıması</div>
+              <div class="vc-risk">Risk: Ekran veya evrak yansıyabilir</div>
+              <div class="vc-fix">✅ Sahne açısını kontrol et, dikkatli konumlan</div>
+            </div>
+          </div>
+
+          <div class="section-head">📁 BÖLÜM 4 — METADATA TEMİZLİĞİ</div>
+
+          <div class="meta-steps">
+            <div class="ms-item">
+              <div class="ms-icon">📄</div>
+              <div>
+                <div class="ms-title">PDF Metadata Nedir?</div>
+                <div class="ms-desc">PDF ve Word dosyaları içinde gizli bilgi taşır: yazar adı, kurum, oluşturma tarihi, revizyon geçmişi, silinmiş ama saklanan içerik. Harici kişiye gönderirken bu bilgiler de gider.</div>
+                <div class="ms-tip">→ Word: Dosya → Bilgi → Sorunları Denetle → Belgeyi Denetle</div>
+              </div>
+            </div>
+            <div class="ms-item">
+              <div class="ms-icon">🧹</div>
+              <div>
+                <div class="ms-title">PowerPoint Metadata Temizleme</div>
+                <div class="ms-desc">PPT dosyasında konuşmacı notları, gizli slaytlar ve yorum geçmişi paylaşılan versiyonda görünebilir. "PDF olarak kaydet" daha temiz bir yol ama yeterli değil.</div>
+                <div class="ms-tip">→ PowerPoint: Dosya → Bilgi → Sorunları Denetle → Denetle → Hepsini Kaldır</div>
+              </div>
+            </div>
+            <div class="ms-item">
+              <div class="ms-icon">✂️</div>
+              <div>
+                <div class="ms-title">İki Versiyon Stratejisi</div>
+                <div class="ms-desc">Slaytları iki versiyonda hazırla: biri iç kullanım (detaylı rakamlar, notlar), biri kalabalık sunum (sadeleştirilmiş, anonim). Asla iç versiyonu dışarıya gönderme.</div>
+                <div class="ms-tip">→ Sunum versiyonuna "EXTERNAL" etiketi koy, iç versiyona "INTERNAL - CONFIDENTIAL"</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">💻 BÖLÜM 5 — EKRAN PAYLAŞIMI & ZOOM/TEAMS</div>
+
+          <div class="zoom-grid">
+            <div class="zoom-card">
+              <div class="zc-head"><div class="zc-icon">✅</div><div class="zc-title">Ekran Paylaşımından Önce</div></div>
+              <ul class="zc-list">
+                <li><span class="zc-ok">✓</span>Tüm e-posta ve mesajlaşma sekmelerini kapat</li>
+                <li><span class="zc-ok">✓</span>Masaüstündeki dosya isimlerini kontrol et</li>
+                <li><span class="zc-ok">✓</span>Bildirimleri/popup'ları kapat (Odak modu)</li>
+                <li><span class="zc-ok">✓</span>Yalnızca sunum penceresini paylaş, tüm ekranı değil</li>
+                <li><span class="zc-ok">✓</span>Tarayıcıda açık sekmeleri gözden geçir</li>
+              </ul>
+            </div>
+            <div class="zoom-card">
+              <div class="zc-head"><div class="zc-icon">🎥</div><div class="zc-title">Toplantı Güvenliği</div></div>
+              <ul class="zc-list">
+                <li><span class="zc-ok">✓</span>Toplantı şifresi ve bekleme odası aktif olsun</li>
+                <li><span class="zc-ok">✓</span>Kayıt açıksa katılımcılara bildir</li>
+                <li><span class="zc-no">✗</span>Toplantı linkini herkese açık paylaşma</li>
+                <li><span class="zc-no">✗</span>Kişisel toplantı ID'ni her seferinde kullanma</li>
+                <li><span class="zc-no">✗</span>Ev/ofis ortamını arka planda görünür bırakma</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-head">✅ İNTERAKTİF KONTROL LİSTESİ</div>
+
+          <div class="checklist-wrap">
+            <div class="cl-head">
+              <div class="cl-title">SUNUM ÖNCESİ KONTROL</div>
+              <div class="cl-progress" id="cl-progress">0 / 12</div>
+            </div>
+            <div class="cl-bar"><div class="cl-bar-fill" id="cl-bar" style="width:0%"></div></div>
+
+            <div class="cl-section">
+              <div class="cl-sec-title">A · KİŞİSEL VERİLER</div>
+              <div class="cl-items">
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Slaytlarda ad–soyad yer almıyor</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Telefon, e-posta, adres, kimlik no gibi bilgiler kaldırıldı</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Yüzlerin net göründüğü fotoğraflar anonimleştirildi veya değiştirildi</div></div>
+              </div>
+            </div>
+
+            <div class="cl-section">
+              <div class="cl-sec-title">B · ŞİRKET GİZLİLİĞİ</div>
+              <div class="cl-items">
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Detaylı mali ve stratejik rakamlar genelleştirildi</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Açıklanmamış projeler veya planlar slayta girmedi</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Tablolarda gereksiz detay yok, veriler oransal verildi</div></div>
+              </div>
+            </div>
+
+            <div class="cl-section">
+              <div class="cl-sec-title">C · DOSYA & METADATA</div>
+              <div class="cl-items">
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Konuşmacı notları paylaşılan versiyondan kaldırıldı</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Metadata temizlendi (Dosya → Bilgi → Sorunları Denetle)</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Gizli slaytlar veya yorum geçmişi kontrol edildi</div></div>
+              </div>
+            </div>
+
+            <div class="cl-section">
+              <div class="cl-sec-title">D · SUNUM ANI & EKRAN PAYLAŞIMI</div>
+              <div class="cl-items">
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Ekran paylaşımından önce bildirimler ve e-posta sekmeleri kapatıldı</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Yalnızca sunum penceresi paylaşılıyor, tüm ekran değil</div></div>
+                <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-checkbox"></div><div class="cl-text">Doğaçlama konuşmada isim veya net rakam vermemek için hazırlık yapıldı</div></div>
+              </div>
+            </div>
+            <div class="cl-done" id="cl-done">🎉 <strong style="color:var(--green)">Sunum güvenli!</strong> Tüm maddeleri tamamladın.</div>
+          </div>
+
+          <button type="button" class="btn btn-primary" style="margin-top:4px" onclick="completeReadingStep()">Okumayı Tamamladım →</button>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🚫 PAYLAŞILMAZ</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--red)">✗</span><div>Ad–soyad, kimlik bilgisi</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div>Sağlık, maaş, disiplin</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div>Detaylı stratejik rakam</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div>Net yüz görüntüsü</div></div>
+              <div class="side-item"><span style="color:var(--red)">✗</span><div>Açıklanmamış proje</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🔄 DÖNÜŞTÜR</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--purple)">→</span><div>İsim → Rol ("bir yönetici")</div></div>
+              <div class="side-item"><span style="color:var(--purple)">→</span><div>%17,4 → "%15–20 arası"</div></div>
+              <div class="side-item"><span style="color:var(--purple)">→</span><div>E-posta → a***@firma.com</div></div>
+              <div class="side-item"><span style="color:var(--purple)">→</span><div>Gerçek → Temsili senaryo</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">📁 METADATA</div>
+            <div class="side-list">
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Word/PPT: Dosya → Bilgi → Sorunları Denetle</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>İki versiyon: INTERNAL / EXTERNAL</div></div>
+              <div class="side-item"><span style="color:var(--cyan)">→</span><div>Notları paylaşılan versiyondan sil</div></div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">💡 ALTIN SORU</div>
+            <div class="side-list">
+              <div class="side-item" style="font-style:italic;line-height:1.6;color:var(--text);">"Bu slaytın fotoğrafı paylaşılsa rahat olur muyum?"</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:10%"></div></div>
+        <div class="quiz-prog-label"><span id="q-counter">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">🤖</div>
+            <div style="flex:1;">
+              <div class="scene-label">BYTE'IN SENARYOSU — YANLIŞ SLAYT</div>
+              <div class="scene-text">Şirket geneli bir Teams toplantısında sunum yapıyorsun. Slaytlar hazır, bağlantı tamam. Ekran paylaşımını açtığın anda fark ettin — yanlış dosyayı açmışsın. Ekranda şu slayt görünüyor:</div>
+              <div class="slide-mockup">
+                <div class="sm-titlebar">
+                  <div class="sm-dot" style="background:#ff5f57;"></div>
+                  <div class="sm-dot" style="background:#febc2e;margin-left:6px;"></div>
+                  <div class="sm-dot" style="background:#28c840;margin-left:6px;"></div>
+                  <div class="sm-file">Q4_Calisanlar_INTERNAL_v3_FINAL.pptx</div>
+                </div>
+                <div class="sm-slide">
+                  <div class="sm-slide-title">📊 Q4 Performans Değerlendirmesi — GİZLİ</div>
+                  <table class="sm-table">
+                    <tr><th>Çalışan</th><th>Maaş (€)</th><th>Puan</th><th>Durum</th></tr>
+                    <tr><td>S. de Vries</td><td class="sm-hl">4.200</td><td>72/100</td><td style="color:var(--yellow)">İzleme</td></tr>
+                    <tr><td>M. Bakker</td><td class="sm-hl">5.100</td><td>91/100</td><td style="color:var(--green)">Terfi Önerisi</td></tr>
+                    <tr><td>J. Smits</td><td class="sm-hl">3.800</td><td>61/100</td><td style="color:var(--red)">İK Görüşmesi</td></tr>
+                  </table>
+                </div>
+                <div class="sm-warn">
+                  <div class="sw-title">⚠️ EKRANDAKİ SORUNLAR</div>
+                  <div class="sw-item"><span class="sw-dot">1</span><span>Çalışanların adları, maaşları ve performans notları herkese açık</span></div>
+                  <div class="sw-item"><span class="sw-dot">2</span><span>Dosya adı "INTERNAL" yazıyor — zaten yanlış dosya</span></div>
+                  <div class="sw-item"><span class="sw-dot">3</span><span>50+ kişilik toplantı — kaydediliyor olabilir</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">🤔 Ne yaparsın?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)"><span class="s-icon">⏩</span><span>Hızlıca doğru dosyaya geçersin — kimse fark etmemiştir, sunum devam eder.</span></button>
+            <button class="scene-opt" onclick="pickScene(1)"><span class="s-icon">🛑</span><span>Ekran paylaşımını <strong>hemen durdurursun</strong>, özür dilersin ve yanlış dosyayı kapattıktan sonra doğru dosyayı açıp devam edersin. Sonrasında IT/İK'ya durumu bildirirsin.</span></button>
+            <button class="scene-opt" onclick="pickScene(2)"><span class="s-icon">🤐</span><span>Ekranı kapatırsın ama kimseye bir şey söylemezsin — geçip gider.</span></button>
+            <button class="scene-opt" onclick="pickScene(3)"><span class="s-icon">😬</span><span>Panikleyip toplantıyı tamamen kapatırsın, bir daha katılmazsın.</span></button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <div style="font-size:1.8rem;flex-shrink:0;">🤖</div>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+          <div style="margin-top:20px;display:none;" id="scene-next">
+            <button class="btn btn-green" onclick="completeStep(4)">Senaryoyu Tamamladım →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: BADGE -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🎤</div>
+        </div>
+        <h2 class="badge-title">GÜVENLİ SUNUMCU</h2>
+        <p class="badge-subtitle">Aynı mesajı, daha az riskle veriyorsun</p>
+        <div class="xp-celebrate">
+          <div><div class="xp-big">+400 XP</div><div class="xp-lbl">KAZANILDI · MODÜL 07</div></div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">5</div><div class="sum-label">Konu Alanı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">400</div><div class="sum-label">Toplam XP</div></div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+function byteSpeak(){
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance('Modül yedi. Sunum Güvenliği. Slaytındaki o satır fotoğraflanıp paylaşılırsa rahat olur musun? Kimin dinlediğini bilmiyorsun. Bu modülde ne paylaşılmaz, nasıl anonimleştirilir, metadata nasıl temizlenir ve ekran paylaşımında nelere dikkat edilir öğreneceksin.');
+  ut.lang='tr-TR';ut.rate=0.92;ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
+}
+
+let checkCount=0;const totalChecks=12;
+
+function toggleCheck(el){
+  el.classList.toggle('checked');
+  const cb=el.querySelector('.cl-checkbox');
+  checkCount=document.querySelectorAll('.cl-item.checked').length;
+  cb.textContent=el.classList.contains('checked')?'✓':'';
+  document.getElementById('cl-progress').textContent=checkCount+' / '+totalChecks;
+  document.getElementById('cl-bar').style.width=(checkCount/totalChecks*100)+'%';
+  if(checkCount===totalChecks){document.getElementById('cl-done').classList.add('show');showToast('xp','✅ Liste Tamamlandı','Sunum güvenli!');}
+  else{document.getElementById('cl-done').classList.remove('show');}
+}
+
+window.moduleQuestions=[
+  {q:"GDPR ölçülülük ilkesi sunum bağlamında ne anlama gelir?",
+   opts:["Her sunum için GDPR belgesi hazırlanmalıdır","İzin alınmış olsa bile gerekli olandan fazla kişisel veri paylaşmak hatadır","Sunumlar yalnızca şifreli kanaldan yapılmalıdır","Katılımcı sayısı 20'yi geçemez"],
+   correct:1,fb:{wrong:"Ölçülülük: gerekli olandan fazlasını paylaşmak, izin olsa bile GDPR ihlalidir. 'İzin alındı' her ortamda paylaşılabileceği anlamına gelmez.",correct:"Doğru! 'İzin alındı' demek kalabalık ortamda paylaşılabileceği anlamına gelmez. Amaç aşılmadan minimum veri ilkesi."}},
+  {q:"'%17,4 büyüme' rakamını güvenli hale getirmek için hangi teknik kullanılır?",
+   opts:["Tamamen çıkarılır","Genelleştirme — '%15–20 arası' gibi aralık verilir","Yıldızlarla maskelenir: %**.* ","Yalnızca sunum sonrası PDF'e eklenir"],
+   correct:1,fb:{wrong:"Genelleştirme: net rakam yerine aralık ver. Mesaj aynı kalır, gizlilik riski azalır.",correct:"Doğru! Aynı mesajı iletirsin — kayıp olmaz. Slayt fotoğraflanırsa hassas veri görünmez."}},
+  {q:"PowerPoint dosyasında hangi gizli içerik paylaşım sırasında risk yaratabilir?",
+   opts:["Slayt arka plan rengi","Konuşmacı notları, gizli slaytlar ve yorum geçmişi","Yazı tipi seçimi","Animasyon hızı"],
+   correct:1,fb:{wrong:"PPT dosyasında konuşmacı notları, gizli slaytlar ve yorum geçmişi — tüm bunlar paylaşılan dosyada görünebilir.",correct:"Doğru! Dosya → Bilgi → Sorunları Denetle ile bunları kaldır. PDF olarak kaydetmek de yetmez — notları ayrıca sil."}},
+  {q:"Zoom toplantısında ekran paylaşımından önce yapılması gereken en önemli adım nedir?",
+   opts:["Kamerayı kapatmak","E-posta, mesaj sekmelerini kapatmak ve bildirimleri devre dışı bırakmak","Toplantı linkini katılımcılara tekrar göndermek","Mikrofonu test etmek"],
+   correct:1,fb:{wrong:"Bir bildirim popup'ı veya açık e-posta sekmesi herkesin görebileceği kişisel bilgiyi ifşa edebilir.",correct:"Doğru! Tüm sekmeleri kapat, bildirimleri durdur, yalnızca sunum penceresini paylaş — tüm ekranı değil."}},
+  {q:"'Ahmet Yılmaz, Satış Müdürü' ifadesini sunumda kullanmak yerine ne söylenmeli?",
+   opts:["A. Yılmaz, S. Müdürü","Bir ekip yöneticisi","Çalışan #1042","İsim gizlenmiştir"],
+   correct:1,fb:{wrong:"Rol bazlı anlatım: 'Bir ekip yöneticisi' veya 'Bir müşteri' gibi. Kişiyi tanımlanabilir kılmadan aynı mesajı verirsin.",correct:"Kesinlikle! Rol bazlı anlatım hem GDPR uyumlu hem de mesajı zayıflatmaz."}},
+  {q:"Sunum dosyasını harici kişiye göndermeden önce hangi iki versiyon stratejisi uygulanmalı?",
+   opts:["Biri renkli biri siyah-beyaz","INTERNAL (detaylı) ve EXTERNAL (sadeleştirilmiş/anonim) olmak üzere iki ayrı versiyon","Biri PDF biri PPT","Biri Türkçe biri İngilizce"],
+   correct:1,fb:{wrong:"İki versiyon: biri iç kullanım (detaylı), biri dış paylaşım (sadeleştirilmiş). Asla iç versiyonu dışarıya gönderme.",correct:"Doğru! INTERNAL ve EXTERNAL etiketleme hayat kurtarır. Yanlış dosyayı göndermek sık yapılan hatadır."}},
+  {q:"Bir sunum fotoğrafında arka planda yaka kartı görünüyor. Bu neden risk oluşturur?",
+   opts:["Estetik açıdan kötü görünür","Yaka kartındaki ad, şirket veya rozet bilgisi fotoğrafta okunabilir","Fotoğraf telif hakkı ihlali olur","Sadece güvenlik personeli için geçerlidir"],
+   correct:1,fb:{wrong:"Arka plandaki yaka kartı kişiyi ve bağlı olduğu kurumu tanımlanabilir kılar. GDPR kapsamında bu bir gizlilik ihlalidir.",correct:"Doğru! Fotoğraf çekmeden önce arka planı kontrol et — ekran, pano, yaka kartı, ayna yansıması."}},
+  {q:"Sunum sırasında biri detay sorarsa ve bu bilgiyi o ortamda paylaşman uygun değilse ne yapmalısın?",
+   opts:["Soruyu görmezden gelirsin","'Bu bilgiyi bu ortamda detaylandıramam' diyip geçersin — bu doğru bir davranıştır","Toplantıyı bitirirsin","Soruyu sorana özel mesaj atarsın"],
+   correct:1,fb:{wrong:"'Bu bilgiyi bu ortamda detaylandıramam' demek profesyonel ve doğru bir davranıştır. Kimse bunu garip karşılamaz.",correct:"Kesinlikle! Bu cümle hem seni hem kurumu korur. Hazırlıklı ol ve gerekirse bu cümleyi kullan."}},
+  {q:"Bir çalışanın performans ve maaş bilgisi neden sunum ortamında paylaşılmamalıdır?",
+   opts:["Bu bilgiler yalnızca İngilizce paylaşılabilir","Bunlar GDPR'da özel nitelikli veri sayılır; sunum ortamı bu tür hassas bilgi için uygun değildir","Sadece C-level toplantılarında paylaşılabilir","Maaş bilgisi 100€ altındaysa sorun olmaz"],
+   correct:1,fb:{wrong:"Performans ve maaş bilgisi GDPR kapsamında hassas veri kategorisindedir. Kalabalık ortam bu bilgi için asla uygun değildir.",correct:"Doğru! Senaryo tam da bu konuyu ele alıyor. Yanlış dosyayı açmak bile ciddi GDPR ihlali doğurabilir."}},
+  {q:"Doğaçlama konuşma sırasında sunum güvenliği açısından en kritik kural nedir?",
+   opts:["Yavaş konuşmak","İsim vermemek ve net rakamları ağzından kaçırmamak","Her cümleden sonra duraksamak","Slayta bakarak okumak"],
+   correct:1,fb:{wrong:"Doğaçlama sırasında en sık yapılan hata: isim kaçırmak veya net bir rakam söylemek. Bunlar kayıt altına alınırsa geri dönüşü zordur.",correct:"Doğru! Slayt temiz olsa bile doğaçlama konuşmada isim veya rakam kaçabilir. Önceden prova yap, bu konuda hazırlıklı ol."}}
+];
+
+
+
+function completeVideoStep(){
+  if (typeof window.completeStep === 'function') {
+    window.completeStep(1);
+    return;
+  }
+
+  const dot = document.getElementById('dot-1');
+  if (dot) {
+    dot.classList.remove('active', 'pending');
+    dot.classList.add('done');
+    dot.textContent = '✓';
+  }
+
+  const panel1 = document.getElementById('panel-1');
+  const panel2 = document.getElementById('panel-2');
+  if (panel1) panel1.style.display = 'none';
+  if (panel2) panel2.style.display = 'block';
+
+  const step1 = document.getElementById('step-btn-1');
+  const step2 = document.getElementById('step-btn-2');
+  if (step1) step1.classList.remove('active');
+  if (step2) step2.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+function completeReadingStep(){
+  if (typeof window.completeStep === 'function') {
+    window.completeStep(2);
+    return;
+  }
+
+  const dot = document.getElementById('dot-2');
+  if (dot) {
+    dot.classList.remove('active', 'pending');
+    dot.classList.add('done');
+    dot.textContent = '✓';
+  }
+
+  if (typeof window.goStep === 'function') {
+    window.goStep(3);
+    return;
+  }
+
+  const panel2 = document.getElementById('panel-2');
+  const panel3 = document.getElementById('panel-3');
+  if (panel2) panel2.style.display = 'none';
+  if (panel3) panel3.style.display = 'block';
+
+  const step2 = document.getElementById('step-btn-2');
+  const step3 = document.getElementById('step-btn-3');
+  if (step2) step2.classList.remove('active');
+  if (step3) step3.classList.add('active');
+
+  if (typeof window.renderQuestion === 'function') {
+    window.renderQuestion();
+  }
+
+  window.scrollTo(0, 0);
+}
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}
+
+function skipVideo(){
+  completeVideoStep();
+}
+
+
+
+window.moduleSceneFeedbacks=[
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Hızlıca geçmek zamanı geri almaz. 50+ kişi zaten gördü — bazıları ekran görüntüsü bile almış olabilir. Tepkisiz kalmak durumu daha da kötüleştirir."},
+  {correct:true,text:"<strong>Doğru hamle!</strong> Ekranı anında durdurmak hasarı minimize eder. Özür dilemek şeffaflık gösterir. IT/İK bildirimi ise prosedür gereği — ihmal olarak değil, doğru adım olarak kayıt altına alınır."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Susarak geçiştirmek GDPR ihlalini bildirmeme anlamına gelir. Bu kendi başına ek bir ihlaldir. Veri ihlalleri 72 saat içinde yetkili birimlere bildirilmek zorundadır."},
+  {correct:false,text:"<strong class='bad'>Yanlış.</strong> Toplantıyı kapatmak durumu daha da tuhaflaştırır ve ihlali gizlemeye çalışıyormuşsun gibi görünür. Sakin kal, ekranı durdur, özür dile, devam et — sonra bildir."}
+];
+
+
+
+
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,785 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e2d4a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BYTE Academy">
+<link rel="apple-touch-icon" href="/videos/byte1.png">
+<title>BYTE Academy — Modül 11: Yapay Zeka Güvenliği</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/modules.css">
+
+<style>
+/* READING */
+.reading-grid{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;}
+.article-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:28px 30px;}
+.article-tag{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
+.article-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:10px;line-height:1.35;}
+.article-intro{font-size:.90rem;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+.section-head{font-family:'Orbitron',sans-serif;font-size:.78rem;color:var(--cyan);letter-spacing:2px;margin:26px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-box{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;color:var(--cyan);margin-bottom:4px;}
+.stat-lbl{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+.alert-warn{background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-red{background:rgba(248,113,113,.06);border:1px solid rgba(248,113,113,.25);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+.alert-info{background:rgba(96,200,240,.05);border:1px solid rgba(96,200,240,.2);border-radius:12px;padding:14px 16px;display:flex;gap:11px;margin-bottom:18px;font-size:.87rem;color:var(--text);line-height:1.55;}
+/* READING SIDEBAR */
+.reading-sidebar{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.side-title{font-family:'Orbitron',sans-serif;font-size:.70rem;color:var(--cyan);letter-spacing:1.5px;margin-bottom:10px;}
+.side-list{display:flex;flex-direction:column;gap:7px;}
+.side-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-dim);line-height:1.4;}
+.side-ok{color:var(--green);flex-shrink:0;font-weight:700;}
+.side-bad{color:var(--red);flex-shrink:0;font-weight:700;}
+.side-arr{color:var(--cyan);flex-shrink:0;font-weight:700;}
+/* YZ SPECIFIC */
+.flow-diagram{display:flex;align-items:center;gap:0;background:var(--bg-panel);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.flow-box{background:var(--bg-card);border:1px solid rgba(96,200,240,.2);border-radius:10px;padding:12px 16px;text-align:center;min-width:100px;}
+.flow-icon{font-size:1.4rem;margin-bottom:5px;}
+.flow-name{font-size:.80rem;font-weight:700;color:#fff;margin-bottom:2px;}
+.flow-desc{font-size:.73rem;color:var(--text-dim);}
+.flow-box.danger{border-color:rgba(248,113,113,.3);background:rgba(248,113,113,.04);}
+.flow-arrow{font-size:1.4rem;color:var(--cyan);}
+.flow-arrow.red{color:var(--red);}
+.tool-cards{display:flex;flex-direction:column;gap:8px;margin-bottom:18px;}
+.tool-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:12px;padding:13px 16px;display:flex;gap:12px;align-items:flex-start;}
+.tool-level{width:8px;flex-shrink:0;border-radius:4px;align-self:stretch;}
+.tl-risk{background:var(--red);}
+.tl-mid{background:var(--yellow);}
+.tl-safe{background:var(--green);}
+.tl-top{background:var(--cyan);}
+.tool-info-head{font-size:.87rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.tool-info-desc{font-size:.81rem;color:var(--text-dim);line-height:1.45;}
+.tool-info-tag{font-size:.74rem;margin-top:4px;}
+.tag-risk{color:var(--red);}
+.tag-mid{color:var(--yellow);}
+.tag-safe{color:var(--green);}
+.tag-top{color:var(--cyan);}
+.ten-ilke-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.ilke-card{background:var(--bg-panel);border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;}
+.ilke-num{font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;color:var(--cyan);flex-shrink:0;min-width:22px;}
+.ilke-title{font-size:.84rem;font-weight:700;color:#fff;margin-bottom:3px;}
+.ilke-desc{font-size:.79rem;color:var(--text-dim);line-height:1.4;}
+.deepfake-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.df-card{background:var(--bg-panel);border:1px solid rgba(248,113,113,.2);border-radius:12px;padding:15px 18px;display:flex;gap:14px;}
+.df-icon{font-size:1.5rem;flex-shrink:0;}
+.df-type{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--red);letter-spacing:.5px;margin-bottom:4px;}
+.df-desc{font-size:.82rem;color:var(--text-dim);line-height:1.5;}
+.df-real{font-size:.79rem;color:var(--orange);margin-top:5px;}
+.df-tip{font-size:.79rem;color:var(--green);margin-top:5px;}
+.steps-3{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.s3-step{background:var(--bg-panel);border-left:3px solid var(--cyan);border-radius:0 12px 12px 0;padding:14px 18px;}
+.s3-step.warn{border-left-color:var(--orange);}
+.s3-step.safe{border-left-color:var(--green);}
+.s3-num{font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;margin-bottom:6px;}
+.s3-step.warn .s3-num{color:var(--orange);}
+.s3-step.safe .s3-num{color:var(--green);}
+.s3-title{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:5px;}
+.s3-desc{font-size:.83rem;color:var(--text-dim);line-height:1.5;}
+.anon-example{background:var(--bg-panel);border:1px solid rgba(251,191,36,.2);border-radius:12px;padding:16px 18px;margin-bottom:18px;}
+.ae-head{font-family:'Orbitron',sans-serif;font-size:.75rem;color:var(--yellow);letter-spacing:1px;margin-bottom:12px;}
+.ae-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.ae-before{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.2);border-radius:8px;padding:8px 12px;font-size:.82rem;color:var(--text-dim);flex:1;min-width:180px;}
+.ae-arrow{font-size:1.2rem;color:var(--cyan);}
+.ae-after{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.2);border-radius:8px;padding:8px 12px;font-size:.82rem;color:var(--green);flex:1;min-width:180px;}
+.byte-tip-card{background:linear-gradient(135deg,rgba(96,200,240,.06),rgba(96,200,240,.02));border:1px solid rgba(96,200,240,.2);border-radius:14px;padding:18px 20px;display:flex;gap:12px;align-items:flex-start;margin-top:20px;}
+.byte-tip-text{font-size:.86rem;color:var(--text-dim);line-height:1.6;}
+/* QUIZ */
+.quiz-wrap{max-width:700px;}
+.quiz-prog-bar{background:var(--bg-panel);border-radius:50px;height:7px;margin-bottom:8px;overflow:hidden;border:1px solid var(--border);}
+.quiz-prog-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:50px;transition:width .5s ease;}
+.quiz-prog-label{display:flex;justify-content:space-between;font-size:.82rem;color:var(--text-dim);margin-bottom:22px;font-family:'Orbitron',sans-serif;}
+.question-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:26px;margin-bottom:18px;}
+.question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
+.question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
+.options{display:flex;flex-direction:column;gap:9px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
+.option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
+.option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
+.option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
+.option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
+.feedback-box{border-radius:10px;padding:11px 15px;font-size:.91rem;line-height:1.5;margin-top:11px;display:none;}
+.feedback-box.correct{background:rgba(74,222,154,.07);border:1px solid rgba(74,222,154,.3);color:var(--green);}
+.feedback-box.wrong{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.3);color:var(--red);}
+.feedback-box.show{display:block;animation:fadeUp .3s ease;}
+.quiz-actions{display:flex;justify-content:flex-end;}
+
+/* VIDEO WRAPPER (modul11 özel) */
+.video-wrapper{position:relative;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 30px rgba(96,200,240,.12);}
+.video-yt{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000;}
+.video-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(160deg,rgba(6,15,30,.72),rgba(5,13,32,.72));cursor:pointer;}
+.video-overlay.hidden{display:none;}
+.play-hint{margin-top:8px;font-size:.74rem;color:var(--text-dim);font-family:'Orbitron',sans-serif;letter-spacing:1px;}
+
+/* Mobile tap reliability for step action buttons */
+.btn{touch-action:manipulation;}
+
+
+
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="logo">BYTE<span>ACADEMY</span></div>
+  <div class="topbar-right">
+    <a class="back-btn" href="index.html">&#8592; Dashboard</a>
+    <div class="xp-wrap">
+      <span class="xp-label">XP</span>
+      <span id="xp-count">3750</span>
+      <div class="xp-bar-mini"><div class="xp-bar-fill"></div></div>
+    </div>
+      <div class="mod-badge-top">🏅 <span>10</span> Rozet</div>
+  </div>
+</div>
+
+<div id="app">
+    <aside id="sidebar">
+    <div style="padding:0 8px 6px;">
+      <div class="sidebar-title">Modüller</div>
+      <div class="module-item" onclick="goTo('modul1.html')"><div class="mod-num done">01</div><div><div class="mod-name">Şifre Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul2.html')"><div class="mod-num done">02</div><div><div class="mod-name">Ağ Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul3.html')"><div class="mod-num done">03</div><div><div class="mod-name">Mobil Güvenlik</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul4.html')"><div class="mod-num done">04</div><div><div class="mod-name">Sosyal Mühendislik</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul5.html')"><div class="mod-num done">05</div><div><div class="mod-name">Phishing & Zararlı Yazılımlar</div><div class="mod-meta">&#x2713; Tamamland&#x131; </div></div></div>
+      <div class="module-item" onclick="goTo('modul6.html')"><div class="mod-num done">06</div><div><div class="mod-name">Veri Gizliliği & Bulut</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul7.html')"><div class="mod-num done">07</div><div><div class="mod-name">Sunum Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; </div></div></div>
+      <div class="module-item" onclick="goTo('modul8.html')"><div class="mod-num done">08</div><div><div class="mod-name">Güvenli İletişim</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item" onclick="goTo('modul9.html')"><div class="mod-num done">09</div><div><div class="mod-name">Hesap & Platform Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131; </div></div></div>
+      <div class="module-item" onclick="goTo('modul10.html')"><div class="mod-num done">10</div><div><div class="mod-name">Seyahat Güvenliği</div><div class="mod-meta">&#x2713; Tamamland&#x131;</div></div></div>
+      <div class="module-item active">
+        <div class="mod-num active2">11</div>
+        <div><div class="mod-name" style="color:var(--cyan)">Yapay Zeka Güvenliği</div><div class="mod-meta">Aktif &middot; 450 XP</div></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">12</div><div><div class="mod-name">Sosyal Medya Güvenliği</div><div class="mod-meta">Kilitli &middot; 400 XP</div></div></div>
+      <div class="module-item" onclick="tryNav()"><div class="mod-num locked">13</div><div><div class="mod-name">Siber Zorbalık</div><div class="mod-meta">Kilitli &middot; 400 XP</div></div></div>
+      <div class="sidebar-divider"></div>
+      <div class="module-item" onclick="goTo('rehber.html')" style="opacity:.85">
+        <div class="mod-num" style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);color:var(--yellow);font-size:.6rem;">&#x1F4CB;</div>
+        <div><div class="mod-name" style="color:var(--yellow)">H&#x131;zl&#x131; Rehber</div><div class="mod-meta">&#xD6;zet &middot; Cheat Sheet</div></div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="mod-header">
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()">
+        🤖
+        <div class="byte-rings"><div class="byte-ring"></div><div class="byte-ring"></div><div class="byte-ring"></div></div>
+        <div class="byte-tooltip">▶ BYTE'a tıkla</div>
+      </div>
+      <div class="mod-title-block">
+        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 11 · 🔊 Dinle</div>
+        <h1 class="mod-title">Yapay Zeka <span>Güvenliği</span></h1>
+        <p class="mod-desc">Veri emanet sorumluluğu, PII riskleri, deepfake tehditleri ve YZ araçlarını gizlilik odaklı kullanmanın pratik yolları. Teknoloji güçlüdür — onu doğru kullanan siz olmalısınız.</p>
+        <div class="mod-stats">
+          <div class="stat-chip"><div class="dot dot-c"></div>5 Adım</div>
+          <div class="stat-chip"><div class="dot dot-y"></div>350 XP</div>
+          <div class="stat-chip"><div class="dot dot-g"></div>~40 Dakika</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-nav">
+      <div class="step-btn active" id="step-btn-1" onclick="goStep(1)"><div class="step-dot active" id="dot-1">01</div><div class="step-label">Video Ders</div><div class="step-xp">+50 XP</div></div>
+      <div class="step-btn" id="step-btn-2" onclick="goStep(2)"><div class="step-dot pending" id="dot-2">02</div><div class="step-label">Okuma</div><div class="step-xp">+70 XP</div></div>
+      <div class="step-btn" id="step-btn-3" onclick="goStep(3)"><div class="step-dot pending" id="dot-3">03</div><div class="step-label">Quiz</div><div class="step-xp">+160 XP</div></div>
+      <div class="step-btn" id="step-btn-4" onclick="goStep(4)"><div class="step-dot pending" id="dot-4">04</div><div class="step-label">Senaryo</div><div class="step-xp">+40 XP</div></div>
+      <div class="step-btn" id="step-btn-5" onclick="goStep(5)"><div class="step-dot pending" id="dot-5">05</div><div class="step-label">Rozet</div><div class="step-xp">+30 XP</div></div>
+    </div>
+
+    <!-- PANEL 1: VIDEO -->
+    <div class="lesson-panel active" id="panel-1">
+      <div class="video-wrapper">
+        <iframe class="video-yt" id="yt-frame"
+          src="https://www.youtube.com/watch?v=RTj7vA3a2BE"
+          title="Yapay Zeka ve Sosyal Medyada Veri Güvenliği ve Mahremiyet"
+          allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+        <div class="video-overlay" id="vid-overlay" onclick="startVideo()">
+          <div class="vs-label">BYTE ACADEMY · MODÜL 11</div>
+          <div class="vs-title">Yapay Zeka Güvenliği</div>
+          <div class="vs-sub">Veri Emanettir · Mahremiyet · Deepfake · Güvenli YZ Kullanımı</div>
+          <div class="play-big">▶</div>
+          <div class="play-hint">OYNATMAK İÇİN TIKLA</div>
+        </div>
+      </div>
+      <div class="key-points">
+        <div class="kp-head"><span>🔑</span><span class="kp-title">Ders Öncesi Anahtar Noktalar</span></div>
+        <ul class="kp-list">
+          <li><span class="kp-b">▸</span>Yapay zekaya paylaştığın bilgiler sadece sana özel kalmaz — sunuculara gider, model eğitiminde kullanılabilir, süresiz saklanabilir.</li>
+          <li><span class="kp-b">▸</span><strong>Kendi bilgilerini paylaşmak senin tercihin</strong> — ancak başkasına ait verileri izinsiz paylaşmak <strong>kul hakkı ihlali</strong>dir.</li>
+          <li><span class="kp-b">▸</span>Müşteri listesi, öğrenci kaydı, çalışan bilgisi — bunlar YZ araçlarına yüklenmemesi gereken <strong>emanet veriler</strong>dir.</li>
+          <li><span class="kp-b">▸</span>Deepfake: Ses klonlama, yüz değiştirme ve sahte belge üretimi artık dakikalık iş — farkında olmak en güçlü savunmadır.</li>
+          <li><span class="kp-b">▸</span>Gizlilik odaklı araçlar var: Duck.ai, Lumo AI, yerel modeller. ChatGPT'nin "Geçici Sohbet" modu en az risk seçeneği.</li>
+        </ul>
+      </div>
+      <div style="text-align:right;margin-top:16px;">
+        <button class="btn btn-primary" id="btn-video-done" onclick="return safeAdvance(1,2)">Videoyu Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 2: READING -->
+    <div class="lesson-panel" id="panel-2">
+      <div class="reading-grid">
+        <div class="article-card">
+          <div class="article-tag">📖 OKUMA MATERYALİ · 7 BÖLÜM</div>
+          <div class="article-title">Yapay Zeka Güvenliği: Veri Emanettir ve Kontrol Sizde</div>
+          <div class="article-intro">Yapay zeka araçları hayatımızı kolaylaştırıyor — ama bu kolaylığın arkasında sessizce dönen bir veri ekonomisi var. Paylaştığınız her bilgi gittiği sunucularda nasıl kullanılır? Başkalarına ait verileri YZ'ye vermek etik midir? Ve deepfake çağında gerçeği nasıl ayırt edeceğiz? Bu modül hem teknik hem etik boyutuyla YZ güvenliğini ele alıyor.</div>
+
+          <div class="stat-row">
+            <div class="stat-box"><div class="stat-num">%74</div><div class="stat-lbl">Çalışanların iş için YZ araçları kullandığı oran (Gartner 2024)</div></div>
+            <div class="stat-box"><div class="stat-num">8x</div><div class="stat-lbl">Deepfake video sayısının 2023'te önceki yıla göre artış hızı</div></div>
+            <div class="stat-box"><div class="stat-num">10 İlke</div><div class="stat-lbl">Dijital mahremiyette altın kurallar</div></div>
+          </div>
+
+          <div class="section-head">🔍 BÖLÜM 1 — YZ VERİLERİNİZİ NASIL KULLANIR?</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Bir YZ aracına mesaj yazdığınızda ne olur? Sadece size ve makineye özel kalmaz. Stanford araştırmacılarına göre bu veriler modeli "eğitmek" için kullanılabilir ve süresiz saklanabilir. Yapay zekayı <strong style="color:#fff;">bir stajyer gibi düşünün:</strong> zeki, öğrenmeye hevesli — ama neyi gizli tutacağını bilmez.</p>
+
+          <div class="flow-diagram">
+            <div class="flow-box"><div class="flow-icon">🧑</div><div class="flow-name">Siz</div><div class="flow-desc">Bilgiyi yazarsınız</div></div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-box"><div class="flow-icon">🤖</div><div class="flow-name">YZ Aracı</div><div class="flow-desc">Yanıt üretir</div></div>
+            <div class="flow-arrow red">→</div>
+            <div class="flow-box danger"><div class="flow-icon">☁️</div><div class="flow-name">Sunucu</div><div class="flow-desc">Saklar, analiz eder</div></div>
+            <div class="flow-arrow red">→</div>
+            <div class="flow-box danger"><div class="flow-icon">❓</div><div class="flow-name">Sonraki Kullanım</div><div class="flow-desc">Model eğitimi?</div></div>
+          </div>
+
+          <div class="alert-warn">
+            <span>⚠️</span>
+            <div>Bir Google güvenlik uzmanı, yapay zekayı <strong>herkese açık bir forum</strong> gibi düşünmemizi tavsiye ediyor. Paylaştığınız her şeyin başkaları tarafından görülebileceğini varsayın.</div>
+          </div>
+
+          <div class="section-head">🔴 BÖLÜM 2 — KIRMIZI ÇİZGİ: ASLA PAYLAŞMAMANIZ GEREKENLER</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">PII (Kişisel Olarak Tanımlanabilir Bilgi): Belirli bir kişiyi tanımlayabilecek her veri. Herkese açık YZ araçlarına kesinlikle girilmemeli.</p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+            <div class="side-card">
+              <div class="side-title">🚫 KENDİNİZE AİT</div>
+              <div class="side-list">
+                <div class="side-item"><span class="side-bad">✕</span>T.C. Kimlik No, doğum tarihi</div>
+                <div class="side-item"><span class="side-bad">✕</span>Banka / kredi kartı bilgileri</div>
+                <div class="side-item"><span class="side-bad">✕</span>Sağlık bilgileri, tıbbi sonuçlar</div>
+                <div class="side-item"><span class="side-bad">✕</span>Kullanıcı adları ve şifreler</div>
+                <div class="side-item"><span class="side-bad">✕</span>Adres ve konum verileri</div>
+              </div>
+            </div>
+            <div class="side-card">
+              <div class="side-title">🚫 BAŞKALARINA AİT — KESİNLİKLE</div>
+              <div class="side-list">
+                <div class="side-item"><span class="side-bad">✕</span>Müşteri / hasta listeleri</div>
+                <div class="side-item"><span class="side-bad">✕</span>Çalışan kayıtları, maaş bilgileri</div>
+                <div class="side-item"><span class="side-bad">✕</span>Gizli şirket bilgileri</div>
+                <div class="side-item"><span class="side-bad">✕</span>Finansal raporlar</div>
+                <div class="side-item"><span class="side-bad">✕</span>Avukat-müvekkil yazışmaları</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert-red">
+            <span>🔴</span>
+            <div>GDPR ihlali: Kişisel verilerin YZ araçlarına yüklenmesi <strong>Madde 5</strong> kapsamında ciddi yasal sonuçlar doğurabilir. İtalya bu gerekçeyle ChatGPT'yi 2023'te geçici olarak yasakladı.</div>
+          </div>
+
+          <div class="section-head">🤝 BÖLÜM 3 — BAŞKASININ VERİSİ: EMANET SORUMLULUĞU</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Bir kişinin bize bilgisini vermesi, aslında kişisel dünyasının kapısını aralaması ve anahtarı bize teslim etmesidir — <strong style="color:#fff;">"Sana güveniyorum"</strong> sözünün dijital karşılığı. Kendi bilgilerimizi paylaşmak tercihimizdir. Ama başkasının verisini izinsiz paylaşmak <strong style="color:var(--red);">kul hakkı ihlali</strong>dir.</p>
+
+          <div class="ten-ilke-grid">
+            <div class="ilke-card"><div class="ilke-num">01</div><div><div class="ilke-title">Verinin Sahibini Bil</div><div class="ilke-desc">Açık rıza olmadan asla paylaşmayın.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">02</div><div><div class="ilke-title">Mahremiyeti Önceliklendir</div><div class="ilke-desc">Her bilgi özel bir kapıdır.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">03</div><div><div class="ilke-title">Niyetinizi Sorgulayın</div><div class="ilke-desc">Kolaylık, mahremiyetin önüne geçmemeli.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">04</div><div><div class="ilke-title">Anonimleştirmeden Paylaşmayın</div><div class="ilke-desc">Kimliği belli eden unsurları kaldırın.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">05</div><div><div class="ilke-title">Ham Veri Vermeyin</div><div class="ilke-desc">Soruyu genelleyin veya şablon kullanın.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">06</div><div><div class="ilke-title">Açık Platformlara Yükleme</div><div class="ilke-desc">YZ araçları veriyi saklayabilir veya paylaşabilir.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">07</div><div><div class="ilke-title">Erişimi Sınırlı Tut</div><div class="ilke-desc">Yalnızca gerekli kişilerle, asgari bilgiyle paylaşın.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">08</div><div><div class="ilke-title">Sonuçlarını Düşün</div><div class="ilke-desc">Bu veri yayılırsa kimi üzer?</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">09</div><div><div class="ilke-title">Saklama Süresini Kısalt</div><div class="ilke-desc">İşi biten veriyi saklamak emaneti riske atar.</div></div></div>
+            <div class="ilke-card"><div class="ilke-num">10</div><div><div class="ilke-title">Hata Yaparsan Sahiplen</div><div class="ilke-desc">Derhal bildirin, özür dileyin, telafi edin.</div></div></div>
+          </div>
+
+          <div class="section-head">🎭 BÖLÜM 4 — DEEPFAKE: YAPAY ZEKANIN KARANLIK YÜZÜ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">YZ sadece üretkenlik aracı değil. Kötü niyetli kullanımda sahte ses, yüz ve belgeler üretebilir. 2023'te deepfake video sayısı önceki yıla göre 8 kat arttı.</p>
+
+          <div class="deepfake-grid">
+            <div class="df-card">
+              <div class="df-icon">🎤</div>
+              <div>
+                <div class="df-type">SES KLONLAMA</div>
+                <div class="df-desc">Sadece 3-10 saniyelik ses örneğiyle birinin sesi kopyalanabilir. "CEO'dan acil havale talebi" dolandırıcılığının başlıca silahı.</div>
+                <div class="df-real">⚠ Gerçek vaka: 2023'te bir CFO, ses klonlama ile 25 milyon dolar transfer ettirdi.</div>
+                <div class="df-tip">✓ Şüpheli durumlarda farklı kanaldan doğrulayın — mesaj yerine telefon, telefon yerine yüz yüze.</div>
+              </div>
+            </div>
+            <div class="df-card">
+              <div class="df-icon">🎬</div>
+              <div>
+                <div class="df-type">YÜZ DEĞİŞTİRME (FACE SWAP)</div>
+                <div class="df-desc">Bir kişinin yüzü başka bir videoya eklenerek sahte görüntüler oluşturulur. Siyasi dezenformasyon, şantaj ve kimlik dolandırıcılığında kullanılıyor.</div>
+                <div class="df-real">⚠ Fark etme ipuçları: Göz kırpma düzensizliği, yüz kenarlarında bulanıklık, ışık tutarsızlığı.</div>
+                <div class="df-tip">✓ Kaynağından doğrulanmamış kritik videolara güvenmeyin.</div>
+              </div>
+            </div>
+            <div class="df-card">
+              <div class="df-icon">📄</div>
+              <div>
+                <div class="df-type">SAHTE BELGE ÜRETİMİ</div>
+                <div class="df-desc">YZ ile birkaç dakikada gerçekçi fatura, sözleşme, diploma veya kimlik belgesi üretilebilir. Sahte iş başvuruları ve finansal dolandırıcılıkta yaygınlaşıyor.</div>
+                <div class="df-real">⚠ Gerçek vaka: Sahte YZ-üretimi özgeçmişlerle işe alım süreçleri manipüle ediliyor.</div>
+                <div class="df-tip">✓ Kritik belgeler için resmi kanallardan doğrulama yapın.</div>
+              </div>
+            </div>
+            <div class="df-card">
+              <div class="df-icon">📞</div>
+              <div>
+                <div class="df-type">GERÇEK ZAMANLI VIDEO DEEPFAKE</div>
+                <div class="df-desc">Artık canlı video görüşmelerinde bile deepfake uygulanabiliyor. "Acil" baskısı ve kimlik doğrulama isteği olmayan toplantı taleplerine dikkat.</div>
+                <div class="df-real">⚠ Gerçek vaka: 2024'te sahte video konferansla çok uluslu şirket çalışanları dolandırıldı.</div>
+                <div class="df-tip">✓ Kritik kararlar için tek kanal yeterli değil — mutlaka ikinci doğrulama yapın.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head">🛡️ BÖLÜM 5 — GİZLİLİK ODAKLI ARAÇ SEÇİMİ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Tüm YZ araçları eşit değil. Risk seviyesine göre bilinçli tercih yapın:</p>
+
+          <div class="tool-cards">
+            <div class="tool-card"><div class="tool-level tl-risk"></div><div><div class="tool-info-head">ChatGPT · Gemini (Varsayılan Ayarlar)</div><div class="tool-info-desc">Varsayılan olarak sohbet geçmişini kaydeder. PII girişi ifşa riskini artırır.</div><div class="tool-info-tag tag-risk">⚠ RİSKLİ — Önlem: ChatGPT'de "Geçici Sohbet" modunu kullanın.</div></div></div>
+            <div class="tool-card"><div class="tool-level tl-mid"></div><div><div class="tool-info-head">Claude (Anthropic) · Perplexity.ai</div><div class="tool-info-desc">İstemleri eğitim için kullanmama eğilimi veya opt-out seçeneği sunar.</div><div class="tool-info-tag tag-mid">◑ ORTA GÜVENLİK — Ayarları kontrol edin, gizlilik politikasını okuyun.</div></div></div>
+            <div class="tool-card"><div class="tool-level tl-safe"></div><div><div class="tool-info-head">Lumo AI (Proton) · Duck.ai (DuckDuckGo)</div><div class="tool-info-desc">Lumo AI sıfır erişimli şifreleme kullanır. Duck.ai sohbet geçmişini sadece yerel cihazda saklar.</div><div class="tool-info-tag tag-safe">✓ GÜVENLİ — Gizlilik öncelikli tasarım.</div></div></div>
+            <div class="tool-card"><div class="tool-level tl-top"></div><div><div class="tool-info-head">Kendi Kendine Barındırılan YZ (Llama, GPT4All)</div><div class="tool-info-desc">Yerel bilgisayarda çevrimdışı çalışır. Veriler cihazdan asla ayrılmaz, tam kontrol sizde.</div><div class="tool-info-tag tag-top">★ MAKSİMUM GÜVENLİK — Teknik bilgi gerektirir.</div></div></div>
+          </div>
+
+          <div class="section-head">🔢 BÖLÜM 6 — 3 PRATİK ADIM: ÖNCE, SIRASINDA, SONRA</div>
+          <div class="steps-3">
+            <div class="s3-step">
+              <div class="s3-num">ADIM 1 · YZ KULLANMADAN ÖNCE</div>
+              <div class="s3-title">Akıllı Başlangıç</div>
+              <div class="s3-desc">Mümkünse hesap oluşturmadan kullanın. Google/Apple ile giriş yapmayın — YZ hesabınızın diğer hesaplarınızla ilişkilendirilmesini önler. Her yeni aracın gizlilik politikasını okuyun.</div>
+            </div>
+            <div class="s3-step warn">
+              <div class="s3-num">ADIM 2 · SOHBET SIRASINDA</div>
+              <div class="s3-title">Sohbet Hijyeni</div>
+              <div class="s3-desc">Geçici sohbet modunu açın. Ayarlardan "Herkes için modeli iyileştir" seçeneğini kapatın. <strong style="color:#fff;">Kırmızı çizgi:</strong> Kimlik, finansal veya sağlık bilgilerini asla girmeyin. Başkasının verisini kullanmak zorundaysanız anonimleştirin.</div>
+            </div>
+            <div class="s3-step safe">
+              <div class="s3-num">ADIM 3 · KULLANDIKTAN SONRA</div>
+              <div class="s3-title">Dijital Temizlik</div>
+              <div class="s3-desc">Hassas konuşmaları silin. YZ'nin hafızasındaki kişisel bilgileri temizleyin. Artık kullanmadığınız YZ hesaplarını kapatın ve verilerinizin silinmesini talep edin.</div>
+            </div>
+          </div>
+
+          <div class="section-head">📐 BÖLÜM 7 — ANONİMLEŞTİRME: ZORUNSA BÖYLE KULLAN</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;"><strong style="color:#fff;">Veri Minimizasyonu:</strong> Yalnızca gerekli bilgileri kullanın, kimliği belli eden her şeyi kaldırın.</p>
+
+          <div class="anon-example">
+            <div class="ae-head">✂ ANONİMLEŞTİRME ÖRNEKLERİ</div>
+            <div class="ae-row">
+              <div class="ae-before">Ahmet Yılmaz, Kadıköy'deki 3+1 daire</div>
+              <div class="ae-arrow">→</div>
+              <div class="ae-after">A Müşterisi, Anadolu yakasında konut</div>
+            </div>
+            <div class="ae-row">
+              <div class="ae-before">Öğrencilerin isimleri + notları (Excel)</div>
+              <div class="ae-arrow">→</div>
+              <div class="ae-after">100 öğrenci, not ortalamaları: 45, 67, 88</div>
+            </div>
+            <div class="ae-row">
+              <div class="ae-before">Müşteri listesi: ad, e-posta, telefon</div>
+              <div class="ae-arrow">→</div>
+              <div class="ae-after">200 kişilik liste — segmentasyon analizi</div>
+            </div>
+          </div>
+
+          <div class="alert-red">
+            <span>🔴</span>
+            <div><strong>Önemli:</strong> Yapay zekaya asla orijinal belge veya e-posta zinciri yüklemeyin. Bilgileri kendiniz özetleyip anonimleştirin. Kaldırdığınızı sandığınız bilgilerle birlikte kişi tespit edilebilir — yeterince genelleştirin.</div>
+          </div>
+
+          <div class="byte-tip-card">
+            <div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:1.2rem">🤖</span><span style="font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;">BYTE diyor ki:</span></div>
+              <div class="byte-tip-text">"Bu bilgiyi YZ'ye vermeden önce, verinin sahibi rıza gösterdi mi?" sorusunu sormayı alışkanlık haline getirin. Veriyi korumak, mahremiyeti ve güveni korumaktır. Gizlilik aktif olarak korunması gereken bir değerdir.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="reading-sidebar">
+          <div class="side-card">
+            <div class="side-title">🚦 DEEPFAKE FARK ETME</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">▸</span>Göz kırpma düzensizliği</div>
+              <div class="side-item"><span class="side-arr">▸</span>Yüz kenarlarında bulanıklık</div>
+              <div class="side-item"><span class="side-arr">▸</span>Işık / gölge tutarsızlığı</div>
+              <div class="side-item"><span class="side-arr">▸</span>Ses-dudak senkron hatası</div>
+              <div class="side-item"><span class="side-arr">▸</span>Aşırı pürüzsüz / yapay cilt</div>
+              <div class="side-item"><span class="side-arr">▸</span>Arka plan bozulmaları</div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">✅ YAPIN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-ok">✓</span>Gizlilik odaklı araçları tercih edin</div>
+              <div class="side-item"><span class="side-ok">✓</span>Geçici sohbet modunu kullanın</div>
+              <div class="side-item"><span class="side-ok">✓</span>Opt-out ayarlarını aktif edin</div>
+              <div class="side-item"><span class="side-ok">✓</span>Veriyi anonimleştirin</div>
+              <div class="side-item"><span class="side-ok">✓</span>Sohbet geçmişini silin</div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">🚫 YAPMAYIN</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-bad">✕</span>PII içeren veri yüklemeyin</div>
+              <div class="side-item"><span class="side-bad">✕</span>Başkasının verisini izinsiz paylaşmayın</div>
+              <div class="side-item"><span class="side-bad">✕</span>Orijinal belge yüklemeyin</div>
+              <div class="side-item"><span class="side-bad">✕</span>Kritik kararları YZ'ye bırakmayın</div>
+              <div class="side-item"><span class="side-bad">✕</span>Şüpheli videolara körü körüne güvenmeyin</div>
+            </div>
+          </div>
+          <div class="side-card">
+            <div class="side-title">⚖️ GDPR REFERANSLARI</div>
+            <div class="side-list">
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">Md.5</strong> — Veri İşleme İlkeleri</span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">Md.7</strong> — Açık Rıza</span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">Md.15-22</strong> — Kullanıcı Hakları</span></div>
+              <div class="side-item"><span class="side-arr">▸</span><span><strong style="color:#fff;">Md.32</strong> — Güvenlik Önlemleri</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;margin-top:20px;">
+        <button class="btn btn-primary" id="btn-reading-done" onclick="return safeAdvance(2,3)">Okumayı Tamamladım →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 3: QUIZ -->
+    <div class="lesson-panel" id="panel-3">
+      <div class="quiz-wrap">
+        <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:0%"></div></div>
+        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">Doğru: 0</span></div>
+        <div id="q-area"></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: SENARYO -->
+    <div class="lesson-panel" id="panel-4">
+      <div class="scenario-card">
+        <div class="scenario-head">
+          <div class="scenario-head-inner">
+            <div class="scene-byte">📊</div>
+            <div>
+              <div class="scene-label">📍 SENARYO — OFİS / PAZARLAMA TOPLANTISI</div>
+              <div class="scene-text">Pazarlama müdürü Selin Hanım, yeni kampanya için hedef kitle analizi yapacak. Elinde 200 kişilik müşteri listesi var — isim, e-posta, telefon ve satın alma geçmişi. <strong>"Hızlı bir segment analizi lazım"</strong> diyor ve ChatGPT'yi açıyor.<br><br>
+              Yanındaki veri sorumlusu Emre duraksıyor: <em>"Bekle, bu müşteri verilerini doğrudan ChatGPT'ye yapıştırabilir miyiz?"</em><br><br>
+              Toplantı odası sessiz, herkes birbirine bakıyor.</div>
+            </div>
+          </div>
+        </div>
+        <div class="scene-body">
+          <div class="scene-q">Emre olsaydınız, Selin Hanım'a ne önerirdiniz?</div>
+          <div class="scene-opts" id="scene-opts">
+            <button class="scene-opt" onclick="pickScene(0)">
+              <span class="s-icon">📋</span>
+              <div><strong>A) "Sorun yok, yapıştır"</strong> — ChatGPT güvenlidir, müşteri verilerini rahatlıkla analiz eder. Hızlı sonuç alırız.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(1)">
+              <span class="s-icon">🎭</span>
+              <div><strong>B) Anonimleştirerek kullan</strong> — İsimleri, e-postaları, telefonları kaldır. "200 müşteri, 3 segment, şu satın alma aralıkları" şeklinde soruyu genelleştir.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(2)">
+              <span class="s-icon">⏸️</span>
+              <div><strong>C) Tamamen durdurun</strong> — YZ araçları hiç kullanılmamalı. Excel'de manuel analiz yapalım.</div>
+            </button>
+            <button class="scene-opt" onclick="pickScene(3)">
+              <span class="s-icon">🏢</span>
+              <div><strong>D) Kurumsal YZ aracı kullanın</strong> — Şirketin onayladığı, veri gizliliği sözleşmesi olan özel bir YZ platformu varsa, şartları kontrol edip o kanalı kullanın.</div>
+            </button>
+          </div>
+          <div class="byte-fb" id="byte-fb">
+            <span style="font-size:2rem;flex-shrink:0;">🤖</span>
+            <div class="byte-fb-text" id="byte-fb-text"></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <button class="btn btn-green" id="scene-next" style="display:none;" onclick="return safeAdvance(4,5)">Devam Et →</button>
+      </div>
+    </div>
+
+    <!-- PANEL 5: ROZET -->
+    <div class="lesson-panel" id="panel-5">
+      <div class="badge-panel">
+        <div class="badge-glow-wrap">
+          <div class="badge-glow"></div>
+          <div class="badge-icon">🛡️</div>
+        </div>
+        <h2 class="badge-title">AI KALKANI</h2>
+        <div class="badge-subtitle">Yapay zeka araçlarını etik ve güvenli kullanan profesyonel</div>
+        <div class="xp-celebrate">
+          <div class="xp-big" id="final-xp">4100</div>
+          <div class="xp-lbl">TOPLAM<br>XP</div>
+        </div>
+        <div class="summary-grid">
+          <div class="sum-card"><div class="sum-val sv-g" id="s-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-r">350</div><div class="sum-label">XP Kazanıldı</div></div>
+          <div class="sum-card"><div class="sum-val sv-y">5/5</div><div class="sum-label">Adım Tamamlandı</div></div>
+        </div>
+        <div class="next-lessons">
+          <div class="next-card" role="button" tabindex="0" onclick="goTo('index.html')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('index.html');}">
+            <div class="next-num">BYTE</div>
+            <div class="next-name">Anasayfa</div>
+            <div class="next-xp">İlerlemeni görüntüle</div>
+          </div>
+          <div class="next-card" role="button" tabindex="0" onclick="goTo('modul12.html')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();goTo('modul12.html');}">
+            <div class="next-num">MODÜL 12</div>
+            <div class="next-name">Sonraki Modüle Geç</div>
+            <div class="next-xp">Devam Et</div>
+          </div>
+        </div>
+        <p style="font-size:.93rem;color:var(--text-dim);max-width:500px;margin:24px auto 32px;line-height:1.7;">"Veriyi korumak, mahremiyeti ve güveni korumaktır. Dijital çağda emanete sadık kalmak ahlaki bir duruştur."</p>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script>
+let completedSteps = new Set();
+const stepXP = {1:50,2:70,3:160,4:40,5:30};
+let quizScore = 0, quizIdx = 0, quizAnswered = false;
+
+function startVideo(){
+  const overlay = document.getElementById('vid-overlay');
+  if (overlay) overlay.classList.add('hidden');
+
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1');
+    }
+  }
+
+  const prog = document.getElementById('vprog');
+  const vt = document.getElementById('vtime');
+  if (!prog || !vt) return;
+
+  const playCtrl = document.getElementById('play-ctrl');
+  const playBtn = document.getElementById('play-btn');
+  if (playCtrl) playCtrl.textContent = '? Duraklat';
+  if (playBtn) playBtn.textContent = '?';
+
+  const chs = document.querySelectorAll('.ch-pill');
+  let p = 0;
+  const iv = setInterval(() => {
+    p += 1.6;
+    if (p >= 100) {
+      p = 100;
+      clearInterval(iv);
+      if (playCtrl) playCtrl.textContent = '? Oynat';
+      if (playBtn) playBtn.textContent = '?';
+    }
+
+    prog.style.width = p + '%';
+    const s = Math.floor((p / 100) * 570);
+    vt.textContent = Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0') + ' / 9:30';
+
+    if (chs.length > 0) {
+      const ci = p < 20 ? 0 : p < 40 ? 1 : p < 62 ? 2 : p < 80 ? 3 : 4;
+      chs.forEach((c, i) => c.classList.toggle('active', i === ci));
+    }
+  }, 200);
+}function goStep(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const panel=document.getElementById('panel-'+n);
+  if(panel){panel.classList.add('active');panel.style.display='block';}
+  document.querySelectorAll('.step-btn').forEach(b=>b.classList.remove('active'));
+  const stepBtn=document.getElementById('step-btn-'+n);
+  if(stepBtn)stepBtn.classList.add('active');
+  if (n===5 && typeof saveProgress === 'function') saveProgress(11);
+  if (n===3 && quizIdx===0) renderQuestion();
+  window.scrollTo({top:180,behavior:'smooth'});
+}
+
+function completeStep(n) {
+  if (completedSteps.has(n)) { goStep(n+1); return; }
+  completedSteps.add(n);
+  addXP(stepXP[n], '');
+  const dot = document.getElementById('dot-'+n);
+  dot.textContent = '✓'; dot.className = 'step-dot done';
+  const msgs = {1:'Video tamamlandı!',2:'Okuma tamamlandı!',3:'Quiz tamamlandı!',4:'Senaryo tamamlandı!',5:'Modül tamamlandı!'};
+  showToast('xp','⚡ +'+stepXP[n]+' XP', msgs[n]||'');
+  if (n===5) {
+    document.getElementById('final-xp').textContent=xp;
+    document.getElementById('s-correct').textContent=quizScore;
+    if (typeof saveProgress === 'function') saveProgress(11);
+    showToast('xp','🏆 ROZET KAZANILDI!','AI Kalkanı rozetini aldın!');
+    goStep(5);
+  }
+  else goStep(n+1);
+}
+
+function safeAdvance(stepNo, nextStep) {
+  try {
+    completeStep(stepNo);
+  } catch (e) {
+    // If XP/progress logic fails for any reason, still allow navigation.
+  }
+  try {
+    goStep(nextStep);
+  } catch (e) {
+    // No-op
+  }
+  if (nextStep===5 && typeof saveProgress === 'function') saveProgress(11);
+  return false;
+}
+
+function goTo(url){window.location.href=url;}
+function tryNav(){showToast('warn','🔒 Kilitli','Bu modülü açmak için önce Modül 11\'i tamamla.');}
+
+function byteSpeak() {
+  const av = document.getElementById('byteAvatar');
+  const lines = [
+    'Bana emanet edilen veriyi, sahibinin rızası olmadan paylaşmak güveni zedelemektir.',
+    'Yapay zekaya yazdığın her şeyin herkese açık bir forum gibi görülebileceğini varsay.',
+    'Başkasının müşteri listesini YZ araçlarına yüklemeden önce anonimleştir.',
+    'Deepfake sesini tanımanın yolu: şüpheli durumlarda farklı kanaldan doğrula.',
+    'Gizlilik bir hak değil, aktif olarak korunması gereken bir değerdir.'
+  ];
+  const msg = lines[Math.floor(Math.random()*lines.length)];
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(msg);
+    u.lang='tr-TR'; u.rate=0.91; u.pitch=1.04;
+    u.onstart=()=>av.classList.add('speaking');
+    u.onend=()=>av.classList.remove('speaking');
+    window.speechSynthesis.speak(u);
+  }
+}
+
+window.moduleQuestions = [
+  {q:'Bir öğretmen öğrenci performans verilerini içeren Excel tablosunu ChatGPT\'ye yükleyerek analiz yaptırmak istiyor. Bu eylem hangi temel riski doğurur?',opts:['Excel dosyaları ChatGPT tarafından okunamaz','Hassas öğrenci verileri güvenliği bilinmeyen sunuculara iletilir ve kul hakkı ihlali oluşur','ChatGPT yanlış analiz yapabilir','Dosya boyutu çok büyük olabilir'],correct:1,fb:'Doğru! Öğrenci isimleri ve notları PII (kişisel olarak tanımlanabilir bilgi) içerir. Herkese açık YZ araçlarına yüklemek hem GDPR ihlali hem de etik bir sorundur.'},
+  {q:'"Yapay zekayı bir stajyer gibi düşünün" metaforu ne anlama gelir?',opts:['YZ çok yavaş çalışır','YZ zeki ve hafızası güçlü — ama neyi gizli tutması gerektiğini bilmez; verdiğiniz bilgiler başkaları tarafından görülebilir','YZ sadece basit işler yapabilir','YZ\'nin kendi fikirleri yoktur'],correct:1,fb:'Doğru! Stajyer metaforu şunu anlatır: YZ her bilgiden öğrenir, hafızası güçlüdür — ama neyi gizli tutacağını bilmez.'},
+  {q:'10 Altın İlke\'ye göre, başkasına ait bir veriyi yapay zeka aracıyla işlemeniz zorunluysa ne yapmalısınız?',opts:['En güvenilir YZ aracını seçip doğrudan yükleyin','İsimleri, iletişim bilgilerini ve kimliği belli eden unsurları kaldırarak anonimleştirin','Sadece gece vakti işlem yapın','Hukuk departmanını bekleyin'],correct:1,fb:'Doğru! İlke 4: Anonimleştirmeden paylaşım yapmayın. Gereksiz isimleri ve kimliği belli eden unsurları kaldırın, ardından soruyu genelleştirin.'},
+  {q:'Deepfake ses klonlama saldırısında saldırgan ne yapar?',opts:['Kurbanın telefonunu hackler','Kısa bir ses örneğinden kurbanın sesini kopyalayarak "CEO\'dan acil para transferi" gibi sahte talepler oluşturur','Sosyal medya hesabını ele geçirir','E-posta şifresini çalar'],correct:1,fb:'Doğru! Sadece 3-10 saniyelik ses örneğiyle birinin sesi kopyalanabilir. 2023\'te bir CFO, ses klonlama yöntemiyle 25 milyon dolar transfer ettirdi.'},
+  {q:'ChatGPT\'de en az risk oluşturan kullanım yöntemi hangisidir?',opts:['Google hesabıyla giriş yapmak','"Temporary Chat" (Geçici Sohbet) modunu kullanmak','Anonim tarayıcıda açmak','Telefon numarası ile kaydolmak'],correct:1,fb:'Doğru! Geçici Sohbet modu, konuşmanın kaydedilmesini ve model eğitimi için kullanılmasını engeller.'},
+  {q:'Gizlilik odaklı YZ araçları arasında en yüksek güvenlik seviyesini sunan hangisidir?',opts:['ChatGPT (varsayılan ayarlar)','Gemini (Google)','Yerel olarak çalıştırılan açık kaynaklı YZ (Llama, GPT4All)','Perplexity.ai'],correct:2,fb:'Doğru! Kendi kendine barındırılan YZ araçları maksimum güvenlik sağlar — veriler cihazdan asla ayrılmaz.'},
+  {q:'GDPR\'ın hangi maddesi YZ araçlarına veri yüklerken en sık çatışma yaşanan alandır?',opts:['Madde 1 — GDPR\'ın Amacı','Madde 7 — Açık Rıza','Madde 25 — Tasarım Gereği Veri Koruma','Madde 30 — Kayıt Tutma'],correct:1,fb:'Doğru! GDPR Madde 7, kişisel verilerin kullanımı için açık rızayı zorunlu kılar. İtalya bu gerekçeyle ChatGPT\'yi geçici yasakladı.'},
+  {q:'"Veri emanettir" anlayışında bir kurum yöneticisi bağışçı listesini başka bir kuruluşla iyi niyetle paylaşırsa ne olur?',opts:['İyi niyet tüm etik riskleri ortadan kaldırır','Veri sahibinin açık rızası alınmadığından kul hakkı ihlali, güven ihlali ve mahremiyet zedelenmesi gerçekleşir','Sadece GDPR para cezası riski oluşur','Bağışçılar zaten kamuya açık kişilerdir'],correct:1,fb:'Doğru! İyi niyet etik ilkeleri devre dışı bırakmaz. Açık rıza olmadan paylaşım kul hakkı, güven ihlali ve mahremiyet zedelenmesi üçlüsünü oluşturur.'},
+  {q:'Bir deepfake video izliyorsunuz — hangisi sahte olduğunu gösteren bir işaret DEĞİLDİR?',opts:['Yüz kenarlarında bulanıklık ve ışık tutarsızlığı','Dudak-ses senkronizasyon bozukluğu','Videonun çok yüksek çözünürlüklü olması','Göz kırpma düzensizliği ve aşırı pürüzsüz cilt'],correct:2,fb:'Doğru! Yüksek çözünürlük deepfake belirtisi değil. Gerçek ipuçları: yüz kenarı bulanıklığı, dudak-ses kayması, ışık tutarsızlığı ve göz kırpma anomalileri.'},
+  {q:'"Saklama Süresini Kısalt" ilkesi ne anlama gelir?',opts:['Verileri hızlı internet ile yüklemelisiniz','İşi biten veriyi gereksiz yere saklamak emaneti riske atmaktır — verinin amacı kalmadığında güvenli şekilde imha edilmelidir','Sadece küçük dosyalar saklanmalıdır','Veriler 30 günden fazla tutulamaz'],correct:1,fb:'Doğru! "Dursun kenarda" mantığı emaneti gereksiz riske atar. Veri saklama politikaları net olmalı ve uygulanmalıdır.'}
+];
+
+function renderQuestion() {
+  if (quizIdx>=window.moduleQuestions.length){showQuizResult();return;}
+  quizAnswered=false;
+  const q=window.moduleQuestions[quizIdx];
+  document.getElementById('qprog').style.width=(quizIdx/window.moduleQuestions.length*100)+'%';
+  document.getElementById('q-label').textContent='Soru '+(quizIdx+1)+' / '+window.moduleQuestions.length;
+  document.getElementById('q-score').textContent='Doğru: '+quizScore;
+  const L=['A','B','C','D'];
+  document.getElementById('q-area').innerHTML=`
+    <div class="question-card">
+      <div class="question-num">SORU ${quizIdx+1} / ${window.moduleQuestions.length}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="feedback-box" id="fb-box"></div>
+    </div>
+    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">Sonraki Soru →</button></div>`;
+}
+
+function answerQ(i) {
+  if(quizAnswered)return;
+  quizAnswered=true;
+  const q=window.moduleQuestions[quizIdx];
+  document.querySelectorAll('.option-btn').forEach((b,j)=>{
+    b.style.pointerEvents='none';
+    if(j===q.correct)b.classList.add('correct');
+    else if(j===i&&i!==q.correct)b.classList.add('wrong');
+  });
+  const fb=document.getElementById('fb-box');
+  if(i===q.correct){quizScore++;fb.className='feedback-box correct show';fb.textContent='✓ '+q.fb;document.getElementById('q-score').textContent='Doğru: '+quizScore;}
+  else{fb.className='feedback-box wrong show';fb.textContent='✗ '+q.fb;}
+  document.getElementById('nqb').style.display='block';
+}
+
+function nextQuestion(){quizIdx++;renderQuestion();}
+
+function showQuizResult() {
+  document.getElementById('qprog').style.width='100%';
+  const passed=quizScore>=7;
+  if (typeof saveQuizResult === 'function') saveQuizResult(quizScore, window.moduleQuestions.length);
+  document.getElementById('q-area').innerHTML=`
+    <div class="question-card" style="text-align:center;padding:36px;">
+      <div style="font-size:3.5rem;margin-bottom:16px;">${passed?'🏆':'📚'}</div>
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENE'}</div>
+      <div style="font-size:.95rem;color:var(--text-dim);margin-bottom:24px;">${quizScore} / ${window.moduleQuestions.length} doğru${passed?' — Geçme eşiğini aştın!':' — En az 7 doğru gerekiyor.'}</div>
+      ${passed?`<button class="btn btn-green" onclick="completeStep(3)">Devam Et — Senaryo →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Quizi Tekrar Dene</button>`}
+    </div>`;
+  document.getElementById('s-correct').textContent=quizScore;
+}
+
+function restartQuiz(){quizScore=0;quizIdx=0;renderQuestion();}
+
+const sceneFB=[
+  {ok:false,text:'<span class="bad">❌ Yanlış.</span> ChatGPT herkese açık bir platformdur. 200 müşterinin kişisel verisini yapıştırmak GDPR ihlali ve kul hakkı sorunudur. Müşteriler bu paylaşıma onay vermedi.'},
+  {ok:true, text:'✅ Mükemmel! Doğru yaklaşım bu. İsimleri ve kişisel verileri kaldırıp "200 müşteri, segmentasyon analizi" şeklinde anonim soru sormak hem yasal hem etik.'},
+  {ok:false,text:'<span class="bad">❌ Aşırı tepki.</span> YZ araçları doğru kullanıldığında değerli. Tamamen reddetmek yerine veriyi anonimleştirerek analizi yapabilirsiniz.'},
+  {ok:true, text:'✅ Çok iyi! Şirketin onayladığı, veri işleme sözleşmesi imzalanmış kurumsal YZ platformu kullanmak hem hukuki hem etik açıdan güvenlidir.'}
+];
+
+function pickScene(i){
+  document.querySelectorAll('.scene-opt').forEach(b=>b.style.pointerEvents='none');
+  document.querySelectorAll('.scene-opt')[i].classList.add(sceneFB[i].ok?'chosen-correct':'chosen-wrong');
+  document.getElementById('byte-fb-text').innerHTML=sceneFB[i].text;
+  document.getElementById('byte-fb').classList.add('show');
+  const nextBtn = document.getElementById('scene-next') || document.getElementById('scene-next-btn');
+  if (nextBtn) setTimeout(()=>{nextBtn.style.display='inline-block';},400);
+}
+
+function showToast(type,title,msg){
+  const t=document.createElement('div');
+  t.className='toast '+type;
+  const icons={xp:'⚡',info:'ℹ️',warn:'⚠️'};
+  t.innerHTML=`<div class="toast-icon">${icons[type]||'•'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(()=>t.remove(),3200);
+}
+
+// Keep module-specific handlers to restore after shared app script loads.
+window.__m11 = {
+  goStep,
+  completeStep,
+  renderQuestion,
+  answerQ,
+  nextQuestion,
+  restartQuiz,
+  pickScene
+};
+</script>
+<script src="js/app.js"></script>
+<script>
+if (window.__m11) {
+  Object.assign(window, window.__m11);
+}
+</script>
+</body>
+</html>
+
+
+
+

@@ -1,7 +1,7 @@
 // ══════════════════════════════════════════════════════
 // BYTE ACADEMY — SERVICE WORKER  (PWA Offline Desteği)
 // ══════════════════════════════════════════════════════
-const CACHE = 'byte-v1';
+const CACHE = 'byte-v3';
 
 const ASSETS = [
   '/',
@@ -59,6 +59,33 @@ self.addEventListener('fetch', e => {
   // Chrome extension isteklerini atla
   if (!e.request.url.startsWith('http')) return;
 
+  const accept = e.request.headers.get('accept') || '';
+  const url = new URL(e.request.url);
+  const isDocument = e.request.mode === 'navigate' || accept.includes('text/html');
+  const isStaticCode = /\.(js|css)$/i.test(url.pathname);
+
+  if (isDocument || isStaticCode) {
+    // Online iken en guncel kodu al, offline iken cache'e dus.
+    e.respondWith(
+      fetch(e.request)
+        .then(res => {
+          if (res && res.status === 200 && res.type !== 'opaque') {
+            const clone = res.clone();
+            caches.open(CACHE).then(c => c.put(e.request, clone));
+          }
+          return res;
+        })
+        .catch(() =>
+          caches.match(e.request).then(cached => {
+            if (cached) return cached;
+            if (isDocument) return caches.match('/index.html');
+            return undefined;
+          })
+        )
+    );
+    return;
+  }
+
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
@@ -71,9 +98,7 @@ self.addEventListener('fetch', e => {
           return res;
         })
         .catch(() => {
-          // Offline fallback: HTML isteği ise index'e yönlendir
-          if (e.request.headers.get('accept') &&
-              e.request.headers.get('accept').includes('text/html')) {
+          if (isDocument) {
             return caches.match('/index.html');
           }
         });

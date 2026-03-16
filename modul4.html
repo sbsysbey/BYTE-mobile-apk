@@ -108,11 +108,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--purple);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(192,132,252,.05);border-color:rgba(192,132,252,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{display:block;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;transition:.2s;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -705,64 +706,144 @@ function byteSpeak() {
 // ── QUIZ QUESTIONS ──
 window.moduleQuestions = [
   {
-    q: "WhatsApp'ta tanıdık birinden '6 haneli kodu yanlışlıkla sana gönderdim, atar mısın?' mesajı geldi. Ne yaparsın?",
-    opts: ["Kodu gönderirsin — tanıdık biri zor durumda","Kodu göndermez, kişiyi doğrudan arayarak durumu teyit edersin","Kodu göndermeden önce biraz beklersin","Kodu göndermeden önce doğrulama sorusu sorarsın"],
-    correct: 1,
-    fb: { wrong: "Bu Avrupa'da en yaygın WhatsApp dolandırıcılığıdır. Arkadaşının hesabı çalınmış olabilir. Kodu gönderirsen kendi hesabın ele geçirilir.", correct: "Mükemmel! Kodu asla gönderme. Arayarak sesini duy ve durumu doğrula. WhatsApp giriş kodu başkasına verilecek bir şey değildir." }
+    q: "WhatsApp'ta tanıdık birinden 6 haneli doğrulama kodunu yanlışlıkla sana gönderdim, bana atar mısın mesajı gelirse ne yaparsınız?",
+    opts: [
+      "Kişiyi hemen arayarak durumu teyit eder, mesajın gerçekten ondan gelip gelmediğini kontrol edersiniz.",
+      "Tanıdığınız biri zor durumda kalmasın diye gelen kodu hızlıca mesaj yoluyla ona geri gönderirsiniz.",
+      "Kodu göndermeden önce kişiye özel bir soru sorarak kimliğini kanıtlamasını istersiniz.",
+      "Kodu gönderir ancak hemen ardından WhatsApp ayarlarından şifrenizi değiştirmeyi denersiniz."
+    ],
+    correct: 0,
+    fb: {
+      wrong: "Doğrulama kodu paylaşımı hesap ele geçirme saldırılarının en yaygın adımıdır; iyi niyetle gönderilen kod doğrudan hesabı kaybettirebilir.",
+      correct: "Doğru! Aynı kişiyi farklı bir kanaldan arayıp doğrulamak, ele geçirilmiş hesap kaynaklı kimlik taklidini engellemenin en güvenli yoludur."
+    }
   },
   {
-    q: "Yeni bir numaradan mesaj geliyor: 'Anne, benim! Telefonum bozuldu, bu arkadaşımın numarası. Acil €300 lazım.' Ne yaparsın?",
-    opts: ["Çocuğun zor durumda, parayı gönderirsin","Eski numarasını arar ve sesini duyarak doğrularsın","Mesajı dikkate almazsın","Kimliğini kanıtlaması için soru sorarsın ve cevabını beklersin"],
-    correct: 1,
-    fb: { wrong: "Bu 'Hi Mom/Hi Dad' dolandırıcılığıdır. Hollanda'da 2024'te bu yöntemle 25 milyon € çalındı. Soru sormak da yetmez — cevapları sosyal medyadan öğrenmiş olabilirler.", correct: "Doğru! Eski numarayı ara, sesini duy. Para göndermeden önce başka bir kanaldan %100 doğrula. Hiçbir gerçek acil durum bu doğrulamayı bekleyemeyecek kadar acil değildir." }
+    q: "Yeni bir numaradan Anne veya Baba telefonum bozuldu, acil para lazım mesajı aldığınızda izlemeniz gereken en güvenli yol nedir?",
+    opts: [
+      "Arkadaşının numarası olduğunu söylediği için tereddüt etmeden istenen miktarı hemen gönderirsiniz.",
+      "Mesajın yazım tarzını kontrol eder, eğer her zamanki gibi yazıyorsa parayı güvenle iletirsiniz.",
+      "Çocuğunuzun eski kayıtlı numarasını arayarak veya sesini duyarak durumu bizzat doğrularsınız.",
+      "Kimliğini kanıtlaması için ona sadece ikinizin bildiği bir soru sorup cevabını yazılı beklersiniz."
+    ],
+    correct: 2,
+    fb: {
+      wrong: "Sadece yazım tarzı veya mesaj tonu güvenlik kanıtı değildir; bu saldırılar taklit içerikle kolayca inandırıcı hale getirilebilir.",
+      correct: "Harika! Kayıtlı numaraya geri arama veya ses doğrulama, Hi Mom veya Hi Dad dolandırıcılığında en etkili karşı hamledir."
+    }
   },
   {
-    q: "Bir site 'ücretsiz Netflix erişimi' sunuyor ve 'sadece doğrulama için' kart bilgilerini istiyor. Ne yaparsın?",
-    opts: ["Kart bilgilerini girersin — doğrulama için olduğunu söylüyorlar","Bu tuzaktır — kart bilgilerini girmez, siteyi kapatırsın","Sanal kart kullanırsın — böylece güvendesin","Sadece kart numarasını girersin, CVV'yi vermezsin"],
+    q: "Bir web sitesi ücretsiz üyelik karşılığında sadece doğrulama amaçlı kart bilgilerinizi isterse ne yaparsınız?",
+    opts: [
+      "Sanal kart oluşturup limitini sıfırlayarak bilgileri girer ve güvenliğinizi bu şekilde sağlarsınız.",
+      "Bunun bir kredi kartı dolandırıcılığı tuzağı olduğunu anlayıp siteyi hemen kapatır ve bilgilerinizi vermezsiniz.",
+      "Kartın sadece ön yüzündeki numarasını girer, CVV ve son kullanma tarihi gibi hassas kısımları boş bırakırsınız.",
+      "Sitenin tasarımının profesyonel görünüp görünmediğine bakarak güvenilir olduğuna karar verirsiniz."
+    ],
     correct: 1,
-    fb: { wrong: "Kart bilgilerini isteyen her 'ücretsiz' site şüphelidir. 'Doğrulama için' bahanesi klasik bir tuzaktır — bilgiler çalınır veya aylık ücret başlar.", correct: "Kesinlikle! Gerçek ücretsiz hizmetler kart bilgisi istemez. Netflix, Spotify gibi hizmetlerin resmi sitelerini kullan." }
+    fb: {
+      wrong: "Kart bilgisi talep eden ücretsiz teklifler sıkça oltalama veya sahte abonelik tuzağıdır; kısmi bilgi paylaşımı bile riski kaldırmaz.",
+      correct: "Doğru! En güvenli yaklaşım bilgiyi hiç paylaşmamak ve şüpheli sayfayı hemen kapatmaktır."
+    }
   },
   {
-    q: "Sosyal medyada 'WhatsApp'ta seni takip edenleri gör!' linki paylaşılmış. Arkadaşların tıklamış bile. Ne yaparsın?",
-    opts: ["Tıklarsın — arkadaşların tıkladıysa güvenlidir","Tıklamazsın — WhatsApp bu tür verileri üçüncü taraflarla paylaşmaz, bu bir tuzaktır","Tıklarsın ama kişisel bilgi girmezsin","Önce antivirüsle taratırsın, temizse tıklarsın"],
-    correct: 1,
-    fb: { wrong: "Arkadaşların tıklamış olması güvenli olduğu anlamına gelmez — zincir saldırıdır. Ele geçirilen hesaplar aynı linki yayıyor.", correct: "Doğru! WhatsApp, Instagram veya TikTok bu tür verileri üçüncü taraf sitelere asla vermez. Bu linkler hesap çalmak veya zararlı yazılım bulaştırmak içindir." }
+    q: "Sosyal medyada paylaşılan WhatsApp'ta profilini kimler gezmiş gör benzeri linkler için hangisi doğrudur?",
+    opts: [
+      "Arkadaşlarınız bu linke tıkladıysa ve bir sorun yaşamadıysa siz de güvenle tıklayıp kullanabilirsiniz.",
+      "Linki açıp sadece telefon numaranızı girer, herhangi bir şifre veya onay kodu paylaşmadan devam edersiniz.",
+      "Bu bir oltalama phishing tuzağıdır; uygulama resmi olmadığı için kişisel verilerinizi çalmayı hedefler.",
+      "Linke tıklamadan önce bilgisayarınızdaki antivirüs programı ile kısa bir tarama yapıp öyle açarsınız."
+    ],
+    correct: 2,
+    fb: {
+      wrong: "Arkadaşın tıklaması ya da antivirüs taraması, sahte form ve kimlik avı riskini otomatik olarak ortadan kaldırmaz.",
+      correct: "Kesinlikle! Bu tip linkler resmi uygulama özelliği değildir ve çoğunlukla kullanıcı verisi toplamak için hazırlanır."
+    }
   },
   {
-    q: "Biri sana 'sadece banka hesabından para ilet, sana %10 komisyon vereyim' teklif etti. Ne yaparsın?",
-    opts: ["Kabul edersin — kolay para ve risk yok gibi görünüyor","Reddedersin — bu kara para aklamadır, hem mağdur hem suça ortak olursun","Önce küçük bir denemeyaparsin","Yalnızca bir kez yaparsın, sonra bırakırsın"],
+    q: "Bir yabancı, kendi parasını sizin hesabınız üzerinden iletmeniz karşılığında size komisyon teklif ederse ne yaparsınız?",
+    opts: [
+      "Önce çok küçük bir tutarla deneme yapar, sorun çıkmazsa daha büyük miktarlar için kabul edersiniz.",
+      "Teklifi reddedersiniz; bu bir kara para aklama yöntemidir ve sizi doğrudan bir suçun ortağı yapar.",
+      "Komisyon oranını artırmasını isteyerek risk-kazanç dengesini kendi lehinize çevirmeye çalışırsınız.",
+      "Sadece bir defaya mahsus olmak üzere yardım amaçlı kabul eder, sonrasında iletişimi kesersiniz."
+    ],
     correct: 1,
-    fb: { wrong: "Bu 'money mule' (para katırı) dolandırıcılığıdır. AB ülkelerinde suç sayılır. Banka hesabın kalıcı kapatılabilir, savcılığa sevk edilebilirsin.", correct: "Kesinlikle! Başkasının parasını iletmek kara para aklamadır. 'Kolay para' her zaman büyük bir riskin işaretidir." }
+    fb: {
+      wrong: "Para transferine aracılık teklifi çoğu durumda money mule senaryosudur; deneme amaçlı dahi kabul etmek hukuki risk doğurur.",
+      correct: "Doğru! Bu teklif kara para aklama zincirinin parçası olabilir ve hesabınızı adli sürece sürükleyebilir."
+    }
   },
   {
-    q: "Ofis otoparkında 'Maaş Listesi 2024' yazılı bir USB bellek buldun. Ne yaparsın?",
-    opts: ["İçine bakarsın — belki önemli birinin belgesi","IT departmanına teslim edersin veya çöpe atarsın — asla takmadan","Kendi bilgisayarına değil, iş arkadaşının bilgisayarına takarsın","Antivirüsle taratırsın, temizse içine bakarsın"],
-    correct: 1,
-    fb: { wrong: "Cazip bir etiket, baiting saldırısının en bilinen taktiğidir. Etiketi ne olursa olsun — özellikle 'Maaş Listesi' gibi merak uyandıran etiketler şüphe uyandırmalı.", correct: "Doğru! Bulduğun USB'yi asla takma. IT'ye teslim et veya çöp. ABD Savunma Bakanlığı bile bu yöntemle hacklendi." }
+    q: "Ofis otoparkında veya asansörde üzerinde Maaş Listesi yazan bir USB bellek bulursanız ne yapmalısınız?",
+    opts: [
+      "Merakınızı gidermek için belleği kendi bilgisayarınıza takıp sadece ilgili dosyayı hızlıca kontrol edersiniz.",
+      "Belleği güvenliğinden emin olduğunuz bir arkadaşınızın bilgisayarında açarak virüs olup olmadığına bakarsınız.",
+      "Kendi bilgisayarınıza takmadan önce güncel bir antivirüs yazılımı ile belleği derinlemesine taratırsınız.",
+      "Belleği asla hiçbir cihaza takmaz; imha eder veya incelenmesi için bilgi işlem IT birimine teslim edersiniz."
+    ],
+    correct: 3,
+    fb: {
+      wrong: "Baiting saldırılarında merak duygusu hedeflenir; bellek bir kez takıldığında otomatik yürüyen zararlı kod riski oluşabilir.",
+      correct: "Mükemmel! En güvenli yöntem USB'yi hiç takmamak ve yetkili BT ekibine kontrollü inceleme için teslim etmektir."
+    }
   },
   {
-    q: "Telefonda biri 'ING güvenlik birimi, hesabınızda şüpheli işlem var' deyip SMS doğrulama kodu istedi. Ne yaparsın?",
-    opts: ["Kodu söylersin — gerçekten banka arıyor olabilir","Telefonu kapatıp ING'nin kartının arkasındaki resmi numarasını arayarak doğrularsın","Kodu söylemeden adını ve son 4 hane kart numaranı verirsin","Kodu söylemeden önce 'ben mi aradım?' diye sorarsın"],
-    correct: 1,
-    fb: { wrong: "Caller ID spoofing ile gerçek banka numarasından bile arayabilirler. Bankalar telefonda asla OTP kodu, şifre veya CVV istemez.", correct: "Mükemmel! Gelen aramalarda asla kod verme. Kapat, resmi numarayı kendin ara. Bu kural hayat kurtarır." }
+    q: "Kendini banka görevlisi olarak tanıtan birinin telefonla arayıp Guvenlik kodu istemesi durumunda ne yaparsınız?",
+    opts: [
+      "Karşı tarafa güvenmek yerine telefonu kapatır, bankanın resmi numarasını kendiniz tuşlayarak ararsınız.",
+      "Bankanın gerçekten arıyor olabileceğini düşünerek, işlemin iptali için gelen SMS kodunu telefonda söylersiniz.",
+      "Onay kodunu paylaşmazsınız ancak kimlik doğrulama için anne kızlık soyadı gibi diğer bilgilerinizi verirsiniz.",
+      "Kodu sesli söylemek yerine tuş takımıyla girmeyi teklif ederek daha güvenli bir yöntem izlediğinizi düşünürsünüz."
+    ],
+    correct: 0,
+    fb: {
+      wrong: "Arayan tarafın kimliği doğrulanmadan kod veya kişisel bilgi paylaşımı, hesap ele geçirme zincirini başlatabilir.",
+      correct: "Doğru! Görüşmeyi sonlandırıp resmi numarayı kendiniz aramak, vishing saldırılarına karşı altın standarttır."
+    }
   },
   {
-    q: "Sosyal mühendislik saldırılarında 'aciliyet' neden kullanılır?",
-    opts: ["Kurbanı daha nazik yapmak için","Kurbanın düşünme ve doğrulama sürecini devre dışı bırakmak için","Yasal sorumluluktan kaçmak için","Saldırının daha hızlı tamamlanması için"],
-    correct: 1,
-    fb: { wrong: "Aciliyet bir psikolojik silahtır. 'Hemen yapmazsan kötü bir şey olur' mesajı mantıklı düşünceyi engeller.", correct: "Tam olarak! 'Son 2 saat', 'hesabın silinecek', 'acil' — bunlar düşünmeni önlemek için. Ne kadar acil görünürse o kadar yavaş hareket et." }
+    q: "Sosyal mühendislik saldırılarında saldırganlar neden kurbanda bir aciliyet hissi yaratmaya çalışır?",
+    opts: [
+      "Kurbanın panik yapmasını sağlayarak mantıklı düşünme ve doğrulama yapma sürecini devre dışı bırakmak için.",
+      "Saldırıyı daha profesyonel ve kurumsal bir havaya sokarak kurbanın üzerindeki otorite baskısını artırmak için.",
+      "Yapılan siber saldırının teknik olarak daha kısa sürede tamamlanmasını ve iz bırakmamasını sağlamak için.",
+      "Hedef seçilen kişinin daha nazik ve yardımcı bir tutum sergileyerek sorgulama yapmasını engellemek için."
+    ],
+    correct: 0,
+    fb: {
+      wrong: "Aciliyet tekniğinin asıl hedefi teknik hız değil, kurbanın düşünmeden hareket etmesini sağlamaktır.",
+      correct: "Evet! Panik ve zaman baskısı, doğrulama refleksini bastırır; bu yüzden acil taleplerde özellikle yavaşlayıp kontrol etmek gerekir."
+    }
   },
   {
-    q: "Crack program veya oyun hilesi indirmek neden tehlikelidir?",
-    opts: ["Sadece telif hakkı ihlali olduğu için","Çoğunlukla trojan, keylogger veya spyware içerdiği için — program çalışırken arka planda bilgilerini çalabilir","Yalnızca eski bilgisayarlarda sorun çıkardığı için","İnternet hızını yavaşlattığı için"],
+    q: "Crackli program veya oyun hilesi gibi korsan içerikleri indirmek neden cihaz güvenliğini tehlikeye atar?",
+    opts: [
+      "Sadece telif haklarını ihlal ettiği için yasal sorumluluk doğurur ancak cihazın donanımına zarar vermez.",
+      "Bu dosyalar genellikle arka planda çalışan ve bilgilerinizi çalan casus yazılımlar spyware içerir.",
+      "Korsan yazılımlar orijinal dosyalara göre daha fazla yer kapladığı için bilgisayarı sadece yavaşlatırlar.",
+      "Sadece internet hızını düşürerek diğer uygulamaların çalışmasını engeller ancak veri hırsızlığı yapmazlar."
+    ],
     correct: 1,
-    fb: { wrong: "Telif ihlali de sorun ama asıl tehlike zararlı yazılımdır. 2023'te 'CS2 Cheat' adlı dosya 80.000+ gençten banka bilgisi çaldı.", correct: "Kesinlikle! Crack = casus yazılım kapısı. Adobe ve Spotify'ın öğrenci indirimleri, Photoshop'un ücretsiz alternatifleri (GIMP, Canva) meşru seçeneklerdir." }
+    fb: {
+      wrong: "Korsan yazılımlarda temel tehdit performans kaybı değil, truva atı veya keylogger bileşenleriyle veri sızıntısıdır.",
+      correct: "Doğru! Crack paketleri sıklıkla arka kapı veya spyware taşır ve oturum bilgileri dahil hassas verileri sızdırabilir."
+    }
   },
   {
-    q: "Sosyal mühendisliğe karşı en etkili üçlü savunma kuralı hangisidir?",
-    opts: ["Şüphe et, güven, paylaş","Dur, sor, doğrula","Tıkla, kontrol et, devam et","Oku, ara, bildir"],
+    q: "Sosyal mühendislik tuzaklarından korunmak için uygulanması gereken en etkili temel savunma kuralı hangisidir?",
+    opts: [
+      "Gelen her iletiyi dikkatlice okumak, bağlantılara hızlıca tıklamak ve süreci hemen tamamlamak.",
+      "Gelen bilgiyi şüpheyle karşılamak, acele etmeden durumu sorgulamak ve güvenilir kanaldan doğrulamak.",
+      "Sadece tanıdığınız kişilerden gelen mesajlara güvenmek ve gelen ek dosyaları doğrudan açmak.",
+      "Bilgisayarınızdaki antivirüs programına tam güven duymak ve tüm uyarıları görmezden gelmek."
+    ],
     correct: 1,
-    fb: { wrong: "Doğru sıra kritik: önce dur (acele etme), sonra sor (mantıklı mı?), sonra doğrula (başka kanaldan).", correct: "Mükemmel! DUR — SOR — DOĞRULA. Bu üç adım sosyal mühendislik saldırılarının büyük çoğunluğunu engeller." }
+    fb: {
+      wrong: "Tek başına tanıdık göndericiye güvenmek veya hızlı tıklamak, sosyal mühendislik saldırılarında en sık yapılan hatadır.",
+      correct: "Mükemmel! Şüphelen, yavaşla, güvenilir kanaldan doğrula yaklaşımı sosyal mühendislik vakalarının çoğunu daha başta engeller."
+    }
   }
 ];
 

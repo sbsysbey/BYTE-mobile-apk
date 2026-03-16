@@ -104,11 +104,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -189,7 +190,7 @@
         <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 06 🔊</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 06 🔊</div>
         <h1 class="mod-title">Veri Gizliliği & <span>Bulut Güvenliği</span></h1>
         <p class="mod-desc">Verilerine kim erişiyor? Bulut depolama güvenli mi? Hangi uygulama ne alıyor? BYTE ile dijital ayak izini kontrol et, bulut servislerini karşılaştır ve GDPR haklarını öğren.</p>
         <div class="mod-stats">
@@ -566,84 +567,84 @@ function byteSpeak(){
 
 window.moduleQuestions = [
   {
-    q: "Bir fener uygulaması hangi izni isterse şüphelenmelisin?",
-    opts: ["İnternet erişimi", "Ekran parlaklığı", "Depolama alanı", "Rehbere erişim"],
-    correct: 3,
+    q: "İşten ayrılan veya artık projede yer almayan birinin ortak klasör/dosya erişim yetkisi hakkında ne yapılmalıdır?",
+    opts: ["Erişim yetkisi olduğu gibi kalabilir; kişi artık çalışmadığı için zaten dosyaları kontrol etmeyecektir.", "Kişinin erişim yetkisi derhal kaldırılmalıdır; veri güvenliği sadece 'ihtiyaç duyulduğu kadar erişim' gerektirir.", "Sadece yönetici yetkileri alınmalı, 'görüntüleme' yetkisi anı olarak kalması için açık bırakılmalıdır.", "Dosya şifresi değiştirilmeli ancak eski personelin bu yeni şifreyi tahmin etmesi için süre verilmelidir."],
+    correct: 1,
     fb: {
-      wrong: "Fener uygulamasının rehberine kesinlikle ihtiyacı yoktur. Bu tür mantıksız izin istekleri kırmızı bayraktır.",
-      correct: "Doğru! Fener → Rehber tamamen anlamsız. Veri toplamak için bahane izin demektir."
+      wrong: "Yetki yönetiminde temel kural en az ayrıcalıktır. İşten ayrılan kişilerin erişimi bekletilmeden kapatılmalıdır.",
+      correct: "Doğru! Erişim yetkisi ihtiyaç bittiği anda kaldırılmalıdır; aksi halde veri sızıntısı riski artar."
     }
   },
   {
-    q: "iCloud Gelişmiş Veri Koruması (Advanced Data Protection) etkinleştirildiğinde ne olur?",
-    opts: ["Apple bile verilerinize erişemez — uçtan uca şifreleme kapsamı genişler", "Veriler yalnızca Wi-Fi ile aktarılır", "Yedeklemeler otomatik durur", "Fotoğraflar otomatik silinir"],
+    q: "Bir web sitesine veya uygulamaya üye olurken 'Hüküm ve Koşulları' (Aydınlatma Metni) incelemek veri gizliliği açısından neden önemlidir?",
+    opts: ["Uygulamanın telefonunuzun bataryasını ne kadar tükettiği hakkında teknik detaylara ulaşmanızı sağlar.", "Verilerinizin kimlerle paylaşıldığını ve hangi amaçlarla işlendiğini yasal olarak öğrenmenize imkan tanır.", "Sadece uygulamanın ücretli olup olmadığını anlamanızı sağlar; veri güvenliği ile ilgili bir bilgi içermez.", "Uygulama içerisindeki grafiklerin ve arayüzün kalitesini belirleyen standartlar hakkında bilgi verir."],
+    correct: 1,
+    fb: {
+      wrong: "Aydınlatma metni esas olarak veri işleme ve paylaşım koşullarını açıklar; gizlilik için kritik kaynaktır.",
+      correct: "Kesinlikle doğru! Hangi verinin kimlerle ve ne amaçla paylaşıldığını burada öğrenirsin."
+    }
+  },
+  {
+    q: "Bulut üzerinde paylaştığınız bir dosyanın erişim iznini 'Bağlantıya sahip olan herkes' şeklinde ayarlamak neden risklidir?",
+    opts: ["Dosyanın boyutu arttığı için bulut depolama alanınızın beklenenden daha hızlı dolmasına sebep olur.", "Bağlantı (link) bir şekilde başkalarının eline geçerse, yetkisiz herkesin verilerinize erişmesine yol açar.", "Sadece bağlantıya tıklayan kişilerin bilgisayarlarına otomatik olarak virüs bulaşma ihtimali çok yüksektir.", "Dosyanın internet üzerinden indirilme hızı düşer ve sadece belirli coğrafi bölgelerden erişim sağlanabilir."],
+    correct: 1,
+    fb: {
+      wrong: "Bu ayarda ana risk depolama değil erişimdir; link sızarsa yetkisiz kişiler de dosyaya ulaşabilir.",
+      correct: "Doğru! Herkese açık bağlantı modeli, linkin yayılması halinde ciddi veri sızıntısı oluşturur."
+    }
+  },
+  {
+    q: "Sosyal medya veya forum gibi halka açık dijital ortamlarda T.C. kimlik numarası, ev adresi veya uçak bileti (QR kodlu) paylaşmanın temel riski nedir?",
+    opts: ["Paylaşılan bilgilerin platform tarafından reklam hedeflemesi amacıyla kullanılarak hesabın askıya alınmasıdır.", "Bu bilgilerin kötü niyetli kişilerce ele geçirilerek adınıza sahte işlemler yapılmasına zemin hazırlamasıdır.", "Paylaşım yapılan cihazın işlemci performansının düşmesi ve internet tarayıcısının yavaş çalışmasıdır.", "Sadece paylaşımı gören arkadaşlarınızın bu bilgileri yanlışlıkla kendi profillerinde tekrar paylaşma ihtimalidir."],
+    correct: 1,
+    fb: {
+      wrong: "Asıl tehlike performans değil kimlik kötüye kullanımıdır; bu veriler sahte işlem ve dolandırıcılığa zemin hazırlar.",
+      correct: "Doğru! Kimlik ve seyahat verileri ele geçirilirse adınıza işlem yapılması gibi ciddi sonuçlar doğabilir."
+    }
+  },
+  {
+    q: "Elinizde birçok müşterinin veya iş arkadaşınızın bilgilerini içeren bir liste (Excel/PDF) varsa, bu listeyi korumak için en temel sorumluluğunuz nedir?",
+    opts: ["Listeyi herkesin erişebileceği ortak bir bulut klasörüne yükleyip ekip arkadaşlarınıza haber vermektir.", "Listeyi içeren dosyayı güçlü bir parola ile şifrelemek ve sadece yetkili kişilerle, güvenli yoldan paylaşmaktır.", "Verileri bilgisayarın masaüstünde, kolayca erişilebilecek bir klasörde herhangi bir şifre koymadan saklamaktır.", "Listenin çıktısını alıp ofis içerisinde herkesin görebileceği ortak bir panoda veya masada bırakmaktır."],
+    correct: 1,
+    fb: {
+      wrong: "Toplu kişisel veri dosyaları açık paylaşımda tutulamaz; yetki sınırı ve dosya şifreleme birlikte uygulanmalıdır.",
+      correct: "Doğru! Güçlü şifreleme + sadece yetkili kişilerle paylaşım veri korumanın temelidir."
+    }
+  },
+  {
+    q: "Bir iş arkadaşınızın telefon numarasını veya e-posta adresini, kendisinden izin almadan bir üçüncü şahısla veya sosyal grupta paylaşmak neden yanlıştır?",
+    opts: ["Kişisel verilerin korunması ilkesine aykırıdır ve kişinin dijital güvenliğini tehlikeye atabilir.", "Paylaşılan numara üzerinden yapılan aramalar rehberdeki diğer kişilerin güvenliğini de bozar.", "Sadece numaranın paylaşıldığı platformun kullanıcı sözleşmesine aykırı bir durum oluşturur.", "Mesai saatleri dışında yapılan bu tür paylaşımlar teknik olarak iletişim hatlarında yoğunluk yaratır."],
     correct: 0,
     fb: {
-      wrong: "Gelişmiş Veri Koruması açıkken Apple dahil hiçbir üçüncü taraf verilerinize erişemez.",
-      correct: "Kesinlikle doğru! Bu ayar açıkken Apple'ın şifreleme anahtarı yoktur — bu yüzden hukuki talepler de karşılanamaz."
+      wrong: "İzin olmadan iletişim bilgisi paylaşımı kişisel veri ihlalidir ve kişiyi hedefli saldırılara açık hale getirebilir.",
+      correct: "Doğru! Kişinin açık izni olmadan iletişim bilgisini paylaşmak veri koruma ilkesine aykırıdır."
     }
   },
   {
-    q: "Google Drive'ın temel gizlilik sorunu nedir?",
-    opts: ["Dosyalar şifrelenmez", "Dosya boyutu sınırı çok düşük", "Google verilerinize erişebilir ve reklam hedefleme için analiz edebilir", "2FA desteklemiyor"],
-    correct: 2,
-    fb: {
-      wrong: "Google Drive AES-256 şifreleme kullanır — ama Google şifreleme anahtarlarını yönetir, yani verilerinize erişimi vardır.",
-      correct: "Doğru! Ücretsiz ürünün bedeli: verilerinizin analiz edilmesi. Reklam modeli buna dayanır."
-    }
-  },
-  {
-    q: "OneDrive'ın Google Drive'a göre öne çıkan güvenlik özelliği nedir?",
-    opts: ["Uçtan uca şifreleme", "Personal Vault ve fidye yazılımı koruması", "Açık kaynak şifreleme", "Apple ile entegrasyon"],
+    q: "Bulut depolama servislerine yüklenecek olan kimlik fotokopisi gibi çok hassas belgeler için en güvenli yaklaşım nedir?",
+    opts: ["Belgeleri hiçbir ön işlem yapmadan doğrudan yüklemek; bulut servisinin korumasına tamamen güvenmek.", "Belgeleri önce parola korumalı bir ZIP veya PDF haline getirip, o şifreli dosyayı buluta yüklemek.", "Belgeleri sadece iCloud servisine yüklemek; diğer servislerin şifreleme kalitesinin yetersiz olduğunu varsaymak.", "Herhangi bir belgeyi dijital ortama aktarmamak; bulut teknolojilerinin hiçbir zaman güvenli olmadığını kabul etmek."],
     correct: 1,
     fb: {
-      wrong: "OneDrive'ın avantajı Personal Vault (ekstra güvenlik katmanı) ve fidye yazılımı saldırısı sonrası dosyaları geri yükleme özelliğidir.",
-      correct: "Doğru! Personal Vault hassas dosyalar için ek koruma sunar. Fidye yazılımı koruması ise versiyonlama sayesinde çalışır."
+      wrong: "Hassas belgeyi buluta ham halde yüklemek risklidir; dosya düzeyinde ek şifreleme daha güvenli yaklaşımdır.",
+      correct: "Doğru! Parola korumalı ZIP/PDF ile belgeyi ek katmanda şifrelemek en güvenli yöntemlerden biridir."
     }
   },
   {
-    q: "GDPR kapsamında 'unutulma hakkı' ne anlama gelir?",
-    opts: ["Şifreni unutunca sıfırlama hakkı", "Hesabını geçici kapatma hakkı", "Verilerinin şirketten silinmesini talep etme hakkı", "Bildirimleri kapatma hakkı"],
-    correct: 2,
-    fb: {
-      wrong: "Unutulma hakkı (silme hakkı): hizmet kullanmayı bıraktığında verilerinin tamamen silinmesini talep edebilirsin.",
-      correct: "Doğru! GDPR Madde 17. Sosyal medya hesabını kapatırken bu talebi ayrıca göndermelisin."
-    }
-  },
-  {
-    q: "Google Drive'daki eski paylaşımı kaldırdığında o dosya karşı taraftan silinir mi?",
-    opts: ["Evet, anında silinir", "Hayır, indirildiyse karşı tarafın cihazında hâlâ vardır", "Evet ama 30 gün sonra", "Google Cloud tarafından silinir"],
+    q: "Kişisel veri; bir bireyi doğrudan veya dolaylı olarak tanımlayan her türlü bilgidir. Buna göre, aşağıdakilerden hangisi tek başına bir 'kişisel veri' değildir?",
+    opts: ["Kişinin sadece kendisine ait olan özel cep telefonu numarası veya kişisel e-posta adresi.", "Bir şehrin yıllık ortalama hava sıcaklığı veya o bölgedeki toplam nüfus sayısı gibi genel istatistikler.", "Bireyin parmak izi, yüz tanıma verisi veya genetik bilgileri gibi biyometrik detayları.", "Bir çalışanın T.C. kimlik numarası ile birlikte sistemde kayıtlı olan ev adresi bilgisi."],
     correct: 1,
     fb: {
-      wrong: "Paylaşım erişimi kaldırıldığında yalnızca Drive'dan erişim kesilir. Karşı taraf dosyayı daha önce indirdiyse o kopyaya müdahale edemezsin.",
-      correct: "Kesinlikle! Bu yüzden hassas dosyaları hiç paylaşmamak veya paylaşımı zamanında kısıtlamak kritik."
+      wrong: "Telefon, e-posta, biyometrik veri ve kimlik/adres bilgileri kişisel veridir; genel anonim istatistikler değildir.",
+      correct: "Doğru! Genel ve anonim istatistikler tek başına kişiyi tanımlamadığı için kişisel veri sayılmaz."
     }
   },
   {
-    q: "Bir uygulama izin kontrolü için nereye bakmalısın? (iPhone)",
-    opts: ["Ayarlar → Gizlilik & Güvenlik → İzinler", "Uygulama içi ayarlar", "App Store değerlendirmeleri", "Safari'de arama"],
-    correct: 0,
-    fb: {
-      wrong: "iPhone'da Ayarlar → Gizlilik & Güvenlik menüsünden her izin kategorisine hangi uygulamanın eriştiğini görebilirsin.",
-      correct: "Doğru! Buradan her kategoriyi (Konum, Mikrofon, Rehber) açıp hangi uygulama ne zaman erişmiş görebilirsin."
-    }
-  },
-  {
-    q: "GDPR kapsamında şirket verilerini görme talebine kaç günde yanıt vermek zorunda?",
-    opts: ["7 gün", "15 gün", "60 gün", "30 gün"],
+    q: "'Veri Minimizasyonu' ilkesine göre, bir şirket veya uygulama kullanıcıdan veri toplarken aşağıdakilerden hangisine uymak zorundadır?",
+    opts: ["Verilerin sistemde ne kadar süre saklanacağını kullanıcıya bildirmek ve bu süreyi asla aşmamak.", "Toplanan verilerin her zaman güncel ve doğru kalmasını sağlayacak teknik altyapıyı kurmak.", "Verileri yasalara uygun şekilde işlemek ve verilerin gizliliğini en üst düzeyde korumak.", "Sadece sunulacak hizmet için gerçekten gerekli olan, en az miktardaki veriyi talep etmek."],
     correct: 3,
     fb: {
-      wrong: "AB GDPR'a göre şirketler veri erişim taleplerine 30 gün içinde yanıt vermek zorundadır.",
-      correct: "Doğru! 30 gün. Karmaşık durumlarda 60 güne kadar uzatılabilir ama yazılı bildirim yapmaları gerekir."
-    }
-  },
-  {
-    q: "Buluta yüklenecek hassas bir belge (kimlik fotokopisi gibi) için en doğru yaklaşım hangisidir?",
-    opts: ["Doğrudan yükle, zaten şifreli", "Önce zip ile şifrele veya parola korumalı PDF yap, sonra yükle", "Hiçbir belgeyi buluta yükleme", "Sadece iCloud'a yükle"],
-    correct: 1,
-    fb: {
-      wrong: "Bulut şifreleme depolama güvenliği sağlar, belge içeriğini korumaz. İçeriği şifrelemek ayrı bir adımdır.",
-      correct: "Doğru! Bulut sağlayıcısı şifreleme anahtarına sahipse teorik olarak belgeyi görebilir. 7-Zip ile AES-256 şifreli zip oluşturabilirsin."
+      wrong: "Veri minimizasyonu, gerekli olandan fazlasını toplamamayı ifade eder; ana odak 'en az gerekli veri'dir.",
+      correct: "Kesinlikle doğru! Hizmet için gerekli minimum veri toplamak veri minimizasyonunun özüdür."
     }
   },
   {
@@ -651,8 +652,8 @@ window.moduleQuestions = [
     opts: ["google.com/apps", "Gmail → Ayarlar → Uygulamalar", "Chrome → Uzantılar", "myaccount.google.com → Güvenlik → Üçüncü Taraf Erişimi"],
     correct: 3,
     fb: {
-      wrong: "Doğru adres: myaccount.google.com → Güvenlik → Üçüncü taraf erişimine sahip uygulamalar.",
-      correct: "Doğru! Buraya gidince yıllarca bağlı kalmış uygulamalara şaşıracaksın. Kullanmadıklarını kaldır."
+      wrong: "Doğru yol Google Hesabım panelidir: Güvenlik sekmesindeki üçüncü taraf erişimleri ekranı.",
+      correct: "Doğru! Bu menüden gereksiz uygulama erişimlerini kaldırarak hesap güvenliğini güçlendirebilirsin."
     }
   }
 ];
