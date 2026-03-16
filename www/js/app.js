@@ -809,7 +809,10 @@ function answerQ(i) {
   }
   
   const qActions = document.getElementById('q-actions');
-  if (qActions) qActions.style.display = 'flex';
+  if (qActions) {
+    qActions.style.display = 'flex';
+    scrollToQuizActionsIfLandscape();
+  }
 }
 
 function nextQuestion() {
@@ -818,6 +821,7 @@ function nextQuestion() {
   currentQ++;
   if (currentQ < quizQuestions.length) {
     renderQuestion();
+    scrollToQuizQuestionTop();
   } else {
     showResult();
   }
@@ -825,6 +829,37 @@ function nextQuestion() {
 
 function nextQ() {
   nextQuestion();
+}
+
+function scrollToQuizQuestionTop() {
+  const quizArea = document.getElementById('quiz-area') || document.getElementById('q-area');
+  if (!quizArea) return;
+
+  const target = quizArea.querySelector('.question-card') || quizArea;
+  const topOffset = 84;
+  const top = window.pageYOffset + target.getBoundingClientRect().top - topOffset;
+
+  window.scrollTo({
+    top: Math.max(0, top),
+    behavior: 'auto'
+  });
+}
+
+function scrollToQuizActionsIfLandscape() {
+  const isLandscape = window.innerWidth > window.innerHeight;
+  const isMobileLike = Math.min(window.innerWidth, window.innerHeight) <= 820;
+  if (!isLandscape || !isMobileLike) return;
+
+  const actions = document.getElementById('q-actions');
+  if (!actions) return;
+
+  requestAnimationFrame(function () {
+    const bottomPadding = 18;
+    const top = window.pageYOffset + actions.getBoundingClientRect().bottom - window.innerHeight + bottomPadding;
+    if (top > window.pageYOffset) {
+      window.scrollTo({ top: top, behavior: 'auto' });
+    }
+  });
 }
 
 function showResult() {
@@ -1117,13 +1152,16 @@ function initSidebarToggle() {
   var sidebar = document.getElementById('sidebar');
   if (!sidebar) return;
 
-  // Inject toggle button after sidebar in DOM
-  var btn = document.createElement('button');
-  btn.id = 'sidebar-toggle';
-  btn.title = 'Menüyü Gizle/Göster';
-  btn.textContent = '‹';
-  btn.onclick = toggleSidebar;
-  sidebar.parentNode.insertBefore(btn, sidebar.nextSibling);
+  // Reuse existing toggle if present; avoid duplicates.
+  var btn = document.getElementById('sidebar-toggle');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'sidebar-toggle';
+    btn.title = 'Menüyü Gizle/Göster';
+    btn.textContent = '‹';
+    btn.onclick = toggleSidebar;
+    sidebar.parentNode.insertBefore(btn, sidebar.nextSibling);
+  }
 
   // Check if navigated from dashboard
   var fromDash = sessionStorage.getItem('byteFromDashboard');
@@ -1137,8 +1175,16 @@ function initSidebarToggle() {
     btn.textContent = '›';
     requestAnimationFrame(function () {
       sidebar.classList.remove('no-anim');
+      placeSidebarToggle();
     });
+  } else {
+    placeSidebarToggle();
   }
+
+  window.removeEventListener('resize', placeSidebarToggle);
+  window.addEventListener('resize', placeSidebarToggle);
+  window.removeEventListener('scroll', placeSidebarToggle);
+  window.addEventListener('scroll', placeSidebarToggle, { passive: true });
 }
 
 function toggleSidebar() {
@@ -1148,12 +1194,44 @@ function toggleSidebar() {
   var collapsed = sidebar.classList.toggle('collapsed');
   btn.classList.toggle('collapsed', collapsed);
   btn.textContent = collapsed ? '›' : '‹';
+  placeSidebarToggle();
+}
+
+function placeSidebarToggle() {
+  var sidebar = document.getElementById('sidebar');
+  var btn = document.getElementById('sidebar-toggle');
+  if (!sidebar || !btn) return;
+
+  btn.style.position = 'fixed';
+  btn.style.top = (typeof CSS !== 'undefined' && CSS.supports && CSS.supports('top', '50svh')) ? '50svh' : '50%';
+  btn.style.transform = 'translateY(-50%)';
+
+  var collapsed = sidebar.classList.contains('collapsed');
+  var rect = sidebar.getBoundingClientRect();
+  btn.style.left = collapsed ? '0px' : Math.max(0, Math.round(rect.right)) + 'px';
+}
+
+function injectModuleMobileFixes() {
+  if (document.getElementById('byte-module-mobile-fixes')) return;
+
+  var style = document.createElement('style');
+  style.id = 'byte-module-mobile-fixes';
+  style.textContent = [
+    '@media (max-width: 1024px){#main{max-width:none !important;padding:20px 14px !important;}}',
+    '@media (max-width: 1024px){.reading-grid{grid-template-columns:1fr !important;gap:14px !important;}}',
+    '@media (max-width: 1024px){.article-card{padding:18px 14px !important;}}',
+    '@media (max-width: 1024px){.reading-sidebar{display:grid !important;grid-template-columns:1fr !important;}}'
+  ].join('');
+
+  document.head.appendChild(style);
 }
 
 // ── PROGRESS KAYDETME ──────────────────────────────────
 function initModuleUI() {
   const xpEl = document.getElementById('xp-count');
   if (xpEl) xpEl.textContent = String(xp);
+
+  injectModuleMobileFixes();
 
   normalizeModuleVideo();
   normalizeSidebarLabels();

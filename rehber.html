@@ -241,6 +241,26 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .cl-item.checked .cl-text{color:var(--text-dim);text-decoration:line-through;}
 .cl-count{font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--cyan);}
 
+@media(max-width:980px){
+  .page{display:block;}
+  .side-nav{display:none;}
+  .main-content{max-width:none;padding:16px 12px;}
+
+  .topbar{padding:0 10px;height:56px;}
+  .topbar-right{gap:6px;}
+  .back-btn,.print-btn{padding:6px 9px;font-size:.7rem;}
+
+  .rehber-hero{padding:16px 14px;display:block;}
+  .rh-title{font-size:1.06rem;}
+  .rh-desc{font-size:.8rem;}
+
+  .device-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+  .dtab{justify-content:center;padding:8px 10px;}
+
+  .install-grid{grid-template-columns:1fr;}
+  .checklist-wrap,.guide-section,.byte-tip-float{padding-left:14px;padding-right:14px;}
+}
+
 /* TOAST */
 #toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;
   display:flex;flex-direction:column;gap:8px;}

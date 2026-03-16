@@ -421,6 +421,27 @@ body{font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);min-h
   .modules-grid{grid-template-columns:1fr 1fr;}
   .bottom-grid{grid-template-columns:1fr;}
   .stats-row{grid-template-columns:1fr 1fr;}
+
+  .dash-topbar{height:56px;padding:0 12px;}
+  .dash-body{padding-top:56px;}
+  .dash-side{display:none;}
+  .dash-main{padding:16px 12px;}
+  .dash-right{gap:8px;}
+  .dash-user-btn{display:none;}
+  .dash-logout{padding:5px 8px;font-size:.66rem;}
+  .xp-pill{padding:4px 8px;}
+  .xp-pill-bar{width:42px;}
+
+  .welcome-strip{padding:14px;display:block;}
+  .ws-left{gap:10px;align-items:flex-start;}
+  .ws-title{font-size:.9rem;}
+  .ws-sub{font-size:.74rem;}
+  .ws-right{margin-top:10px;display:flex;justify-content:flex-start;width:100%;}
+  .level-badge,.streak-badge{min-width:76px;padding:8px 10px;}
+  .level-num,.streak-num{font-size:1.05rem;}
+
+  #quick-guide-banner{flex-wrap:wrap !important;gap:12px !important;align-items:flex-start !important;}
+  #quick-guide-meta{width:100%;justify-content:flex-start !important;}
 }
 
 /* scrollbar */
