@@ -194,9 +194,17 @@
  <main id="main">
     <!-- MODULE HEADER -->
     <div class="mod-header">
-      <div class="byte-avatar">🔐</div>
+      <div class="byte-avatar" id="byteAvatar" onclick="byteSpeak()" title="">
+        🔐
+        <div class="byte-rings">
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+          <div class="byte-ring"></div>
+        </div>
+        <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
+      </div>
       <div class="mod-title-block">
-        <div class="mod-tag">◆ MODÜL 02</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 02 <span style="font-family:'Segoe UI Emoji','Noto Color Emoji',sans-serif">🔊</span></div>
         <h1 class="mod-title">Ağ      <span>Güvenliği</span></h1>
         <p class="mod-desc">Açık Wi-Fi tehlikeleri, MITM saldırıları, VPN kullanımı ve kurumsal ağ güvenliği. Bağlanmadan önce iki kez düşün!</p>
         <div class="mod-stats">
@@ -564,143 +572,143 @@
 <script>
 window.moduleQuestions = [
   {
-    q: "MITM (Man-in-the-Middle) saldırısında saldırgan ne yapar?",
+    q: "MITM (Man-in-the-Middle - Aradaki Adam) saldırısında saldırganın temel amacı ve eylemi nedir?",
     opts: [
-      "Cihazı fiziksel olarak çalar",
-      "Senin ile sunucu arasına girip trafiği okur/değiştirir",
-      "Sadece Wi-Fi hızını düşürür",
-      "Yalnızca modem şifresini sıfırlar"
+      "Hedef kullanıcının bilgisayarına veya telefonuna fiziksel olarak erişip cihazı tamamen çalmak.",
+      "Kullanıcı ile sunucu arasındaki veri trafiğine sızarak bilgileri gizlice okumak veya değiştirmek.",
+      "Bağlı bulunan Wi-Fi ağının bant genişliğini kasıtlı olarak daraltarak internet hızını düşürmek.",
+      "Yerel ağdaki modemin arayüzüne sızarak sadece kablosuz ağ şifresini fabrika ayarlarına sıfırlamak."
     ],
     correct: 1,
     fb: {
-      wrong: "MITM saldırısında asıl risk, iletişimin arasına girilmesi ve verinin okunup değiştirilebilmesidir.",
-      correct: "Doğru! MITM saldırısında saldırgan trafik akışına girer ve veriyi izleyebilir ya da manipüle edebilir."
+      wrong: "MITM saldırısında odak cihazın fiziksel çalınması değil, istemci-sunucu trafiğinin araya girilerek ele geçirilmesidir.",
+      correct: "Doğru! Saldırgan veri akışına man-in-the-middle olarak girer ve paketleri okuyup manipüle edebilir."
     }
   },
   {
-    q: "Kurumsal cihazla havalimanı/kafe gibi açık alan Wi-Fi'larında en doğru yaklaşım nedir?",
+    q: "Kurumsal bir cihazla havalimanı veya kafe gibi halka açık alanlardaki Wi-Fi ağlarına bağlanırken en güvenli yaklaşım hangisidir?",
     opts: [
-      "Sinyali en güçlü ağa bağlanmak",
-      "Sadece HTTPS sitelere girip devam etmek",
-      "Mümkünse hiç bağlanmamak; mobil hotspot + VPN kullanmak",
-      "Ağ adında Airport/Hotel varsa güvenmek"
+      "Mevcut ağlar arasından sinyal seviyesi en yüksek ve bağlantı hızı en stabil olan açık ağı seçmek.",
+      "Sadece başında kilit simgesi olan HTTPS protokolü kullanan web sitelerine girerek işleme devam etmek.",
+      "Mümkünse hiç bağlanmamak; bunun yerine mobil hotspot ve güvenilir bir VPN bağlantısı kullanmak.",
+      "Ağ adında Airport veya Hotel gibi resmi ibareler bulunuyorsa bu ağları doğrudan güvenli kabul etmek."
     ],
     correct: 2,
     fb: {
-      wrong: "Açık alan ağları manipüle edilmiş olabilir. Kurumsal cihaz için en güvenli yöntem mobil hotspot ve güvenilir VPN'dir.",
-      correct: "Harika! Kurumsal cihazlarda açık Wi-Fi'dan kaçınmak ve mobil hotspot + VPN kullanmak en güvenli yaklaşımdır."
+      wrong: "Açık ağlarda SSID adı veya HTTPS tek başına yeterli güvence vermez; kurumsal cihaz için en düşük risk özel bağlantıdır.",
+      correct: "Harika! Mobil hotspot + güvenilir VPN kombinasyonu, sahte hotspot ve trafik izleme riskini ciddi ölçüde azaltır."
     }
   },
   {
-    q: "Evil Twin hotspot nedir?",
+    q: "Evil Twin (Kötü İkiz) hotspot saldırısı siber güvenlikte neyi ifade eder?",
     opts: [
-      "Modemin yedek ağı",
-      "Gerçek ağ adı taklit edilerek oluşturulan sahte ağ",
-      "Sadece 5GHz çalışan ağ",
-      "Şifreli kurumsal ağ"
+      "Mevcut modemin kapsama alanını genişletmek amacıyla oluşturulan yasal bir yedek ağ kurulumudur.",
+      "Güvenilir bir ağın adı taklit edilerek saldırgan tarafından oluşturulan sahte ve tuzak kablosuz ağdır.",
+      "Sadece 5GHz frekans bandında çalışan ve eski nesil cihazların bağlanmasını engelleyen kısıtlı bir ağdır.",
+      "Kurumsal ağlara sızmak için tasarlanan ve aynı şifreleme protokolünü kullanan ikincil güvenlik katmanıdır."
     ],
     correct: 1,
     fb: {
-      wrong: "Evil Twin, meşru ağın adını taklit eden sahte erişim noktasıdır.",
-      correct: "Doğru! Evil Twin, gerçek ağı taklit ederek kullanıcıyı sahte ağa bağlatır."
+      wrong: "Evil Twin, performans veya kapsama amaçlı yasal bir ağ değil; güvenilir SSID kopyasıyla kullanıcıyı kandıran sahte erişim noktasıdır.",
+      correct: "Doğru! Saldırgan, gerçek ağa benzer isimle sahte AP açarak kimlik bilgisi ve trafiği ele geçirmeye çalışır."
     }
   },
   {
-    q: "Şüpheli bir Wi-Fi'da hassas işlem yapman gerekiyorsa minimum güvenlik önlemi nedir?",
+    q: "Güvenliğinden emin olmadığınız bir Wi-Fi ağında hassas bir işlem yapmanız gerekiyorsa almanız gereken minimum güvenlik önlemi nedir?",
     opts: [
-      "Tarayıcıyı gizli sekmede açmak",
-      "VPN kullanmak",
-      "Sadece telefonla bağlanmak",
-      "Wi-Fi adını kaydetmemek"
+      "Tarayıcıyı gizli sekme modunda açarak geçmişin ve çerezlerin kaydedilmesini engellemek.",
+      "İnternet trafiğinizi uçtan uca şifreleyen ve IP adresinizi gizleyen bir VPN (Sanal Özel Ağ) kullanmak.",
+      "Bilgisayar yerine sadece mobil cihaz üzerinden bağlanarak hücresel veri şebekesinin gücünü kullanmak.",
+      "Bağlantı ayarlarından ağ adını otomatik kaydetme özelliğini devre dışı bırakarak bağlantıyı bitirmek."
     ],
     correct: 1,
     fb: {
-      wrong: "Gizli sekme veya cihaz türü trafiği şifrelemez. Şüpheli ağda VPN şarttır.",
-      correct: "Evet. VPN trafiği şifreleyerek MITM riskini ciddi ölçüde azaltır."
+      wrong: "Gizli sekme ve benzeri önlemler yerel iz bırakmayı azaltır ancak ağ katmanındaki dinleme riskini ortadan kaldırmaz.",
+      correct: "Evet! VPN tüneli trafik bütünlüğünü artırır ve açık ağda pasif dinleme ile MITM riskini azaltır."
     }
   },
   {
-    q: "Router güvenliği için hangisi doğrudur?",
+    q: "Yönlendirici (Router) güvenliğini sağlamak adına aşağıdakilerden hangisi teknik olarak doğrudur?",
     opts: [
-      "Varsayılan admin şifresi kalabilir",
-      "WEP hala yeterince güvenlidir",
-      "WPA2/WPA3 tercih edilmeli ve varsayılan şifre değiştirilmeli",
-      "Sadece ağ adını gizlemek yeterlidir"
+      "Fabrika ayarlarında gelen varsayılan admin kullanıcı adı ve şifresinin değiştirilmeden bırakılması.",
+      "WEP protokolünün güncel cihazlarla tam uyumlu olması nedeniyle siber saldırılara karşı yeterli olması.",
+      "WPA2/WPA3 protokollerinin tercih edilmesi ve varsayılan yönetici giriş bilgilerinin güncellenmesi.",
+      "Ağ adını (SSID) gizli konuma getirmenin tüm dış saldırıları durdurmak için tek başına yeterli olması."
     ],
     correct: 2,
     fb: {
-      wrong: "Eski protokoller ve varsayılan şifreler ciddi risk yaratır.",
-      correct: "Doğru yaklaşım bu: WPA2/WPA3 + güçlü benzersiz router şifresi."
+      wrong: "WEP ve varsayılan kimlik bilgileri kolay hedef oluşturur; SSID gizleme ise tek başına güvenlik kontrolü değildir.",
+      correct: "Doğru! WPA2/WPA3 kullanımı ve yönetici parolasının değiştirilmesi router sertleştirmenin temel adımıdır."
     }
   },
   {
-    q: "Bluetooth ve WLAN için güvenli alışkanlık hangisidir?",
+    q: "Bluetooth ve WLAN (Wi-Fi) gibi kablosuz teknolojiler için en güvenli kullanım alışkanlığı nedir?",
     opts: [
-      "Her zaman açık tutmak",
-      "Yalnızca kullanırken açıp iş bitince kapatmak",
-      "Sadece ofiste kapatmak",
-      "Pil azsa kapatmak"
+      "Acil durumlarda hızlı bağlantı kurabilmek adına bu özellikleri her zaman açık ve görünür tutmak.",
+      "Yalnızca ihtiyaç duyulan anlarda bu özellikleri aktif hale getirip, kullanım bitince hemen kapatmak.",
+      "Güvenli olduğu varsayılan ofis veya ev gibi kapalı alanlarda bu bağlantıları tamamen devre dışı bırakmak.",
+      "Cihazın pil seviyesi kritik düzeye düşene kadar tüm kablosuz bağlantıları aktif olarak açık bırakmak."
     ],
     correct: 1,
     fb: {
-      wrong: "Saldırı yüzeyini azaltmak için gereksiz açık bırakmamak gerekir.",
-      correct: "Mükemmel! Kullanmıyorken kapatmak saldırı riskini düşürür."
+      wrong: "Kablosuz arabirimleri sürekli açık bırakmak cihazın saldırı yüzeyini genişletir ve keşif saldırılarına alan açar.",
+      correct: "Mükemmel! Gerektiğinde aç-kapat yaklaşımı, gereksiz yayın ve izinsiz eşleşme riskini düşüren güvenli hijyen davranışıdır."
     }
   },
   {
-    q: "Ücretsiz/demo VPN'ler için en doğru ifade nedir?",
+    q: "Ücretsiz veya deneme sürümü olarak sunulan VPN servisleri hakkında hangi ifade en doğrudur?",
     opts: [
-      "Her zaman güvenlidir",
-      "Daha hızlıdır, bu yüzden daha güvenlidir",
-      "Güvenilir olmayan ücretsiz VPN'ler veri gizliliği riski taşıyabilir",
-      "Kurumsal cihazda özellikle önerilir"
+      "Bu servisler küresel güvenlik kuruluşları tarafından onaylandığı için her zaman en güvenli seçenektir.",
+      "Ücretli versiyonlara göre daha yüksek hız sundukları için veri sızıntılarını teknik olarak imkansız kılarlar.",
+      "Güvenilir olmayan ücretsiz VPN servisleri kullanıcı trafiğini izleyebilir ve veri gizliliği riski oluşturabilir.",
+      "Kurumsal cihazlarda veri güvenliğini maksimize etmek için özellikle bu tip ücretsiz araçlar önerilir."
     ],
     correct: 2,
     fb: {
-      wrong: "VPN'in ücretsiz olması tek başına avantaj değildir; bazı servisler veriyi kötü işleyebilir.",
-      correct: "Doğru. Güvenilir ve politikaları açık VPN seçmek gerekir."
+      wrong: "Fiyat tek başına güvenlik göstergesi değildir; bazı servisler log tutabilir, trafiği analiz edebilir veya üçüncü taraf SDK kullanabilir.",
+      correct: "Doğru! VPN sağlayıcısının şeffaf kayıt politikası, denetim geçmişi ve veri işleme modeli teknik güvenlik kadar kritiktir."
     }
   },
   {
-    q: "Aşağıdakilerden hangisi sahte hotspot belirtisi olabilir?",
+    q: "Aşağıdakilerden hangisi siber saldırganlar tarafından oluşturulmuş sahte bir hotspot ağının belirtisi olabilir?",
     opts: [
-      "Ağ adının beklenenden çok benzer olması",
-      "Sinyalin orta seviye olması",
-      "Ağın şifre istemesi",
-      "Ağın 5GHz olması"
+      "Mevcut yasal ağ adı ile neredeyse aynı olan fakat küçük karakter farkları içeren benzer bir ağ adı.",
+      "Kablosuz ağ sinyalinin orta veya düşük seviyede kalması nedeniyle bağlantının sık sık kopması.",
+      "Ağın ilk bağlantı aşamasında kullanıcıdan karmaşık bir parola veya kişisel doğrulama kodu istemesi.",
+      "Bağlantı protokolünün en güncel standart olan 5GHz bandı üzerinden yüksek hızda yayın yapması."
     ],
     correct: 0,
     fb: {
-      wrong: "Sahte ağlar genellikle gerçek isme çok benzeyen SSID kullanır.",
-      correct: "Evet. 'Airport_Free' vs 'Airprot_Free' gibi benzer adlar kırmızı bayraktır."
+      wrong: "Sinyal seviyesi veya frekans bandı tek başına saldırı göstergesi değildir; SSID taklidi en yaygın sosyal mühendislik sinyalidir.",
+      correct: "Evet! Karakter benzerliğiyle oluşturulan SSID klonları Evil Twin saldırılarında en kritik kırmızı bayraklardan biridir."
     }
   },
   {
-    q: "Açık Wi-Fi'da hangi işlem en risklidir?",
+    q: "Güvenlik önlemi alınmamış açık bir Wi-Fi ağında aşağıdaki işlemlerden hangisinin yapılması en yüksek riski taşır?",
     opts: [
-      "Hava durumuna bakmak",
-      "Banka/kurumsal oturum açma işlemleri",
-      "Harita açmak",
-      "Müzik dinlemek"
+      "Yerel bir haber sitesinden güncel hava durumu bilgilerine bakmak veya genel gazete başlıklarını okumak.",
+      "Çevrimiçi bankacılık işlemleri yapmak veya kurumsal hesaplara kullanıcı adı ve şifre ile giriş yapmak.",
+      "Gidilecek bir adres için harita uygulaması üzerinden rota planlamak ve konum servislerini kullanmak.",
+      "Herkese açık müzik veya video platformları üzerinden çevrimiçi içerik tüketmek veya radyo dinlemek."
     ],
     correct: 1,
     fb: {
-      wrong: "Hassas kimlik doğrulama ve finansal işlemler açık Wi-Fi'da en yüksek riski taşır.",
-      correct: "Doğru. Kimlik bilgisi ve finansal işlemler bu ortamda özellikle hedeflenir."
+      wrong: "Açık ağlarda en kritik tehdit, kimlik ve finans verisi taşıyan oturumların ele geçirilmesidir; düşük hassasiyetli içerik tüketimi aynı seviyede risk üretmez.",
+      correct: "Doğru! Bankacılık ve kurumsal giriş işlemleri, açık Wi-Fi ortamında oturum çalma ve kimlik avı için en değerli hedeftir."
     }
   },
   {
-    q: "Ağdan çıktıktan sonra güvenlik için iyi bir ek adım hangisidir?",
+    q: "Bir kablosuz ağdan ayrıldıktan sonra güvenlik seviyesini korumak için hangi ek adımın atılması önerilir?",
     opts: [
-      "Ağı otomatik bağlanmada bırakmak",
-      "Bağlı kalıp ekranı kilitlemek",
-      "Ağı unutmak ve bağlantıyı kesmek",
-      "Aynı ağ adıyla tekrar bağlanmak"
+      "Ağı otomatik bağlan seçeneğinde bırakarak bir sonraki ziyarette hızlıca erişim sağlanmasını beklemek.",
+      "Cihazı ağa bağlı durumda bırakarak sadece ekranı kilitlemek ve arka plandaki işlemleri sürdürmek.",
+      "Cihaz ayarlarından Ağı Unut seçeneğini kullanmak ve ağla olan tüm dijital bağlantıyı tamamen kesmek.",
+      "Güvenliği doğrulamak amacıyla aynı ağ adına sahip farklı bir erişim noktasına tekrar bağlanmak."
     ],
     correct: 2,
     fb: {
-      wrong: "Ağı otomatik bağlı bırakmak sonraki seferlerde istemeden bağlanma riski yaratır.",
-      correct: "Evet. Ağı unutmak ve bağlantıyı kesmek iyi bir hijyen adımıdır."
+      wrong: "Ağı otomatik kayıtlı bırakmak istem dışı yeniden bağlanma yaratabilir ve sahte erişim noktalarına maruz kalma riskini artırır.",
+      correct: "Kesinlikle! Ağı unutmak, cihazın aynı SSID'ye otomatik bağlanmasını engeller ve bağlantı hijyenini güçlendirir."
     }
   }
 ];

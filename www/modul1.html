@@ -604,139 +604,139 @@ window.moduleQuestions = [
 
 
   {
-    q: "Aşağıdaki şifrelerden hangisi en güvenlidir?",
-    opts: ["Ahmet1990!","MyDog2023","xK#9mP!vL2@qW7","123456789"],
+    q: "Aşağıdaki şifrelerden hangisi siber güvenlik standartlarına göre en yüksek güvenliği sağlar?",
+    opts: ["Ahmet1990!","MyDog2023","123456789","xK#9mP!vL2@qW7"],
+    correct: 3,
+    fb: {
+      wrong: "Zayıf şifreler tahmin edilebilir kalıplar içerir. En güvenli seçenek uzun, rastgele ve yüksek entropili olmalıdır.",
+      correct: "Doğru! Bu şifre uzun, rastgele ve sembol+rakam+harf kombinasyonuyla brute-force saldırılarına daha dayanıklıdır."
+    }
+  },
+  {
+    q: "2FA (2 Faktörlü Doğrulama) sisteminin tek başına şifre kullanımına göre temel farkı nedir?",
+    opts: [
+      "Saldırgan şifrenizi bilse bile fiziksel veya ikinci bir doğrulama adımı gerektirir.",
+      "Mevcut şifrenizin karakter sayısını artırarak brute-force saldırılarını engeller.",
+      "Şifrenizi unuttuğunuzda hesaba hiçbir ek bilgi gerekmeden giriş yapmanızı sağlar.",
+      "Hesabınıza yapılan şüpheli giriş denemelerini algılayarak sistemi otomatik kapatır."
+    ],
+    correct: 0,
+    fb: {
+      wrong: "2FA'nın amacı şifreyi uzatmak değil ikinci bir kimlik kanıtı eklemektir. Şifre sızsa bile ek katman saldırganı durdurur.",
+      correct: "Harika! 2FA, 'bildiğin şey + sahip olduğun şey' modelini uygular ve hesap ele geçirme riskini ciddi azaltır."
+    }
+  },
+  {
+    q: "Şifre yöneticisi (Password Manager) kullanmanın sağladığı en kritik avantaj nedir?",
+    opts: [
+      "İnternet bağlantısı olmadığı durumlarda tüm şifrelerinizi bulut üzerinden günceller.",
+      "Her site için güçlü ve benzersiz şifre oluşturup saklar, tek ana şifre gerektirir.",
+      "Tüm sosyal medya hesaplarınızın şifrelerini belirli aralıklarla sistemden değiştirir.",
+      "Şifrelerinizi güvenli bir ağ üzerinden arkadaşlarınızla paylaşmanızı kolaylaştırır."
+    ],
+    correct: 1,
+    fb: {
+      wrong: "Şifre yöneticisinin temel gücü otomatik paylaşım ya da toplu değişim değil, her hesap için benzersiz güçlü parola üretmesidir.",
+      correct: "Evet! Bu yaklaşım credential stuffing etkisini kırar ve kullanıcıya sadece güçlü bir ana şifreyi yönetme yükü bırakır."
+    }
+  },
+  {
+    q: "Siber güvenlik protokollerine göre en yüksek korumayı sağlayan 2FA yöntemi hangisidir?",
+    opts: [
+      "E-posta adresine gönderilen ve belirli süre geçerli olan tek kullanımlık bağlantılar.",
+      "GSM operatörü üzerinden telefonunuza kısa mesaj yoluyla iletilen doğrulama kodları.",
+      "Fiziksel bir güvenlik anahtarı (Nitrokey veya YubiKey gibi) kullanarak doğrulama.",
+      "Hesap kurulumunda belirlenen ve sadece kullanıcının bildiği gizli güvenlik soruları."
+    ],
     correct: 2,
     fb: {
-      wrong: "Güvenli şifre: uzun, rastgele, harf+rakam+sembol içermeli. Doğum tarihleri, isimler ve ardışık sayılar zayıftır.",
-      correct: "Evet! Rastgele karakterler, büyük-küçük harf, rakam ve sembol — işte güçlü şifre böyle görünür!"
+      wrong: "SMS ve e-posta tabanlı yöntemler phishing ve SIM swap gibi saldırılara daha açıktır. En dirençli yöntem donanım anahtarıdır.",
+      correct: "Doğru! Donanım tabanlı doğrulama, kimlik avı saldırılarına karşı en güçlü 2FA katmanlarından biridir."
     }
   },
   {
-    q: "2FA (2 Faktörlü Doğrulama) neden sadece şifreden daha güvenlidir?",
+    q: "Aynı şifreyi birden fazla hesapta kullanmanın doğurduğu en büyük risk aşağıdakilerden hangisidir?",
     opts: [
-      "Şifreni daha uzun yapar",
-      "Saldırganın şifreni bilse bile fiziksel/ikinci bir doğrulama gerektirir",
-      "Şifren yoksa da giriş yapabilirsin",
-      "Hesabını otomatik olarak kapatır"
+      "Bir site ihlal edilirse o şifreyi kullanan TUM hesaplarınızın tehlikeye girmesidir.",
+      "Şifrenin çok uzun süre değişmemesi durumunda sistemin otomatik erişim engellemesidir.",
+      "Çok fazla hesapta aynı veri girildiği için tarayıcı belleklerinde teknik hata olmasıdır.",
+      "Şifrenin karakter yapısının zamanla eski kalması ve yeni algoritmalara uymamasıdır."
     ],
-    correct: 1,
+    correct: 0,
     fb: {
-      wrong: "2FA, şifreni bilen biri bile hesabına giremez çünkü ikinci bir doğrulama adımı gerektirir.",
-      correct: "Kesinlikle! Şifren çalınsa dahi saldırgan 2. faktörü geçemez."
-    }
-  },
-  {
-    q: "Şifre yöneticisi kullanmanın en büyük avantajı nedir?",
-    opts: [
-      "Şifreni otomatik olarak değiştirir",
-      "Her site için güçlü ve benzersiz şifre oluşturup saklar, sadece bir ana şifre hatırlarsın",
-      "İnternetsiz çalışmaz",
-      "Şifreni arkadaşlarınla paylaşmanı sağlar"
-    ],
-    correct: 1,
-    fb: {
-      wrong: "Şifre yöneticisinin gücü: her hesap için farklı, güçlü şifre — sen sadece bir ana şifreyi hatırlarsın.",
-      correct: "Süper! Tek güçlü ana şifre ile her yerde benzersiz şifre. Devrimsel güvenlik!"
-    }
-  },
-  {
-    q: "Hangi 2FA yöntemi en güvenlidir?",
-    opts: [
-      "SMS ile kod",
-      "E-posta ile kod",
-      "Fiziksel güvenlik anahtarı (Nitrokey gibi)",
-      "Güvenlik sorusu (annenin kızlık soyadı)"
-    ],
-    correct: 2,
-    fb: {
-      wrong: "SMS ve e-posta SIM swap veya e-posta ele geçirme ile atlatılabilir. Fiziksel anahtar asla uzaktan hacklenemez.",
-      correct: "Doğru! Fiziksel anahtar fiziksel varlık gerektirdiği için uzaktan saldırıya karşı mükemmel koruma sağlar."
-    }
-  },
-  {
-    q: "Aynı şifreyi birden fazla hesapta kullanmanın en büyük riski nedir?",
-    opts: [
-      "Şifreyi unutabilirsin",
-      "Bir site ihlal edilirse o şifreyi kullanan TÜM hesapların tehlikeye girer",
-      "Şifren çok kısa kalır",
-      "Sadece sosyal medya hesapların risk altına girer"
-    ],
-    correct: 1,
-    fb: {
-      wrong: "Credential stuffing denen saldırı tam da bunu hedefler: bir yerden çalınan şifre, her yerde denenir.",
-      correct: "Mükemmel! Domino etkisi. Bir düşer, hepsi düşer. Her hesap için benzersiz şifre zorunludur."
+      wrong: "Bu konuda asıl risk teknik performans değil yeniden kullanım etkisidir. Bir sızıntı birden fazla hesabı aynı anda düşürebilir.",
+      correct: "Kesinlikle! Parola tekrar kullanımı credential stuffing saldırılarını kolaylaştırır ve zincirleme ihlal yaratır."
     }
   }
 ,
   {
-    q: "haveibeenpwned.com sitesi ne işe yarar?",
+    q: "haveibeenpwned.com servisinin dijital güvenlikteki temel kullanım amacı nedir?",
     opts: [
-      "Güçlü şifre oluşturur",
-      "E-posta adresinin veri ihlallerinde yer alıp almadığını kontrol eder",
-      "Şifreleri şifreli olarak saklar",
-      "Virüs taraması yapar"
+      "Bilgisayarınızdaki mevcut yazılımları tarayarak casus yazılım olup olmadığını inceler.",
+      "E-posta adresinizin bilinen veri ihlallerinde sızdırılıp sızdırılmadığını kontrol eder.",
+      "Şifrelerinizin ne kadar sürede kırılabileceğini gösteren bir güvenlik analizi sunar.",
+      "Web siteleri için kırılması imkansız olan, yüksek entropili karmaşık şifreler üretir."
     ],
     correct: 1,
     fb: {
-      wrong: "haveibeenpwned.com, Troy Hunt tarafından kurulan bir servistir. Milyarlarca sızdırılmış hesap kaydını içerir. E-postanı girerek hangi ihlallerde yer aldığını öğrenebilirsin.",
-      correct: "Tam doğru! E-postanı veya şifreni girerek sızdırılıp sızdırılmadığını anında görürsün. Düzenli kontrol etmek iyi alışkanlıktır."
+      wrong: "Bu servis antivirüs ya da parola üretici değildir. Esas işlevi ihlal veritabanlarında kimlik bilgilerinizin görünüp görünmediğini kontrol etmektir.",
+      correct: "Doğru! Hesabınız bir sızıntıda geçtiyse erken fark edip şifreleri yenileyerek riski azaltabilirsiniz."
     }
   },
   {
-    q: "Tarayıcıya şifre kaydetmek ne kadar güvenlidir?",
+    q: "Tarayıcıların yerleşik şifre kaydetme özellikleri hakkında aşağıdakilerden hangisi doğrudur?",
     opts: [
-      "Tamamen güvenli, tarayıcılar şifreleri şifreler",
-      "Kullanışlıdır ama bilgisayarın ele geçirilirse tüm şifreler çalınabilir — şifre yöneticisi daha güvenlidir",
-      "Hiç güvenli değil, şifreler düz metin olarak saklanır",
-      "Sadece Chrome güvenlidir, diğer tarayıcılar değil"
+      "Tamamen güvenlidir çünkü tarayıcılar bu verileri işletim sistemi düzeyinde şifreler.",
+      "Hiç güvenli değildir çünkü şifreler hiçbir kriptolama yapılmadan düz metin saklanır.",
+      "Sadece Google Chrome gibi büyük tarayıcılar güvenlidir, diğerleri risk teşkil eder.",
+      "Pratiktir ama cihaz ele geçirilirse şifreler çalınabilir; yönetici kullanmak daha iyidir."
     ],
-    correct: 1,
+    correct: 3,
     fb: {
-      wrong: "Tarayıcı şifre yöneticileri kullanışlı ama sınırlıdır: bilgisayarın fiziksel olarak ele geçirilmesi ya da zararlı yazılım durumunda tüm şifreler risk altına girer.",
-      correct: "Doğru! Tarayıcı şifre depolama konfor sağlar ama Bitwarden veya KeePass gibi bağımsız şifre yöneticileri çok daha güvenlidir."
+      wrong: "Tarayıcı depolaması tamamen güvensiz değildir, ancak tehdit modeli cihaz ele geçirilmesine karşı sınırlıdır. Bu yüzden tek başına yeterli kabul edilmez.",
+      correct: "Evet! Yerleşik kaydetme özelliği pratik olsa da bağımsız bir parola yöneticisi ve 2FA ile daha güçlü bir güvenlik katmanı kurulur."
     }
   },
   {
-    q: "Passphrase (parola cümlesi) neden rastgele harflerden oluşan şifreden üstün olabilir?",
+    q: "Parola cümlesi (Passphrase) kullanımı neden rastgele karakterli kısa şifrelerden daha etkilidir?",
     opts: [
-      "Daha kısadır, hatırlaması kolay",
-      "Hem uzundur hem hatırlanabilir — 'karpuz·fener·dağ·pijama' gibi 4 kelime 8 karakterli karmaşık şifreden çok daha güçlü olabilir",
-      "Özel karakter içermez, bu yüzden daha basittir",
-      "Sadece Türkçe kelimeler için çalışır"
+      "Daha kısa olduğu için sistemlerde daha az yer kaplar ve giriş işlemlerini hızlandırır.",
+      "Hem uzundur hem hatırlanabilir; 4 kelime kısa bir şifreden çok daha güçlü olabilir.",
+      "Özel karakter içermediği için tüm eski sistemlerde sorunsuz bir şekilde çalışabilir.",
+      "Sadece yerel dillerde oluşturulduğu için yabancı kaynaklı siber saldırılara takılmaz."
     ],
     correct: 1,
     fb: {
-      wrong: "Uzunluk, karmaşıklıktan daha güçlüdür. 4 rastgele kelime = ~44 bit entropi = kaba kuvvet saldırısı için astronomik süre. Hem güçlü hem hatırlanabilir.",
-      correct: "Mükemmel! Uzunluk kazanır. 'karpuz·fener·dağ·pijama' gibi bir passphrase, 'X#9kM!' gibi kısa ama karmaşık şifreden çok daha güvenlidir."
+      wrong: "Passphrase'in avantajı kısalık ya da dil değil uzunluk ve tahmin edilemezlik dengesidir. Amaç hem güçlü hem hatırlanabilir bir parola üretmektir.",
+      correct: "Aynen! Uzun ve anlamlı kelime kombinasyonları, kısa karmaşık şifrelere göre daha yüksek entropi sunarken kullanımı da kolaylaştırır."
     }
   },
   {
-    q: "Şifre yöneticisinin ana şifresi (master password) çalınırsa ne olur?",
+    q: "Şifre yöneticisinin ana şifresi (master password) ele geçirilirse nasıl bir durum oluşur?",
     opts: [
-      "Hiçbir şey, şifre yöneticileri hacklenemez",
-      "Tüm şifreler tehlikeye girebilir — bu yüzden ana şifre çok güçlü olmalı ve asla başka yerde kullanılmamalı",
-      "Sadece en son eklenen şifre risk altına girer",
-      "Şifre yöneticisi otomatik olarak tüm şifreleri değiştirir"
+      "Şifre yöneticisi sızıntıyı fark eder ve tum kayıtlı şifreleri otomatik olarak yeniler.",
+      "Guvenlik gereği sadece en son eklenen veya güncellenen şifreleriniz risk altına girer.",
+      "Kasadaki tüm şifreler tehlikeye girer; bu yüzden ana şifre eşsiz ve çok güçlü olmalıdır.",
+      "Hiçbir şey olmaz çünkü yöneticiler ana şifre çalınsa dahi verileri saklamaya devam eder."
     ],
-    correct: 1,
+    correct: 2,
     fb: {
-      wrong: "Ana şifre tek kilit. Güçlü bir passphrase, 2FA aktif etmek ve ana şifreyi asla başka yerde kullanmamak şarttır. Güvenilir şifre yöneticileri sıfır bilgi mimarisi kullanır.",
-      correct: "Kesinlikle! Bu yüzden ana şifre için passphrase kullan, 2FA'yı aç ve asla başka yerde kullanma. Sıfır bilgi mimarisi sayesinde şifre yöneticisi de ana şifreni bilmez."
+      wrong: "Master password tek kritik anahtardır; ele geçirilirse kasa güvenliği ciddi zayıflar. Bu nedenle tekil, güçlü ve 2FA destekli kullanım şarttır.",
+      correct: "Doğru! Ana şifre her yerde farklı, uzun ve güçlü olmalı; mümkünse donanım anahtarı veya authenticator ile ek katman eklenmelidir."
     }
   },
   {
-    q: "SIM Swap saldırısı SMS tabanlı 2FA'yı nasıl atlatır?",
+    q: "SIM Swap saldırısı, SMS tabanlı 2FA yöntemini tam olarak nasıl devre dışı bırakır?",
     opts: [
-      "SMS'leri kopyalayarak",
-      "Operatörü kandırarak telefon numarasını kendi SIM kartına aktarır, böylece SMS kodlarını alır",
-      "Telefonu fiziksel olarak çalarak",
-      "SMS kodlarını tahmin ederek"
+      "Telefonunuza sızarak gelen kısa mesajları eş zamanlı olarak saldırganın ekranına iletir.",
+      "SMS kodlarının oluşturulma algoritmasını tersine mühendislik ile çözerek tahmin eder.",
+      "Telefonu fiziksel olarak çalarak ekran kilidini açmadan gelen bildirimleri okumayı başarır.",
+      "Operatörü kandırıp numarayı kendi kartına tanımlatır, böylece kodlar saldırgana gider."
     ],
-    correct: 1,
+    correct: 3,
     fb: {
-      wrong: "SIM Swap: saldırgan operatörü arar, 'telefonum kayboldu' der ve numarayı kendi SIM'ine taşıtır. Bundan sonra senin SMS kodlarını o alır. Bu yüzden SMS 2FA zayıftır.",
-      correct: "Doğru! SIM Swap, Almanya, Hollanda ve İngiltere dahil Avrupa genelinde yaygın bir saldırı. Fiziksel güvenlik anahtarı veya authenticator uygulaması SMS'ten çok daha güvenlidir."
+      wrong: "SIM Swap'ın kalbi operatör tarafında numara devridir; algoritma kırma ya da cihaz çalma şart değildir. Bu yüzden SMS tabanlı 2FA tek başına zayıf kalabilir.",
+      correct: "Kesin doğru! Numara saldırganın SIM'ine taşındığında tüm SMS kodları ona gider; bu nedenle uygulama tabanlı veya donanım tabanlı 2FA daha güvenlidir."
     }
   }
 ];

@@ -43,11 +43,107 @@ let answered = false;
 let startTime = Date.now();
 let rewardedQuizQuestions = new Set();
 
+const MODULE_NAMES = {
+  1: 'Şifre Güvenliği',
+  2: 'Ağ Güvenliği',
+  3: 'Mobil Güvenlik',
+  4: 'Sosyal Mühendislik',
+  5: 'Phishing & Zararlı Yazılımlar',
+  6: 'Veri Gizliliği & Bulut',
+  7: 'Sunum Güvenliği',
+  8: 'Güvenli İletişim',
+  9: 'Hesap & Platform Güvenliği',
+  10: 'Seyahat Güvenliği',
+  11: 'Yapay Zeka Güvenliği',
+  12: 'Sosyal Medya Güvenliği',
+  13: 'Siber Zorbalık'
+};
+
+const MODULE_XP = {
+  1: 300, 2: 350, 3: 400, 4: 350, 5: 300, 6: 400, 7: 450,
+  8: 350, 9: 500, 10: 400, 11: 300, 12: 400, 13: 300
+};
+
+const DEFAULT_MODULE_VIDEO_URL = 'https://www.youtube.com/embed/RTj7vA3a2BE';
+
+const MODULE_VIDEO_URLS = {
+  1: 'https://youtu.be/SHiMaDUPmzQ',
+  2: 'https://youtu.be/gxaz_lfwgvE',
+  3: 'https://youtu.be/sNQ83nqk1Dw',
+  4: 'https://youtu.be/mZA-x6Ulwl0',
+  5: 'https://youtu.be/90jA5q7n1AY',
+  6: 'https://youtu.be/Glr2dJOO-EE',
+  7: 'https://youtu.be/UDXudENAJSg',
+  8: 'https://youtu.be/uA7EF91QQmM',
+  9: 'https://youtu.be/djduU78tqGA',
+  10: 'https://youtu.be/CzLPeXujLAM',
+  11: DEFAULT_MODULE_VIDEO_URL,
+  12: 'https://youtu.be/vhpb8bZdMa4',
+  13: 'https://youtu.be/vhpb8bZdMa4'
+};
+
 // Quiz/Senaryo verilerini çakışmasız şekilde topla.
 function getModuleQuestions() {
   if (Array.isArray(window.moduleQuestions)) return window.moduleQuestions;
   if (Array.isArray(window.questions)) return window.questions;
   return [];
+}
+
+function prepareQuestionForDisplay(q) {
+  if (!q || !Array.isArray(q.opts) || typeof q.correct !== 'number') return;
+  if (Array.isArray(q._displayOpts) && typeof q._displayCorrect === 'number') return;
+
+  const pairs = q.opts.map((opt, idx) => ({
+    text: opt,
+    isCorrect: idx === q.correct
+  }));
+
+  for (let i = pairs.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = pairs[i];
+    pairs[i] = pairs[j];
+    pairs[j] = tmp;
+  }
+
+  q._displayOpts = pairs.map(p => p.text);
+  q._displayCorrect = pairs.findIndex(p => p.isCorrect);
+}
+
+function clearQuestionDisplayOrder(questions) {
+  if (!Array.isArray(questions)) return;
+  questions.forEach(q => {
+    if (!q || typeof q !== 'object') return;
+    delete q._displayOpts;
+    delete q._displayCorrect;
+  });
+}
+
+function auditQuizQuestionQuality(questions) {
+  if (!Array.isArray(questions) || questions.length === 0) return;
+
+  const counts = [0, 0, 0, 0];
+  const longestBias = [];
+
+  questions.forEach((q, idx) => {
+    if (!q || !Array.isArray(q.opts) || typeof q.correct !== 'number') return;
+    if (q.correct >= 0 && q.correct < counts.length) counts[q.correct]++;
+
+    const lengths = q.opts.map(opt => String(opt || '').replace(/\s+/g, ' ').trim().length);
+    const maxLen = Math.max.apply(null, lengths);
+    const maxCount = lengths.filter(len => len === maxLen).length;
+    if (maxCount === 1 && lengths[q.correct] === maxLen) {
+      longestBias.push(idx + 1);
+    }
+  });
+
+  const maxCount = Math.max.apply(null, counts);
+  const minCount = Math.min.apply(null, counts);
+  if (maxCount - minCount > 2) {
+    console.warn('[BYTE Quiz] Dogru sik dagilimi dengesiz olabilir:', counts);
+  }
+  if (longestBias.length > 0) {
+    console.warn('[BYTE Quiz] Dogru cevap en uzun sik olabilir. Soru no:', longestBias.join(', '));
+  }
 }
 
 function getSceneFeedbacks() {
@@ -119,15 +215,11 @@ function syncSidebarModuleState() {
     const users = JSON.parse(localStorage.getItem('byte_users') || '{}');
     const session = localStorage.getItem('byte_session');
     if (session && users[session] && Array.isArray(users[session].completedModules)) {
-      done = users[session].completedModules;
+      done = users[session].completedModules.map(v => Number(v)).filter(v => v >= 1 && v <= 13);
     }
   } catch (e) {}
 
   const current = getCurrentModuleNumber();
-  const xpByModule = {
-    1: 300, 2: 350, 3: 400, 4: 350, 5: 300, 6: 400, 7: 450,
-    8: 350, 9: 500, 10: 400, 11: 300, 12: 400, 13: 300
-  };
 
   sidebar.querySelectorAll('.module-item').forEach(item => {
     const badge = item.querySelector('.mod-num, .mn');
@@ -145,18 +237,18 @@ function syncSidebarModuleState() {
     if (typeof current === 'number' && n === current) {
       item.classList.add('active');
       badge.classList.add('active2');
-      if (meta) meta.textContent = 'Aktif · ' + (xpByModule[n] || 0) + ' XP';
+      if (meta) meta.textContent = 'Aktif · ' + (MODULE_XP[n] || 0) + ' XP';
       return;
     }
 
     if (done.indexOf(n) !== -1) {
       badge.classList.add('done');
-      if (meta) meta.textContent = '✓ Tamamlandı · ' + (xpByModule[n] || 0) + ' XP';
+      if (meta) meta.textContent = '✓ Tamamlandı · ' + (MODULE_XP[n] || 0) + ' XP';
       return;
     }
 
     badge.classList.add('locked');
-    if (meta) meta.textContent = '🔒 Kilitli · ' + (xpByModule[n] || 0) + ' XP';
+    if (meta) meta.textContent = '🔒 Kilitli · ' + (MODULE_XP[n] || 0) + ' XP';
   });
 }
 
@@ -205,6 +297,311 @@ function buildAutoModuleNav() {
   navWrap.appendChild(dashboardCard);
   navWrap.appendChild(nextCard);
   panel5.appendChild(navWrap);
+}
+
+function getCompletedModulesSafe() {
+  try {
+    const users = JSON.parse(localStorage.getItem('byte_users') || '{}');
+    const session = localStorage.getItem('byte_session');
+    const done = (session && users[session] && Array.isArray(users[session].completedModules))
+      ? users[session].completedModules
+      : [];
+    return done.map(function (v) { return Number(v); }).filter(function (v) { return v >= 1 && v <= 13; });
+  } catch (e) {
+    return [];
+  }
+}
+
+function canAccessModule(target, doneList) {
+  if (!(target >= 1 && target <= 13)) return false;
+  if (target === 1) return true;
+  const done = Array.isArray(doneList) ? doneList : [];
+  return done.indexOf(target) !== -1 || done.indexOf(target - 1) !== -1;
+}
+
+function openModuleFromSidebar(target) {
+  const num = Number(target);
+  if (!Number.isFinite(num)) return false;
+  const done = getCompletedModulesSafe();
+  if (canAccessModule(num, done)) {
+    window.location.href = 'modul' + num + '.html';
+    return true;
+  }
+  return false;
+}
+
+function normalizeSidebarNavigation() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  const items = sidebar.querySelectorAll('.module-item');
+  items.forEach(function (item) {
+    const badge = item.querySelector('.mod-num, .mn');
+    if (!badge) return;
+
+    const modNo = parseInt((badge.textContent || '').replace(/\D/g, ''), 10);
+    if (!Number.isFinite(modNo) || modNo < 1 || modNo > 13) return;
+
+    item.onclick = function () {
+      if (!openModuleFromSidebar(modNo)) {
+        showToast('warn', '🔒 Kilitli', 'Önceki modülü tamamla.');
+      }
+    };
+  });
+}
+
+function normalizeSidebarLabels() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  sidebar.querySelectorAll('.module-item').forEach(function (item) {
+    const badge = item.querySelector('.mod-num, .mn');
+    if (!badge) return;
+
+    const modNo = parseInt((badge.textContent || '').replace(/\D/g, ''), 10);
+    if (!Number.isFinite(modNo) || modNo < 1 || modNo > 13) return;
+
+    const nameEl = item.querySelector('.mod-name');
+    if (nameEl && MODULE_NAMES[modNo]) {
+      nameEl.textContent = MODULE_NAMES[modNo];
+      nameEl.style.removeProperty('color');
+    }
+
+    badge.textContent = String(modNo).padStart(2, '0');
+  });
+}
+
+function normalizeYouTubeEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return DEFAULT_MODULE_VIDEO_URL;
+
+  if (/youtube\.com\/embed\//i.test(url) || /youtu\.be\//i.test(url)) {
+    if (/youtu\.be\//i.test(url)) {
+      const shortId = url.split('/').pop().split('?')[0];
+      return 'https://www.youtube.com/embed/' + shortId;
+    }
+    return url;
+  }
+
+  const match = url.match(/[?&]v=([^&#]+)/i);
+  if (match && match[1]) {
+    return 'https://www.youtube.com/embed/' + match[1];
+  }
+
+  return url;
+}
+
+function getModuleVideoUrl(moduleNum) {
+  return normalizeYouTubeEmbedUrl(MODULE_VIDEO_URLS[moduleNum] || DEFAULT_MODULE_VIDEO_URL);
+}
+
+function getYouTubeWatchUrl(url) {
+  if (!url || typeof url !== 'string') return 'https://www.youtube.com/';
+
+  if (/youtu\.be\//i.test(url)) {
+    const shortId = url.split('/').pop().split('?')[0];
+    return 'https://www.youtube.com/watch?v=' + shortId;
+  }
+
+  const embedMatch = url.match(/youtube\.com\/embed\/([^?&#/]+)/i);
+  if (embedMatch && embedMatch[1]) {
+    return 'https://www.youtube.com/watch?v=' + embedMatch[1];
+  }
+
+  const watchMatch = url.match(/[?&]v=([^&#]+)/i);
+  if (watchMatch && watchMatch[1]) {
+    return 'https://www.youtube.com/watch?v=' + watchMatch[1];
+  }
+
+  return url;
+}
+
+function injectStandardVideoStyles() {
+  if (document.getElementById('byte-standard-video-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'byte-standard-video-styles';
+  style.textContent = [
+    '.video-wrapper{position:relative;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 30px rgba(96,200,240,.12);margin-bottom:18px;}',
+    '.video-yt{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000;}',
+    '.video-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(160deg,rgba(6,15,30,.72),rgba(5,13,32,.72));cursor:pointer;}',
+    '.video-overlay.hidden{display:none;}',
+    '.play-hint{margin-top:8px;font-size:.74rem;color:var(--text-dim);font-family:\'Orbitron\',sans-serif;letter-spacing:1px;}',
+    '.byte-standard-video .vs-label{font-family:\'Orbitron\',sans-serif;font-size:.76rem;letter-spacing:2px;color:var(--cyan);margin-bottom:10px;}',
+    '.byte-standard-video .vs-title{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px;max-width:640px;}',
+    '.byte-standard-video .vs-sub{font-size:.88rem;line-height:1.6;color:var(--text-dim);max-width:720px;}',
+    '.byte-standard-video .play-big{width:72px;height:72px;border-radius:999px;display:grid;place-items:center;background:rgba(96,200,240,.18);border:1px solid rgba(96,200,240,.45);color:#fff;font-size:1.8rem;margin-top:18px;box-shadow:0 12px 32px rgba(0,0,0,.28);}',
+    '.byte-standard-video .video-link-subtle{margin-top:36px;font-size:.84rem;color:#d7e4ef;opacity:.88;text-decoration:none;letter-spacing:.35px;border-bottom:1px dotted rgba(215,228,239,.58);padding:4px 6px;border-radius:8px;display:inline-block;transition:color .2s ease, opacity .2s ease, border-color .2s ease, text-shadow .2s ease, transform .2s ease, box-shadow .2s ease;}',
+    '.byte-standard-video .video-link-subtle:hover{opacity:1;color:#ffffff;border-bottom-color:rgba(255,255,255,.98);text-shadow:0 0 12px rgba(255,255,255,.5);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 14px rgba(255,255,255,.2);}',
+    '@media (max-width: 768px){.byte-standard-video .vs-title{font-size:1rem;}.byte-standard-video .vs-sub{font-size:.82rem;}}'
+  ].join('');
+  document.head.appendChild(style);
+}
+
+function createStandardVideoWrapper(copy, url) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'video-wrapper byte-standard-video';
+
+  const iframe = document.createElement('iframe');
+  iframe.className = 'video-yt';
+  iframe.id = 'yt-frame';
+  iframe.src = url;
+  iframe.title = copy.title || 'BYTE Academy Video';
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+  iframe.loading = 'lazy';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'video-overlay';
+  overlay.id = 'vid-overlay';
+  overlay.onclick = function () {
+    if (typeof window.startVideo === 'function') {
+      window.startVideo();
+    }
+  };
+
+  const label = document.createElement('div');
+  label.className = 'vs-label';
+  label.textContent = copy.label;
+
+  const title = document.createElement('div');
+  title.className = 'vs-title';
+  title.textContent = copy.title;
+
+  const sub = document.createElement('div');
+  sub.className = 'vs-sub';
+  sub.textContent = copy.sub;
+
+  const playBig = document.createElement('div');
+  playBig.className = 'play-big';
+  playBig.textContent = '▶';
+
+  const hint = document.createElement('div');
+  hint.className = 'play-hint';
+  hint.textContent = 'Oynatmaya başla';
+
+  const ytLink = document.createElement('a');
+  ytLink.className = 'video-link-subtle';
+  ytLink.href = getYouTubeWatchUrl(url);
+  ytLink.target = '_blank';
+  ytLink.rel = 'noopener noreferrer';
+  ytLink.textContent = "YouTube'da izle";
+  ytLink.onclick = function (e) {
+    e.stopPropagation();
+  };
+
+  overlay.appendChild(label);
+  overlay.appendChild(title);
+  overlay.appendChild(sub);
+  overlay.appendChild(playBig);
+  overlay.appendChild(hint);
+  overlay.appendChild(ytLink);
+
+  wrapper.appendChild(iframe);
+  wrapper.appendChild(overlay);
+  return wrapper;
+}
+
+function extractStandardVideoCopy(moduleNum, panel) {
+  const titleEl = panel ? panel.querySelector('.mod-title') : null;
+  const descEl = panel ? panel.querySelector('.mod-desc') : null;
+  const legacyLabel = panel ? panel.querySelector('.vs-label') : null;
+  const legacyTitle = panel ? panel.querySelector('.vs-title') : null;
+  const legacySub = panel ? panel.querySelector('.vs-sub') : null;
+  const moduleLabel = String(moduleNum || '').padStart(2, '0');
+
+  return {
+    label: (legacyLabel && legacyLabel.textContent.trim()) || ('BYTE ACADEMY — MODÜL ' + moduleLabel),
+    title: (legacyTitle && legacyTitle.textContent.trim()) || (titleEl && titleEl.textContent.replace(/\s+/g, ' ').trim()) || 'BYTE Academy Video Dersi',
+    sub: (legacySub && legacySub.textContent.trim()) || (descEl && descEl.textContent.replace(/\s+/g, ' ').trim()) || 'Bu modülün video anlatımını başlatmak için oynat tuşunu kullan.'
+  };
+}
+
+function normalizeModuleVideo() {
+  const moduleNum = getCurrentModuleNumber();
+  if (typeof moduleNum !== 'number') return;
+
+  const panel = document.getElementById('panel-1');
+  if (!panel) return;
+
+  injectStandardVideoStyles();
+
+  const videoUrl = getModuleVideoUrl(moduleNum);
+  const watchUrl = getYouTubeWatchUrl(videoUrl);
+  const copy = extractStandardVideoCopy(moduleNum, document);
+  const existingWrapper = panel.querySelector('.video-wrapper');
+
+  if (existingWrapper) {
+    existingWrapper.classList.add('byte-standard-video');
+
+    const frame = existingWrapper.querySelector('#yt-frame, iframe');
+    if (frame) {
+      frame.id = 'yt-frame';
+      frame.classList.add('video-yt');
+      frame.setAttribute('src', videoUrl);
+      frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      frame.setAttribute('loading', 'lazy');
+      frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    }
+
+    let overlay = existingWrapper.querySelector('#vid-overlay, .video-overlay');
+    if (!overlay) {
+      overlay = createStandardVideoWrapper(copy, videoUrl).querySelector('.video-overlay');
+      existingWrapper.appendChild(overlay);
+    }
+    overlay.id = 'vid-overlay';
+    overlay.classList.add('video-overlay');
+    overlay.onclick = function () {
+      if (typeof window.startVideo === 'function') {
+        window.startVideo();
+      }
+    };
+
+    const label = overlay.querySelector('.vs-label') || overlay.appendChild(document.createElement('div'));
+    label.className = 'vs-label';
+    label.textContent = copy.label;
+
+    const title = overlay.querySelector('.vs-title') || overlay.appendChild(document.createElement('div'));
+    title.className = 'vs-title';
+    title.textContent = copy.title;
+
+    const sub = overlay.querySelector('.vs-sub') || overlay.appendChild(document.createElement('div'));
+    sub.className = 'vs-sub';
+    sub.textContent = copy.sub;
+
+    const playBig = overlay.querySelector('.play-big') || overlay.appendChild(document.createElement('div'));
+    playBig.className = 'play-big';
+    playBig.textContent = '▶';
+
+    const hint = overlay.querySelector('.play-hint') || overlay.appendChild(document.createElement('div'));
+    hint.className = 'play-hint';
+    hint.textContent = 'Oynatmaya başla';
+
+    let ytLink = overlay.querySelector('.video-link-subtle');
+    if (!ytLink) {
+      ytLink = overlay.appendChild(document.createElement('a'));
+    }
+    ytLink.className = 'video-link-subtle';
+    ytLink.href = watchUrl;
+    ytLink.target = '_blank';
+    ytLink.rel = 'noopener noreferrer';
+    ytLink.textContent = "YouTube'da izle";
+    ytLink.onclick = function (e) {
+      e.stopPropagation();
+    };
+    return;
+  }
+
+  const legacyPlayer = panel.querySelector('.video-player');
+  if (legacyPlayer) {
+    legacyPlayer.replaceWith(createStandardVideoWrapper(copy, videoUrl));
+    return;
+  }
+
+  const placeholderCard = panel.firstElementChild;
+  if (placeholderCard) {
+    placeholderCard.replaceWith(createStandardVideoWrapper(copy, videoUrl));
+  }
 }
 
 
@@ -281,6 +678,28 @@ function startVideo() {
   if (overlay) {
     overlay.classList.add('hidden');
   }
+
+  // Trigger playback on first click for modules that rely on shared handler.
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1&playsinline=1&enablejsapi=1');
+    }
+
+    // Best-effort: ask YouTube iframe to play with sound after user gesture.
+    try {
+      setTimeout(function () {
+        if (!frame.contentWindow) return;
+        frame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        frame.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        frame.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+      }, 250);
+    } catch (e) {
+      // Ignore cross-frame command failures.
+    }
+  }
 }
 
 function skipVideo() {
@@ -328,6 +747,8 @@ function renderQuestion() {
   }
   
   const q = quizQuestions[currentQ];
+  prepareQuestionForDisplay(q);
+  const displayOpts = Array.isArray(q._displayOpts) ? q._displayOpts : q.opts;
   answered = false;
   
   const quizFill = document.getElementById('quiz-fill') || document.getElementById('qprog');
@@ -346,7 +767,7 @@ function renderQuestion() {
     <div class="question-card">
       <div class="question-num">SORU ${currentQ + 1}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o, i) => `<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o, i) => `<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="feedback"></div>
     </div>
     <div class="quiz-actions" id="q-actions" style="display:none;"><button class="btn btn-primary" onclick="nextQuestion()">${currentQ < quizQuestions.length - 1 ? 'Sonraki Soru →' : 'Sonucu Gör →'}</button></div>
@@ -360,7 +781,8 @@ function answerQ(i) {
   if (!Array.isArray(quizQuestions) || quizQuestions.length === 0) return;
   
   const q = quizQuestions[currentQ];
-  const ok = i === q.correct;
+  const correctIdx = typeof q._displayCorrect === 'number' ? q._displayCorrect : q.correct;
+  const ok = i === correctIdx;
   
   if (ok) {
     quizCorrect++;
@@ -378,7 +800,7 @@ function answerQ(i) {
   document.querySelectorAll('.option-btn').forEach(b => (b.disabled = true));
   document.getElementById('opt-' + i).classList.add(ok ? 'correct' : 'wrong');
   
-  if (!ok) document.getElementById('opt-' + q.correct).classList.add('correct');
+  if (!ok) document.getElementById('opt-' + correctIdx).classList.add('correct');
   
   const fb = document.getElementById('feedback');
   if (fb) {
@@ -429,6 +851,7 @@ function showResult() {
 
 function restartQuiz() {
   const quizQuestions = getModuleQuestions();
+  clearQuestionDisplayOrder(quizQuestions);
   currentQ = 0;
   quizCorrect = 0;
   const qScore = document.getElementById('q-score');
@@ -506,16 +929,7 @@ function tryNav() {
     }
   }
   if (!Number.isNaN(target) && target >= 1 && target <= 13) {
-    try {
-      const users = JSON.parse(localStorage.getItem('byte_users') || '{}');
-      const session = localStorage.getItem('byte_session');
-      const done = (session && users[session] && users[session].completedModules) ? users[session].completedModules : [];
-      const canEnter = target === 1 || done.indexOf(target) !== -1 || done.indexOf(target - 1) !== -1;
-      if (canEnter) {
-        window.location.href = 'modul' + target + '.html';
-        return;
-      }
-    } catch (e) {}
+    if (openModuleFromSidebar(target)) return;
   }
   showToast('warn', '🔒 Kilitli', 'Önceki modülü tamamla.');
 }
@@ -525,7 +939,66 @@ function goTo(url) {
 }
 
 function byteSpeak() {
-  showToast('info', 'BYTE Söylüyor', 'Modül dinleme özelliği burada oynatılabilir...');
+  if (!('speechSynthesis' in window)) {
+    showToast('warn', '🔇 Desteklenmiyor', 'Tarayıcın ses sentezini desteklemiyor.');
+    return;
+  }
+
+  const moduleTextById = {
+    1: 'Modül bir. Siber güvenliğe giriş. Dijital tehditleri tanıyacak ve güvenli davranışın temelini öğreneceksin.',
+    2: 'Modül iki. Ağ güvenliği. Açık Wi-Fi riskleri, Evil Twin saldırıları ve güvenli bağlantı adımlarını öğreneceksin.',
+    3: 'Modül üç. Mobil güvenlik. Uygulama izinleri, smishing saldırıları ve çalınan cihaz senaryolarında doğru adımları göreceksin.',
+    4: 'Modül dört. Sosyal mühendislik. Kimlik taklidi, aciliyet tuzakları ve psikolojik manipülasyona karşı savunmayı öğreneceksin.',
+    5: 'Modül beş. Phishing ve zararlı yazılımlar. Sahte bağlantıları ayırt edip cihazını kötü amaçlı yazılımlardan korumayı öğreneceksin.',
+    6: 'Modül altı. Veri gizliliği ve bulut. Verini sınıflandırmayı, paylaşım risklerini ve güvenli depolama alışkanlıklarını öğreneceksin.',
+    7: 'Modül yedi. Dijital kimlik. Kimlik avı, hesap ele geçirme ve doğrulama pratikleriyle kimliğini koruyacaksın.',
+    8: 'Modül sekiz. Güvenli iletişim. Mesajlaşma, dosya paylaşımı ve kanal güvenliği için doğru yöntemleri uygulayacaksın.',
+    9: 'Modül dokuz. Hesap ve platform güvenliği. Parola hijyeni, iki aşamalı doğrulama ve oturum yönetimini güçlendireceksin.',
+    10: 'Modül on. Seyahat güvenliği. Hareket halindeyken cihaz, ağ ve veri güvenliğini nasıl koruyacağını öğreneceksin.',
+    11: 'Modül on bir. Yapay zeka güvenliği. Prompt hijyeni, veri sızıntısı riskleri ve güvenli yapay zeka kullanımını öğreneceksin.',
+    12: 'Modül on iki. Sosyal medya güvenliği. Hesap koruması, görünürlük ayarları ve içerik güvenliği becerilerini geliştireceksin.',
+    13: 'Modül on üç. Siber zorbalık. Dijital şiddeti tanıma, kanıt toplama ve doğru destek adımlarını öğreneceksin.'
+  };
+
+  const match = (window.location.pathname || '').match(/modul(\d+)\.html/i);
+  const moduleId = match ? Number(match[1]) : NaN;
+  const text = moduleTextById[moduleId] || 'BYTE Akademi modül dinleme özelliği aktif. Başlıktan modül özetini dinleyebilirsin.';
+
+  window.speechSynthesis.cancel();
+
+  const avatar = document.getElementById('byteAvatar');
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'tr-TR';
+  utter.rate = 0.92;
+  utter.pitch = 1.04;
+
+  const voices = window.speechSynthesis.getVoices();
+  const trVoice = voices.find((v) => /^tr/i.test(v.lang || ''));
+  if (trVoice) utter.voice = trVoice;
+
+  utter.onstart = function () {
+    if (avatar) avatar.classList.add('speaking');
+    showToast('info', '🤖 BYTE Konuşuyor', 'Modül özeti okunuyor...');
+  };
+  utter.onend = function () {
+    if (avatar) avatar.classList.remove('speaking');
+  };
+  utter.onerror = function () {
+    if (avatar) avatar.classList.remove('speaking');
+    showToast('warn', '🔇 Ses Hatası', 'Tarayıcıda Türkçe ses paketi olmayabilir.');
+  };
+
+  if (!voices || voices.length === 0) {
+    window.speechSynthesis.onvoiceschanged = function () {
+      const loaded = window.speechSynthesis.getVoices();
+      const trLoaded = loaded.find((v) => /^tr/i.test(v.lang || ''));
+      if (trLoaded) utter.voice = trLoaded;
+      window.speechSynthesis.speak(utter);
+    };
+    return;
+  }
+
+  window.speechSynthesis.speak(utter);
 }
 
 function togglePw() {
@@ -639,11 +1112,52 @@ function sidebarClick(n) {
 }
 
 
+// ── SIDEBAR TOGGLE ────────────────────────────────
+function initSidebarToggle() {
+  var sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+
+  // Inject toggle button after sidebar in DOM
+  var btn = document.createElement('button');
+  btn.id = 'sidebar-toggle';
+  btn.title = 'Menüyü Gizle/Göster';
+  btn.textContent = '‹';
+  btn.onclick = toggleSidebar;
+  sidebar.parentNode.insertBefore(btn, sidebar.nextSibling);
+
+  // Check if navigated from dashboard
+  var fromDash = sessionStorage.getItem('byteFromDashboard');
+  sessionStorage.removeItem('byteFromDashboard');
+
+  if (!fromDash) {
+    // Collapse without animation on initial load
+    sidebar.classList.add('no-anim');
+    sidebar.classList.add('collapsed');
+    btn.classList.add('collapsed');
+    btn.textContent = '›';
+    requestAnimationFrame(function () {
+      sidebar.classList.remove('no-anim');
+    });
+  }
+}
+
+function toggleSidebar() {
+  var sidebar = document.getElementById('sidebar');
+  var btn = document.getElementById('sidebar-toggle');
+  if (!sidebar || !btn) return;
+  var collapsed = sidebar.classList.toggle('collapsed');
+  btn.classList.toggle('collapsed', collapsed);
+  btn.textContent = collapsed ? '›' : '‹';
+}
+
 // ── PROGRESS KAYDETME ──────────────────────────────────
 function initModuleUI() {
   const xpEl = document.getElementById('xp-count');
   if (xpEl) xpEl.textContent = String(xp);
 
+  normalizeModuleVideo();
+  normalizeSidebarLabels();
+  normalizeSidebarNavigation();
   updateTopbarBadgeCount();
   syncSidebarModuleState();
 
@@ -663,16 +1177,20 @@ function initModuleUI() {
 
   // Initialize quiz only when module-specific questions are present.
   if (document.getElementById('quiz-area') && getModuleQuestions().length > 0) {
+    auditQuizQuestionQuality(getModuleQuestions());
     renderQuestion();
   }
 
   buildAutoModuleNav();
+  initSidebarToggle();
 }
 
-// Ensure inline onclick handlers can always find these functions.
-Object.assign(window, {
+// Ensure inline onclick handlers can find shared functions without overriding
+// module-specific handlers that intentionally customize quiz/scenario behavior.
+const sharedHandlers = {
   goStep,
   completeStep,
+  startVideo,
   togglePlay,
   seekBack,
   seekTo,
@@ -692,7 +1210,14 @@ Object.assign(window, {
   saveQuizResult,
   ensureModuleCompletion,
   saveProgress,
-  skipVideo
+  skipVideo,
+  toggleSidebar
+};
+
+Object.keys(sharedHandlers).forEach((key) => {
+  if (typeof window[key] !== 'function') {
+    window[key] = sharedHandlers[key];
+  }
 });
 
 if (document.readyState === 'loading') {
@@ -704,6 +1229,6 @@ if (document.readyState === 'loading') {
 // ── PWA SERVICE WORKER KAYDI ─────────────────────
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {});
+    navigator.serviceWorker.register('/sw.js?v=3').catch(() => {});
   });
 }

@@ -127,10 +127,11 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
 .question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:flex-start;gap:11px;}
 .option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;font-family:'Orbitron',sans-serif;flex-shrink:0;transition:.25s;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.2);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.2);border-color:var(--red);color:var(--red);}
@@ -258,7 +259,7 @@
         <div class="byte-tooltip">▶ BYTE'a tıkla</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 09 · 🔊 Dinle</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 09 🔊</div>
         <h1 class="mod-title">Hesap & <span>Platform Güvenliği</span></h1>
         <p class="mod-desc">2FA türleri, passkey'ler, hesap ele geçirme saldırıları, ihlal müdahalesi ve platform bazlı güvenlik ayarları. ENISA & Europol verileriy le AB odaklı içerik.</p>
         <div class="mod-stats">
@@ -528,6 +529,34 @@
             </div>
           </div>
 
+          <div class="section-head">💡 BÖLÜM 5 — TAKİBİ AZALTMAK İÇİN 3 ALTIN TAVSİYE</div>
+          <div class="settings-paths">
+            <div class="sp-row">
+              <div class="sp-app-icon">🍪</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Üçüncü Taraf Çerezleri (Third-Party Cookies)</div>
+                <div class="sp-path-line"><span>NEDEN ÖNEMLİ? →</span> Reklam ağlarının site site davranışını takip ederek profil çıkarmasını sağlar.</div>
+                <div class="sp-path-line"><span>NE YAPMALI? →</span> Tarayıcı ayarlarından üçüncü taraf çerezleri engelle. Bu, reklam profilinin oluşmasını zorlaştırır.</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🧹</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Otomatik Silme (Auto-Delete)</div>
+                <div class="sp-path-line"><span>NEDEN ÖNEMLİ? →</span> Web ve Uygulama Etkinliği tamamen kapalı olmasa bile geçmiş verinin birikmesini sınırlar.</div>
+                <div class="sp-path-line"><span>NE YAPMALI? →</span> Google hesabında otomatik silmeyi 3 veya 18 ay olarak etkinleştir.</div>
+              </div>
+            </div>
+            <div class="sp-row">
+              <div class="sp-app-icon">🎯</div>
+              <div style="flex:1;">
+                <div class="sp-app-name">Kişiselleştirilmiş Reklamlar</div>
+                <div class="sp-path-line"><span>NEDEN ÖNEMLİ? →</span> Google'ın ilgi alanı modeline dayalı hedefli reklamları dijital izini büyütür.</div>
+                <div class="sp-path-line"><span>NE YAPMALI? →</span> myadcenter.google.com adresinden ilgi alanı profilini gözden geçir ve reklam kişiselleştirmeyi kapat.</div>
+              </div>
+            </div>
+          </div>
+
           <div class="recommend-box">
             <div class="rb-icon">🎯</div>
             <div>
@@ -702,36 +731,36 @@ let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, modul
 
 /* ── QUIZ DATA ── */
 window.moduleQuestions=[
-  {q:"ENISA'ya göre AB'deki hesap ele geçirme (ATO) vakalarının büyük çoğunluğu hangi yöntemle gerçekleşiyor?",
-   opts:["Brute force (kaba kuvvet) saldırısı","Credential stuffing — başka platformdan çalınan şifre bilgisinin denenmesi","SIM swap saldırısı","Keylogger yazılımı"],
-   correct:1,fb:{wrong:"Europol 2024 verileri: AB'deki ATO vakalarının %61'i credential stuffing kaynaklı. Saldırganlar dark web'de satılan çalıntı listelerle tüm büyük platformlarda otomatik deneme yapıyor.",correct:"Doğru! Credential stuffing bu yüzden bu kadar yaygın: platformlar arası şifre yeniden kullanımı açığı çok geniş. Çözüm: her platform için benzersiz şifre + şifre yöneticisi."}},
-  {q:"2FA türleri arasında phishing'e karşı en dirençli seçenek hangisidir?",
-   opts:["SMS ile gelen 6 haneli kod","TOTP authenticator uygulaması (Google Authenticator vb.)","FIDO2 donanım güvenlik anahtarı (YubiKey vb.)","E-posta ile gelen doğrulama kodu"],
-   correct:2,fb:{wrong:"FIDO2 donanım anahtarları phishing'e karşı tam dirençli: site URL'sini kriptografik olarak doğrular — sahte sitede çalışmaz. SMS ve TOTP ise gelişmiş phishing ile atlatılabilir.",correct:"Kesinlikle! FIDO2/WebAuthn standardı: anahtar yalnızca kayıtlı domain için çalışır. Sahte login sayfasında imkânsız — ENISA'nın kurumsal hesaplar için birincil önerisi bu."}},
-  {q:"Passkey (geçiş anahtarı) teknolojisinin şifreye göre en kritik avantajı nedir?",
-   opts:["Daha kısa ve hatırlanması kolay","Şifre olmadığından credential stuffing ve phishing mümkün değil","Yalnızca Apple cihazlarında çalışır","Daha ucuz güvenlik çözümü sunar"],
-   correct:1,fb:{wrong:"Passkey'in özü: cihazda saklanan kriptografik anahtar çifti. Şifre yok → çalınacak şey yok → credential stuffing imkânsız. Domain doğrulaması → phishing çalışmaz.",correct:"Doğru! Şifresiz kimlik doğrulamanın temel mantığı bu. Google, Apple, Microsoft, PayPal, GitHub destekliyor. FIDO2/WebAuthn standardı W3C tarafından onaylı."}},
-  {q:"Hesabının ihlal edildiğini fark ettiğinde doğru adım sırası hangisi?",
-   opts:["Oturumları kapat → şifreyi değiştir → 2FA'yı etkinleştir","Şifreyi değiştir → oturumları kapat → 2FA'yı gözden geçir → kurtarma kodlarını yenile","Platformun destek ekibine bildir → şifreyi değiştir","Antivirüs tara → şifreyi değiştir → oturumları kapat"],
-   correct:1,fb:{wrong:"Sıra kritik. Önce şifre değişmeli — bu saldırganın erişimini kırar. Sonra oturumlar: hâlâ aktif bağlantıyı keser. Sonra 2FA ve kurtarma kodları.",correct:"Tam doğru! Bu sıra hasarı minimize eder. Şifre → Oturumlar → 2FA → Kurtarma Kodları → Bağlı Uygulamalar → Diğer Platformlar. 60 dakikan var."}},
-  {q:"GDPR kapsamında bir platform bir hesap ihlalini öğrendiğinde yetkililere ne kadar süre içinde bildirmek zorundadır?",
-   opts:["7 gün","30 gün","72 saat","24 saat"],
-   correct:2,fb:{wrong:"GDPR Madde 33: Kişisel veri ihlali tespit edildiğinde ilgili Veri Koruma Otoritesine (DPA) 72 saat içinde bildirim zorunlu. Bu süre aşılırsa ciddi para cezaları gündeme gelir.",correct:"Doğru! 72 saatlik kural GDPR'nin en bilinenleri arasında. AB'deki tüm veri işleyiciler için geçerli. Almanya'da BfDI, Fransa'da CNIL, Hollanda'da AP sorumlu otorite."}},
-  {q:"SMS ile 2FA'nın en ciddi güvenlik açığı nedir?",
-   opts:["SMS mesajları çok hızlı siliyor","SIM swap — saldırgan operatörü arayarak hattı kendi SIM'ine taşıtabilir","SMS mesajı yalnızca 5 dakika geçerli","SMS mesajı şifreli değil"],
-   correct:1,fb:{wrong:"SIM swap: Saldırgan teleoperatörü arayıp sosyal mühendislik yaparak hattı kendi SIM kartına taşıtır. Artık senin SMS'lerin ona gidiyor. Bu yüzden SMS 2FA zayıf sayılır.",correct:"Kesinlikle! SIM swap + SS7 protokol zafiyetleri SMS 2FA'yı kurumsal hesaplar için yetersiz kılıyor. TOTP uygulaması veya donanım anahtarı minimum standart olmalı."}},
-  {q:"LinkedIn güvenlik ayarlarında 2FA için hangi seçenek tercih edilmelidir?",
-   opts:["SMS kodu — en hızlı seçenek","Authenticator uygulaması (TOTP) — SMS'den çok daha güvenli","E-posta kodu","Telefon araması"],
-   correct:1,fb:{wrong:"LinkedIn'de TOTP authenticator uygulaması seçimi: Ayarlar → Oturum Açma ve Güvenlik → İki Adımlı Doğrulama → Authenticator Uygulaması. SMS kodu iş hesapları için yetersiz.",correct:"Doğru! LinkedIn spear-phishing saldırılarının birincil hedefi. TOTP minimum — mümkünse FIDO2 donanım anahtarı ekle. AB'deki iş dünyası hesapları için ENISA bu standardı tavsiye ediyor."}},
-  {q:"Hesabını ihlal eden saldırgan, oturumunu kapatmadan önce ne yapabilir?",
-   opts:["Yalnızca profilini görüntüleyebilir","OAuth uygulaması bağlayarak şifren değişse bile erişimini sürdürebilir","Hesabını tamamen silebilir","Yalnızca e-postalarını okuyabilir"],
-   correct:1,fb:{wrong:"Sofistike saldırganlar OAuth token bağlar: sahte bir 'verimlilik aracı' izni alırlar. Şifreni değiştirsen de bu yetki devam eder. Bu yüzden 'Bağlı Uygulamalar' inceleme şart.",correct:"Kritik nokta! İhlal sonrası 5. adım bu yüzden var: Ayarlar → Güvenlik → Bağlı Uygulamalar / Üçüncü Taraf Erişim. Tanımadığın her şeyi iptal et."}},
-  {q:"haveibeenpwned.com sitesi ne için kullanılır?",
-   opts:["Güçlü şifre üretmek","E-posta adresinin geçmiş veri ihlallerinde yer alıp almadığını kontrol etmek","2FA kodunu doğrulamak","VPN bağlantısı kurmak"],
-   correct:1,fb:{wrong:"haveibeenpwned.com: Troy Hunt tarafından kurulan, milyarlarca çalıntı kimlik bilgisini içeren veri tabanı. E-postanı gir — hangi ihlallerde yer aldığını görürsün. Sonra o hesapların şifrelerini değiştir.",correct:"Tam isabet! haveibeenpwned.com'u düzenli kontrol et (ayda bir). Bir ihlal varsa o platformun şifresini hemen değiştir. AB'de Almanya BSI de benzer araçlar öneriyor."}},
-  {q:"Google Passkey oluşturmak için doğru adım dizisi hangisidir?",
-   opts:["Google Play Store → Passkey Uygulaması → İndir","myaccount.google.com → Güvenlik → Passkey'ler → Yeni Passkey Oluştur","Gmail → Ayarlar → Gizlilik → Passkey Etkinleştir","Google → Profil → Güvenlik → 2FA → Passkey Ekle"],
-   correct:1,fb:{wrong:"Google Passkey yolu: myaccount.google.com adresine git → Sol menüden 'Güvenlik' → 'Passkey'ler' bölümü → 'Yeni Passkey Oluştur'. Cihazının biyometrik sensörü veya PIN'i kullanılır.",correct:"Doğru! Bu adımı şimdi tamamlamak 5 dakika alıyor — hesabını credential stuffing'e karşı tam koruma altına alıyor. Google, 2024'te kullanıcıları passkey'e geçişi varsayılan yaptı."}}
+  {q:"Google hesabınızda ve internet genelinde kişisel verilerinizin takip edilmesini (tracking) en aza indirmek için yapılması gereken en kritik işlem dizisi hangisidir?",
+   opts:["Google ana sayfasındaki arama geçmişini manuel olarak silmek ve her oturum sonrası bilgisayarı yeniden başlatmak.","'Etkinlik Kontrolleri' altındaki 'Web ve Uygulama Etkinliği'ni kapatmak ve tarayıcıda 'Üçüncü Taraf Çerezleri'ni engellemek.","Google Drive üzerindeki tüm yedeklemeleri durdurarak dosyaların bulut üzerinden takip edilmesini tamamen engellemek.","Sadece Google Chrome'u 'Misafir Modu'nda kullanmak; çünkü bu moddayken hiçbir veri sunuculara iletilmez."],
+   correct:1,fb:{wrong:"Takibi azaltmanin ana kombinasyonu: Web ve Uygulama Etkinligi kontrolu + ucuncu taraf cerez engellemesidir.",correct:"Dogru! Etkinlik kontrollerini kisitlamak ve ucuncu taraf cerezleri engellemek dijital ayak izinizi ciddi oranda azaltir."}},
+  {q:"Google hesabınızda 'Web ve Uygulama Etkinliği'ni tamamen kapatmak yerine, 'Otomatik Silme' (Auto-Delete) özelliğini (3 veya 18 ay gibi seçeneklerle) aktif etmenin temel avantajı nedir?",
+   opts:["Google'in verilerinizi ucuncu taraf reklam sirketlerine satmasini yasal olarak tamamen engeller.","Hesabinizin sifresini belirli araliklarla otomatik olarak degistirerek guvenligi en ust seviyeye cikarir.","Size ozel oneriler sunulmaya devam edilirken, gecmis verilerin duzenli olarak silinip dijital ayak izinizin sinirlandirilmasini saglar.","Sadece Google Haritalar uzerindeki konum gecmisinizi siler, ancak arama motorundaki verilerinize dokunmaz."],
+   correct:2,fb:{wrong:"Auto-Delete'in amaci, kisilestirmeyi tamamen kapatmadan eski veriyi periyodik silerek riski azaltmaktir.",correct:"Kesinlikle dogru! Kisisellestirme devam ederken biriken gecmis veriyi sinirlamak guvenli bir denge sunar."}},
+  {q:"Bircok siteye veya oyuna 'Google/Facebook ile giris yap' diyerek verdiginiz izinleri (OAuth) duzenli olarak temizlememek neden ciddi bir guvenlik riskidir?",
+   opts:["Bu uygulamalar, siz sifrenizi degistirseniz bile hesabiniza erismeye, e-postalarinizi okumaya veya adiniza paylasim yapmaya devam edebilir.","Internet tarayicinizin onbellek alanini doldurarak Google hesabinizin kotasinin dolmasina ve yeni e-posta alamamaniza neden olur.","Bu siteler, hesabiniza bagli olan kredi karti bilgilerinizi otomatik olarak kopyalayip diger tum sosyal medya hesaplariniza aktarir.","Sadece Google servislerinin yavaslamasina sebep olur; ancak bu durum hesabin genel guvenligi icin herhangi bir tehdit olusturmaz."],
+   correct:0,fb:{wrong:"OAuth izinleri aktif kaldiginda sifre degisikligi tek basina yeterli olmaz; token bazli erisim devam edebilir.",correct:"Dogru! Duzenli OAuth temizlikleri, hesap devralma sonrasi kalici erisim riskini ciddi sekilde dusurur."}},
+  {q:"SMS ile 2FA (iki faktorlu dogrulama) kullaniminin gunumuzde en cok elestirilen ciddi guvenlik acigi nedir?",
+   opts:["Saldirganin operatorunuzu kandirarak hatti kendi SIM kartina tasitabilmesi (SIM Swap).","SMS mesajlarinin telefonda cok fazla yer kaplamasi ve cihazin hafizasini doldurmasi.","Operator gecikmeleri nedeniyle kodun 5 dakikalik gecerlilik suresini asmasi.","SMS mesajlarinin uctan uca sifreli olmamasi nedeniyle Wi-Fi aglarinda kolayca okunmasi."],
+   correct:0,fb:{wrong:"SMS 2FA'nin kritik zayifligi SIM swap'tir; saldirgan hat tasiyarak kodlari alabilir.",correct:"Dogru! Bu nedenle TOTP veya FIDO2 tabanli yontemler SMS'e gore daha guvenli kabul edilir."}},
+  {q:"ENISA verilerine gore, Avrupa'daki hesap ele gecirme (ATO) vakalarinin buyuk cogunlugu hangi yontemle gerceklesmektedir?",
+   opts:["Credential Stuffing: Baska bir platformdan calinan sifrelerin otomatik yazilimlarla denenmesiyle.","Brute Force: Saldirganin tum sifre kombinasyonlarini tek tek denemesiyle.","SIM Swap: Saldirganin telefon hattinizi kendi cihazina kopyalamasi yontemiyle.","Keylogger: Bilgisayariniza yuklenen bir yazilimin klavye hareketlerinizi kaydetmesiyle."],
+   correct:0,fb:{wrong:"ATO vakalarinda en yaygin kaynak credential stuffing'dir; sifre tekrar kullanimi riski buyutur.",correct:"Kesinlikle! Baska platformlardan sizan sifrelerin tekrar denenmesi ATO saldirilarinda ana vektordur."}},
+  {q:"Iki faktorlu dogrulama (2FA) yontemleri arasinda, sahte sitelere (phishing) karsi en yuksek direnci saglayan secenek hangisidir?",
+   opts:["Cep telefonuna SMS ile gelen 6 haneli tek kullanimlik kod.","TOTP uygulamalarindan (Google Authenticator vb.) alinan zamana duyarlı kodlar.","FIDO2 standardina sahip donanim guvenlik anahtarlari (YubiKey vb.).","Kayitli e-posta adresine gonderilen onay baglantisi veya kodu."],
+   correct:2,fb:{wrong:"Phishing'e karsi en guclu koruma, etki alani dogrulamasi yapan FIDO2 donanim anahtarlaridir.",correct:"Dogru! FIDO2 anahtarlar sahte domaine imza uretmedigi icin phishing'e karsi en direncli secenektir."}},
+  {q:"Yeni nesil Passkey (Gecis Anahtari) teknolojisinin, geleneksel sifre kullanimina gore en kritik avantaji nedir?",
+   opts:["Klasik sifrelerden cok daha kisa ve hatirlanmasi kolay bir yapiya sahip olmasi.","Sifre tasimadigi icin Credential Stuffing ve Phishing saldirilarini teknik olarak imkansiz kilmasi.","Sirketler icin kurulum maliyetinin diger tum guvenlik cozumlerinden cok daha ucuz olmasi.","Sadece Apple cihazlarinda calisarak diger tum isletim sistemlerini engellemesi."],
+   correct:1,fb:{wrong:"Passkey'in kritik avantaji kolaylik degil; sifreyi ortadan kaldirarak temel saldiri vektorlerini devre disi birakmasidir.",correct:"Tam isabet! Passkey modelinde paylasilabilir sifre yoktur; bu credential stuffing ve phishing riskini dramatik azaltir."}},
+  {q:"Bir hesabinizin ihlal edildigini fark ettiginizde, guvenligi en saglam sekilde yeniden tesis etmek icin izlenmesi gereken dogru adim sirasi hangisidir?",
+   opts:["Once tum aktif oturumlari kapatmak, ardindan sadece 2FA ayarlarini gozden gecirmek.","Sifreyi degistirmek, tum oturumlari kapatmak, 2FA'yi aktif edip Kurtarma Kodlarini yenilemek.","Hicbir islem yapmadan once platformun destek ekibine durumu bildirmek ve beklemek.","Bilgisayarda antivirus taramasi yapmak ve tarayicidaki tum cerezleri temizlemek."],
+   correct:1,fb:{wrong:"En guvenli akista sadece tek adim yetmez; sifre, oturum, 2FA ve kurtarma kodlari birlikte ele alinmalidir.",correct:"Dogru! Bu sira saldirganin kalici erisimini keser ve hesabi guvenli sekilde yeniden tesis eder."}},
+  {q:"GDPR kapsaminda, bir platform ciddi bir veri ihlali ogrendiginde bu durumu yetkililere bildirmek icin yasal olarak ne kadar sureye sahiptir?",
+   opts:["Olayin tespit edilmesinden itibaren en gec 30 gun icerisinde bildirim yapmalidir.","Ihlalin uzerinden 7 is gunu gectikten sonra resmi aciklama yapmalidir.","Kullanici guvenligi icin ihlali ogrendigi andan itibaren ilk 24 saat icinde.","Olayin tespit edilmesinden itibaren en gec 72 saat icerisinde bildirim yapmalidir."],
+   correct:3,fb:{wrong:"GDPR Madde 33 kapsaminda standart sure 72 saattir; daha uzun sure genel kural degildir.",correct:"Kesinlikle dogru! Ciddi veri ihlallerinde yetkili makama bildirim icin yasal ust sinir 72 saattir."}},
+  {q:"LinkedIn veya X gibi platformlarda neden Authenticator App (TOTP) secenegi SMS'e tercih edilmelidir?",
+   opts:["SMS kodu en hizli secenek olsa da, bu uygulamalar internet olmadan da kod uretebilir.","Uygulama tabanli kodlar sebeke sinyali gerektirmez ve SIM kart saldirilarina karsi cok daha guvenlidir.","E-posta ile gelen kodlar sadece bilgisayarda calistigi icin bu uygulamalar daha mobil uyumludur.","Telefon aramasi ile kod alma yontemi sadece kurumsal hesaplar icin gecerli bir guvenlik katmanidir."],
+   correct:1,fb:{wrong:"TOTP'nin farki hiz degil; SIM swap gibi operator temelli saldirilardan bagimsiz olmasidir.",correct:"Dogru! TOTP kodlari operator hatti gerektirmez ve SMS tabanli 2FA'ya gore daha guvenlidir."}}
 ];
 
 /* ── NAVIGATION ── */
@@ -802,10 +831,24 @@ function startVideo(){
   }, 200);
 }function skipVideo(){if(window.completeStep) window.completeStep(1);}
 
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
+
 /* ── QUIZ ── */
 function renderQuestion(){
   if(moduleCurrentQ>=10){showResult();return;}
   const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  prepareModuleQuestion(q);
+  const displayOpts=Array.isArray(q._displayOpts)?q._displayOpts:q.opts;
   document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
   document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
   const L=['A','B','C','D'];
@@ -813,7 +856,7 @@ function renderQuestion(){
     <div class="question-card">
       <div class="question-num">SORU ${moduleCurrentQ+1}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="feedback"></div>
     </div>
     <div class="quiz-actions" id="q-actions" style="display:none;">
@@ -823,12 +866,12 @@ function renderQuestion(){
 
 function answerQ(i){
   if(moduleQuizAnswered)return;moduleQuizAnswered=true;
-  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  const q=window.moduleQuestions[moduleCurrentQ],correctIdx=(typeof q._displayCorrect==='number'?q._displayCorrect:q.correct),ok=i===correctIdx;
   if(ok)moduleQuizCorrect++;
   document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
   document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
   document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
-  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  if(!ok)document.getElementById('opt-'+correctIdx).classList.add('correct');
   const fb=document.getElementById('feedback');
   fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
   fb.className='feedback-box show '+(ok?'correct':'wrong');
@@ -850,7 +893,7 @@ function showResult(){
     </div>`;
 }
 
-function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
 
 /* ── SCENARIO ── */
 window.moduleSceneFeedbacks=[

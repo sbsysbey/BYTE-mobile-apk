@@ -64,6 +64,24 @@ const MODULE_XP = {
   8: 350, 9: 500, 10: 400, 11: 300, 12: 400, 13: 300
 };
 
+const DEFAULT_MODULE_VIDEO_URL = 'https://www.youtube.com/embed/RTj7vA3a2BE';
+
+const MODULE_VIDEO_URLS = {
+  1: 'https://youtu.be/SHiMaDUPmzQ',
+  2: 'https://youtu.be/gxaz_lfwgvE',
+  3: 'https://youtu.be/sNQ83nqk1Dw',
+  4: 'https://youtu.be/mZA-x6Ulwl0',
+  5: 'https://youtu.be/90jA5q7n1AY',
+  6: 'https://youtu.be/Glr2dJOO-EE',
+  7: 'https://youtu.be/UDXudENAJSg',
+  8: 'https://youtu.be/uA7EF91QQmM',
+  9: 'https://youtu.be/djduU78tqGA',
+  10: 'https://youtu.be/CzLPeXujLAM',
+  11: DEFAULT_MODULE_VIDEO_URL,
+  12: 'https://youtu.be/vhpb8bZdMa4',
+  13: 'https://youtu.be/vhpb8bZdMa4'
+};
+
 // Quiz/Senaryo verilerini çakışmasız şekilde topla.
 function getModuleQuestions() {
   if (Array.isArray(window.moduleQuestions)) return window.moduleQuestions;
@@ -353,6 +371,239 @@ function normalizeSidebarLabels() {
   });
 }
 
+function normalizeYouTubeEmbedUrl(url) {
+  if (!url || typeof url !== 'string') return DEFAULT_MODULE_VIDEO_URL;
+
+  if (/youtube\.com\/embed\//i.test(url) || /youtu\.be\//i.test(url)) {
+    if (/youtu\.be\//i.test(url)) {
+      const shortId = url.split('/').pop().split('?')[0];
+      return 'https://www.youtube.com/embed/' + shortId;
+    }
+    return url;
+  }
+
+  const match = url.match(/[?&]v=([^&#]+)/i);
+  if (match && match[1]) {
+    return 'https://www.youtube.com/embed/' + match[1];
+  }
+
+  return url;
+}
+
+function getModuleVideoUrl(moduleNum) {
+  return normalizeYouTubeEmbedUrl(MODULE_VIDEO_URLS[moduleNum] || DEFAULT_MODULE_VIDEO_URL);
+}
+
+function getYouTubeWatchUrl(url) {
+  if (!url || typeof url !== 'string') return 'https://www.youtube.com/';
+
+  if (/youtu\.be\//i.test(url)) {
+    const shortId = url.split('/').pop().split('?')[0];
+    return 'https://www.youtube.com/watch?v=' + shortId;
+  }
+
+  const embedMatch = url.match(/youtube\.com\/embed\/([^?&#/]+)/i);
+  if (embedMatch && embedMatch[1]) {
+    return 'https://www.youtube.com/watch?v=' + embedMatch[1];
+  }
+
+  const watchMatch = url.match(/[?&]v=([^&#]+)/i);
+  if (watchMatch && watchMatch[1]) {
+    return 'https://www.youtube.com/watch?v=' + watchMatch[1];
+  }
+
+  return url;
+}
+
+function injectStandardVideoStyles() {
+  if (document.getElementById('byte-standard-video-styles')) return;
+
+  const style = document.createElement('style');
+  style.id = 'byte-standard-video-styles';
+  style.textContent = [
+    '.video-wrapper{position:relative;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 30px rgba(96,200,240,.12);margin-bottom:18px;}',
+    '.video-yt{display:block;width:100%;aspect-ratio:16/9;border:0;background:#000;}',
+    '.video-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(160deg,rgba(6,15,30,.72),rgba(5,13,32,.72));cursor:pointer;}',
+    '.video-overlay.hidden{display:none;}',
+    '.play-hint{margin-top:8px;font-size:.74rem;color:var(--text-dim);font-family:\'Orbitron\',sans-serif;letter-spacing:1px;}',
+    '.byte-standard-video .vs-label{font-family:\'Orbitron\',sans-serif;font-size:.76rem;letter-spacing:2px;color:var(--cyan);margin-bottom:10px;}',
+    '.byte-standard-video .vs-title{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:8px;max-width:640px;}',
+    '.byte-standard-video .vs-sub{font-size:.88rem;line-height:1.6;color:var(--text-dim);max-width:720px;}',
+    '.byte-standard-video .play-big{width:72px;height:72px;border-radius:999px;display:grid;place-items:center;background:rgba(96,200,240,.18);border:1px solid rgba(96,200,240,.45);color:#fff;font-size:1.8rem;margin-top:18px;box-shadow:0 12px 32px rgba(0,0,0,.28);}',
+    '.byte-standard-video .video-link-subtle{margin-top:36px;font-size:.84rem;color:#d7e4ef;opacity:.88;text-decoration:none;letter-spacing:.35px;border-bottom:1px dotted rgba(215,228,239,.58);padding:4px 6px;border-radius:8px;display:inline-block;transition:color .2s ease, opacity .2s ease, border-color .2s ease, text-shadow .2s ease, transform .2s ease, box-shadow .2s ease;}',
+    '.byte-standard-video .video-link-subtle:hover{opacity:1;color:#ffffff;border-bottom-color:rgba(255,255,255,.98);text-shadow:0 0 12px rgba(255,255,255,.5);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 14px rgba(255,255,255,.2);}',
+    '@media (max-width: 768px){.byte-standard-video .vs-title{font-size:1rem;}.byte-standard-video .vs-sub{font-size:.82rem;}}'
+  ].join('');
+  document.head.appendChild(style);
+}
+
+function createStandardVideoWrapper(copy, url) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'video-wrapper byte-standard-video';
+
+  const iframe = document.createElement('iframe');
+  iframe.className = 'video-yt';
+  iframe.id = 'yt-frame';
+  iframe.src = url;
+  iframe.title = copy.title || 'BYTE Academy Video';
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.allowFullscreen = true;
+  iframe.loading = 'lazy';
+  iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'video-overlay';
+  overlay.id = 'vid-overlay';
+  overlay.onclick = function () {
+    if (typeof window.startVideo === 'function') {
+      window.startVideo();
+    }
+  };
+
+  const label = document.createElement('div');
+  label.className = 'vs-label';
+  label.textContent = copy.label;
+
+  const title = document.createElement('div');
+  title.className = 'vs-title';
+  title.textContent = copy.title;
+
+  const sub = document.createElement('div');
+  sub.className = 'vs-sub';
+  sub.textContent = copy.sub;
+
+  const playBig = document.createElement('div');
+  playBig.className = 'play-big';
+  playBig.textContent = '▶';
+
+  const hint = document.createElement('div');
+  hint.className = 'play-hint';
+  hint.textContent = 'Oynatmaya başla';
+
+  const ytLink = document.createElement('a');
+  ytLink.className = 'video-link-subtle';
+  ytLink.href = getYouTubeWatchUrl(url);
+  ytLink.target = '_blank';
+  ytLink.rel = 'noopener noreferrer';
+  ytLink.textContent = "YouTube'da izle";
+  ytLink.onclick = function (e) {
+    e.stopPropagation();
+  };
+
+  overlay.appendChild(label);
+  overlay.appendChild(title);
+  overlay.appendChild(sub);
+  overlay.appendChild(playBig);
+  overlay.appendChild(hint);
+  overlay.appendChild(ytLink);
+
+  wrapper.appendChild(iframe);
+  wrapper.appendChild(overlay);
+  return wrapper;
+}
+
+function extractStandardVideoCopy(moduleNum, panel) {
+  const titleEl = panel ? panel.querySelector('.mod-title') : null;
+  const descEl = panel ? panel.querySelector('.mod-desc') : null;
+  const legacyLabel = panel ? panel.querySelector('.vs-label') : null;
+  const legacyTitle = panel ? panel.querySelector('.vs-title') : null;
+  const legacySub = panel ? panel.querySelector('.vs-sub') : null;
+  const moduleLabel = String(moduleNum || '').padStart(2, '0');
+
+  return {
+    label: (legacyLabel && legacyLabel.textContent.trim()) || ('BYTE ACADEMY — MODÜL ' + moduleLabel),
+    title: (legacyTitle && legacyTitle.textContent.trim()) || (titleEl && titleEl.textContent.replace(/\s+/g, ' ').trim()) || 'BYTE Academy Video Dersi',
+    sub: (legacySub && legacySub.textContent.trim()) || (descEl && descEl.textContent.replace(/\s+/g, ' ').trim()) || 'Bu modülün video anlatımını başlatmak için oynat tuşunu kullan.'
+  };
+}
+
+function normalizeModuleVideo() {
+  const moduleNum = getCurrentModuleNumber();
+  if (typeof moduleNum !== 'number') return;
+
+  const panel = document.getElementById('panel-1');
+  if (!panel) return;
+
+  injectStandardVideoStyles();
+
+  const videoUrl = getModuleVideoUrl(moduleNum);
+  const watchUrl = getYouTubeWatchUrl(videoUrl);
+  const copy = extractStandardVideoCopy(moduleNum, document);
+  const existingWrapper = panel.querySelector('.video-wrapper');
+
+  if (existingWrapper) {
+    existingWrapper.classList.add('byte-standard-video');
+
+    const frame = existingWrapper.querySelector('#yt-frame, iframe');
+    if (frame) {
+      frame.id = 'yt-frame';
+      frame.classList.add('video-yt');
+      frame.setAttribute('src', videoUrl);
+      frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      frame.setAttribute('loading', 'lazy');
+      frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    }
+
+    let overlay = existingWrapper.querySelector('#vid-overlay, .video-overlay');
+    if (!overlay) {
+      overlay = createStandardVideoWrapper(copy, videoUrl).querySelector('.video-overlay');
+      existingWrapper.appendChild(overlay);
+    }
+    overlay.id = 'vid-overlay';
+    overlay.classList.add('video-overlay');
+    overlay.onclick = function () {
+      if (typeof window.startVideo === 'function') {
+        window.startVideo();
+      }
+    };
+
+    const label = overlay.querySelector('.vs-label') || overlay.appendChild(document.createElement('div'));
+    label.className = 'vs-label';
+    label.textContent = copy.label;
+
+    const title = overlay.querySelector('.vs-title') || overlay.appendChild(document.createElement('div'));
+    title.className = 'vs-title';
+    title.textContent = copy.title;
+
+    const sub = overlay.querySelector('.vs-sub') || overlay.appendChild(document.createElement('div'));
+    sub.className = 'vs-sub';
+    sub.textContent = copy.sub;
+
+    const playBig = overlay.querySelector('.play-big') || overlay.appendChild(document.createElement('div'));
+    playBig.className = 'play-big';
+    playBig.textContent = '▶';
+
+    const hint = overlay.querySelector('.play-hint') || overlay.appendChild(document.createElement('div'));
+    hint.className = 'play-hint';
+    hint.textContent = 'Oynatmaya başla';
+
+    let ytLink = overlay.querySelector('.video-link-subtle');
+    if (!ytLink) {
+      ytLink = overlay.appendChild(document.createElement('a'));
+    }
+    ytLink.className = 'video-link-subtle';
+    ytLink.href = watchUrl;
+    ytLink.target = '_blank';
+    ytLink.rel = 'noopener noreferrer';
+    ytLink.textContent = "YouTube'da izle";
+    ytLink.onclick = function (e) {
+      e.stopPropagation();
+    };
+    return;
+  }
+
+  const legacyPlayer = panel.querySelector('.video-player');
+  if (legacyPlayer) {
+    legacyPlayer.replaceWith(createStandardVideoWrapper(copy, videoUrl));
+    return;
+  }
+
+  const placeholderCard = panel.firstElementChild;
+  if (placeholderCard) {
+    placeholderCard.replaceWith(createStandardVideoWrapper(copy, videoUrl));
+  }
+}
+
 
 // ──────────────────────────────────────────────────────────────
 // ADIM YÖNETİMİ
@@ -426,6 +677,28 @@ function startVideo() {
   const overlay = document.getElementById('vid-overlay');
   if (overlay) {
     overlay.classList.add('hidden');
+  }
+
+  // Trigger playback on first click for modules that rely on shared handler.
+  const frame = document.getElementById('yt-frame');
+  if (frame) {
+    const src = frame.getAttribute('src') || '';
+    if (src && !/autoplay=1/.test(src)) {
+      const hasQuery = src.indexOf('?') !== -1;
+      frame.setAttribute('src', src + (hasQuery ? '&' : '?') + 'autoplay=1&playsinline=1&enablejsapi=1');
+    }
+
+    // Best-effort: ask YouTube iframe to play with sound after user gesture.
+    try {
+      setTimeout(function () {
+        if (!frame.contentWindow) return;
+        frame.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        frame.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+        frame.contentWindow.postMessage('{"event":"command","func":"setVolume","args":[100]}', '*');
+      }, 250);
+    } catch (e) {
+      // Ignore cross-frame command failures.
+    }
   }
 }
 
@@ -882,6 +1155,7 @@ function initModuleUI() {
   const xpEl = document.getElementById('xp-count');
   if (xpEl) xpEl.textContent = String(xp);
 
+  normalizeModuleVideo();
   normalizeSidebarLabels();
   normalizeSidebarNavigation();
   updateTopbarBadgeCount();
@@ -916,6 +1190,7 @@ function initModuleUI() {
 const sharedHandlers = {
   goStep,
   completeStep,
+  startVideo,
   togglePlay,
   seekBack,
   seekTo,

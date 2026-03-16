@@ -133,11 +133,12 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.81rem;color:var(--cyan);letter-spacing:2px;margin-bottom:10px;}
 .question-text{font-size:.95rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:13px 16px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.2s;text-align:left;width:100%;color:var(--text-dim);font-size:.91rem;font-family:'Exo 2',sans-serif;}
 .option-btn:hover{background:rgba(96,200,240,.05);border-color:rgba(96,200,240,.25);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.09);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.09);border-color:var(--red);color:var(--red);}
 .option-btn:disabled{cursor:default;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-letter{width:24px;height:24px;border-radius:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:.68rem;font-weight:700;flex-shrink:0;}
 .option-btn.correct .option-letter{background:rgba(74,222,154,.18);border-color:var(--green);color:var(--green);}
 .option-btn.wrong .option-letter{background:rgba(248,113,113,.18);border-color:var(--red);color:var(--red);}
@@ -220,7 +221,7 @@
         <div class="byte-tooltip">🔊 Tıkla &amp; Dinle</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 08 🔊</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 08 🔊</div>
         <h1 class="mod-title">Güvenli <span>İletişim</span></h1>
         <p class="mod-desc">"Uçtan uca şifreli uygulama kullanıyorum, güvendeyim." — Hayır, değilsin. Mesaj iletildi, ama telefonda hâlâ duruyor. Metaverin gidiyor. BYTE ile gerçek güvenliğin 3 katmanını öğren.</p>
         <div class="mod-stats">
@@ -748,36 +749,36 @@ function byteSpeak(){
 let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
 
 window.moduleQuestions=[
-  {q:"Güvenli iletişimin '3 katmanı' nedir?",
-   opts:["Şifre, 2FA ve antivirüs","Transit şifreleme (E2EE), metaveri koruması ve cihazda depolama kontrolü","VPN, firewall ve şifreleme","İçerik şifreleme, bağlantı şifreleme ve yedekleme"],
-   correct:1,fb:{wrong:"3 katman: (1) E2EE — yolda şifreli, (2) Metaveri koruması — kim/ne zaman gizli, (3) Süreli mesaj — cihazda birikmez. Hepsi gerekli.",correct:"Doğru! Bu üç katmanın tümü olmadan 'güvenli iletişim' eksik kalır. Çoğu insan yalnızca ilk katmanda duruyor."}},
-  {q:"WhatsApp ile Signal arasındaki en kritik fark nedir?",
-   opts:["Signal tamamen ücretsiz, WhatsApp ücretli","WhatsApp mesaj içeriğini şifrelemez, Signal şifreler","WhatsApp metaveri toplar ve Meta'ya aktarır; Signal toplamaz","Signal yalnızca Android'de çalışır"],
-   correct:2,fb:{wrong:"İkisi de E2EE sağlar. Fark metaveri: WhatsApp kiminle, ne zaman, kaç kez konuştuğunu toplar ve Meta'ya aktarır. Signal bunu yapmaz.",correct:"Kesinlikle! E2EE her ikisinde de var — asıl fark metaveri. Bu yüzden Signal Katman 1+2'yi sağlarken WhatsApp yalnızca Katman 1'i sağlar."}},
-  {q:"Threema'yı diğer uygulamalardan ayıran en önemli özellik nedir?",
-   opts:["Tamamen ücretsizdir","Telefon numarası veya e-posta adresi gerektirmez — Threema ID ile çalışır","Yalnızca iOS'ta mevcuttur","Mesajları otomatik olarak siler"],
-   correct:1,fb:{wrong:"Threema ID: rastgele 8 karakterli kimlik. Telefon numarası veya e-posta bağlantısı yok — en yüksek anonimlik.",correct:"Doğru! Threema ID sistemi kişisel bilgiye bağlı değil. Tel. numarası olmadan iletişim — özellikle anonimlik gerektiren durumlar için kritik."}},
-  {q:"Süreli mesaj özelliği iletişim güvenliğinde hangi katmanı tamamlar?",
-   opts:["Katman 1 — transit şifreleme","Katman 2 — metaveri koruması","Katman 3 — cihazda depolama kontrolü","Hiçbirini — sadece pratik bir özellik"],
-   correct:2,fb:{wrong:"Süreli mesaj Katman 3'tür: mesaj başarıyla iletildi ama telefonda birikmiyor. Cihaz ele geçirilse bile eski yazışmalar yok.",correct:"Kesinlikle! Uçtan uca şifreli ilettiniz, ama mesaj telefonda birikmeye devam ediyorsa cihaz riski açık kalır. Süreli mesaj bunu kapatır."}},
-  {q:"Telegram'da E2EE hangi koşulda aktif olur?",
-   opts:["Her zaman otomatik aktiftir","Yalnızca grup sohbetlerinde","Yalnızca 'Gizli Sohbet' modunda","Telegram hiçbir zaman E2EE sağlamaz"],
-   correct:2,fb:{wrong:"Telegram'ın normal sohbeti şifresiz — Telegram sunucuları mesajları okuyabilir. Sadece 'Gizli Sohbet' modu E2EE sağlar.",correct:"Doğru! Bu en sık yapılan yanılgılardan biri. Telegram açık, süreli mesaj ikonuna tıklayıp 'Gizli Sohbet' açmak gerekir."}},
-  {q:"Signal'de IP adresini gizlemek için hangi ayar açılmalıdır?",
-   opts:["Ayarlar → Bildirimler → Sessiz mod","Ayarlar → Gizlilik → Gelişmiş → Aramaları Her Zaman Aktar","Ayarlar → Hesap → Telefon numarasını gizle","Ayarlar → Veri kullanımı → VPN"],
-   correct:1,fb:{wrong:"Signal: Ayarlar → Gizlilik → Gelişmiş → 'Aramaları Her Zaman Aktar' açıldığında tüm aramalar Signal sunucusu üzerinden geçer, IP gizlenir.",correct:"Doğru! Bu ayar aramalarda IP adresini karşı tarafa göstermez. Arama kalitesi hafif düşebilir ama gizlilik sağlanır."}},
+  {q:"Telefonunuzun ekran kilidi açıkken (örneğin birine fotoğraf göstermek için verdiğinizde) mesajlarınızın okunmasını engellemek için en etkili uygulama içi güvenlik adımı nedir?",
+   opts:["Uygulamayı her kullanımdan sonra tamamen kapatıp arka plandan silmek.","WhatsApp/Signal ayarlarından 'Parmak İzi' veya 'FaceID' kilidini aktif hale getirmek.","Bildirim ayarlarından mesaj sesini kapatarak telefonun dikkat çekmesini önlemek.","Telefonun genel ayarlarından uygulama bildirimlerini tamamen devre dışı bırakmak."],
+   correct:1,fb:{wrong:"En etkili koruma uygulama içi biyometrik kilittir; uygulamayı kapatmak tek başına yeterli değildir.",correct:"Doğru! WhatsApp/Signal biyometrik kilidi açık olduğunda cihaz açık olsa bile sohbetler korunur."}},
+  {q:"Uçtan uca şifreli (E2EE) bir mesajlaşma uygulamasında mesajlarınızı iCloud veya Google Drive'a yedeklediğinizde ortaya çıkan en büyük güvenlik açığı nedir?",
+   opts:["Yedekleme işlemi sırasında telefonun bataryasının çok hızlı tükenmesi ve ısınması.","Yedeklenen verilerin şifreleme anahtarının bulut sağlayıcısının elinde olabilmesi.","Bulut yedeklemesinin sadece internet hızını düşürerek mesaj iletimini geciktirmesi.","Mesajların yedeklenirken sadece metin olarak saklanıp, medya dosyalarının silinmesi."],
+   correct:1,fb:{wrong:"Risk performans değil, anahtar yönetimidir; bulut sağlayıcısı anahtara sahipse içerik riske girebilir.",correct:"Kesinlikle doğru! E2EE taşıma sırasında güçlüdür, ancak bulut yedek anahtar modeli ek risk oluşturabilir."}},
+  {q:"Tanımadığınız kişilerin sizi rastgele gruplara eklemesini ve böylece telefon numaranızın yabancılar tarafından görülmesini engellemek için hangi ayar yapılmalıdır?",
+   opts:["Ayarlar → Hesap → Gizlilik menüsünden 'Gruplar' seçeneğini 'Kişilerim' olarak değiştirmek.","Telefon numarasını tamamen silip uygulamayı sadece e-posta adresiyle kullanmaya başlamak.","Gelen her grup davetini kabul ettikten sonra gruptaki tüm kişileri tek tek engellemek.","Profil fotoğrafını ve 'Hakkımda' kısmını sadece yabancıların görebileceği şekilde ayarlamak."],
+   correct:0,fb:{wrong:"Doğru yöntem grup gizlilik ayarıdır; 'Kişilerim' seçeneği rastgele eklemeleri büyük ölçüde engeller.",correct:"Doğru! Grup gizliliğini 'Kişilerim' yapmak telefon numaranın yabancılarca görünmesini azaltır."}},
+  {q:"'Uçtan uca şifreleme (E2EE) kullanıyorum, bu yüzden tamamen güvendeyim' düşüncesi neden hatalıdır?",
+   opts:["E2EE içeriği korur; ancak metaveri takip edilebilir ve telefonda mesajlar fiziksel olarak birikebilir.","E2EE teknolojisi çok eski olduğu için günümüzdeki hiçbir akıllı telefonda düzgün çalışmaz.","E2EE sadece yazılı mesajlarda geçerlidir; fotoğraflar ve videolar hiçbir uygulamada şifrelenemez.","Bu özellik sadece ücretli olan özel siber güvenlik telefonlarında gerçekten güvenlidir."],
+   correct:0,fb:{wrong:"E2EE tek başına tam koruma değildir; metaveri ve cihazda biriken içerik ayrıca yönetilmelidir.",correct:"Doğru! Tam güvenlik için içerik, metaveri ve cihaz depolaması birlikte ele alınmalıdır."}},
+  {q:"Mesajlaşma uygulamalarındaki 'Süreli Mesaj' (kaybolan mesaj) özelliği, 3 katmanlı korumanın hangi aşamasını tamamlar?",
+   opts:["Katman 1: Mesajın internetten geçerken şifrelenmesi ve çalınmasının önlenmesi.","Katman 4: Mesajın bulut yedeklemesine girmesini engelleyerek internet kotasını koruması.","Katman 3: Mesajın fiziksel cihazda (telefonda) birikmesini önleyerek cihaz güvenliğini sağlaması.","Katman 2: Mesajın kimden kime gittiğine dair dijital ayak izlerinin silinmesi."],
+   correct:2,fb:{wrong:"Süreli mesajların ana etkisi, cihazda tutulan mesaj geçmişini azaltarak cihaz katmanını korumaktır.",correct:"Kesinlikle! Bu özellik Katman 3'ü güçlendirir ve cihaz ele geçirilirse geriye dönük riski düşürür."}},
+  {q:"Signal uygulamasının gizlilik açısından WhatsApp'tan en temel farkı aşağıdakilerden hangisidir?",
+   opts:["Signal 'metaveri' (kiminle, ne zaman konuştun) toplamaz; WhatsApp bu veriyi Meta ile paylaşabilir.","WhatsApp mesaj içeriğini hiçbir zaman şifrelemezken, Signal tüm mesajları şifreli iletir.","Signal uygulaması tamamen ücretli bir abonelik modeliyle çalışırken, WhatsApp ücretsizdir.","Signal sadece belirli marka telefonlarda çalışırken, WhatsApp tüm cihazlarda kullanılabilir."],
+   correct:0,fb:{wrong:"Temel fark içerik şifreleme değil metaveri politikasıdır; Signal bu konuda daha sınırlı veri toplar.",correct:"Doğru! En kritik fark metaveri yaklaşımıdır ve bu gizlilik seviyesini doğrudan etkiler."}},
+  {q:"Threema uygulamasını diğer mesajlaşma araçlarından ayıran ve gizliliği artıran en önemli özellik nedir?",
+   opts:["Sadece sesli aramalar için geliştirilmiş olması ve yazılı mesajlaşmaya izin vermemesidir.","Gönderilen her mesajın 5 saniye içinde her iki taraftan da kalıcı olarak silinmesidir.","Uygulamanın sadece İsviçre sınırları içerisinde internete bağlıyken çalışıyor olmasıdır.","Mesajların iletilmesi için telefon numarası veya e-posta adresi gerektirmez; anonim ID ile çalışır."],
+   correct:3,fb:{wrong:"Threema'nın ayırt edici yönü anonim kimlik yaklaşımıdır; telefon numarası zorunlu değildir.",correct:"Doğru! Telefon/e-posta zorunluluğu olmadan ID ile çalışması gizlilik avantajı sağlar."}},
+  {q:"Güvenli iletişimin '3 Katmanlı Koruması' (Transit Şifreleme, Metaveri Koruması, Cihazda Depolama) tam olarak neyi hedefler?",
+   opts:["Tüm mesajları bulut sunucularında sınırsız süreyle saklayarak veriye her yerden erişebilmeyi.","Sadece mesajın içeriğini değil; kiminle konuşulduğu bilgisini ve telefonda kalan izleri de korumayı.","Bilgisayara antivirüs kurmayı, güçlü bir şifre belirlemeyi ve düzenli olarak yedek almayı.","İnternet hızını artırmayı, mesajların daha hızlı iletilmesini ve depolama alanından tasarruf etmeyi."],
+   correct:1,fb:{wrong:"3 katman yaklaşımı yalnızca içerik şifrelemesini değil, metaveri ve cihaz izlerini de kapsar.",correct:"Kesinlikle! Amaç içerik + metaveri + cihazda kalan izlerin birlikte korunmasıdır."}},
+  {q:"Mesajlaşma uygulamalarında 'Süreli Mesajlar' özelliğini aktif hale getirmenin siber güvenlik açısından sağladığı en temel fayda nedir?",
+   opts:["Mesajların internet üzerinden iletilme hızını artırarak bağlantı kopmalarını ve veri paketlerinin kaybolmasını engellemek.","Mesajlar sadece metin tabanlı olduğu için telefonun işlemci yükünü azaltmak ve bataryanın daha uzun süre gitmesini sağlamak.","Gönderilen mesajların karşı tarafın telefonuna ulaşıp ulaşmadığını kesin olarak kanıtlayan yasal bir dijital imza oluşturmak.","Cihazın fiziksel olarak ele geçirilmesi veya çalınması durumunda, geriye dönük hassas mesaj arşivinin saldırganlarca okunmasını engellemek."],
+   correct:3,fb:{wrong:"Ana fayda performans değil; cihaz ele geçirilmesi durumunda geçmiş mesaj riskini azaltmaktır.",correct:"Doğru! Süreli mesajlar geçmiş arşivi küçültür ve fiziksel cihaz riskine karşı güçlü koruma sağlar."}},
   {q:"ProtonMail ile normal bir Gmail kullanıcısına şifreli e-posta göndermek mümkün müdür?",
    opts:["Hayır, alıcının da ProtonMail kullanması gerekir","Evet — alıcıya şifreli bağlantı gönderilir, bir şifreyle açar","Sadece Tutanota kullanıcılarına gönderilebilir","Hayır, ProtonMail yalnızca kendi sunucusunda çalışır"],
-   correct:1,fb:{wrong:"ProtonMail'den Gmail'e şifreli gönderi mümkün. Alıcı bir link alır ve belirlediğin şifreyle açar — ProtonMail hesabı gerekmez.",correct:"Doğru! Şifreli bağlantı özelliği: gönderici şifre belirler, alıcı linki tıklar ve şifreyi girer. Karşılıklı ProtonMail şartı yok."}},
-  {q:"WhatsApp'ta süreli mesajın varsayılan durumu nedir ve nasıl açılır?",
-   opts:["Varsayılan açık, kapatmak için Ayarlar → Sohbetler","Varsayılan kapalı — her sohbet için ayrı ayrı açılmalı: Sohbet → İsim → Süreli Mesajlar","Otomatik 90 günde bir temizlenir","Süreli mesaj özelliği WhatsApp'ta mevcut değil"],
-   correct:1,fb:{wrong:"WhatsApp'ta süreli mesaj varsayılan kapalı. Her sohbet için ayrı ayrı açılmalı: sohbete gir, karşının ismine tıkla, 'Süreli Mesajlar' seç.",correct:"Doğru! Bu nedenle Signal daha avantajlı — global varsayılan ayarlanabiliyor, yeni tüm sohbetlere otomatik uygulanıyor."}},
-  {q:"Konferansta gördüğün bir posterteki QR kodu taramadan önce hangi kontrolü yapmalısın?",
-   opts:["QR kodunun rengi ve kalitesine bak","Domain adresini kontrol et — resmi adres mi (web.whatsapp.com gibi), HTTP mi HTTPS mi","Posterin boyutuna ve matbaa kalitesine bak","Çevrenizdekilere sorun — tanıdık biri koymuş olabilir"],
-   correct:1,fb:{wrong:"Domain ve protokol kontrolü kritik: resmi adres mi (örn. web.whatsapp.com), bağlantı HTTPS mi? Yanlış domain — sahte QR, hesap ele geçirme riski.",correct:"Kesinlikle! Fiziksel ortamdaki QR kodlar güvenilir değil. Domain + HTTPS + resmi kaynak — bu üçü bir arada değilse tara."}},
-  {q:"'E2EE kullanıyorum yani güvendeyim' ifadesi neden eksik bir yaklaşımdır?",
-   opts:["E2EE aslında güvenli değildir","E2EE sadece Katman 1'dir — metaveri toplanabilir, telefonda mesajlar birikir; Katman 2 ve 3 olmadan tam güvenlik sağlanamaz","E2EE yalnızca ücretli uygulamalarda gerçekten çalışır","E2EE yalnızca sesli aramalarda geçerlidir"],
-   correct:1,fb:{wrong:"E2EE güçlü ama yeterli değil. Metaveri (kim/ne zaman) toplanabilir, mesajlar telefonda birikir. 3 katman birlikte olmadan eksik.",correct:"Tam isabet! Bu modülün özü bu. E2EE Katman 1. Gerçek güvenlik: E2EE + metaveri koruması (Signal/Threema) + süreli mesaj. Üçü birden."}}
+   correct:1,fb:{wrong:"ProtonMail'den Gmail'e şifreli gönderim mümkündür; alıcı bağlantıyı belirlenen şifreyle açar.",correct:"Doğru! Alıcının Proton hesabı olmasa da şifreli bağlantı modeliyle güvenli iletim yapılabilir."}}
 ];
 
 function goStep(n){
@@ -846,9 +847,23 @@ function startVideo(){
   }, 200);
 }function skipVideo(){if(window.completeStep) window.completeStep(1);}
 
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
+
 function renderQuestion(){
   if(moduleCurrentQ>=10){showResult();return;}
   const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  prepareModuleQuestion(q);
+  const displayOpts=Array.isArray(q._displayOpts)?q._displayOpts:q.opts;
   document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
   document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
   const L=['A','B','C','D'];
@@ -856,7 +871,7 @@ function renderQuestion(){
     <div class="question-card">
       <div class="question-num">SORU ${moduleCurrentQ+1}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="feedback"></div>
     </div>
     <div class="quiz-actions" id="q-actions" style="display:none;"><button class="btn btn-primary" onclick="nextQuestion()">${moduleCurrentQ<9?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
@@ -864,12 +879,12 @@ function renderQuestion(){
 
 function answerQ(i){
   if(moduleQuizAnswered)return;moduleQuizAnswered=true;
-  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  const q=window.moduleQuestions[moduleCurrentQ],correctIdx=(typeof q._displayCorrect==='number'?q._displayCorrect:q.correct),ok=i===correctIdx;
   if(ok)moduleQuizCorrect++;
   document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
   document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
   document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
-  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  if(!ok)document.getElementById('opt-'+correctIdx).classList.add('correct');
   const fb=document.getElementById('feedback');
   fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
   fb.className='feedback-box show '+(ok?'correct':'wrong');
@@ -891,7 +906,7 @@ function showResult(){
     </div>`;
 }
 
-function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
 
 window.moduleSceneFeedbacks=[
   {correct:false,text:"<strong class='bad'>Yanlış.</strong> Domain 'whatsapp-web-connect.net' — resmi adres 'web.whatsapp.com'. Bu sahte bir sayfa; QR taranırsa hesap ele geçirilir. Hız güvenliğin önüne geçemez."},

@@ -99,7 +99,8 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--cyan);letter-spacing:2px;margin-bottom:9px;}
 .question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:flex-start;gap:11px;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-btn:hover{background:rgba(96,200,240,.06);border-color:rgba(96,200,240,.3);color:#fff;}
 .option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
@@ -118,6 +119,10 @@
 .video-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px;background:linear-gradient(160deg,rgba(6,15,30,.72),rgba(5,13,32,.72));cursor:pointer;}
 .video-overlay.hidden{display:none;}
 .play-hint{margin-top:8px;font-size:.74rem;color:var(--text-dim);font-family:'Orbitron',sans-serif;letter-spacing:1px;}
+.video-actions{display:flex;justify-content:center;margin-top:34px;pointer-events:auto;}
+.video-actions .btn{min-width:180px;}
+.btn-subtle{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:var(--text-dim);font-size:.84rem;opacity:.78;}
+.btn-subtle:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2);color:#fff;opacity:.95;}
 
 /* Mobile tap reliability for step action buttons */
 .btn{touch-action:manipulation;}
@@ -178,7 +183,7 @@
         <div class="byte-tooltip">▶ BYTE'a tıkla</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 11 · 🔊 Dinle</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 11 🔊</div>
         <h1 class="mod-title">Yapay Zeka <span>Güvenliği</span></h1>
         <p class="mod-desc">Veri emanet sorumluluğu, PII riskleri, deepfake tehditleri ve YZ araçlarını gizlilik odaklı kullanmanın pratik yolları. Teknoloji güçlüdür — onu doğru kullanan siz olmalısınız.</p>
         <div class="mod-stats">
@@ -201,17 +206,17 @@
     <div class="lesson-panel active" id="panel-1">
       <div class="video-wrapper">
         <iframe class="video-yt" id="yt-frame"
-          src="https://www.youtube.com/watch?v=RTj7vA3a2BE"
+          src="https://www.youtube.com/embed/RTj7vA3a2BE?playsinline=1&controls=1&fs=1&rel=0"
           title="Yapay Zeka ve Sosyal Medyada Veri Güvenliği ve Mahremiyet"
           allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen">
         </iframe>
         <div class="video-overlay" id="vid-overlay" onclick="startVideo()">
           <div class="vs-label">BYTE ACADEMY · MODÜL 11</div>
           <div class="vs-title">Yapay Zeka Güvenliği</div>
           <div class="vs-sub">Veri Emanettir · Mahremiyet · Deepfake · Güvenli YZ Kullanımı</div>
           <div class="play-big">▶</div>
-          <div class="play-hint">OYNATMAK İÇİN TIKLA</div>
+          <div class="play-hint">Oynatmaya başla</div>
         </div>
       </div>
       <div class="key-points">
@@ -233,7 +238,7 @@
     <div class="lesson-panel" id="panel-2">
       <div class="reading-grid">
         <div class="article-card">
-          <div class="article-tag">📖 OKUMA MATERYALİ · 7 BÖLÜM</div>
+          <div class="article-tag">📖 OKUMA MATERYALİ · 8 BÖLÜM</div>
           <div class="article-title">Yapay Zeka Güvenliği: Veri Emanettir ve Kontrol Sizde</div>
           <div class="article-intro">Yapay zeka araçları hayatımızı kolaylaştırıyor — ama bu kolaylığın arkasında sessizce dönen bir veri ekonomisi var. Paylaştığınız her bilgi gittiği sunucularda nasıl kullanılır? Başkalarına ait verileri YZ'ye vermek etik midir? Ve deepfake çağında gerçeği nasıl ayırt edeceğiz? Bu modül hem teknik hem etik boyutuyla YZ güvenliğini ele alıyor.</div>
 
@@ -406,6 +411,33 @@
             <div><strong>Önemli:</strong> Yapay zekaya asla orijinal belge veya e-posta zinciri yüklemeyin. Bilgileri kendiniz özetleyip anonimleştirin. Kaldırdığınızı sandığınız bilgilerle birlikte kişi tespit edilebilir — yeterince genelleştirin.</div>
           </div>
 
+          <div class="section-head">💡 BÖLÜM 8 — YAPAY ZEKA GÜVENLİĞİ TAVSİYELERİ</div>
+          <p style="font-size:.88rem;color:var(--text-dim);line-height:1.7;margin-bottom:14px;">Günlük kullanımda küçük davranış değişiklikleri, YZ kaynaklı veri sızıntısı ve deepfake dolandırıcılığı riskini ciddi oranda azaltır.</p>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px;">
+            <div class="side-card">
+              <div class="side-title">🔓 GİRİŞ YAPMADAN KULLAN</div>
+              <div style="font-size:.84rem;color:var(--text-dim);line-height:1.6;">Mümkünse hassas olmayan genel sorularını hesap girişi yapmadan sor. Yemek tarifi, genel bilgi gibi içeriklerde kimlik bağını azaltırsın.</div>
+            </div>
+            <div class="side-card">
+              <div class="side-title">🕶️ ÖZEL İSİMLERİ MASKELE</div>
+              <div style="font-size:.84rem;color:var(--text-dim);line-height:1.6;">"Ahmet Bey ile yarın saat 14:00'te Zorlu Center'da görüşeceğiz" yerine "Bir yönetici ile yapılacak iş toplantısı için gündem hazırla" gibi genelleştir.</div>
+            </div>
+            <div class="side-card">
+              <div class="side-title">🎙️ SESLİ ONAY</div>
+              <div style="font-size:.84rem;color:var(--text-dim);line-height:1.6;">"Acil paraya ihtiyacım var" gibi sesli mesajlarda, sadece o kişinin bilebileceği bir soru sor. Deepfake sesler anlık soru-cevapta sık hata verir.</div>
+            </div>
+            <div class="side-card">
+              <div class="side-title">⚙️ EĞİTİMİ KAPAT</div>
+              <div style="font-size:.84rem;color:var(--text-dim);line-height:1.6;">ChatGPT Ayarlar → Data Controls → "Chat History & Training" seçeneğini kapat. Böylece yazdıkların model eğitimi için kullanılmaz.</div>
+            </div>
+          </div>
+
+          <div class="alert-info">
+            <span>✅</span>
+            <div><strong>60 Saniyelik Hızlı Kontrol:</strong> (1) Hassas olmayan sorularda mümkünse giriş yapmadan ilerle. (2) Özel isim/tarih/konum bilgilerini maskele. (3) Acil sesli taleplerde kişiye özel doğrulama sorusu sor. (4) Data Controls altında "Chat History & Training" kapalı mı kontrol et.</div>
+          </div>
+
           <div class="byte-tip-card">
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:1.2rem">🤖</span><span style="font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;">BYTE diyor ki:</span></div>
@@ -466,8 +498,8 @@
     <div class="lesson-panel" id="panel-3">
       <div class="quiz-wrap">
         <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:0%"></div></div>
-        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">Doğru: 0</span></div>
-        <div id="q-area"></div>
+        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
       </div>
     </div>
 
@@ -530,7 +562,7 @@
           <div class="xp-lbl">TOPLAM<br>XP</div>
         </div>
         <div class="summary-grid">
-          <div class="sum-card"><div class="sum-val sv-g" id="s-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
           <div class="sum-card"><div class="sum-val sv-r">350</div><div class="sum-label">XP Kazanıldı</div></div>
           <div class="sum-card"><div class="sum-val sv-y">5/5</div><div class="sum-label">Adım Tamamlandı</div></div>
         </div>
@@ -557,9 +589,9 @@
 <div id="toast-container"></div>
 
 <script>
-let completedSteps = new Set();
+let moduleCompletedSteps = new Set();
 const stepXP = {1:50,2:70,3:160,4:40,5:30};
-let quizScore = 0, quizIdx = 0, quizAnswered = false;
+let moduleQuizCorrect = 0, moduleCurrentQ = 0, moduleQuizAnswered = false;
 
 function startVideo(){
   const overlay = document.getElementById('vid-overlay');
@@ -611,13 +643,13 @@ function startVideo(){
   const stepBtn=document.getElementById('step-btn-'+n);
   if(stepBtn)stepBtn.classList.add('active');
   if (n===5 && typeof saveProgress === 'function') saveProgress(11);
-  if (n===3 && quizIdx===0) renderQuestion();
+  if (n===3 && moduleCurrentQ===0) renderQuestion();
   window.scrollTo({top:180,behavior:'smooth'});
 }
 
 function completeStep(n) {
-  if (completedSteps.has(n)) { goStep(n+1); return; }
-  completedSteps.add(n);
+  if (moduleCompletedSteps.has(n)) { goStep(n+1); return; }
+  moduleCompletedSteps.add(n);
   addXP(stepXP[n], '');
   const dot = document.getElementById('dot-'+n);
   dot.textContent = '✓'; dot.className = 'step-dot done';
@@ -625,7 +657,7 @@ function completeStep(n) {
   showToast('xp','⚡ +'+stepXP[n]+' XP', msgs[n]||'');
   if (n===5) {
     document.getElementById('final-xp').textContent=xp;
-    document.getElementById('s-correct').textContent=quizScore;
+    document.getElementById('sum-correct').textContent=moduleQuizCorrect;
     if (typeof saveProgress === 'function') saveProgress(11);
     showToast('xp','🏆 ROZET KAZANILDI!','AI Kalkanı rozetini aldın!');
     goStep(5);
@@ -652,94 +684,133 @@ function goTo(url){window.location.href=url;}
 function tryNav(){showToast('warn','🔒 Kilitli','Bu modülü açmak için önce Modül 11\'i tamamla.');}
 
 function byteSpeak() {
-  const av = document.getElementById('byteAvatar');
-  const lines = [
-    'Bana emanet edilen veriyi, sahibinin rızası olmadan paylaşmak güveni zedelemektir.',
-    'Yapay zekaya yazdığın her şeyin herkese açık bir forum gibi görülebileceğini varsay.',
-    'Başkasının müşteri listesini YZ araçlarına yüklemeden önce anonimleştir.',
-    'Deepfake sesini tanımanın yolu: şüpheli durumlarda farklı kanaldan doğrula.',
-    'Gizlilik bir hak değil, aktif olarak korunması gereken bir değerdir.'
-  ];
-  const msg = lines[Math.floor(Math.random()*lines.length)];
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(msg);
-    u.lang='tr-TR'; u.rate=0.91; u.pitch=1.04;
-    u.onstart=()=>av.classList.add('speaking');
-    u.onend=()=>av.classList.remove('speaking');
-    window.speechSynthesis.speak(u);
-  }
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance('Modül on bir. Yapay Zeka, Etik ve Gizlilik. Yapay zeka güçlü bir yardımcıdır ama yanlış kullanıldığında veri ihlali riskini büyütür. Bu modülde anonimleştirme, güvenli kullanım ilkeleri ve deepfake doğrulama adımlarını öğreneceksin.');
+  ut.lang='tr-TR';ut.rate=0.92;ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
 }
 
 window.moduleQuestions = [
-  {q:'Bir öğretmen öğrenci performans verilerini içeren Excel tablosunu ChatGPT\'ye yükleyerek analiz yaptırmak istiyor. Bu eylem hangi temel riski doğurur?',opts:['Excel dosyaları ChatGPT tarafından okunamaz','Hassas öğrenci verileri güvenliği bilinmeyen sunuculara iletilir ve kul hakkı ihlali oluşur','ChatGPT yanlış analiz yapabilir','Dosya boyutu çok büyük olabilir'],correct:1,fb:'Doğru! Öğrenci isimleri ve notları PII (kişisel olarak tanımlanabilir bilgi) içerir. Herkese açık YZ araçlarına yüklemek hem GDPR ihlali hem de etik bir sorundur.'},
-  {q:'"Yapay zekayı bir stajyer gibi düşünün" metaforu ne anlama gelir?',opts:['YZ çok yavaş çalışır','YZ zeki ve hafızası güçlü — ama neyi gizli tutması gerektiğini bilmez; verdiğiniz bilgiler başkaları tarafından görülebilir','YZ sadece basit işler yapabilir','YZ\'nin kendi fikirleri yoktur'],correct:1,fb:'Doğru! Stajyer metaforu şunu anlatır: YZ her bilgiden öğrenir, hafızası güçlüdür — ama neyi gizli tutacağını bilmez.'},
-  {q:'10 Altın İlke\'ye göre, başkasına ait bir veriyi yapay zeka aracıyla işlemeniz zorunluysa ne yapmalısınız?',opts:['En güvenilir YZ aracını seçip doğrudan yükleyin','İsimleri, iletişim bilgilerini ve kimliği belli eden unsurları kaldırarak anonimleştirin','Sadece gece vakti işlem yapın','Hukuk departmanını bekleyin'],correct:1,fb:'Doğru! İlke 4: Anonimleştirmeden paylaşım yapmayın. Gereksiz isimleri ve kimliği belli eden unsurları kaldırın, ardından soruyu genelleştirin.'},
-  {q:'Deepfake ses klonlama saldırısında saldırgan ne yapar?',opts:['Kurbanın telefonunu hackler','Kısa bir ses örneğinden kurbanın sesini kopyalayarak "CEO\'dan acil para transferi" gibi sahte talepler oluşturur','Sosyal medya hesabını ele geçirir','E-posta şifresini çalar'],correct:1,fb:'Doğru! Sadece 3-10 saniyelik ses örneğiyle birinin sesi kopyalanabilir. 2023\'te bir CFO, ses klonlama yöntemiyle 25 milyon dolar transfer ettirdi.'},
-  {q:'ChatGPT\'de en az risk oluşturan kullanım yöntemi hangisidir?',opts:['Google hesabıyla giriş yapmak','"Temporary Chat" (Geçici Sohbet) modunu kullanmak','Anonim tarayıcıda açmak','Telefon numarası ile kaydolmak'],correct:1,fb:'Doğru! Geçici Sohbet modu, konuşmanın kaydedilmesini ve model eğitimi için kullanılmasını engeller.'},
-  {q:'Gizlilik odaklı YZ araçları arasında en yüksek güvenlik seviyesini sunan hangisidir?',opts:['ChatGPT (varsayılan ayarlar)','Gemini (Google)','Yerel olarak çalıştırılan açık kaynaklı YZ (Llama, GPT4All)','Perplexity.ai'],correct:2,fb:'Doğru! Kendi kendine barındırılan YZ araçları maksimum güvenlik sağlar — veriler cihazdan asla ayrılmaz.'},
-  {q:'GDPR\'ın hangi maddesi YZ araçlarına veri yüklerken en sık çatışma yaşanan alandır?',opts:['Madde 1 — GDPR\'ın Amacı','Madde 7 — Açık Rıza','Madde 25 — Tasarım Gereği Veri Koruma','Madde 30 — Kayıt Tutma'],correct:1,fb:'Doğru! GDPR Madde 7, kişisel verilerin kullanımı için açık rızayı zorunlu kılar. İtalya bu gerekçeyle ChatGPT\'yi geçici yasakladı.'},
-  {q:'"Veri emanettir" anlayışında bir kurum yöneticisi bağışçı listesini başka bir kuruluşla iyi niyetle paylaşırsa ne olur?',opts:['İyi niyet tüm etik riskleri ortadan kaldırır','Veri sahibinin açık rızası alınmadığından kul hakkı ihlali, güven ihlali ve mahremiyet zedelenmesi gerçekleşir','Sadece GDPR para cezası riski oluşur','Bağışçılar zaten kamuya açık kişilerdir'],correct:1,fb:'Doğru! İyi niyet etik ilkeleri devre dışı bırakmaz. Açık rıza olmadan paylaşım kul hakkı, güven ihlali ve mahremiyet zedelenmesi üçlüsünü oluşturur.'},
-  {q:'Bir deepfake video izliyorsunuz — hangisi sahte olduğunu gösteren bir işaret DEĞİLDİR?',opts:['Yüz kenarlarında bulanıklık ve ışık tutarsızlığı','Dudak-ses senkronizasyon bozukluğu','Videonun çok yüksek çözünürlüklü olması','Göz kırpma düzensizliği ve aşırı pürüzsüz cilt'],correct:2,fb:'Doğru! Yüksek çözünürlük deepfake belirtisi değil. Gerçek ipuçları: yüz kenarı bulanıklığı, dudak-ses kayması, ışık tutarsızlığı ve göz kırpma anomalileri.'},
-  {q:'"Saklama Süresini Kısalt" ilkesi ne anlama gelir?',opts:['Verileri hızlı internet ile yüklemelisiniz','İşi biten veriyi gereksiz yere saklamak emaneti riske atmaktır — verinin amacı kalmadığında güvenli şekilde imha edilmelidir','Sadece küçük dosyalar saklanmalıdır','Veriler 30 günden fazla tutulamaz'],correct:1,fb:'Doğru! "Dursun kenarda" mantığı emaneti gereksiz riske atar. Veri saklama politikaları net olmalı ve uygulanmalıdır.'}
+  {q:'YapayZeka kullanırken verilerinizin "model eğitimi" için kullanılmasını engellemek amacıyla tercih edilebilecek en güvenli yöntem hangisidir?',opts:['Soruların sonuna "Bu bilgiyi saklama ve kimseyle paylaşma" şeklinde bir not eklemek.','YapayZekayi sadece mobil uygulama üzerinden, VPN kullanarak ve konum kapalıyken açmak.','Google veya Apple hesabı ile hızlı giriş yaparak kurumsal güvenlik kalkanını aktif etmek.','Ayarlar kısmından "Chat History & Training" (Sohbet Geçmişi ve Eğitim) seçeneğini kapatmak.'],correct:3,fb:'Doğru! Model eğitimi kullanımını azaltmak için en etkili adım ilgili veri kontrol ayarını kapatmaktır.'},
+  {q:'Siber etik prensiplerinden olan "Saklama Süresini Kısalt" ilkesi yapay zeka bağlamında neyi savunur?',opts:['Verilerin internete yüklenme hızını artırarak sunucu üzerinde bekleme süresini azaltmayı.','Yapay zekaya yüklenen dosyaların boyutunun 10 MB\'dan az olması zorunluluğunu.','Verilerin sistemde sadece 72 saat tutulabileceği yönündeki küresel teknik kısıtlamayı.','Amacı kalmayan verinin tutulmasının emanete risk olduğunu ve güvenli şekilde imha edilmesini.'],correct:3,fb:'Doğru! Amaç dışı kalan verinin sistemde tutulmaması ve güvenli şekilde imhası esastır.'},
+  {q:'Bir yöneticinin iyi niyetle de olsa bağışçı listesini başka bir kuruluşla paylaşması, "Veri Emanettir" anlayışına göre neden yanlıştır?',opts:['Paylaşılan listenin o kurumda sadece İngilizce bilenler tarafından okunabilecek olması.','Açık rıza alınmadığı için kul hakkı, güven ihlali ve mahremiyet zedelenmesi gerçekleşmiş olur.','Bağışçıların zaten tanınan kişiler olması nedeniyle bu verilerin gizliliğinin önem taşımaması.','Sadece teknik bir hata olduğu için herhangi bir etik veya hukuki sorumluluk doğurmaması.'],correct:1,fb:'Doğru! Açık rıza olmadan paylaşım hem etik hem hukuki ihlal doğurur.'},
+  {q:'Bir öğretmenin, öğrenci performans verilerini içeren Excel tablosunu analiz etmesi için ChatGPT\'ye yüklemesi neden "etik ve hukuki" bir risk doğurur?',opts:['ChatGPT\'nin matematiksel analiz yeteneği Excel\'den daha zayıf olduğu için sonuçlar hatalı çıkabilir.','Hassas veriler güvenliği ve gizlilik politikası belirsiz sunuculara iletilmiş olur; bu da mahremiyet ihlalidir.','Excel dosyaları sadece çevrimdışı (offline) çalışan yapay zeka araçları tarafından analiz edilebilir.','Dosya boyutu büyükse ChatGPT\'nin işlem hızı yavaşlar ve diğer kullanıcıların hakkına girilmiş olur.'],correct:1,fb:'Doğru! Kişisel verilerin üçüncü taraf sistemlere yüklenmesi ciddi mahremiyet ve uyum riski taşır.'},
+  {q:'"Yapay zekayı her şeyi duyan ve asla unutmayan bir stajyer gibi düşünün" metaforu siber güvenlikte neyi temsil eder?',opts:['Yapay zekanın çok yavaş çalıştığını ve her işi birkaç kez tekrar etmeniz gerektiğini.','Yapay zekanın kendi fikirleri olmadığını, sadece kendisine verilen komutları harfiyen uyguladığını.','Yapay zekanın zeki olduğunu ancak sır saklamayı bilmediğini; verdiğiniz bilginin başkalarına sızabileceğini.','Yapay zekanın sadece basit ve teknik işlerde stajyerler kadar başarılı olabildiğini.'],correct:2,fb:'Doğru! Bu metafor, paylaşılan bilginin gizlilik açısından risk taşıyabileceğini anlatır.'},
+  {q:'"10 Altın İlke"ye göre, bir başkasının verisini yapay zeka aracıyla işlemeniz zorunluysa almanız gereken ilk önlem nedir?',opts:['Veri sahibinden izin almadan, verileri gece saatlerinde (trafik azken) yüklemek.','İsim, adres ve kimlik numarası gibi belirleyici unsurları kaldırarak veriyi "anonim" hale getirmek.','En pahalı ve en bilinen yapay zeka aboneliğini satın alarak veriyi doğrudan yüklemek.','Verileri parçalara bölerek farklı yapay zeka araçlarına (Gemini, Claude vb.) dağıtmak.'],correct:1,fb:'Doğru! İlk adım daima kimliği belirleyici verileri kaldırmak ve veriyi anonimleştirmektir.'},
+  {q:'"Deepfake" ses klonlama saldırılarında bir saldırganın temel çalışma prensibi nedir?',opts:['Kurbanın e-posta şifresini çalarak yazılı talimatları sesli mesaja dönüştürmek.','Kurbanın kısa bir ses örneğini yapay zekayla kopyalayıp, onun ağzından sahte acil durum talepleri oluşturmak.','Kurbanın telefonuna sızarak tüm sesli aramalarını canlı olarak başka bir numaraya yönlendirmek.','Kurbanın sosyal medya hesabını ele geçirip tüm takipçilerine otomatik sesli reklamlar göndermek.'],correct:1,fb:'Doğru! Kısa bir ses örneği bile kimlik taklidi için kullanılabilir; acil talepler mutlaka ikinci kanaldan doğrulanmalıdır.'},
+  {q:'ChatGPT kullanırken verilerinizin "model eğitimi" için kullanılmasını engellemek amacıyla tercih edilebilecek en güvenli mod hangisidir?',opts:['Google veya Apple hesabı ile hızlı giriş yapmak.','"Temporary Chat" (Geçici Sohbet) modunu aktif hale getirmek.','ChatGPT\'yi sadece mobil uygulama üzerinden, VPN kullanarak açmak.','Soruların sonuna "Bu bilgiyi saklama" şeklinde bir komut eklemek.'],correct:1,fb:'Doğru! Geçici sohbet modu, sohbetlerin eğitime dahil edilmesini azaltan en pratik güvenlik tercihidir.'},
+  {q:'Gizlilik ve veri egemenliği açısından en yüksek güvenlik seviyesini hangi yapay zeka kullanım yöntemi sunar?',opts:['ChatGPT veya Gemini gibi araçları "Gizli Sekme" üzerinden kullanmak.','Perplexity veya Claude gibi araçların kurumsal (Enterprise) sürümlerine abone olmak.','Yerel olarak (kendi bilgisayarınızda) internete bağlı olmadan çalışan açık kaynaklı araçlar (Llama vb.).','Ücretsiz yapay zeka araçlarını sadece takma isimler ve sahte bilgilerle kullanmak.'],correct:2,fb:'Doğru! Yerelde çalışan ve internete bağlı olmayan çözümler, veri egemenliği açısından en yüksek kontrolü sağlar.'},
+  {q:'GDPR (Genel Veri Koruma Yönetmeliği) kapsamında, yapay zeka araçlarına veri yüklerken en sık ihlal edilen ve çatışma yaşanan alan hangisidir?',opts:['Madde 1: Yönetmeliğin genel amacının yapay zekaya uygun olmaması.','Madde 30: Yapay zekanın tüm işlemlerinin kaydını tutmakta zorlanması.','Madde 7: Veri sahibinin "açık rızası" alınmadan verilerinin işlenmesi.','Madde 25: Yapay zekanın tasarım aşamasında veri koruma ilkelerine uymaması.'],correct:2,fb:'Doğru! Açık rıza olmadan veri işleme, yapay zeka kullanımında en sık karşılaşılan uyum ihlallerinden biridir.'}
 ];
 
 function renderQuestion() {
-  if (quizIdx>=window.moduleQuestions.length){showQuizResult();return;}
-  quizAnswered=false;
-  const q=window.moduleQuestions[quizIdx];
-  document.getElementById('qprog').style.width=(quizIdx/window.moduleQuestions.length*100)+'%';
-  document.getElementById('q-label').textContent='Soru '+(quizIdx+1)+' / '+window.moduleQuestions.length;
-  document.getElementById('q-score').textContent='Doğru: '+quizScore;
+  if (moduleCurrentQ>=window.moduleQuestions.length){showQuizResult();return;}
+  moduleQuizAnswered=false;
+  const q=window.moduleQuestions[moduleCurrentQ];
+  prepareModuleQuestion(q);
+  const displayOpts=getBalancedDisplayOpts(q);
+  document.getElementById('qprog').style.width=(moduleCurrentQ/window.moduleQuestions.length*100)+'%';
+  document.getElementById('q-label').textContent='Soru '+(moduleCurrentQ+1)+' / '+window.moduleQuestions.length;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';
   const L=['A','B','C','D'];
-  document.getElementById('q-area').innerHTML=`
+  document.getElementById('quiz-area').innerHTML=`
     <div class="question-card">
-      <div class="question-num">SORU ${quizIdx+1} / ${window.moduleQuestions.length}</div>
+      <div class="question-num">SORU ${moduleCurrentQ+1} / ${window.moduleQuestions.length}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="fb-box"></div>
     </div>
-    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">Sonraki Soru →</button></div>`;
+    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">${moduleCurrentQ<window.moduleQuestions.length-1?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
 }
 
 function answerQ(i) {
-  if(quizAnswered)return;
-  quizAnswered=true;
-  const q=window.moduleQuestions[quizIdx];
+  if(moduleQuizAnswered)return;
+  moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ];
+  const correctIdx=typeof q._displayCorrect==='number'?q._displayCorrect:q.correct;
   document.querySelectorAll('.option-btn').forEach((b,j)=>{
     b.style.pointerEvents='none';
-    if(j===q.correct)b.classList.add('correct');
-    else if(j===i&&i!==q.correct)b.classList.add('wrong');
+    if(j===correctIdx)b.classList.add('correct');
+    else if(j===i&&i!==correctIdx)b.classList.add('wrong');
   });
   const fb=document.getElementById('fb-box');
-  if(i===q.correct){quizScore++;fb.className='feedback-box correct show';fb.textContent='✓ '+q.fb;document.getElementById('q-score').textContent='Doğru: '+quizScore;}
+  if(i===correctIdx){moduleQuizCorrect++;fb.className='feedback-box correct show';fb.textContent='✓ '+q.fb;document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';}
   else{fb.className='feedback-box wrong show';fb.textContent='✗ '+q.fb;}
   document.getElementById('nqb').style.display='block';
 }
 
-function nextQuestion(){quizIdx++;renderQuestion();}
+function nextQuestion(){moduleCurrentQ++;renderQuestion();}
 
 function showQuizResult() {
   document.getElementById('qprog').style.width='100%';
-  const passed=quizScore>=7;
-  if (typeof saveQuizResult === 'function') saveQuizResult(quizScore, window.moduleQuestions.length);
-  document.getElementById('q-area').innerHTML=`
+  const passed=moduleQuizCorrect>=7;
+  if (typeof saveQuizResult === 'function') saveQuizResult(moduleQuizCorrect, window.moduleQuestions.length);
+  document.getElementById('quiz-area').innerHTML=`
     <div class="question-card" style="text-align:center;padding:36px;">
       <div style="font-size:3.5rem;margin-bottom:16px;">${passed?'🏆':'📚'}</div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENE'}</div>
-      <div style="font-size:.95rem;color:var(--text-dim);margin-bottom:24px;">${quizScore} / ${window.moduleQuestions.length} doğru${passed?' — Geçme eşiğini aştın!':' — En az 7 doğru gerekiyor.'}</div>
-      ${passed?`<button class="btn btn-green" onclick="completeStep(3)">Devam Et — Senaryo →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Quizi Tekrar Dene</button>`}
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / ${window.moduleQuestions.length} doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      ${passed?`<button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Tekrar Dene</button>`}
     </div>`;
-  document.getElementById('s-correct').textContent=quizScore;
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
 }
 
-function restartQuiz(){quizScore=0;quizIdx=0;renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleQuizCorrect=0;moduleCurrentQ=0;renderQuestion();}
+
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
+
+function getBalancedDisplayOpts(q){
+  const src = (Array.isArray(q._displayOpts) ? q._displayOpts : q.opts).slice();
+  const correctIdx = (typeof q._displayCorrect==='number' ? q._displayCorrect : q.correct);
+  const lens = src.map(s => String(s||'').replace(/\s+/g,' ').trim().length);
+  const maxLen = Math.max.apply(null, lens);
+  const maxIdxs = lens.map((v,i)=>v===maxLen?i:-1).filter(i=>i!==-1);
+  if (!(maxIdxs.length===1 && maxIdxs[0]===correctIdx)) return src;
+
+  const target = Math.max(0, maxLen - 6);
+  const tails = [
+    ' pratikte de sık konuşulur',
+    ' ilk bakışta makul görünebilir',
+    ' sahada sık duyulan bir tercihtir',
+    ' çoğu kullanıcı bunu da düşünür'
+  ];
+  let t = 0;
+
+  for(let i=0;i<src.length;i++){
+    if(i===correctIdx) continue;
+    let out = String(src[i]);
+    while(String(out).replace(/\s+/g,' ').trim().length < target){
+      out += (/[.!?]$/.test(out) ? '' : '.') + tails[t % tails.length];
+      t++;
+    }
+    src[i] = out;
+  }
+  return src;
+}
 
 const sceneFB=[
-  {ok:false,text:'<span class="bad">❌ Yanlış.</span> ChatGPT herkese açık bir platformdur. 200 müşterinin kişisel verisini yapıştırmak GDPR ihlali ve kul hakkı sorunudur. Müşteriler bu paylaşıma onay vermedi.'},
-  {ok:true, text:'✅ Mükemmel! Doğru yaklaşım bu. İsimleri ve kişisel verileri kaldırıp "200 müşteri, segmentasyon analizi" şeklinde anonim soru sormak hem yasal hem etik.'},
-  {ok:false,text:'<span class="bad">❌ Aşırı tepki.</span> YZ araçları doğru kullanıldığında değerli. Tamamen reddetmek yerine veriyi anonimleştirerek analizi yapabilirsiniz.'},
-  {ok:true, text:'✅ Çok iyi! Şirketin onayladığı, veri işleme sözleşmesi imzalanmış kurumsal YZ platformu kullanmak hem hukuki hem etik açıdan güvenlidir.'}
+  {ok:false,text:'<strong class="bad">Yanlış tercih.</strong> ChatGPT herkese açık bir platformdur. Kişisel müşteri verisini doğrudan yapıştırmak GDPR ihlali ve güven ihlali riski doğurur.'},
+  {ok:true, text:'<strong>Mükemmel karar!</strong> İsimleri ve kimliği belli eden bilgileri kaldırıp anonim veriyle soru sormak hem etik hem hukuki açıdan doğru yaklaşımdır.'},
+  {ok:false,text:'<strong class="bad">Eksik yaklaşım.</strong> Yapay zekayı tamamen reddetmek yerine kontrollü ve anonim kullanım tercih edilmelidir. Asıl hedef güvenli kullanım alışkanlığıdır.'},
+  {ok:true, text:'<strong>Doğru hamle!</strong> Kurumun onayladığı ve veri işleme sözleşmesi bulunan kurumsal YZ çözümünü kullanmak riskleri ciddi biçimde azaltır.'}
 ];
 
 function pickScene(i){
@@ -757,26 +828,11 @@ function showToast(type,title,msg){
   const icons={xp:'⚡',info:'ℹ️',warn:'⚠️'};
   t.innerHTML=`<div class="toast-icon">${icons[type]||'•'}</div><div class="toast-body"><div class="toast-title">${title}</div><div class="toast-msg">${msg}</div></div>`;
   document.getElementById('toast-container').appendChild(t);
-  setTimeout(()=>t.remove(),3200);
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),400);},3500);
 }
 
-// Keep module-specific handlers to restore after shared app script loads.
-window.__m11 = {
-  goStep,
-  completeStep,
-  renderQuestion,
-  answerQ,
-  nextQuestion,
-  restartQuiz,
-  pickScene
-};
 </script>
 <script src="js/app.js"></script>
-<script>
-if (window.__m11) {
-  Object.assign(window, window.__m11);
-}
-</script>
 </body>
 </html>
 

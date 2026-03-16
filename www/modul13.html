@@ -198,7 +198,7 @@
         <div class="byte-tooltip">▶ BYTE'a tıkla</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">▶ BYTE KONUŞUYOR</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 13 🔊</div>
         <div class="mod-title">MODÜL 13 — <span>Siber Zorbalık</span></div>
         <div class="mod-desc">Dijital ortamda taciz ve zorbalığı tanı, müdahale et, önle. AB mevzuatı, platform raporlama mekanizmaları ve destek kaynakları.</div>
         <div class="mod-stats">
@@ -241,7 +241,7 @@
     <!-- PANEL 1: VİDEO -->
     <div class="lesson-panel active" id="panel-1">
       <div class="video-wrapper">
-        <iframe id="yt-frame" class="video-yt" src="https://www.youtube.com/embed/KKJc5u3ILQQ" allowfullscreen></iframe>
+        <iframe id="yt-frame" class="video-yt" src="https://www.youtube.com/embed/KKJc5u3ILQQ?playsinline=1&controls=1&fs=1&rel=0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"></iframe>
         <div class="video-overlay" id="vid-overlay" onclick="startVideo()">
           <div class="vs-label">MODÜL 13 · GİRİŞ</div>
           <div class="vs-title">SİBER ZORBALIK</div>
@@ -424,6 +424,26 @@
             </div>
           </div>
 
+          <div class="section-head">💡 MODÜL 13: EBEVEYNLERE KRİTİK TAVSİYELER</div>
+          <div class="platform-flow">
+            <div class="pf-step safe">
+              <div class="pf-num">1 · AÇIK İLETİŞİM</div>
+              <div class="pf-desc">Çocuğunuza, "İnternette seni rahatsız eden bir şey olursa bana anlatırsan sana kızmayacağım, beraber çözeceğiz" güvenini verin. Çocuklar genellikle "İnternetim yasaklanır" korkusuyla başlarına gelen taciz veya zorbalıkları gizlerler.</div>
+            </div>
+            <div class="pf-step warn">
+              <div class="pf-num">2 · KAMERA GÜVENLİĞİ</div>
+              <div class="pf-desc">Kullanılmadığı zamanlarda laptop ve tablet kameralarını fiziksel olarak kapatın. Bazı zararlı yazılımlar kamerayı gizlice aktif edebilir.</div>
+            </div>
+            <div class="pf-step">
+              <div class="pf-num">3 · BİRLİKTE KEŞFEDİN</div>
+              <div class="pf-desc">Çocuğunuzun oynadığı oyunları veya girdiği siteleri en azından haftada bir kez birlikte inceleyin. "Bu oyunda puan nasıl toplanıyor?" gibi sorular sorarak onun dijital dünyasına misafir olun.</div>
+            </div>
+            <div class="pf-step danger">
+              <div class="pf-num">4 · UYGULAMA İZİNLERİ</div>
+              <div class="pf-desc">Çocuğunuzun telefonundaki uygulamaların mikrofon, rehber ve konum izinlerini "Sadece uygulama kullanılırken" veya "Reddet" olarak düzenleyin.</div>
+            </div>
+          </div>
+
           <div class="byte-tip-card">
             <div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="font-size:1.2rem">🤖</span><span style="font-family:'Orbitron',sans-serif;font-size:.72rem;color:var(--cyan);letter-spacing:1px;">BYTE diyor ki:</span></div>
@@ -482,8 +502,8 @@
     <div class="lesson-panel" id="panel-3">
       <div class="quiz-wrap">
         <div class="quiz-prog-bar"><div class="quiz-prog-fill" id="qprog" style="width:0%"></div></div>
-        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">Doğru: 0</span></div>
-        <div id="q-area"></div>
+        <div class="quiz-prog-label"><span id="q-label">Soru 1 / 10</span><span id="q-score">0 / 10 Doğru</span></div>
+        <div id="quiz-area"></div>
       </div>
     </div>
 
@@ -603,7 +623,7 @@
           <div class="xp-lbl">TOPLAM<br>XP</div>
         </div>
         <div class="summary-grid">
-          <div class="sum-card"><div class="sum-val sv-g" id="s-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
+          <div class="sum-card"><div class="sum-val sv-g" id="sum-correct">0</div><div class="sum-label">Doğru Cevap</div></div>
           <div class="sum-card"><div class="sum-val sv-r">350</div><div class="sum-label">XP Kazanıldı</div></div>
           <div class="sum-card"><div class="sum-val sv-y">5/5</div><div class="sum-label">Adım Tamamlandı</div></div>
         </div>
@@ -629,7 +649,7 @@
 <script>
 let completedSteps = new Set();
 const stepXP = {1:50,2:70,3:160,4:40,5:30};
-let quizScore = 0, quizIdx = 0, quizAnswered = false;
+let moduleQuizCorrect = 0, moduleCurrentQ = 0, moduleQuizAnswered = false;
 
 function forceCompleteModule13() {
   try {
@@ -647,7 +667,7 @@ function forceCompleteModule13() {
     if (!u.quizStats || typeof u.quizStats !== 'object') u.quizStats = {};
     if (!u.quizStats['13']) {
       var totalQ = (window.moduleQuestions && window.moduleQuestions.length) ? window.moduleQuestions.length : 10;
-      u.quizStats['13'] = { correct: Math.max(0, Number(quizScore) || 0), total: totalQ };
+      u.quizStats['13'] = { correct: Math.max(0, Number(moduleQuizCorrect) || 0), total: totalQ };
     }
 
     users[session] = u;
@@ -708,7 +728,7 @@ function startVideo(){
   document.getElementById('step-btn-'+n).classList.add('active');
   if (n===5) forceCompleteModule13();
   if (n===5 && typeof saveProgress === 'function') saveProgress(13);
-  if (n===3 && quizIdx===0) renderQuestion();
+  if (n===3 && moduleCurrentQ===0) renderQuestion();
   window.scrollTo({top:180,behavior:'smooth'});
 }
 
@@ -724,7 +744,7 @@ function completeStep(n) {
     forceCompleteModule13();
     if (typeof saveProgress === 'function') saveProgress(13);
     document.getElementById('final-xp').textContent = xp;
-    document.getElementById('s-correct').textContent = quizScore;
+    document.getElementById('sum-correct').textContent = moduleQuizCorrect;
     showToast('xp','🏆 ROZET KAZANILDI!','Dijital Cesaret rozetini aldın!');
     showToast('xp','🎓 TEBRİKLER!','Tüm 13 modülü tamamladın!');
     goStep(5);
@@ -752,123 +772,119 @@ function safeAdvance(stepNo, nextStep) {
 function goTo(url){ window.location.href=url; }
 
 function byteSpeak() {
-  const av = document.getElementById('byteAvatar');
-  const lines = [
-    'Siber zorbalık dijital dünyada bıraktığın izlerin başkasını incitip incitmediğini sorgulamaktır.',
-    'Bir mesaj göndermeden önce sor: Bu kişinin yüzüne karşı da söyler miydim?',
-    'Tanık olmak sorumluluk gerektirir. Sessizlik zorbayı güçlendirir.',
-    'Ekran görüntüsü al, raporla, destek al. Bu üç adım seni koruyan zırhtır.',
-    'Unutulma Hakkı gerçek bir hak. Fotoğrafının kaldırılmasını platforma talep edebilirsin.',
-    'AB Dijital Hizmetler Yasası platformları zararlı içeriği 72 saat içinde kaldırmaya zorluyor.',
-    'Dijital cesaret: Biri zorbalığa uğrarken harekete geçmek, sadece izlemek değil.'
-  ];
-  const msg = lines[Math.floor(Math.random()*lines.length)];
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(msg);
-    u.lang='tr-TR'; u.rate=0.91; u.pitch=1.04;
-    u.onstart=()=>av.classList.add('speaking');
-    u.onend=()=>av.classList.remove('speaking');
-    window.speechSynthesis.speak(u);
-  }
+  if(!('speechSynthesis' in window)){showToast('warn','🔇 Desteklenmiyor','Tarayıcın ses sentezini desteklemiyor.');return;}
+  window.speechSynthesis.cancel();
+  const av=document.getElementById('byteAvatar');
+  const ut=new SpeechSynthesisUtterance('Modül on üç. Siber Zorbalık ve Dijital Cesaret. Çevrimiçi zorbalıkta sessizlik sorunu büyütür, doğru müdahale ise süreci durdurabilir. Bu modülde kanıt toplama, raporlama ve mağdura güvenli destek adımlarını öğreneceksin.');
+  ut.lang='tr-TR';ut.rate=0.92;ut.pitch=1.05;
+  const voices=window.speechSynthesis.getVoices();
+  const tr=voices.find(v=>v.lang.startsWith('tr'));
+  if(tr)ut.voice=tr;
+  ut.onstart=()=>{av.classList.add('speaking');showToast('info','🤖 BYTE Konuşuyor','Modül tanıtımı başladı...');};
+  ut.onend=()=>av.classList.remove('speaking');
+  ut.onerror=()=>{av.classList.remove('speaking');showToast('warn','🔇 Ses Hatası','Türkçe ses paketi yüklü olmayabilir.');};
+  if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
 }
 
 window.moduleQuestions = [
   {
-    q:'ENISA verilerine göre AB\'de gençlerin yüzde kaçı çevrimiçi zorbalığa maruz kalmaktadır?',
-    opts:['%15','%28','%44','%60'],
-    correct:2,
-    fb:'Doğru! ENISA 2023 raporuna göre AB gençlerinin %44\'ü çevrimiçi zorbalığa maruz kalıyor. Bu oran siber zorbalığın ne kadar yaygın olduğunu gözler önüne seriyor.'
-  },
-  {
-    q:'Europol\'e göre siber zorbalık vakalarının yaklaşık kaçta kaçı raporlanmamaktadır?',
-    opts:['%20','%40','%55','%68'],
-    correct:3,
-    fb:'Doğru! Europol\'e göre vakaların %68\'i raporlanmıyor. Utanç, sürecin karmaşıklığı ve "ciddiye alınmam" korkusu en sık gösterilen nedenler.'
-  },
-  {
-    q:'Araştırmalar, bir tanık müdahale ettiğinde zorbalığın ne oranda durduğunu gösteriyor?',
-    opts:['%20','%35','%57','%80'],
-    correct:2,
-    fb:'Doğru! Bir tanık sesini yükselttiğinde zorbalık %57 oranında duruyor. "Seyirci etkisi" tam tersi çalışıyor — bir kişi yeter.'
-  },
-  {
-    q:'"Doxing" ne demektir?',
-    opts:['Hesap şifrelerini kırmak','Kişinin özel bilgilerini rızası olmadan kamuya ifşa etmek','Sahte kimlikle profil açmak','Virüslü dosya göndermek'],
-    correct:1,
-    fb:'Doğru! Doxing, ev adresi, telefon, işyeri gibi kişisel bilgilerin izinsiz paylaşılmasıdır. Fiziksel tehlikeye yol açabildiği için pek çok AB ülkesinde suç sayılır.'
-  },
-  {
     q:'Zorbalığa maruz kaldığında yapman gereken ilk şey nedir?',
     opts:['Hemen saldırgana yanıt ver','Ekran görüntüsü al ve kanıtları kaydet','Sosyal medya hesabını kapat','Polise git'],
     correct:1,
-    fb:'Doğru! Kanıtları kaydetmek en kritik ilk adımdır. Ekran görüntüsü, URL ve tarih/saat hukuki süreçte delil niteliği taşır. Engelleme kanıt almadan ÖNCE değil SONRA yapılmalı.'
-  },
-  {
-    q:'AB\'nin Dijital Hizmetler Yasası (DSA) kapsamında büyük platformlar zararlı içerikleri kaç saat içinde kaldırmak zorundadır?',
-    opts:['24 saat','48 saat','72 saat','7 gün'],
-    correct:2,
-    fb:'Doğru! DSA büyük platformlara 72 saatlik kaldırma yükümlülüğü getiriyor. Uymayan platformlar küresel cironun %6\'sına kadar para cezasıyla karşılaşabilir.'
+    fb:'Doğru! İlk adım kanıt toplamaktır. Ekran görüntüsü, tarih ve bağlantı bilgisi sürecin en kritik delilidir.'
   },
   {
     q:'GDPR\'ın "Unutulma Hakkı" hangi maddede yer alır ve ne anlama gelir?',
     opts:['Madde 5 — Veri işleme ilkeleri','Madde 7 — Açık rıza şartı','Madde 17 — İzinsiz paylaşılan içeriklerin kaldırılmasını talep etme hakkı','Madde 32 — Güvenlik önlemleri'],
     correct:2,
-    fb:'Doğru! GDPR Madde 17, senden izinsiz paylaşılan fotoğraf veya videonun kaldırılmasını isteme hakkını düzenler. Platform 30 gün içinde yanıt vermek zorunda.'
-  },
-  {
-    q:'"Aktif seyirci" olmak ne demektir?',
-    opts:['Zorbalığa katılmadan sadece izleyen, hiçbir şey yapmayan kişi','Zorbalığı kaydedip polise bildiren kişi','İçeriği raporlayan ve mağdura destek olan kişi','Zorbalığı başlatan kişi'],
-    correct:0,
-    fb:'Doğru! Aktif seyirci, içeriği beğenmese de sessiz kalan kişidir. Bu sessizlik zorbanın cesaretini artırır. Oysa bir kişinin "bu yanlış" demesi durumu değiştirebilir.'
+    fb:'Doğru! GDPR Madde 17, izinsiz paylaşılan içeriklerin kaldırılmasını isteme hakkını düzenler.'
   },
   {
     q:'"Sadece şakaydı" savunması zorbalık bağlamında neden geçerli değildir?',
     opts:['Geçerlidir, niyet her şeydir','Zorbalıkta kriter gönderenin niyeti değil, hedefin yaşadığı acıdır','Şaka yalnızca yüz yüze yapılabilir','Dijital ortamda şaka olmaz'],
     correct:1,
-    fb:'Doğru! Zorbalığın ölçüsü gönderenin niyeti değil, hedefin hissettiği acıdır. "Ben şaka yaptım" demek zararı ortadan kaldırmaz.'
+    fb:'Doğru! Zorbalıkta belirleyici olan niyet değil, karşı tarafta oluşan zarar ve acıdır.'
   },
   {
-    q:'Kanıt toplarken engelleme işlemini ne zaman yapmalısın?',
-    opts:['Zorbalığı fark eder etmez hemen','Önce tüm kanıtları (ekran görüntüsü, URL, tarih) aldıktan sonra','Yetkililere başvurduktan sonra','Engellemene gerek yok'],
+    q:'Bir ebeveynin, çocuğunun internet trafiğini yönetmek ve sakıncalı içerikleri engellemek için modem/router seviyesinde yapabileceği en etkili teknik ayar nedir?',
+    opts:['Güvenli DNS (Family DNS) ayarlarını kullanarak kumar, müstehcenlik ve zararlı yazılım içeren siteleri ağ seviyesinde engellemek.','İnternet kablosunu her akşam sökerek fiziksel erişimi tamamen ortadan kaldırmak.','Bilgisayarın ekran parlaklığını düşürerek çocuğun ekrana bakma süresini dolaylı yoldan azaltmak.','Sadece Google Chrome\'un "Gizli Sekme" özelliğini kullanmasına izin vermek.'],
+    correct:0,
+    fb:'Doğru! Güvenli DNS kullanımı, zararlı içeriklere erişimi ağ seviyesinde filtreleyen etkili bir ebeveyn kontrol adımıdır.'
+  },
+  {
+    q:'Çocuğunuzun oynadığı çevrimiçi bir oyunda, tanımadığı birinin ona "oyun içi kostüm/para" vaat ederek kişisel bilgilerini veya sizin kredi kartı bilgilerinizi istemesi hangi saldırı türüne girer?',
+    opts:['Brute Force (Kaba Kuvvet) saldırısı.','DDoS (Hizmet Engelleme) saldırısı.','SQL Injection saldırısı.','Sosyal Mühendislik / Oltalama (Phishing).'],
+    correct:3,
+    fb:'Doğru! Bu yöntem sosyal mühendisliktir; güven kazanıp kişisel bilgiyi kandırma yoluyla toplamayı hedefler.'
+  },
+  {
+    q:'Siber zorbalığa (Cyberbullying) maruz kalan bir çocuğun dijital dünyada kendini koruması için atması gereken ilk ve en önemli adım nedir?',
+    opts:['Zorbalık yapan kişiye aynı sertlikte cevap vererek onu korkutmak.','Hiçbir işlem yapmadan tüm sosyal medya hesaplarını kalıcı olarak silmek.','Zorbalık içeren mesajların ekran görüntüsünü alıp kanıt topladıktan sonra kişiyi engellemek ve bir yetişkine haber vermek.','Bilgisayarın kamerasını bantla kapatıp bir hafta boyunca internete hiç girmemek.'],
+    correct:2,
+    fb:'Doğru! Önce kanıt topla, sonra engelle ve güvenilir bir yetişkine haber ver.'
+  },
+  {
+    q:'Bir çocuğun sosyal medya profilinde "okulunun adı, formasıyla çekilmiş fotoğrafı ve evinin yakınındaki parkın konumu" olması hangi riskin kapısını aralar?',
+    opts:['İnternet hızının yavaşlamasına ve video yükleme hatalarına yol açar.','Çocuğun sadece kendi okul arkadaşlarıyla iletişim kurmasını sağlar.','Uygulamanın çocuk için daha fazla reklam göstermesine neden olur.','Kötü niyetli kişilerin çocuğun fiziksel konumunu tespit etmesine ve takibe (Stalking) olanak sağlar.'],
+    correct:3,
+    fb:'Doğru! Konum ve kimlik ipuçları birleştirildiğinde fiziksel takip riski ciddi şekilde artar.'
+  },
+  {
+    q:'Oyun platformlarında (Roblox, Minecraft, Discord vb.) çocukların güvenliği için mutlaka yapılması gereken ayar hangisidir?',
+    opts:['Mesajlaşma ve arkadaşlık isteklerini "Sadece Tanıdık Kişiler" veya "Kapalı" konumuna getirmek.','Oyunun grafik kalitesini düşürerek zararlı yazılımların bulaşmasını engellemek.','Oyunu her zaman "Misafir" oturumuyla açarak verilerin kaydedilmesini önlemek.','Sadece ücretli oyunları tercih etmek; çünkü ücretsiz oyunlarda şifreleme yoktur.'],
+    correct:0,
+    fb:'Doğru! Mesajlaşma ve arkadaşlık erişimini sınırlandırmak çocukları yabancılarla temastan korur.'
+  },
+  {
+    q:'Sosyal medyada tanımadığınız biri size hediye veya para teklif ederse ne yapmalısınız?',
+    opts:['Kabul edin, zarar vermez','Güvenilir görünüyorsa kabul edin','Reddedip hesabı bildirin; büyük ihtimalle dolandırıcılıktır','Sadece kişisel bilgilerinizi vermeyin, kalanını kabul edin'],
+    correct:2,
+    fb:'Doğru! Bu tür teklifler çoğunlukla dolandırıcılık girişimidir; reddedip hesabı raporlamak en güvenli yaklaşımdır.'
+  },
+  {
+    q:'Çocuklar için sosyal medyada yaşını ve okulunu paylaşmak neden risklidir?',
+    opts:['Arkadaş sayısını azaltır','Kötü niyetli kişilerin seni hedef almasını kolaylaştırır','Algoritma tarafından engellenir','Veri kotasını tüketir'],
     correct:1,
-    fb:'Doğru! Engelledikten sonra kişinin profiline erişimin kapanabilir. Bu yüzden önce ekran görüntüsü, URL ve tarih bilgisini kaydet, SONRA engelle.'
+    fb:'Doğru! Yaş ve okul bilgisi, çocuğu hedeflemeyi kolaylaştıran kimlik ve konum ipuçları üretir.'
   }
 ];
 
 function renderQuestion() {
-  if (quizIdx>=window.moduleQuestions.length){showQuizResult();return;}
-  quizAnswered=false;
-  const q=window.moduleQuestions[quizIdx];
-  document.getElementById('qprog').style.width=(quizIdx/window.moduleQuestions.length*100)+'%';
-  document.getElementById('q-label').textContent='Soru '+(quizIdx+1)+' / '+window.moduleQuestions.length;
-  document.getElementById('q-score').textContent='Doğru: '+quizScore;
+  if (moduleCurrentQ>=window.moduleQuestions.length){showQuizResult();return;}
+  moduleQuizAnswered=false;
+  const q=window.moduleQuestions[moduleCurrentQ];
+  prepareModuleQuestion(q);
+  const displayOpts=Array.isArray(q._displayOpts)?q._displayOpts:q.opts;
+  document.getElementById('qprog').style.width=(moduleCurrentQ/window.moduleQuestions.length*100)+'%';
+  document.getElementById('q-label').textContent='Soru '+(moduleCurrentQ+1)+' / '+window.moduleQuestions.length;
+  document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';
   const L=['A','B','C','D'];
-  document.getElementById('q-area').innerHTML=`
+  document.getElementById('quiz-area').innerHTML=`
     <div class="question-card">
-      <div class="question-num">SORU ${quizIdx+1} / ${window.moduleQuestions.length}</div>
+      <div class="question-num">SORU ${moduleCurrentQ+1} / ${window.moduleQuestions.length}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="fb-box"></div>
     </div>
-    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">Sonraki Soru →</button></div>`;
+    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">${moduleCurrentQ<window.moduleQuestions.length-1?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
 }
 
 function answerQ(i) {
-  if(quizAnswered)return;
-  quizAnswered=true;
-  const q=window.moduleQuestions[quizIdx];
+  if(moduleQuizAnswered)return;
+  moduleQuizAnswered=true;
+  const q=window.moduleQuestions[moduleCurrentQ];
+  const correctIdx=typeof q._displayCorrect==='number'?q._displayCorrect:q.correct;
   document.querySelectorAll('.option-btn').forEach((b,j)=>{
     b.style.pointerEvents='none';
-    if(j===q.correct)b.classList.add('correct');
-    else if(j===i&&i!==q.correct)b.classList.add('wrong');
+    if(j===correctIdx)b.classList.add('correct');
+    else if(j===i&&i!==correctIdx)b.classList.add('wrong');
   });
   const fb=document.getElementById('fb-box');
-  if(i===q.correct){
-    quizScore++;
+  if(i===correctIdx){
+    moduleQuizCorrect++;
     fb.className='feedback-box correct show';
     fb.textContent='✓ '+q.fb;
-    document.getElementById('q-score').textContent='Doğru: '+quizScore;
+    document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';
   } else {
     fb.className='feedback-box wrong show';
     fb.textContent='✗ '+q.fb;
@@ -876,29 +892,41 @@ function answerQ(i) {
   document.getElementById('nqb').style.display='block';
 }
 
-function nextQuestion(){quizIdx++;renderQuestion();}
+function nextQuestion(){moduleCurrentQ++;renderQuestion();}
 
 function showQuizResult() {
   document.getElementById('qprog').style.width='100%';
-  const passed=quizScore>=7;
-  if (typeof saveQuizResult === 'function') saveQuizResult(quizScore, window.moduleQuestions.length);
-  document.getElementById('q-area').innerHTML=`
+  const passed=moduleQuizCorrect>=7;
+  if (typeof saveQuizResult === 'function') saveQuizResult(moduleQuizCorrect, window.moduleQuestions.length);
+  document.getElementById('quiz-area').innerHTML=`
     <div class="question-card" style="text-align:center;padding:36px;">
       <div style="font-size:3.5rem;margin-bottom:16px;">${passed?'🏆':'📚'}</div>
-      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENE'}</div>
-      <div style="font-size:.95rem;color:var(--text-dim);margin-bottom:24px;">${quizScore} / ${window.moduleQuestions.length} doğru${passed?' — Geçme eşiğini aştın!':' — En az 7 doğru gerekiyor.'}</div>
-      ${passed?`<button class="btn btn-green" onclick="return safeAdvance(3,4)">Devam Et — Senaryo →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Quizi Tekrar Dene</button>`}
+      <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
+      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / ${window.moduleQuestions.length} doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      ${passed?`<button class="btn btn-primary" onclick="return safeAdvance(3,4)">Senaryoya Geç →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Tekrar Dene</button>`}
     </div>`;
-  document.getElementById('s-correct').textContent=quizScore;
+  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
 }
 
-function restartQuiz(){quizScore=0;quizIdx=0;renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleQuizCorrect=0;moduleCurrentQ=0;renderQuestion();}
+
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
 
 const sceneFB=[
-  {ok:false, text:'<span class="bad">❌ Bu zorbalığa ortak olmak.</span> "Hahaha" emojisi göndermek zorbanın yanında yer almak demektir. Can o emojileri de gördü ve saydı. Dijital ayak izin kalıcı — "sadece emoji" değil bu.'},
-  {ok:false, text:'<span class="bad">❌ Sessizlik onay değil mi?</span> Seyirci etkisi tam da bu: herkes korkar, kimse müdahale etmez. Araştırmalar, bir tanık sesini yükseltince zorbalığın %57 oranında durduğunu gösteriyor.'},
-  {ok:true,  text:'✅ Dijital cesaret tam olarak bu! Grupta "Bu yanlış" demek zorbanın gücünü kırar. Canın görmesi, 18 sessiz mesajın ağırlığını taşımak zorunda olmadığını hissettirir.'},
-  {ok:false, text:'<span class="bad">❌ Görmezden gelmek sorunu çözmüyor.</span> Sessize almak seni rahatlatır ama Can hâlâ orada, mesajları hâlâ okuyor. Grupta kalan 17 kişi de aynı şeyi yaptığında zorba kazanıyor.'}
+  {ok:false, text:'<strong class="bad">Yanlış tercih.</strong> Alaycı emoji göndermek zorbalığı normalleştirir ve mağduru daha fazla yalnız bırakır. Dijital ortamda bu da aktif katılım sayılır.'},
+  {ok:false, text:'<strong class="bad">Eksik yaklaşım.</strong> Sessiz kalmak tarafsızlık değildir. Tanık müdahalesi olmadığında zorbalık güçlenir ve grup dinamiği saldırgan lehine döner.'},
+  {ok:true,  text:'<strong>Mükemmel karar!</strong> Grupta "Bu yanlış" diyerek sınır koymak zorbanın etkisini azaltır ve mağdura yalnız olmadığını hissettirir.'},
+  {ok:false, text:'<strong class="bad">Yetersiz çözüm.</strong> Sadece sessize almak kişisel kaçıştır; sorunu bitirmez. Doğru adım raporlama ve mağdura açık destek vermektir.'}
 ];
 
 function pickScene(i){
@@ -915,7 +943,7 @@ function showToast(type,title,msg){
   const icons={xp:'⚡',info:'ℹ️',warn:'⚠️'};
   t.innerHTML='<div class="toast-icon">'+( icons[type]||'•')+'</div><div class="toast-body"><div class="toast-title">'+title+'</div><div class="toast-msg">'+msg+'</div></div>';
   document.getElementById('toast-container').appendChild(t);
-  setTimeout(()=>t.remove(),3600);
+  setTimeout(()=>{t.classList.add('out');setTimeout(()=>t.remove(),400);},3500);
 }
 </script>
 <script src="js/app.js"></script>

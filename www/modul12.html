@@ -116,7 +116,8 @@
 .question-num{font-family:'Orbitron',sans-serif;font-size:.77rem;color:var(--pink);letter-spacing:2px;margin-bottom:9px;}
 .question-text{font-size:1.08rem;color:#fff;font-weight:600;line-height:1.5;margin-bottom:18px;}
 .options{display:flex;flex-direction:column;gap:9px;}
-.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:center;gap:11px;width:100%;}
+.option-btn{background:var(--bg-panel);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:13px 17px;text-align:left;cursor:pointer;transition:.25s;font-family:'Exo 2',sans-serif;font-size:.93rem;color:var(--text);display:flex;align-items:flex-start;gap:11px;width:100%;}
+.option-btn span{line-height:1.45;word-break:break-word;overflow-wrap:anywhere;white-space:normal;}
 .option-btn:hover{background:rgba(244,114,182,.05);border-color:rgba(244,114,182,.3);}
 .option-btn.correct{background:rgba(74,222,154,.08);border-color:var(--green);color:var(--green);}
 .option-btn.wrong{background:rgba(248,113,113,.08);border-color:var(--red);color:var(--red);}
@@ -183,7 +184,7 @@
         <div class="byte-tooltip">▶ BYTE'a tıkla</div>
       </div>
       <div class="mod-title-block">
-        <div class="mod-tag" onclick="byteSpeak()">◆ MODÜL 12 · 🔊 Dinle</div>
+        <div class="mod-tag" onclick="byteSpeak()" title="Tıkla ve dinle">◆ MODÜL 12 🔊</div>
         <h1 class="mod-title">Sosyal Medya <span>Güvenliği</span></h1>
         <p class="mod-desc">Instagram, Facebook, WhatsApp, Telegram — günlük hayatın merkezindeki platformlar, aynı zamanda en çok hedef alınanlar. SIM bypass, hesap ele geçirme, gizlilik ayarları ve acil müdahale protokolü.</p>
         <div class="mod-stats">
@@ -676,36 +677,36 @@ function byteSpeak(){
 let moduleStepsCompleted=new Set(), moduleQuizCorrect=0, moduleCurrentQ=0, moduleQuizAnswered=false;
 
 window.moduleQuestions=[
-  {q:"SIM bypass saldırısında saldırgan ne yapar?",
-   opts:["Telefona fiziksel olarak erişir ve SIM kartı çalar","Operatörü kandırarak veya içeriden biriyle anlaşarak telefon numarasını başka bir SIM'e aktarır","SMS mesajlarını havada yakalar (man-in-the-middle)","Telefonun şifresini kırar"],
-   correct:1,fb:{wrong:"SIM bypass: Operatör üzerinden numaranın başka bir SIM'e aktarılması. Fiziksel erişim gerekmez. Saldırgan senin numarana gelen tüm SMS'leri kendi telefonunda alır — 2FA kodları dahil.",correct:"Doğru! Bu yüzden Türkiye hattı SMS 2FA güvenli değil. Çözüm: Authenticator uygulaması — kod cihazda üretilir, SMS'e gerek yok, SIM bypass etkisiz kalır."}},
-  {q:"2FA için en güvenli yöntem hangisidir?",
-   opts:["SMS ile doğrulama kodu almak","E-posta ile doğrulama kodu almak","Google Authenticator veya Authy gibi uygulama tabanlı 2FA","Güvenlik soruları (doğum tarihi, anne kızlık soyadı gibi)"],
-   correct:2,fb:{wrong:"SMS 2FA: SIM bypass ile bypass edilebilir. E-posta 2FA: E-posta hesabı ele geçirilirse gider. Güvenlik soruları: Sosyal medyadan öğrenilebilir. En güvenli: Authenticator — kod cihazda üretilir, ağa gitmez.",correct:"Kesinlikle! Authenticator uygulamaları TOTP (Time-based One-Time Password) kullanır — kod 30 saniyede bir değişir, internet gerektirmez, SIM bypass etkisiz. Authy yedekleme desteği ile kaybetme riskini de azaltır."}},
-  {q:"Instagram'da aktif oturumları kontrol etmek için doğru yol hangisi?",
-   opts:["Profil → Düzenle → Cihazlar","Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği","Keşfet → Güvenlik → Aktif oturumlar","Bildirimler → Güvenlik Uyarıları"],
-   correct:1,fb:{wrong:"Doğru yol: Ayarlar → Hesap Merkezi → Şifre ve Güvenlik → Giriş etkinliği. Buradan nerede, hangi cihazdan, ne zaman giriş yapıldığını görebilir ve tanımadığın cihazları çıkarabilirsin.",correct:"Doğru! Bu sayfayı ayda en az bir kez kontrol et. Tanımadığın bir cihaz veya konum görürsen hemen 'Çıkış yaptır' seç ve şifreni değiştir."}},
-  {q:"Telegram hakkında hangisi DOĞRUDUR?",
-   opts:["Tüm Telegram sohbetleri varsayılan olarak uçtan uca şifreli","Telegram'da hiç şifreleme yok","Yalnızca 'Gizli Sohbet' özelliği uçtan uca şifreli; normal sohbetler Telegram'ın sunucularında açık metin olarak durur","Telegram, WhatsApp'tan daha az güvenli çünkü açık kaynak değil"],
-   correct:2,fb:{wrong:"Telegram yanılgısı: Normal sohbetler Telegram'ın bulut sunucularında açık metin olarak saklanır. Yalnızca 'Gizli Sohbet' (Secret Chat) uçtan uca şifreli. Hassas konuşmalar için her zaman Gizli Sohbet kullan.",correct:"Doğru! Pek çok kişi Telegram'ın tamamen şifreli olduğunu sanıyor — bu yanlış. Normal sohbet başlatmak yerine 'Yeni Gizli Sohbet' seç. Ayrıca Telegram grupları ve kanalları tamamen açık olabilir — kurumsal hassas bilgileri paylaşma."}},
-  {q:"WhatsApp'ta şifre paylaşmak neden tehlikelidir?",
-   opts:["WhatsApp şifreleme kullanmıyor","WhatsApp mesajları Google Drive veya iCloud'a yedeklenebilir — bu yedekler her zaman uçtan uca şifreli değildir. Ayrıca mesaj geçmişi ele geçirilirse şifre de gider","WhatsApp mesajları Meta tarafından okunuyor","WhatsApp yalnızca kısa mesajlara izin veriyor"],
-   correct:1,fb:{wrong:"WhatsApp mesajları uçtan uca şifreli ama yedeklemeler varsayılan olarak değil. Google Drive'daki WhatsApp yedeği okunabilir durumda olabilir. Şifreler için şifre yöneticisi kullan, DM'yi değil.",correct:"Doğru! Ek risk: Bir gün o arkadaşla yolunuz ayrılabilir veya telefonunu kaybedebilir. Şifre paylaşmanın tek güvenli yolu: şifre yöneticisi üzerinden (Bitwarden, 1Password gibi) güvenli paylaşım özelliği."}},
-  {q:"Instagram hesabın ele geçirildiğinde ilk 5 dakikada ne yapmalısın?",
-   opts:["Instagram'a şikâyet formu doldur ve cevap bekle","Hesaba hâlâ girebiliyorsan şifreyi hemen değiştir ve tüm diğer oturumları kapat","Ekran görüntüsü al ve sosyal medyada paylaş","Arkadaşlarını ara ve durumu anlat"],
-   correct:1,fb:{wrong:"İlk 5 dakika hayati: Hesaba hâlâ girebiliyorsan şifreyi değiştir ve tüm oturumları kapat. Bu saldırganı içeriden atar. Şikâyet formu günler alabilir — önce saldırganı kendin çıkar.",correct:"Doğru! Sıra önemli: 1) Şifreyi değiştir + tüm oturumları kapat. 2) Bağlı e-posta şifresini değiştir. 3) Platform destek talebi. 4) Takipçileri uyar. Her dakika saldırganın daha fazla hasar verebileceği dakikadır."}},
-  {q:"Kurumsal sosyal medya hesaplarında hangi e-posta kullanılmalı?",
-   opts:["Yöneticinin kişisel e-postası — pratik olduğu için","Gmail veya Hotmail gibi ücretsiz genel amaçlı e-postalar","Kurumsal e-posta (kurum.org, kurum.com.tr gibi) — problem çıkınca platform ile iletişim kolaylaşır","Şifreli geçici e-postalar"],
-   correct:2,fb:{wrong:"Kurumsal hesaplarda kurumsal e-posta şart. Kişisel e-posta: kişi kurumdan ayrılırsa hesap takılı kalır. Genel e-posta: platform destek süreçlerinde kurum kimliğini kanıtlamak zorlaşır. Kurumsal e-posta ile kurtarma çok daha hızlı.",correct:"Doğru! Kurum e-maili ile iki avantaj: 1) Yetkili kişi değişince hesap kilitlenmez, e-posta erişimi devredilebilir. 2) Meta/Instagram'ın destek ekibi kurumsal e-posta ile kurtarma taleplerini daha hızlı işler."}},
-  {q:"'Credential stuffing' saldırısı nedir?",
-   opts:["Saldırganın fiziksel olarak bilgisayarına erişmesi","Sızdırılmış kullanıcı adı-şifre kombinasyonlarının otomatik araçlarla farklı platformlarda denenmesi","Phishing e-postası ile şifre çalınması","Tarayıcıdaki kaydedilmiş şifrelerin kopyalanması"],
-   correct:1,fb:{wrong:"Credential stuffing: 'X platformundan sızdı' + 'aynı şifreyi Y platformunda da kullanıyorum' = Y platformu da tehlikede. Bu yüzden her platformda farklı şifre kritik. haveibeenpwned.com'dan e-posta adresinin sızdırılıp sızdırılmadığını kontrol edebilirsin.",correct:"Doğru! Bu saldırı çok yaygın çünkü çoğu insan şifrelerini tekrar kullanıyor. Çözüm: Her platform için farklı, güçlü şifre + şifre yöneticisi. Şifrelerinden birinin sızdığında diğerleri güvende kalır."}},
-  {q:"WhatsApp'ta 'Bağlı Cihazlar' bölümünü kontrol etmek neden önemli?",
-   opts:["Telefonun depolama kapasitesini görmek için","WhatsApp Web veya masaüstü uygulaması üzerinden kim mesajlarını okuyabilir bunu kontrol etmek için","Whatsapp'ın güncel sürümde olup olmadığını anlamak için","Veri kullanımını görmek için"],
-   correct:1,fb:{wrong:"WhatsApp Web: Birinin bilgisayarında oturum açıp unutursan veya başkası erişirse tüm mesajlarını gerçek zamanlı okuyabilir. Ayarlar → Bağlı Cihazlar'dan aktif oturumları gör ve tanımadıklarını kapat.",correct:"Kesinlikle! Bu özellikle ortak bilgisayar kullandıktan sonra kritik. Ayda bir Bağlı Cihazlar'ı kontrol et. Tanımadığın bir cihaz görürsen hemen sonlandır — o cihazdan biri konuşmalarını anlık takip ediyor demek."}},
-  {q:"Hesap ele geçirildikten sonra saldırgan ilk ne yapar?",
-   opts:["İçerikleri inceleyip çıkar","E-posta adresini, telefon numarasını ve şifreyi değiştirerek seni dışarı kilitler","Hesabı kapatır","Yalnızca bazı gönderileri siler"],
-   correct:1,fb:{wrong:"Saldırganın önceliği: recovery bilgilerini değiştirmek. E-posta + telefon + şifre = 30 saniye. Artık sen kurtarma kodunu da alamıyorsun. Bu yüzden saldırı başlar başlamaz saniyeler içinde harekete geçmek şart.",correct:"Doğru! Bu yüzden 'bekleyeyim belki düzelir' seçeneği felaket olur. Her geçen dakika recovery bilgileri değişiyor olabilir. instagram.com/hacked → hemen git."}}
+  {q:"Vefat veya hesap sahibinin hesaba bir daha erişemeyeceği durumlarda, dijital anıların korunması veya hesabın güvenli bir şekilde kapatılması için Google ve Apple gibi platformlarda sunulan çözüm nedir?",
+   opts:["Platformun destek ekibine önceden bir vasiyetname mektubu postalamak.","Şifrenizi bir kağıda yazıp banka kasasında saklamak.","Hesap ayarlarından bir 'Varis / Dijital Mirasçı' atayarak erişim yetkisi tanımlamak.","Hiçbir işlem yapmamak; platformlar 1 yıl girilmeyen hesabı otomatik olarak yasal varislere devreder."],
+   correct:2,fb:{wrong:"Dijital miras için manuel yöntemler güvenli ve standart değildir. Doğru yaklaşım, platformun resmi miras/hesap varisi özelliğini önceden tanımlamaktır.",correct:"Doğru! Dijital mirasçı/varis tanımı, hesap erişimi veya kapatma süreçlerinin güvenli ve kontrollü yürütülmesini sağlar."}},
+  {q:"'Profilime kim baktı?', 'Takibi bırakanları hemen gör' veya 'Hangi ünlüye benziyorsun?' gibi üçüncü taraf uygulamaları kullanmanın en büyük siber güvenlik riski nedir?",
+   opts:["Bu uygulamaların telefonun şarjını çok hızlı bitirmesi ve batarya ömrünü kısaltması.","Uygulamanın reklamlarla dolu olması nedeniyle internet paketinizin hızla tükenmesi.","Bu testlerin her zaman yanlış sonuçlar vererek kullanıcıyı yanıltması ve vakit kaybettirmesi.","Uygulamaya giriş yaparken hesabınızın tüm kontrolünü (mesajlar, takipçiler, şifre) saldırganlara teslim etmeniz."],
+   correct:3,fb:{wrong:"Asıl risk performans değil, yetki devridir. Kötü niyetli üçüncü taraf uygulamalar hesap erişimi alarak hesabı ele geçirebilir.",correct:"Doğru! Bu tip uygulamalar OAuth izinleri veya kimlik bilgileri üzerinden hesabın kontrolünü saldırganlara açabilir."}},
+  {q:"Kötü niyetli kişilerin sizi sahte 'hediye çeki' veya 'skandal video' paylaşımlarına etiketleyerek adınızı lekelemesini ve takipçilerinizi dolandırmasını engelleyen en etkili ayar hangisidir?",
+   opts:["'Etiketlendiğim gönderiler profilimde görünmeden önce onayımı beklesin' seçeneğini aktif etmek.","Sosyal medya hesabınızı sadece hafta sonları erişime açıp diğer günler dondurmak.","Profil fotoğrafını kaldırarak saldırganların sizi tanımasını ve etiketlemesini zorlaştırmak.","Uygulamanın bildirimlerini tamamen kapatarak etiketlendiğinizden haberdar olmamak."],
+   correct:0,fb:{wrong:"Etiket istismarını önlemenin en etkili yolu manuel onaydır. Böylece zararlı içerikler profilinizde otomatik görünmez.",correct:"Doğru! Etiket onayı açıldığında profilinizde neyin görüneceğini siz kontrol edersiniz."}},
+  {q:"Sosyal medya hesapları için aşağıdakilerden hangisi en yüksek güvenlik seviyesine sahip 2FA (İki Faktörlü Doğrulama) yöntemidir?",
+   opts:["Güvenlik soruları (Anne kızlık soyadı, ilk evcil hayvanın adı vb.) belirlemek.","E-posta adresine gelen tek kullanımlık doğrulama bağlantısını kullanmak.","Google Authenticator veya Authy gibi uygulama tabanlı kod üreticileri kullanmak.","Cep telefonuna SMS ile gelen 6 haneli kısa onay kodunu tercih etmek."],
+   correct:2,fb:{wrong:"SMS ve e-posta tabanlı 2FA yöntemleri daha kolay hedef olabilir. Uygulama tabanlı TOTP kodları daha güçlüdür.",correct:"Kesinlikle! Authenticator tabanlı 2FA, SIM swap ve benzeri risklere karşı daha dayanıklıdır."}},
+  {q:"WhatsApp üzerinden kritik bir şifre veya hassas bilgi paylaşmak neden bir güvenlik riski oluşturabilir?",
+   opts:["WhatsApp'ın ücretsiz sürümü hiçbir şekilde iletim sırasında şifreleme teknolojisi kullanmaz.","Mesaj yedekleri (iCloud/Drive) uçtan uca şifreli olmayabilir ve cihaz ele geçirilirse geçmişe ulaşılabilir.","WhatsApp üzerinden gönderilen tüm yazılı mesajlar Meta tarafından reklam hedeflemesi için okunur.","Uygulama sadece 24 saatlik mesajları sakladığı için şifre bilgisinin kaybolma riski çok yüksektir."],
+   correct:1,fb:{wrong:"Riskin ana kaynağı çoğu zaman sohbet yedekleridir. Hassas sırlar mesajlaşma yerine güvenli şifre yöneticileriyle paylaşılmalıdır.",correct:"Doğru! Yedekler ve ele geçirilen cihazlar geçmiş mesajlara erişim sağlayabilir; bu yüzden şifre paylaşımı için güvenli paylaşım araçları tercih edilmelidir."}},
+  {q:"Sosyal hesabınızın şüpheli bir şekilde ele geçirildiğini anladığınız ilk 5 dakika içinde yapmanız gereken en etkili eylem nedir?",
+   opts:["Destek ekibine bir şikayet formu doldurup hesabın incelenmesini beklemek.","Hala giriş yapabiliyorsanız şifreyi değiştirip 'Diğer tüm oturumları kapat' seçeneğini seçmek.","Durumu kanıtlamak için hesabın ekran görüntülerini alıp diğer sosyal medya mecralarında paylaşmak.","Hemen telefonunuzu fabrika ayarlarına döndürerek olası casus yazılımları temizlemek."],
+   correct:1,fb:{wrong:"İlk dakikalarda beklemek yerine erişimi kesmek gerekir. En hızlı koruma adımı şifre değişimi ve tüm aktif oturumları sonlandırmaktır.",correct:"Doğru! İlk 5 dakikada oturumları kapatmak saldırganın hesabı kalıcı ele geçirmesini büyük ölçüde engeller."}},
+  {q:"Sosyal medya platformları ve üçüncü taraf uygulamaların; beğeni, yorum, konum ve ilgi alanlarınızı toplayarak bir 'Kişilik Profili' oluşturmasının temel tehlikesi nedir?",
+   opts:["Sizi yakından tanıyarak zaaflarınıza, siyasi görüşünüze veya korkularınıza göre manipülatif reklam ve içerikler sunulmasına olanak sağlaması.","Telefonunuzun işlemcisini yorarak cihazın fiziksel ömrünü kısaltması ve bataryanın şişmesine neden olması.","Profilinizdeki fotoğraf sayısını yapay olarak artırarak hesabınızın 'sahte hesap' (bot) olarak algılanmasına yol açması.","Sadece internet faturanızın yükselmesine neden olması; ancak kişisel kararlarınız üzerinde herhangi bir etkisi bulunmaması."],
+   correct:0,fb:{wrong:"Temel risk teknik performanstan çok davranışsal manipülasyondur. Profilleme, kararlarınızı etkileyecek hedefli içerik üretir.",correct:"Doğru! Profilleme ile kişiye özel manipülasyon mümkün olur; bu hem mahremiyet hem karar özgürlüğü açısından ciddi risktir."}},
+  {q:"Bir saldırgan bir hesabı ele geçirdikten sonra, asıl sahibinin geri almasını engellemek için genellikle ilk olarak ne yapar?",
+   opts:["Hesaptaki tüm eski mesajları ve fotoğrafları sunuculardan kalıcı olarak siler.","İletişim bilgilerini (e-posta/tel) ve şifreyi değiştirerek sahibini sistemin dışına kilitler.","Hesabın ismini ve profil fotoğrafını değiştirerek hesabın sahte bir hesap gibi görünmesini sağlar.","Hesabı dondurarak platformun güvenlik algoritmalarının hesabı fark etmesini engellemeye çalışır."],
+   correct:1,fb:{wrong:"Saldırganların ilk hedefi kalıcı kontrol sağlamaktır. Bunun için recovery bilgileri ve şifre hızla değiştirilir.",correct:"Doğru! E-posta, telefon ve şifre değiştiğinde hesabı geri almak çok zorlaşır; bu nedenle hızlı müdahale kritik."}},
+  {q:"Aile büyüklerinin siber dünyada güvenliğini sağlamak için onlara verilmesi gereken en kritik tavsiye aşağıdakilerden hangisidir?",
+   opts:["Sosyal medya hesaplarını sadece gece saatlerinde kullanmalarını söylemek.","Bilmedikleri her uygulama için yeni bir hesap açmalarını önermek.","Şifrelerini bir yere not edip telefonun arkasına yapıştırmalarını istemek.","Gelen şüpheli mesajlardaki bağlantılara tıklamadan önce mutlaka bir yakınına danışmalarını ve kimseyle şifre paylaşmamalarını sağlamak."],
+   correct:3,fb:{wrong:"Yaş fark etmeksizin en etkili koruma kuralı: şüpheli bağlantılarda durmak, doğrulamak ve asla şifre paylaşmamaktır.",correct:"Doğru! Basit bir doğrulama alışkanlığı, sosyal mühendislik saldırılarının büyük kısmını engeller."}},
+  {q:"'YAPILMASI GEREKENLER' listesinde yer alan 'Kullanmadığınız hesapları silin' tavsiyesi dijital güvenliğinizi nasıl artırır?",
+   opts:["İnternet üzerindeki toplam verinizi artırarak saldırganların kafasını karıştırır.","Sadece telefonunuzun uygulama menüsünün daha düzenli görünmesini sağlar.","Saldırı yüzeyinizi daraltır; unutulmuş eski bir hesabın ihlal edilmesiyle diğer hesaplarınıza ulaşılabilecek bir sızıntı riskini ortadan kaldırır.","Silinen hesaplar sayesinde internet hızınızın tüm cihazlarda kalıcı olarak artmasını sağlar."],
+   correct:2,fb:{wrong:"Eski ve kullanılmayan hesaplar saldırganlar için kolay hedef olur. Hesap azaltmak, ihlal zinciri riskini düşürür.",correct:"Doğru! Kullanılmayan hesapları kapatmak saldırı yüzeyini küçültür ve unutulmuş hesaplardan doğabilecek sızıntıları engeller."}}
 ];
 
 function goStep(n){
@@ -730,9 +731,52 @@ function completeStep(n){
   if(n<5)goStep(n+1);
 }
 
+function prepareModuleQuestion(q){
+  if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
+  if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
+  const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
+  for(let i=pairs.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=pairs[i];pairs[i]=pairs[j];pairs[j]=t;
+  }
+  q._displayOpts=pairs.map(p=>p.text);
+  q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
+}
+
+function getBalancedDisplayOpts(q){
+  const src = (Array.isArray(q._displayOpts) ? q._displayOpts : q.opts).slice();
+  const correctIdx = (typeof q._displayCorrect==='number' ? q._displayCorrect : q.correct);
+  const lens = src.map(s => String(s||'').replace(/\s+/g,' ').trim().length);
+  const maxLen = Math.max.apply(null, lens);
+  const maxIdxs = lens.map((v,i)=>v===maxLen?i:-1).filter(i=>i!==-1);
+  if (!(maxIdxs.length===1 && maxIdxs[0]===correctIdx)) return src;
+
+  const target = Math.max(0, maxLen - 6);
+  const tails = [
+    ' pratikte de sık konuşulur',
+    ' ilk bakışta makul görünebilir',
+    ' sahada sık duyulan bir tercihtir',
+    ' çoğu kullanıcı bunu da düşünür'
+  ];
+  let t = 0;
+
+  for(let i=0;i<src.length;i++){
+    if(i===correctIdx) continue;
+    let out = String(src[i]);
+    while(String(out).replace(/\s+/g,' ').trim().length < target){
+      out += (/[.!?]$/.test(out) ? '' : '.') + tails[t % tails.length];
+      t++;
+    }
+    src[i] = out;
+  }
+  return src;
+}
+
 function renderQuestion(){
   if(moduleCurrentQ>=10){showResult();return;}
   const q=window.moduleQuestions[moduleCurrentQ];moduleQuizAnswered=false;
+  prepareModuleQuestion(q);
+  const displayOpts=getBalancedDisplayOpts(q);
   document.getElementById('qprog').style.width=((moduleCurrentQ+1)/10*100)+'%';
   document.getElementById('q-counter').textContent='Soru '+(moduleCurrentQ+1)+' / 10';
   const L=['A','B','C','D'];
@@ -740,7 +784,7 @@ function renderQuestion(){
     <div class="question-card">
       <div class="question-num">SORU ${moduleCurrentQ+1}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="feedback"></div>
     </div>
     <div class="quiz-actions" id="q-actions" style="display:none;">
@@ -750,12 +794,12 @@ function renderQuestion(){
 
 function answerQ(i){
   if(moduleQuizAnswered)return;moduleQuizAnswered=true;
-  const q=window.moduleQuestions[moduleCurrentQ],ok=i===q.correct;
+  const q=window.moduleQuestions[moduleCurrentQ],correctIdx=(typeof q._displayCorrect==='number'?q._displayCorrect:q.correct),ok=i===correctIdx;
   if(ok)moduleQuizCorrect++;
   document.getElementById('q-score').textContent=moduleQuizCorrect+' / 10 Doğru';
   document.querySelectorAll('.option-btn').forEach(b=>b.disabled=true);
   document.getElementById('opt-'+i).classList.add(ok?'correct':'wrong');
-  if(!ok)document.getElementById('opt-'+q.correct).classList.add('correct');
+  if(!ok)document.getElementById('opt-'+correctIdx).classList.add('correct');
   const fb=document.getElementById('feedback');
   fb.textContent=(ok?'✓ ':'✗ ')+(ok?q.fb.correct:q.fb.wrong);
   fb.className='feedback-box show '+(ok?'correct':'wrong');
@@ -777,7 +821,7 @@ function showResult(){
     </div>`;
 }
 
-function restartQuiz(){moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
+function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleCurrentQ=0;moduleQuizCorrect=0;document.getElementById('q-score').textContent='0 / 10 Doğru';renderQuestion();}
 
 window.moduleSceneFeedbacks=[
   {correct:false,text:"<strong style='color:var(--red)'>Bu yeterli değil.</strong> Ekran görüntüsü almak izleme açısından iyi ama birincil adım olmamalı. Platform şikayeti günler alabilir. Bu sürede saldırgan recovery bilgilerini değiştirip seni tamamen dışarı kilitler. Önce kendini harekete geçirmek zorundasın."},
