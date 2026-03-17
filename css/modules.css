@@ -303,11 +303,11 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
 
 
 /* TOAST */
-#toast-container{position:fixed;bottom:22px;right:22px;z-index:999;display:flex;flex-direction:column;gap:9px;}
-.toast{display:flex;align-items:center;gap:11px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;min-width:240px;animation:toastIn .35s ease;}
-@keyframes toastIn{from{transform:translateX(90px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+#toast-container{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none;}
+.toast{display:flex;align-items:center;gap:11px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;min-width:240px;max-width:min(92vw,360px);animation:toastIn .35s ease;pointer-events:auto;}
+@keyframes toastIn{from{transform:translateY(-18px);opacity:0;}to{transform:translateY(0);opacity:1;}}
 .toast.out{animation:toastOut .35s ease forwards;}
-@keyframes toastOut{to{transform:translateX(90px);opacity:0;}}
+@keyframes toastOut{to{transform:translateY(-18px);opacity:0;}}
 .toast-icon{font-size:1.1rem;}
 .toast-title{font-weight:600;color:#fff;font-size:.87rem;}
 .toast-sub{color:var(--text-dim);font-size:.80rem;}
