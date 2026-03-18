@@ -1,4 +1,14 @@
-﻿// ══════════════════════════════════════════════════════════════
+﻿// XP artışını sadece ilk tamamlamada tetikleyen kontrol
+function canEarnXPForModule(moduleNum) {
+  try {
+    const session = localStorage.getItem('byte_session');
+    const users = JSON.parse(localStorage.getItem('byte_users') || '{}');
+    if (!session || !users[session]) return false;
+    const doneModules = Array.isArray(users[session].completedModules) ? users[session].completedModules.map(Number) : [];
+    return !doneModules.includes(moduleNum);
+  } catch (e) { return false; }
+}
+// ══════════════════════════════════════════════════════════════
 // BYTE ACADEMY — MODÜLLER ORTAK JAVASCRIPT
 // Her modülün paylaştığı temel fonksiyonlar
 // ══════════════════════════════════════════════════════════════
@@ -180,6 +190,9 @@ function saveQuizResult(correctCount, totalCount) {
     const moduleNum = getCurrentModuleNumber();
     if (typeof moduleNum !== 'number') return;
 
+    // XP artışı sadece ilk tamamlamada
+    if (!canEarnXPForModule(moduleNum)) return;
+
     const safeTotal = Math.max(0, Number(totalCount) || 0);
     const safeCorrect = Math.max(0, Math.min(safeTotal, Number(correctCount) || 0));
 
@@ -270,11 +283,22 @@ function buildAutoModuleNav() {
     card.setAttribute('tabindex', '0');
     card.innerHTML = '<div class="next-num">' + num + '</div><div class="next-name">' + name + '</div><div class="next-xp">' + xp + '</div>';
     card.onclick = function () {
+      // Rozet ve sonraki modül kartı: modül tamamlanmadan geçiş engellenir
+      const moduleNum = getCurrentModuleNumber();
+      if (typeof moduleNum === 'number' && !completedSteps.has(5)) {
+        showToast('warn', 'Modül tamamlanmadı', 'Tüm adımları bitirmeden sonraki modüle geçemezsin.');
+        return;
+      }
       goTo(target);
     };
     card.onkeydown = function (e) {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
+        const moduleNum = getCurrentModuleNumber();
+        if (typeof moduleNum === 'number' && !completedSteps.has(5)) {
+          showToast('warn', 'Modül tamamlanmadı', 'Tüm adımları bitirmeden sonraki modüle geçemezsin.');
+          return;
+        }
         goTo(target);
       }
     };
@@ -609,6 +633,11 @@ function normalizeModuleVideo() {
 // ADIM YÖNETİMİ
 // ──────────────────────────────────────────────────────────────
 function goStep(n) {
+  // Adım sıralama kontrolü: Önceki adım tamamlanmadan geçiş engellenir
+  if (n > 1 && !completedSteps.has(n - 1)) {
+    showToast('warn', 'Önceki adımı tamamla', 'Bu adıma geçmek için önceki adımı bitirmen gerekiyor.');
+    return;
+  }
   currentStep = n;
   const steps = document.querySelectorAll('[class*="step-"]');
   Array.from(document.querySelectorAll('[id^="step-btn-"]')).forEach(btn => {
@@ -616,15 +645,12 @@ function goStep(n) {
   });
   const activeStepBtn = document.getElementById('step-btn-' + n);
   if (activeStepBtn) activeStepBtn.classList.add('active');
-  
   // İçerik alanlarını gizle/göster
   Array.from(document.querySelectorAll('.lesson-panel')).forEach((el, idx) => {
     el.style.display = 'none';
   });
-  
   const stepEl = document.getElementById('panel-' + n);
   if (stepEl) stepEl.style.display = 'block';
-
   // Ensure quiz content is available when user enters step 3.
   if (n === 3) {
     const quizArea = document.getElementById('quiz-area');
@@ -632,7 +658,6 @@ function goStep(n) {
       renderQuestion();
     }
   }
-
   if (n === 5) {
     const moduleNum = getCurrentModuleNumber();
     if (typeof moduleNum === 'number') {
@@ -641,7 +666,6 @@ function goStep(n) {
     }
     buildAutoModuleNav();
   }
-  
   window.scrollTo(0, 0);
 }
 
@@ -655,9 +679,12 @@ function completeStep(n) {
   }
   completedSteps.add(n);
 
-  // Global policy: each module step is worth 50 XP.
-  const earned = 50;
-  addXP(earned, ['', 'Video Ders', 'Okuma', 'Quiz', 'Senaryo', 'Rozet'][n] + ' tamamlandı!');
+  // XP artışı sadece ilk tamamlamada
+  const moduleNum = getCurrentModuleNumber();
+  if (canEarnXPForModule(moduleNum)) {
+    const earned = 50;
+    addXP(earned, ['', 'Video Ders', 'Okuma', 'Quiz', 'Senaryo', 'Rozet'][n] + ' tamamlandı!');
+  }
 
   const dot = document.getElementById('dot-' + n);
   if (dot) {
@@ -668,6 +695,7 @@ function completeStep(n) {
 
   goStep(n + 1);
 }
+
 
 // ──────────────────────────────────────────────────────────────
 // VİDEO YÖNETİMİ
@@ -790,7 +818,11 @@ function answerQ(i) {
     // Global policy: +10 XP per correct quiz answer, once per question.
     if (!rewardedQuizQuestions.has(currentQ)) {
       rewardedQuizQuestions.add(currentQ);
-      addXP(10, 'Quiz sorusu doğru cevaplandı!');
+      // XP artışı sadece ilk tamamlamada
+      const moduleNum = getCurrentModuleNumber();
+      if (canEarnXPForModule(moduleNum)) {
+        addXP(10, 'Quiz sorusu doğru cevaplandı!');
+      }
     }
   }
   
@@ -868,20 +900,49 @@ function showResult() {
   const sumCorrect = document.getElementById('sum-correct');
   if (sumCorrect) sumCorrect.textContent = quizCorrect;
   
-  const passed = quizCorrect >= Math.ceil(quizQuestions.length * 0.7);
+  const MIN_CORRECT = 8;
+  const passed = quizCorrect >= MIN_CORRECT;
   saveQuizResult(quizCorrect, quizQuestions.length);
   const quizArea = document.getElementById('quiz-area');
   if (!quizArea) return;
-  
+
   quizArea.innerHTML = `
     <div class="question-card" style="text-align:center;padding:36px;">
-      <div style="font-size:3rem;margin-bottom:14px;">${passed ? '🏆' : '📚'}</div>
+      <div id="celebrate-icon" style="font-size:3.5rem;margin-bottom:14px;display:inline-block;">${passed ? '🏆' : '📚'}</div>
       <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed ? 'var(--green)' : 'var(--yellow)'};margin-bottom:8px;">${passed ? 'BAŞARILI!' : 'TEKRAR DENEYEBİLİRSİN'}</div>
-      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${quizCorrect} / ${quizQuestions.length} doğru · ${passed ? 'Senaryoya hazırsın.' : Math.ceil(quizQuestions.length * 0.7) + ' veya üzeri gerekli.'}</div>
-      <button class="btn btn-primary" onclick="completeStep(3)">Senaryoya Geç →</button>
+      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${quizCorrect} / ${quizQuestions.length} doğru · ${passed ? 'Senaryoya hazırsın.' : MIN_CORRECT + ' veya üzeri gerekli.'}</div>
+      <button class="btn btn-primary" id="btn-senaryo-gec">Senaryoya Geç →</button>
       ${!passed ? '<button class="btn btn-green" style="margin-left:10px;" onclick="restartQuiz()">Tekrar Dene</button>' : ''}
+      <div id="baraj-uyari" style="display:${passed ? 'none' : 'block'};color:#d00;font-weight:600;margin-top:18px;">Senaryoya geçmek için en az 8 doğru cevap gerekli.</div>
     </div>
   `;
+
+  // Kutlama ikonuna animasyon ekle
+  if (passed) {
+    setTimeout(() => {
+      const icon = document.getElementById('celebrate-icon');
+      if (icon) {
+        icon.style.animation = 'celebratePop 0.5s cubic-bezier(.42,1.2,.58,1), celebrateJumpSpin 1.2s 0.5s cubic-bezier(.42,1.2,.58,1)';
+      }
+    }, 120);
+    // Buton aktif, disabled özelliği yok; tıklama kontrolü eklenmiyor
+  } else {
+    // Baraj altında buton devre dışı ve uyarı gösteriliyor
+    setTimeout(function() {
+      const btn = document.getElementById('btn-senaryo-gec');
+      if (btn) {
+        btn.setAttribute('disabled', 'disabled');
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const uyari = document.getElementById('baraj-uyari');
+          if (uyari) {
+            uyari.style.display = 'block';
+            uyari.textContent = 'Senaryoya geçmek için en az 8 doğru cevap gerekli.';
+          }
+        });
+      }
+    }, 100);
+  }
 }
 
 function restartQuiz() {

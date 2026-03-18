@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDPR Rehberi — BYTE Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #181c26;
+      --surface: #1f2333;
+      --surface2: #252a3a;
+      --border: rgba(255,255,255,.1);
+      --border-hover: rgba(0,229,255,.35);
+      --cyan: #00d4f0;
+      --green: #00e87a;
+      --purple: #c490ff;
+      --orange: #ff9a20;
+      --yellow: #ffdd00;
+      --red: #ff5577;
+      --text: #eceef5;
+      --text-dim: #8e95b0;
+      --text-dimmer: #565d78;
+      --sidebar-w: 268px;
+      --topbar-h: 58px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15.5px;
+      line-height: 1.72;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--topbar-h);
+      background: rgba(24,28,38,.9);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -.5px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .logo span { color: var(--cyan); }
+
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+
+    .back-btn, .print-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .back-btn {
+      color: var(--text-dim);
+      background: transparent;
+      border: 1px solid var(--border);
+    }
+    .back-btn:hover { color: var(--text); border-color: var(--border-hover); }
+
+    .print-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--green));
+      color: #000;
+      border: none;
+      font-weight: 600;
+    }
+    .print-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* ─── LAYOUT ─── */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+      padding-top: var(--topbar-h);
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      position: fixed;
+      top: var(--topbar-h);
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+      border-right: 1px solid var(--border);
+      background: var(--surface);
+      padding: 28px 0 40px 0;
+      z-index: 50;
+      scrollbar-width: thin;
+      scrollbar-color: var(--surface2) transparent;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+    .sidebar-title {
+      font-family: 'Syne', sans-serif;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-dimmer);
+      padding: 0 22px 16px 22px;
+    }
+
+    .sidebar nav ul { list-style: none; }
+    .sidebar nav ul li { position: relative; }
+
+    .sidebar nav ul li a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 22px;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: .88rem;
+      font-weight: 400;
+      border-left: 2px solid transparent;
+      transition: all .18s;
+      position: relative;
+    }
+
+    .sidebar nav ul li a .nav-icon {
+      font-size: 1rem;
+      opacity: .7;
+      flex-shrink: 0;
+    }
+
+    .sidebar nav ul li a:hover,
+    .sidebar nav ul li a.active {
+      color: var(--text);
+      background: rgba(0,229,255,.05);
+      border-left-color: var(--cyan);
+    }
+
+    .sidebar nav ul li a.active .nav-icon { opacity: 1; }
+
+    .sidebar-divider {
+      margin: 14px 22px;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-badge {
+      margin-left: auto;
+      font-size: .7rem;
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: rgba(0,255,136,.12);
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ─── MAIN ─── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      min-width: 0;
+      padding: 52px clamp(24px, 5vw, 72px) 80px;
+      max-width: 900px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      margin-bottom: 64px;
+      position: relative;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 18px;
+      padding: 5px 14px;
+      background: rgba(0,229,255,.08);
+      border: 1px solid rgba(0,229,255,.2);
+      border-radius: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -.03em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      color: var(--text-dim);
+      max-width: 580px;
+      font-size: 1rem;
+      line-height: 1.75;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .hero-tag {
+      font-size: .76rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      background: var(--surface);
+    }
+
+    /* glow orbs */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -80px;
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(0,229,255,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ─── SECTION HEADINGS ─── */
+    .section {
+      margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp .55s ease forwards;
+    }
+
+    .section:nth-child(2)  { animation-delay: .05s; }
+    .section:nth-child(3)  { animation-delay: .1s; }
+    .section:nth-child(4)  { animation-delay: .15s; }
+    .section:nth-child(5)  { animation-delay: .2s; }
+    .section:nth-child(6)  { animation-delay: .25s; }
+    .section:nth-child(7)  { animation-delay: .3s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-heading .icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .icon-cyan  { background: rgba(0,229,255,.12); }
+    .icon-green { background: rgba(0,255,136,.12); }
+    .icon-purple { background: rgba(185,125,255,.12); }
+    .icon-orange { background: rgba(255,140,0,.12); }
+    .icon-yellow { background: rgba(255,214,0,.12); }
+    .icon-red    { background: rgba(255,77,109,.12); }
+
+    /* ─── CARDS ─── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      transition: border-color .2s, transform .2s;
+    }
+    .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .card ul { list-style: none; padding: 0; }
+    .card ul li {
+      padding: 5px 0;
+      color: var(--text-dim);
+      font-size: .875rem;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .card ul li::before {
+      content: '›';
+      color: var(--cyan);
+      flex-shrink: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .card.green-card .card-title { color: var(--green); }
+    .card.green-card ul li::before { color: var(--green); }
+    .card.green-card:hover { border-color: rgba(0,255,136,.3); }
+
+    /* ─── INFO BOXES ─── */
+    .info-box {
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: .9rem;
+      border: 1px solid transparent;
+      line-height: 1.7;
+    }
+    .info-box b { display: block; margin-bottom: 4px; font-weight: 600; }
+
+    .info-cyan   { background: rgba(0,229,255,.06); border-color: rgba(0,229,255,.18); color: #b8f4ff; }
+    .info-cyan b { color: var(--cyan); }
+    .info-green  { background: rgba(0,255,136,.06); border-color: rgba(0,255,136,.18); color: #b8ffe0; }
+    .info-green b { color: var(--green); }
+    .info-yellow { background: rgba(255,214,0,.06); border-color: rgba(255,214,0,.18); color: #fff5b8; }
+    .info-yellow b { color: var(--yellow); }
+    .info-orange { background: rgba(255,140,0,.07); border-color: rgba(255,140,0,.2); color: #ffe0b2; }
+    .info-orange b { color: var(--orange); }
+    .info-purple { background: rgba(185,125,255,.07); border-color: rgba(185,125,255,.2); color: #e8d5ff; }
+    .info-purple b { color: var(--purple); }
+
+    /* ─── NUMBERED LIST ─── */
+    .num-list { counter-reset: num; list-style: none; padding: 0; }
+    .num-list li {
+      counter-increment: num;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      color: var(--text-dim);
+      font-size: .9rem;
+    }
+    .num-list li:last-child { border-bottom: none; }
+    .num-list li::before {
+      content: counter(num, decimal-leading-zero);
+      flex-shrink: 0;
+      font-family: 'Syne', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--cyan);
+      background: rgba(0,229,255,.1);
+      border-radius: 6px;
+      padding: 2px 7px;
+      min-width: 34px;
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    /* ─── PLAIN UL ─── */
+    .plain-list { list-style: none; padding: 0; }
+    .plain-list li {
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,.04);
+      color: var(--text-dim);
+      font-size: .9rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .plain-list li:last-child { border-bottom: none; }
+    .plain-list li::before {
+      content: '—';
+      color: var(--text-dimmer);
+      flex-shrink: 0;
+    }
+
+    /* ─── TWO COL ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ─── HIGHLIGHT ROW ─── */
+    .highlight-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) { .highlight-row { grid-template-columns: 1fr; } }
+
+    .highlight-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: center;
+      transition: transform .2s, border-color .2s;
+    }
+    .highlight-item:hover { transform: translateY(-3px); border-color: rgba(0,229,255,.25); }
+    .highlight-item .hi-icon { font-size: 1.6rem; margin-bottom: 8px; }
+    .highlight-item .hi-label {
+      font-family: 'Syne', sans-serif;
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    /* ─── RIGHTS LIST ─── */
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .right-chip {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: .84rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      transition: all .18s;
+    }
+    .right-chip:hover { border-color: rgba(0,255,136,.3); color: var(--text); }
+    .right-chip .rc-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+
+    details.faq {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    details.faq[open] { border-color: rgba(0,229,255,.25); }
+
+    details.faq summary {
+      padding: 16px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: .92rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      list-style: none;
+      gap: 12px;
+    }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--cyan);
+      flex-shrink: 0;
+      transition: transform .2s;
+      line-height: 1;
+    }
+    details.faq[open] summary::after { transform: rotate(45deg); }
+
+    details.faq .faq-body {
+      padding: 0 20px 18px;
+      color: var(--text-dim);
+      font-size: .875rem;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    /* ─── QUIZ ─── */
+    .quiz-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .quiz-q {
+      margin-bottom: 24px;
+    }
+
+    .quiz-q-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+
+    .quiz-opt {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 18px;
+      cursor: pointer;
+      color: var(--text-dim);
+      font-size: .88rem;
+      transition: all .18s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .quiz-opt::before {
+      content: '';
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--text-dimmer);
+      flex-shrink: 0;
+      transition: all .18s;
+    }
+    .quiz-opt:hover { border-color: var(--cyan); color: var(--text); }
+    .quiz-opt.correct { border-color: var(--green); background: rgba(0,255,136,.08); color: #b8ffe0; }
+    .quiz-opt.correct::before { background: var(--green); border-color: var(--green); }
+    .quiz-opt.wrong { border-color: var(--red); background: rgba(255,77,109,.08); color: #ffb8c6; }
+    .quiz-opt.wrong::before { background: var(--red); border-color: var(--red); }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dimmer);
+      font-size: .82rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      align-items: center;
+    }
+    .page-footer a { color: var(--cyan); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    /* ─── SCROLL PROGRESS ─── */
+    .progress-bar {
+      position: fixed;
+      top: var(--topbar-h);
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      z-index: 200;
+      transition: width .1s linear;
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      .topbar, .sidebar, .progress-bar { display: none; }
+      .main { margin-left: 0; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 820px) {
+      :root { --sidebar-w: 0px; }
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); width: 260px; }
+      .main { margin-left: 0; padding: 32px 20px 60px; }
+      .menu-toggle { display: flex; }
+    }
+
+    .menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="index.html" class="logo">BYTE<span>ACADEMY</span></a>
+  <div class="topbar-right">
+    <button class="menu-toggle" id="menuToggle" aria-label="Menü">☰</button>
+    <a href="index.html" class="back-btn">← Ana Sayfa</a>
+    <button class="print-btn" onclick="window.print()">Yazdır</button>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">İçindekiler</div>
+    <nav>
+      <ul>
+        <li><a href="#gdpr-nedir" class="nav-link"><span class="nav-icon">🔒</span>GDPR Nedir?</a></li>
+        <li><a href="#temel-ilkeler" class="nav-link"><span class="nav-icon">📋</span>Temel İlkeler</a></li>
+        <li><a href="#teknik-onlemler" class="nav-link"><span class="nav-icon">⚙️</span>Teknik Önlemler</a></li>
+        <li><a href="#cihaz-guvenligi" class="nav-link"><span class="nav-icon">📱</span>Cihaz Güvenliği</a></li>
+        <li><a href="#sifre-2fa" class="nav-link"><span class="nav-icon">🔑</span>Şifreler & 2FA</a></li>
+        <li><a href="#bulut" class="nav-link"><span class="nav-icon">☁️</span>Bulut & USB</a></li>
+        <li><a href="#phishing" class="nav-link"><span class="nav-icon">🎣</span>Phishing</a></li>
+        <li><a href="#wifi-vpn" class="nav-link"><span class="nav-icon">📡</span>Wi-Fi & VPN</a></li>
+        <li><a href="#sosyal-medya" class="nav-link"><span class="nav-icon">💬</span>Sosyal Medya</a></li>
+        <li><a href="#yapay-zeka" class="nav-link"><span class="nav-icon">🤖</span>Yapay Zeka</a></li>
+        <hr class="sidebar-divider">
+        <li><a href="#veri-ihlali" class="nav-link"><span class="nav-icon">🚨</span>Veri İhlali & 72 Saat</a></li>
+        <li><a href="#cezalar" class="nav-link"><span class="nav-icon">💰</span>Cezalar & Yaptırımlar</a></li>
+        <li><a href="#cookie" class="nav-link"><span class="nav-icon">🍪</span>Çerez Yönetimi</a></li>
+        <li><a href="#cocuk-verisi" class="nav-link"><span class="nav-icon">👶</span>Çocuk Verileri</a></li>
+        <hr class="sidebar-divider">
+        <li><a href="#sss" class="nav-link"><span class="nav-icon">❓</span>SSS</a></li>
+        <li><a href="#quiz" class="nav-link"><span class="nav-icon">🧠</span>Mini Quiz <span class="sidebar-badge">yeni</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="section hero" id="gdpr-nedir">
+      <div class="hero-eyebrow">🔒 Veri Güvenliği Rehberi</div>
+      <h1>Dijital Veri Güvenliği<br>ve <span class="highlight">GDPR</span> Rehberi</h1>
+      <p class="hero-desc">
+        Kişisel verileri koruma, gizliliği güvence altına alma ve dijital dünyada güvenli hareket etme üzerine kapsamlı rehber.
+      </p>
+      <div class="hero-tags">
+        <span class="hero-tag">GDPR Madde 32</span>
+        <span class="hero-tag">KVKK Uyumu</span>
+        <span class="hero-tag">Teknik Önlemler</span>
+        <span class="hero-tag">Organizasyonel Önlemler</span>
+        <span class="hero-tag">2FA</span>
+        <span class="hero-tag">Şifreleme</span>
+        <span class="hero-tag">VPN</span>
+      </div>
+
+      <div class="info-box info-cyan" style="margin-top: 28px;">
+        <b>Sorumluluk (Accountability)</b>
+        Her veri işleyen kişi veya kurum, aldığı koruma tedbirlerini belgelendirmek zorundadır. Şeffaflık, sınırlı amaç, güncellik, güvenlik ve hesap verebilirlik temel ilkelerdir.
+      </div>
+    </section>
+
+    <!-- TEMEL İLKELER -->
+    <section class="section" id="temel-ilkeler">
+      <h2 class="section-heading">
+        <span class="icon icon-cyan">📋</span>
+        GDPR'nin Temel İlkeleri
+      </h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">⚖️ Veri İşlemenin 6 Yasal Dayanağı</div>
+          <ul>
+            <li>Açık Rıza</li>
+            <li>Sözleşme İfası</li>
+            <li>Yasal Zorunluluk</li>
+            <li>Kamu Yararı</li>
+            <li>Hayati Çıkarlar</li>
+            <li>Meşru Menfaat</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">🛡️ Tasarımda Mahremiyet</div>
+          <ul>
+            <li>Veri koruma, projeden başlangıçta standart olarak uygulanmalı</li>
+            <li>Veri işleme; şeffaf ve sınırlı amaçlı olmalı</li>
+            <li>Güncel, güvenli ve hesap verebilir yaklaşım</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="color: var(--text-dim); font-size: .88rem; margin-bottom: 16px;">Bireylere tanınan haklar:</p>
+      <div class="rights-grid">
+        <div class="right-chip"><span class="rc-dot"></span>Bilgilendirilme</div>
+        <div class="right-chip"><span class="rc-dot"></span>Erişim</div>
+        <div class="right-chip"><span class="rc-dot"></span>Düzeltme</div>
+        <div class="right-chip"><span class="rc-dot"></span>Silme (Unutulma)</div>
+        <div class="right-chip"><span class="rc-dot"></span>İşlemeyi Kısıtlama</div>
+        <div class="right-chip"><span class="rc-dot"></span>Veri Taşınabilirliği</div>
+        <div class="right-chip"><span class="rc-dot"></span>İtiraz Hakkı</div>
+      </div>
+    </section>
+
+    <!-- TEKNİK ÖNLEMLER -->
+    <section class="section" id="teknik-onlemler">
+      <h2 class="section-heading">
+        <span class="icon icon-green">⚙️</span>
+        Teknik & Organizasyonel Önlemler (TOM)
+      </h2>
+
+      <p style="color: var(--text-dim); font-size: .9rem; margin-bottom: 24px;">
+        GDPR Madde 32 uyarınca, veri sorumluları ve işleyenler kişisel verilerin güvenliğini sağlamak için uygun teknik ve organizasyonel önlemleri almakla yükümlüdür.
+      </p>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">🔧 Teknik Önlemler</div>
+          <ul>
+            <li>Güçlü şifreleme, 2FA/MFA kimlik doğrulama</li>
+            <li>Güncel yazılım, antivirüs, güvenlik duvarı</li>
+            <li>Cihaz, disk ve yedekleme verilerinin şifrelenmesi</li>
+            <li>Ağ güvenliği (VPN, güvenli Wi-Fi, firewall)</li>
+            <li>Erişim kontrolü ve log kayıtları</li>
+            <li>Güvenli veri aktarımı (HTTPS, E2EE, S/MIME)</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">🏢 Organizasyonel Önlemler</div>
+          <ul>
+            <li>Personel farkındalık ve güvenlik eğitimi</li>
+            <li>Gizlilik politikaları ve erişim yetkileri</li>
+            <li>Veri işleme sözleşmeleri</li>
+            <li>Yedekleme, imha ve acil durum planları</li>
+            <li>Periyodik risk analizi ve denetimler</li>
+            <li>Olay yönetimi ve ihlal bildirim prosedürleri</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-yellow">
+        <b>Unutma</b>
+        Gizlilik refleks, güvenlik alışkanlık haline gelmelidir. Veri sorumluluğu bireyde başlar.
+      </div>
+    </section>
+
+    <!-- CİHAZ GÜVENLİĞİ -->
+    <section class="section" id="cihaz-guvenligi">
+      <h2 class="section-heading">
+        <span class="icon icon-cyan">📱</span>
+        Telefon / Tablet / PC Güvenliği
+      </h2>
+
+      <ol class="num-list">
+        <li>Ekran kilidi: PIN, şifre, parmak izi veya yüz tanıma kullan.</li>
+        <li>Güncellemeler: Tüm yazılımlar güncel olmalı.</li>
+        <li>Uygulama kaynağı: Sadece resmi mağazalardan indir.</li>
+        <li>Veri minimizasyonu: Gereksiz uygulama yükleme.</li>
+        <li>İzinler: Gerekmedikçe kamera, mikrofon, konum erişimi verme.</li>
+        <li>Yedekleme: Düzenli yedek al.</li>
+        <li>Antivirüs ve güvenlik duvarı kullan.</li>
+        <li>Uzaktan silme özelliğini aktif et.</li>
+        <li>Günlük kullanımda standart kullanıcı hesabı kullan.</li>
+        <li>Otomatik kilit özelliğini aç.</li>
+        <li>Güvenli tarayıcılar kullan (Brave, DuckDuckGo, Firefox Klar).</li>
+        <li>Cihazı gözetimsiz bırakma.</li>
+        <li>Anormallikleri ciddiye al (pil, veri, ses, linkler).</li>
+        <li>Fabrika ayarlarına döndürme / aç-kapa yap.</li>
+      </ol>
+    </section>
+
+    <!-- ŞİFRELER & 2FA -->
+    <section class="section" id="sifre-2fa">
+      <h2 class="section-heading">
+        <span class="icon icon-yellow">🔑</span>
+        Şifreler & 2FA
+      </h2>
+
+      <ul class="plain-list">
+        <li>Güçlü ve farklı şifreler kullan, şifre yöneticisi tercih et.</li>
+        <li>İki Faktörlü Doğrulama (2FA) etkinleştir.</li>
+        <li>Şüpheli dosya ve linklere tıklama.</li>
+        <li>Disk şifreleme (BitLocker, FileVault) kullan.</li>
+        <li>Bilinmeyen USB bellekleri takma.</li>
+      </ul>
+
+      <div class="info-box info-cyan" style="margin-top: 18px;">
+        <b>Önerilen Şifre Yöneticileri</b>
+        Bitwarden, Apple Passwords, Proton Pass gibi araçlar önerilir.
+      </div>
+    </section>
+
+    <!-- BULUT & USB -->
+    <section class="section" id="bulut">
+      <h2 class="section-heading">
+        <span class="icon icon-green">☁️</span>
+        Bulut & USB
+      </h2>
+
+      <ul class="plain-list">
+        <li>AB/EFTA merkezli bulut sağlayıcıları tercih et.</li>
+        <li>Gereksiz dosyaları bulutta tutma, düzenli temizlik yap.</li>
+        <li>Hassas dosyaları yüklemeden önce şifrele (Cryptomator, VeraCrypt).</li>
+        <li>Paylaşım izinlerini sınırlı tut, süreli ve şifreli bağlantı kullan.</li>
+        <li>Ortak cihazlardan giriş yapma, çıkış yapmayı unutma.</li>
+        <li>USB ve harici diskleri şifrele, bilinmeyen USB'leri takma.</li>
+        <li>Verileri güvenli şekilde sil (Eraser, CCleaner, Secure Erase).</li>
+      </ul>
+    </section>
+
+    <!-- PHİSHİNG -->
+    <section class="section" id="phishing">
+      <h2 class="section-heading">
+        <span class="icon icon-red">🎣</span>
+        Phishing (Oltalama)
+      </h2>
+
+      <div class="highlight-row">
+        <div class="highlight-item">
+          <div class="hi-icon">📧</div>
+          <div class="hi-label">Göndereni Doğrula</div>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">⏰</div>
+          <div class="hi-label">Aceleci Mesajlara Dikkat</div>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">🔗</div>
+          <div class="hi-label">Linki Kontrol Et</div>
+        </div>
+      </div>
+
+      <ul class="plain-list">
+        <li>Gönderen adresine dikkat et.</li>
+        <li>Acele ettiren mesajlara şüpheyle yaklaş.</li>
+        <li>Linke tıklamadan önce adresi kontrol et.</li>
+        <li>Dosya eklerini açmadan önce emin ol.</li>
+        <li>2FA kullan, cihazında güncel antivirüs bulunsun.</li>
+        <li>Şüpheli durumda şifreni değiştir, kuruma bildir.</li>
+      </ul>
+    </section>
+
+    <!-- WI-FI & VPN -->
+    <section class="section" id="wifi-vpn">
+      <h2 class="section-heading">
+        <span class="icon icon-purple">📡</span>
+        Wi-Fi & VPN
+      </h2>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">⚠️ Açık Wi-Fi Tehlikeleri</div>
+          <ul>
+            <li>Veri hırsızlığı ve sahte ağlar</li>
+            <li>Kötü amaçlı yazılım bulaşması</li>
+            <li>Konum ve kimlik takibi</li>
+            <li>Halka açık ağlarda VPN kullan</li>
+            <li>Sadece HTTPS sitelere gir</li>
+            <li>Misafir ağı oluştur, şifreni değiştir</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">🛡️ VPN Nedir?</div>
+          <ul>
+            <li>İnternet bağlantını şifreler</li>
+            <li>Gizliliğini artırır</li>
+            <li>Ücretsiz VPN'ler veri toplayabilir</li>
+            <li>ProtonVPN önerilir</li>
+            <li>NordVPN veya ExpressVPN güvenilir alternatif</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOSYAL MEDYA -->
+    <section class="section" id="sosyal-medya">
+      <h2 class="section-heading">
+        <span class="icon icon-cyan">💬</span>
+        Sosyal Medya Güvenliği
+      </h2>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">👤 Bireysel</div>
+          <ul>
+            <li>Gizlilik ayarlarını gözden geçir</li>
+            <li>Kişisel bilgi paylaşımını sınırla</li>
+            <li>Her hesap için farklı şifre ve 2FA</li>
+            <li>Phishing mesajlarına dikkat et</li>
+            <li>Etiket ve fotoğraf kontrolü yap</li>
+            <li>Tanımadığın kişilerle bağlantı kurma</li>
+            <li>Bağlı uygulamaları düzenli kontrol et</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">🏢 Kurumlar İçin</div>
+          <ul>
+            <li>Resmî hesap yönetimi</li>
+            <li>Şifre politikası uygula</li>
+            <li>İçerik onay süreci oluştur</li>
+            <li>Kimlik doğrulama zorunlu kıl</li>
+            <li>Kriz planı hazırla</li>
+            <li>Personel eğitimi ver</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-orange">
+        <b>Altın Kural</b>
+        "Bunu herkes görse sorun olur mu?" diye sormadan hiçbir şeyi paylaşma.
+      </div>
+    </section>
+
+    <!-- YAPAY ZEKA -->
+    <section class="section" id="yapay-zeka">
+      <h2 class="section-heading">
+        <span class="icon icon-purple">🤖</span>
+        Yapay Zeka Kullanımı
+      </h2>
+
+      <ul class="plain-list">
+        <li>Yapay zekâya kişisel veri, hassas bilgi yükleme.</li>
+        <li>Erişim izinlerini, konum, kamera, mikrofon gibi ayarları kontrol et.</li>
+        <li>Çıktıların doğruluğunu sorgula, özel bilgileri paylaşma.</li>
+        <li>Etik ilkelere, veri güvenliğine ve mahremiyete dikkat et.</li>
+      </ul>
+
+      <div class="info-box info-purple">
+        <b>Gizlilik Refleks, Güvenlik Alışkanlık Olmalı</b>
+        "Kontrol bende" anlayışıyla hareket et. Yapay zeka araçlarını kullanırken veri mahremiyetini ön planda tut.
+      </div>
+    </section>
+
+    <!-- VERİ İHLALİ -->
+    <section class="section" id="veri-ihlali">
+      <h2 class="section-heading">
+        <span class="icon icon-red">🚨</span>
+        Veri İhlali & 72 Saat Kuralı
+      </h2>
+
+      <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:22px;">
+        GDPR Madde 33–34 kapsamında, kişisel veri ihlali yaşandığında hem denetim otoritesine hem de etkilenen bireylere belirli süreler içinde bildirim yapılması zorunludur.
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">⏱️ 72 Saat Kuralı</div>
+          <ul>
+            <li>İhlal fark edildiği andan itibaren <b style="color:var(--cyan)">72 saat</b> içinde denetim otoritesine bildirim yapılmalı</li>
+            <li>Bildirim yapılamamışsa gecikmesinin gerekçesi sunulmalı</li>
+            <li>Türkiye'de KVKK'ya da 72 saat içinde bildirim gerekiyor</li>
+            <li>İhlal kayıt altına alınmalı (Madde 33/5)</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">👤 Bireylere Bildirim</div>
+          <ul>
+            <li>İhlal bireyleri "yüksek risk" altına sokuyorsa <b style="color:var(--green)">gecikmeksizin</b> bildirim</li>
+            <li>Açık, sade dille yazılmış iletişim</li>
+            <li>İhlalın niteliği ve olası sonuçları açıklanmalı</li>
+            <li>Alınan önlemler ve başvuru hakları belirtilmeli</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="two-col" style="margin-top:16px;">
+        <div class="card">
+          <div class="card-title">📋 Bildirimde Bulunması Gerekenler</div>
+          <ul>
+            <li>İhlalin niteliği ve kapsamı</li>
+            <li>Etkilenen veri kategorileri ve kişi sayısı</li>
+            <li>Olası sonuçlar</li>
+            <li>Alınan / alınacak önlemler</li>
+            <li>Veri Koruma Görevlisi (DPO) iletişim bilgisi</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title">🔍 İhlal Örnekleri</div>
+          <ul>
+            <li>Yetkisiz kişinin sisteme erişimi</li>
+            <li>Şifreli olmayan cihazın çalınması</li>
+            <li>Yanlış kişiye e-posta gönderilmesi</li>
+            <li>Fidye yazılımı (ransomware) saldırısı</li>
+            <li>Veri tabanının yanlışlıkla silinmesi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-cyan" style="margin-top:18px;">
+        <b>DPO (Data Protection Officer) — Veri Koruma Görevlisi</b>
+        Belirli kuruluşlar için DPO atanması zorunludur: kamu kurumları, büyük ölçekli veri işleyenler ve özel kategori veri işleyenler. DPO, ihlal süreçlerini yönetir ve denetim otoritesiyle irtibat noktasıdır.
+      </div>
+    </section>
+
+    <!-- CEZALAR -->
+    <section class="section" id="cezalar">
+      <h2 class="section-heading">
+        <span class="icon icon-red">💰</span>
+        Cezalar & Yaptırımlar
+      </h2>
+
+      <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:22px;">
+        GDPR, tarihte uygulamaya giren en ağır veri koruma yaptırım rejimlerinden birini içermektedir. Cezalar yalnızca büyük şirketler için değil, her ölçekteki kuruluş için geçerlidir.
+      </p>
+
+      <div class="two-col">
+        <div class="card" style="border-color:rgba(255,85,119,.25);">
+          <div class="card-title" style="color:var(--red);">🔴 Üst Seviye Ceza — Madde 83/5</div>
+          <ul>
+            <li>Yıllık küresel ciron <b style="color:var(--red)">%4'ü</b> veya <b style="color:var(--red)">20 milyon €</b> (hangisi yüksekse)</li>
+            <li>Veri işlemenin temel ilkelerinin ihlali</li>
+            <li>Veri sahibi haklarının engellenmesi</li>
+            <li>Uluslararası veri transferi ihlalleri</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(255,157,32,.25);">
+          <div class="card-title" style="color:var(--orange);">🟠 Alt Seviye Ceza — Madde 83/4</div>
+          <ul>
+            <li>Yıllık küresel ciron <b style="color:var(--orange)">%2'si</b> veya <b style="color:var(--orange)">10 milyon €</b></li>
+            <li>72 saat bildirimi yapılmaması</li>
+            <li>Veri güvenliği eksiklikleri</li>
+            <li>DPO atanmaması</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card-grid" style="margin-top:16px;">
+        <div class="card">
+          <div class="card-title">⚖️ Gerçek Dünyadan Örnekler</div>
+          <ul>
+            <li><b style="color:var(--text)">Meta</b> — 1,2 milyar € (2023, veri transferi)</li>
+            <li><b style="color:var(--text)">Amazon</b> — 746 milyon € (2021, reklam)</li>
+            <li><b style="color:var(--text)">WhatsApp</b> — 225 milyon € (2021, şeffaflık)</li>
+            <li><b style="color:var(--text)">Google</b> — 50 milyon € (2019, rıza)</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">✅ Türkiye — KVKK Yaptırımları</div>
+          <ul>
+            <li>İdari para cezası: 47.000 — 9,4 milyon ₺</li>
+            <li>Veri ihlali bildirimi zorunlu (72 saat)</li>
+            <li>Kabahat niteliğinde suçlar</li>
+            <li>Şikâyet için <a href="https://www.kvkk.gov.tr" style="color:var(--green)">kvkk.gov.tr</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-yellow" style="margin-top:18px;">
+        <b>Bilinmesi Gereken</b>
+        Ceza miktarı belirlenirken ihlalin kasıtlı olup olmadığı, alınan önlemler, etkilenen kişi sayısı ve kurumun iş birliği dikkate alınır. Erken bildirim ve iş birliği cezayı azaltabilir.
+      </div>
+    </section>
+
+    <!-- ÇEREZ YÖNETİMİ -->
+    <section class="section" id="cookie">
+      <h2 class="section-heading">
+        <span class="icon icon-orange">🍪</span>
+        Çerez (Cookie) Yönetimi
+      </h2>
+
+      <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:22px;">
+        Çerezler, kullanıcının cihazına yerleştirilen küçük veri dosyalarıdır. GDPR kapsamında zorunlu olmayan çerezler için kullanıcının <b style="color:var(--text)">önceden açık rızası</b> alınmalıdır.
+      </p>
+
+      <div class="highlight-row" style="grid-template-columns:repeat(4,1fr);">
+        <div class="highlight-item">
+          <div class="hi-icon">✅</div>
+          <div class="hi-label">Zorunlu</div>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">📊</div>
+          <div class="hi-label">Analitik</div>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">🎯</div>
+          <div class="hi-label">Pazarlama</div>
+        </div>
+        <div class="highlight-item">
+          <div class="hi-icon">⚙️</div>
+          <div class="hi-label">Tercih</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">📌 Çerez Kategorileri</div>
+          <ul>
+            <li><b style="color:var(--green)">Zorunlu:</b> Oturum açma, alışveriş sepeti — rıza gerekmez</li>
+            <li><b style="color:var(--cyan)">Tercih:</b> Dil, tema tercihleri — rıza gerekir</li>
+            <li><b style="color:var(--yellow)">Analitik:</b> Google Analytics gibi araçlar — rıza gerekir</li>
+            <li><b style="color:var(--red)">Pazarlama:</b> Hedefli reklamlar — rıza gerekir</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">✔️ Geçerli Çerez Rızası Koşulları</div>
+          <ul>
+            <li>Sayfa yüklenmeden önce verilmeli</li>
+            <li>Her kategori için ayrı onay kutusu</li>
+            <li>Reddetmek en az kabul etmek kadar kolay olmalı</li>
+            <li>İstediği zaman geri alınabilmeli</li>
+            <li>"Siteyi kullanmaya devam ederek..." geçersiz!</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-orange" style="margin-top:18px;">
+        <b>Kullanıcı Olarak Ne Yapabilirsin?</b>
+        Tarayıcı ayarlarından çerezleri yönet, düzenli olarak temizle. Firefox, Brave ve Safari varsayılan olarak takip çerezlerini engeller. uBlock Origin veya Privacy Badger eklentilerini kullanabilirsin.
+      </div>
+    </section>
+
+    <!-- ÇOCUK VERİLERİ -->
+    <section class="section" id="cocuk-verisi">
+      <h2 class="section-heading">
+        <span class="icon icon-purple">👶</span>
+        Çocuk Verilerinin Korunması
+      </h2>
+
+      <p style="color:var(--text-dim);font-size:.9rem;margin-bottom:22px;">
+        GDPR, 16 yaş altı çocukların verilerinin işlenmesi için <b style="color:var(--text)">ebeveyn/vasi rızası</b> zorunlu kılar. Üye devletler bu sınırı 13'e kadar indirebilir (Türkiye'de KVKK kapsamında benzer korumalar geçerlidir).
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">🛡️ Temel Kurallar</div>
+          <ul>
+            <li>16 yaş altı için ebeveyn onayı zorunlu (ülkeye göre 13–16)</li>
+            <li>Rıza doğrulama mekanizmaları oluşturulmalı</li>
+            <li>Çocuklara yönelik dil sade ve anlaşılır olmalı</li>
+            <li>Profilleme ve hedefli reklam yasak</li>
+            <li>Konum verileri özellikle korunmalı</li>
+          </ul>
+        </div>
+        <div class="card green-card">
+          <div class="card-title">📱 Platformların Yükümlülükleri</div>
+          <ul>
+            <li>Yaş doğrulama sistemleri kurulmalı</li>
+            <li>Varsayılan gizlilik ayarları en yüksek koruma seviyesinde</li>
+            <li>Çocuk verilerini üçüncü taraflarla paylaşma</li>
+            <li>Veri minimizasyonu (sadece gerekli veri)</li>
+            <li>"Unutulma hakkı" öncelikli uygulanmalı</li>
+          </ul>
+        </div>
+        <div class="card" style="border-color:rgba(196,144,255,.2);">
+          <div class="card-title" style="color:var(--purple);">⚠️ Riskler & Dikkat Edilecekler</div>
+          <ul>
+            <li>Sosyal medya yaş sınırlarına dikkat (Instagram, TikTok: 13+)</li>
+            <li>Okul uygulamaları için veli bilgisi şart</li>
+            <li>Çocuk fotoğrafları & videolarını paylaşmadan önce düşün</li>
+            <li>Oyun içi mikro ödemeler & profil verileri</li>
+            <li>Akıllı oyuncak ve IoT cihazları riski</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="info-box info-purple" style="margin-top:18px;">
+        <b>Ebeveynler İçin Pratik İpuçları</b>
+        Çocuğunuzun kullandığı uygulamaların gizlilik politikalarını inceleyin. Aile yönetim araçlarını (Apple Screen Time, Google Family Link) kullanın. Veri haklarını birlikte öğrenin — dijital okuryazarlık, veri farkındalığıyla başlar.
+      </div>
+    </section>
+
+    <!-- SSS -->
+    <section class="section" id="sss">
+      <h2 class="section-heading">
+        <span class="icon icon-green">❓</span>
+        Sıkça Sorulan Sorular
+      </h2>
+
+      <div class="faq-list">
+        <details class="faq">
+          <summary>GDPR sadece AB vatandaşlarını mı korur?</summary>
+          <div class="faq-body">Evet, ancak AB'de hizmet sunan tüm şirketler için geçerlidir. Türkiye'de de KVKK ile benzer koruma sağlanır.</div>
+        </details>
+        <details class="faq">
+          <summary>Kişisel verilerim ihlal edilirse ne yapmalıyım?</summary>
+          <div class="faq-body">İlgili kuruma başvurabilir, KVKK veya GDPR kapsamında hakkınızı arayabilirsiniz. İhlal bildirimi için 72 saat kuralı geçerlidir.</div>
+        </details>
+        <details class="faq">
+          <summary>Şirketler verilerimi ne kadar süre saklayabilir?</summary>
+          <div class="faq-body">Yasal zorunluluklar ve işleme amacı sona erdiğinde veriler silinmeli veya anonimleştirilmelidir. "Unutulma hakkı" talep edilebilir.</div>
+        </details>
+        <details class="faq">
+          <summary>VPN kullanmak yasal mı?</summary>
+          <div class="faq-body">VPN kullanmak Türkiye'de ve Almanya'da yasak değildir. Ancak yasa dışı eylemler için kullanmak suçtur.</div>
+        </details>
+        <details class="faq">
+          <summary>Şifrelerim sızarsa ne yapmalıyım?</summary>
+          <div class="faq-body">Hemen şifreni değiştir, 2FA etkinleştir, ilgili platforma bildir ve gerekirse hesabı geçici olarak kapat.</div>
+        </details>
+        <details class="faq">
+          <summary>Bulut servislerinde veri güvenliği nasıl sağlanır?</summary>
+          <div class="faq-body">AB/EFTA merkezli sağlayıcıları tercih et, dosyaları yüklemeden önce şifrele, paylaşım izinlerini sınırla ve gereksiz dosyaları sil.</div>
+        </details>
+        <details class="faq">
+          <summary>Yapay zeka ile kişisel veri paylaşmak güvenli mi?</summary>
+          <div class="faq-body">Hayır, hassas veya kişisel verileri yapay zeka platformlarında paylaşmaktan kaçınmalısın. Çıktıların doğruluğunu sorgula.</div>
+        </details>
+        <details class="faq">
+          <summary>Phishing saldırısına uğradım, ne yapmalıyım?</summary>
+          <div class="faq-body">Şüpheli mesajı açma, şifreni değiştir, 2FA etkinleştir, antivirüs ile cihazı tara ve kuruma bildir.</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- QUİZ -->
+    <section class="section" id="quiz">
+      <h2 class="section-heading">
+        <span class="icon icon-cyan">🧠</span>
+        Mini Quiz
+      </h2>
+
+      <div class="quiz-wrapper">
+        <div class="quiz-q">
+          <div class="quiz-q-title">1. GDPR'ın temel amacı nedir?</div>
+          <div class="quiz-options">
+            <div class="quiz-opt" onclick="answer(this, true)">Kişisel verilerin korunması</div>
+            <div class="quiz-opt" onclick="answer(this, false)">Reklam göndermek</div>
+            <div class="quiz-opt" onclick="answer(this, false)">Şirketlerin veri toplamasını kolaylaştırmak</div>
+          </div>
+        </div>
+        <div class="quiz-q">
+          <div class="quiz-q-title">2. Unutulma hakkı nedir?</div>
+          <div class="quiz-options">
+            <div class="quiz-opt" onclick="answer(this, true)">Kişisel verilerin silinmesini talep etme hakkı</div>
+            <div class="quiz-opt" onclick="answer(this, false)">Verilerin paylaşılması</div>
+            <div class="quiz-opt" onclick="answer(this, false)">Verilerin yedeklenmesi</div>
+          </div>
+        </div>
+        <div class="quiz-q">
+          <div class="quiz-q-title">3. Phishing saldırısında ne yapılmamalıdır?</div>
+          <div class="quiz-options">
+            <div class="quiz-opt" onclick="answer(this, false)">Gönderen adresini doğrulamak</div>
+            <div class="quiz-opt" onclick="answer(this, true)">Bilinmeyen linke tıklamak</div>
+            <div class="quiz-opt" onclick="answer(this, false)">Kuruma bildirmek</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="page-footer">
+      <span>Daha fazla bilgi için:</span>
+      <a href="https://www.kvkk.gov.tr/" target="_blank">KVKK →</a>
+      <a href="https://gdpr-info.eu/" target="_blank">GDPR Info →</a>
+      <a href="https://www.bsi.bund.de/" target="_blank">BSI →</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // ─ Progress bar
+  window.addEventListener('scroll', () => {
+    const el = document.documentElement;
+    const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  });
+
+  // ─ Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (active) {
+          active.classList.add('active');
+          active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ─ Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  document.getElementById('menuToggle').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!sidebar.contains(e.target) && !document.getElementById('menuToggle').contains(e.target)) {
+      sidebar.classList.remove('open');
+    }
+  });
+
+  // ─ Quiz
+  function answer(el, isCorrect) {
+    const group = el.closest('.quiz-options');
+    if (group.dataset.answered) return;
+    group.dataset.answered = '1';
+    if (isCorrect) {
+      el.classList.add('correct');
+    } else {
+      el.classList.add('wrong');
+      group.querySelectorAll('.quiz-opt').forEach(opt => {
+        if (opt !== el) {
+          // find the correct one
+          opt.style.cursor = 'default';
+        }
+      });
+    }
+  }
+</script>
+</body>
+</html>
