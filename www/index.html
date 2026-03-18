@@ -301,15 +301,7 @@ Gerçek senaryolar, quizler ve görevlerle dijital güvenlik uzmanı ol.. Sertif
   </div>
 
   <div class="dash-body">
-    <!-- ICON SIDEBAR -->
-    <div class="dash-side">
-      <div class="side-icon active" title="Dashboard">🏠</div>
-      <div class="side-icon" title="Rozetler">🏅</div>
-      <div class="side-icon" title="Sertifika">🎓</div>
-      <div class="side-icon" title="Hızlı Rehber" onclick="window.location.href='rehber.html'" style="cursor:pointer;">🛡️</div>
-      <div class="side-divider"></div>
-      <div class="side-icon" title="Ayarlar">⚙️</div>
-    </div>
+    <!-- ICON SIDEBAR KALDIRILDI -->
 
     <!-- MAIN DASHBOARD -->
     <div class="dash-main">
@@ -328,36 +320,62 @@ Gerçek senaryolar, quizler ve görevlerle dijital güvenlik uzmanı ol.. Sertif
             <div class="level-num" id="dash-level">Lv.3</div>
             <div class="level-label">SEVİYE</div>
           </div>
-          <div class="streak-badge">
-            <div class="streak-num">🔥 2</div>
-            <div class="level-label" style="color:var(--text-dim)">GÜN</div>
+          <div class="badge-highlight">
+            <div class="badge-count" id="sc-badges">0</div>
+            <div class="badge-label">ROZET</div>
           </div>
         </div>
       </div>
 
       <!-- STATS -->
       <!-- HIZLI REHBER BANNER -->
-      <div id="quick-guide-banner" onclick="window.location.href='rehber.html'" style="background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,229,255,.04));border:1px solid rgba(0,255,136,.2);border-radius:14px;padding:16px 22px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='rgba(0,255,136,.4)'" onmouseout="this.style.borderColor='rgba(0,255,136,.2)'">
-        <div style="display:flex;align-items:center;gap:14px;">
-          <div style="font-size:2rem;">🛡️</div>
-          <div>
-            <div style="font-family:'Orbitron',sans-serif;font-size:.7rem;color:var(--green);letter-spacing:2px;margin-bottom:4px;">HIZLI GÜVENLİK REHBERİ</div>
-            <div style="font-size:.82rem;color:var(--text);">Telefon, bilgisayar ve tablet ayarlarını şimdi güvenli hale getir</div>
-            <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
-              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green);">🤖 Android</span>
-              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);">🍎 iPhone</span>
-              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,214,0,.08);border:1px solid rgba(255,214,0,.2);color:var(--yellow);">🪟 Windows</span>
-              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);color:var(--purple);">🍏 Mac</span>
-              <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);color:var(--orange);">📱 Tablet</span>
+
+      <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 20px;">
+        <!-- Hızlı Güvenlik Rehberi -->
+        <div id="quick-guide-banner" onclick="window.location.href='rehber.html'" style="flex:1 1 320px; min-width:280px; background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,229,255,.04));border:1px solid rgba(0,255,136,.2);border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='rgba(0,255,136,.4)'" onmouseout="this.style.borderColor='rgba(0,255,136,.2)'">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:2rem;">🛡️</div>
+            <div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:.7rem;color:var(--green);letter-spacing:2px;margin-bottom:4px;">HIZLI GÜVENLİK REHBERİ</div>
+              <div style="font-size:.82rem;color:var(--text);">Telefon, bilgisayar ve tablet ayarlarını şimdi güvenli hale getir</div>
+              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green);">🤖 Android</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);">🍎 iPhone</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,214,0,.08);border:1px solid rgba(255,214,0,.2);color:var(--yellow);">🪟 Windows</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.2);color:var(--purple);">🍏 Mac</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);color:var(--orange);">📱 Tablet</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div id="quick-guide-meta" style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-          <div style="text-align:right;">
-            <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--green);">20 KONTROL</div>
-            <div style="font-size:.7rem;color:var(--text-dim);">Adım adım ayar rehberi</div>
+          <div id="quick-guide-meta" style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+            <div style="text-align:right;">
+              <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--green);">20 KONTROL</div>
+              <div style="font-size:.7rem;color:var(--text-dim);">Adım adım ayar rehberi</div>
+            </div>
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">→</div>
           </div>
-          <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">→</div>
+        </div>
+        <!-- GDPR Rehberi Bannerı -->
+        <div id="gdpr-guide-banner" onclick="window.location.href='gdpr.html'" style="flex:1 1 320px; min-width:280px; background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(0,255,136,.04));border:1px solid rgba(0,229,255,.2);border-radius:14px;padding:16px 22px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='rgba(0,229,255,.4)'" onmouseout="this.style.borderColor='rgba(0,229,255,.2)'">
+          <div style="display:flex;align-items:center;gap:14px;">
+            <div style="font-size:2rem;">🔒</div>
+            <div>
+              <div style="font-family:'Orbitron',sans-serif;font-size:.7rem;color:var(--cyan);letter-spacing:2px;margin-bottom:4px;">GDPR REHBERİ</div>
+              <div style="font-size:.82rem;color:var(--text);">Kişisel verilerin korunması ve dijital dünyada gizlilik için pratik ipuçları</div>
+              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);">Veri Hakları</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,214,0,.08);border:1px solid rgba(255,214,0,.2);color:var(--yellow);">Gizlilik</span>
+                <span style="font-size:.65rem;padding:2px 8px;border-radius:10px;background:rgba(255,140,0,.08);border:1px solid rgba(255,140,0,.2);color:var(--orange);">SSS</span>
+              </div>
+            </div>
+          </div>
+          <div id="gdpr-guide-meta" style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+            <div style="text-align:right;">
+              <div style="font-family:'Orbitron',sans-serif;font-size:.65rem;color:var(--cyan);">GDPR</div>
+              <div style="font-size:.7rem;color:var(--text-dim);">Kişisel veri rehberi</div>
+            </div>
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">→</div>
+          </div>
         </div>
       </div>
 
@@ -431,6 +449,8 @@ Gerçek senaryolar, quizler ve görevlerle dijital güvenlik uzmanı ol.. Sertif
     </div>
   </div>
 </div>
+
+
 
 <!-- IMAGE ZOOM MODAL -->
 <div id="image-zoom-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);align-items:center;justify-content:center;">

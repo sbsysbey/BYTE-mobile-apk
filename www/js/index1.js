@@ -154,8 +154,22 @@ function loadDashboard(user) {
   // Topbar & header
   document.getElementById('dash-username').textContent = user;
   document.getElementById('ws-greeting').textContent = 'Hoş geldin, ' + user + '! 👋';
-  document.getElementById('cert-name').textContent = user;
-  document.getElementById('dash-level').textContent = 'Lv.' + (u.level || 1);
+    document.getElementById('cert-name').textContent = user;
+    // Level: tamamlanan modül sayısı kadar
+    document.getElementById('dash-level').textContent = 'Lv.' + doneCount;
+
+    // Dinamik dashboard mesajı
+    const wsSubEl = document.querySelector('.ws-sub');
+    let nextModule = MODULES.find(m => !done.includes(m.n));
+    let msg = '';
+    if (doneCount === 0) {
+      msg = 'Henüz hiç modül tamamlamadın. Hadi ilk modüle başla ve ilk rozetini kazan!';
+    } else if (!nextModule) {
+      msg = doneCount + ' modül tamamladın. Tüm rozetleri kazandın! Tebrikler!';
+    } else {
+      msg = doneCount + ' modül tamamladın. Harika gidiyorsun! Modül ' + nextModule.n + ' seni bekliyor — ' + nextModule.name + ' dünyasına hazır mısın?';
+    }
+    if (wsSubEl) wsSubEl.textContent = msg;
 
   // XP
   document.getElementById('dash-xp').textContent = earnedXP;

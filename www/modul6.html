@@ -43,10 +43,16 @@
 
 /* BULUT KARŞILAŞTIRMA */
 .cloud-compare{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:.84rem;}
-.cloud-compare th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1px;color:var(--text-dim);}
+.cloud-compare th{background:var(--bg-panel);border:1px solid var(--border);padding:10px 14px;text-align:left;font-family:'Orbitron',sans-serif;font-size:.70rem;letter-spacing:1px;color:#eef5ff;}
+.cloud-compare th:first-child{background:#0b2242;color:#f3f7ff;}
+.cloud-compare th:nth-child(2){background:#226fce;color:#f3f8ff;}
+.cloud-compare th:nth-child(3){background:#157dca;color:#f3f8ff;}
+.cloud-compare th:nth-child(4){background:#5a5a5a;color:#f7f7f7;}
+.cloud-compare th:nth-child(5){background:#5b3bd7;color:#f4eeff;}
 .cloud-compare td{border:1px solid var(--border);padding:10px 14px;color:var(--text-dim);vertical-align:top;line-height:1.5;}
 .cloud-compare tr:hover td{background:rgba(255,255,255,.02);}
 .cloud-compare td:first-child{color:var(--text);font-weight:600;}
+.cloud-compare-wrap{overflow-x:auto;margin:12px 0 20px;border:1px solid var(--border);border-radius:12px;}
 .c-apple-adp{color:var(--green);}
 .c-apple{color:var(--cyan);}
 .c-google{color:var(--yellow);}
@@ -211,8 +217,8 @@
 
     <!-- PANEL 1: VIDEO -->
     <div class="lesson-panel active" id="panel-1">
-      <div class="video-player">
-        <div class="video-screen">
+      <div class="video-player" style="max-width:100vw;width:100%;padding:0;margin:0 auto;">
+        <div class="video-screen" style="width:100%;max-width:100vw;height:auto;box-sizing:border-box;padding:0;margin:0 auto;">
           <div class="vs-label">BYTE ACADEMY · MODÜL 06</div>
           <div class="vs-title">VERİ GİZLİLİĞİ & BULUT GÜVENLİĞİ</div>
           <div class="vs-sub">Uygulama izinleri · iCloud vs Google Drive · GDPR hakların · Drive hijyeni</div>
@@ -224,13 +230,33 @@
             <div class="ch-pill">⚖️ GDPR Hakların</div>
           </div>
         </div>
-        <div class="video-controls">
+        <div class="video-controls" style="width:100%;max-width:100vw;">
           <button class="ctrl-btn primary" onclick="startVideo()">▶ Başlat</button>
           <div class="progress-track"><div class="progress-fill" id="vprog"></div></div>
           <span class="vtime" id="vtime">0:00 / 9:45</span>
           <button class="ctrl-btn" onclick="skipVideo()">Atla →</button>
         </div>
       </div>
+      <style>
+        @media (max-width: 600px) {
+          .video-player, .video-screen, .video-controls {
+            width: 100vw !important;
+            max-width: 100vw !important;
+            padding: 0 !important;
+            margin: 0 auto !important;
+          }
+          .vs-title, .vs-label, .vs-sub {
+            font-size: 1rem !important;
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+          }
+          .play-big {
+            font-size: 2.2rem !important;
+            width: 60px !important;
+            height: 60px !important;
+          }
+        }
+      </style>
       <div class="key-points">
         <div class="kp-head"><span>🎯</span><span class="kp-title">VİDEODAN ANAHTAR NOKTALAR</span></div>
         <ul class="kp-list">
@@ -296,6 +322,78 @@
           <div class="alert-info">
             <span>🔬</span>
             <div>Aşağıdaki karşılaştırma teknik olarak doğrulanmış bilgilere dayanmaktadır. Temel kriter: verilerine şirketin kendisi erişebiliyor mu?</div>
+          </div>
+
+          <div class="cloud-compare-wrap">
+            <table class="cloud-compare">
+              <thead>
+                <tr>
+                  <th>Kriter</th>
+                  <th>Google Drive</th>
+                  <th>OneDrive</th>
+                  <th>iCloud</th>
+                  <th>Proton Drive</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Ücretsiz Alan</td>
+                  <td>15 GB</td>
+                  <td>5 GB</td>
+                  <td>5 GB</td>
+                  <td>1 GB</td>
+                </tr>
+                <tr>
+                  <td>Şifreleme (aktarim)</td>
+                  <td>✅ TLS</td>
+                  <td>✅ TLS</td>
+                  <td>✅ TLS</td>
+                  <td>✅ TLS</td>
+                </tr>
+                <tr>
+                  <td>Uçtan Uca Şifr.</td>
+                  <td>❌ Yok</td>
+                  <td>❌ Yok</td>
+                  <td>🟡 Kısmi</td>
+                  <td>✅ Tam</td>
+                </tr>
+                <tr>
+                  <td>Veri Sunucusu</td>
+                  <td>ABD/AB</td>
+                  <td>ABD/AB</td>
+                  <td>ABD/AB</td>
+                  <td>İsviçre</td>
+                </tr>
+                <tr>
+                  <td>Reklam / Takip</td>
+                  <td>🟡 Evet</td>
+                  <td>🟡 Evet</td>
+                  <td>🟡 Kısmi</td>
+                  <td>✅ Yok</td>
+                </tr>
+                <tr>
+                  <td>GDPR Uyumu</td>
+                  <td>✅ Var</td>
+                  <td>✅ Var</td>
+                  <td>✅ Var</td>
+                  <td>✅ Var</td>
+                </tr>
+                <tr>
+                  <td>Açık Kaynak</td>
+                  <td>❌ Hayır</td>
+                  <td>❌ Hayır</td>
+                  <td>❌ Hayır</td>
+                  <td>✅ Evet</td>
+                </tr>
+                <tr>
+                  <td>Gizlilik Politikası</td>
+                  <td>Zayıf</td>
+                  <td>Orta</td>
+                  <td>Orta</td>
+                  <td>Güçlü</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <div class="cloud-cards">
@@ -387,36 +485,78 @@
             </div>
           </div>
 
-          <div class="section-head">⚖️ BÖLÜM 4 — GDPR / KVKK HAKLARIN</div>
-
-          <div class="gdpr-grid">
-            <div class="gdpr-card">
-              <div class="gd-icon">👁️</div>
-              <div class="gd-title">Bilgi Alma Hakkı</div>
-              <div class="gd-desc">Hangi verilerinin tutulduğunu sorabilirsin. Şirket AB genelinde 30 gün içinde cevaplamak zorunda. Google ve Meta'ya bu talebi gönderebilirsin.</div>
-            </div>
-            <div class="gdpr-card">
-              <div class="gd-icon">🗑️</div>
-              <div class="gd-title">Silme Hakkı (Unutulma)</div>
-              <div class="gd-desc">Hizmet almayı bıraktığında verilerinin silinmesini talep edebilirsin. Sosyal medya hesabını kapatırken "veri silme" talebini ayrıca gönder.</div>
-            </div>
-            <div class="gdpr-card">
-              <div class="gd-icon">✏️</div>
-              <div class="gd-title">Düzeltme Hakkı</div>
-              <div class="gd-desc">Hatalı verilerin düzeltilmesini isteyebilirsin. Yanlış adres, yanlış doğum tarihi — şirket düzeltmek zorunda.</div>
-            </div>
-            <div class="gdpr-card">
-              <div class="gd-icon">🚫</div>
-              <div class="gd-title">İtiraz Hakkı</div>
-              <div class="gd-desc">Verilerinin profilleme, otomatik karar verme veya reklam hedefleme için kullanılmasına itiraz edebilirsin.</div>
-            </div>
+          <div class="section-head">⚖️ BÖLÜM 4 — GDPR / KVKK HAKLARIN & REHBER</div>
+          <div class="gdpr-note" style="background:linear-gradient(90deg,rgba(0,229,255,.08),rgba(0,255,136,.08));border-left:4px solid var(--cyan);padding:18px 22px;margin-bottom:18px;border-radius:12px;">
+            <b>GDPR Nedir ve Neden Hayati Önem Taşır?</b><br>
+            Genel Veri Koruma Tüzüğü (GDPR), Avrupa Birliği tarafından bireylerin mahremiyetini korumak ve kişisel verilerin adil, şeffaf ve güvenli bir şekilde işlenmesini sağlamak amacıyla oluşturulmuş, dünya çapında bağlayıcılığı olan en katı veri koruma yasasıdır. 25 Mayıs 2018'de yürürlüğe girmiştir.<br>
+            <ul style="margin:8px 0 0 18px;">
+              <li><b>Ağır Yaptırımlar:</b> Kuralları ihlal eden kurumlara 20 milyon Euro'ya kadar veya yıllık küresel cirolarının %4'üne kadar ağır para cezaları kesilebilir.</li>
+              <li><b>Hesap Verebilirlik:</b> Her veri işleyen kişi veya kurum, aldığı koruma tedbirlerini belgelemek ve ispat etmekle yükümlüdür.</li>
+              <li><b>Küresel Standart:</b> GDPR, dünya çapında 160'tan fazla ülkenin benzer yasalar çıkarmasına öncülük ederek bir benchmark haline gelmiştir.</li>
+            </ul>
           </div>
-
-          <div class="gdpr-note">
-            <span>🇪🇺</span>
-            <div>AB vatandaşları bu hakları tüm dünya şirketlerine karşı kullanabilir. Türkiye'de KVKK benzer hakları güvence altına alır. Şikâyet için: <strong>ENISA, Hollanda APD (AP)</strong> veya ülkene göre yetkili kurum.</div>
+          <div class="gdpr-note" style="background:rgba(0,255,136,.07);border-left:4px solid var(--green);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Kapsam: Kimleri ve Neleri Kapsar?</b><br>
+            GDPR'ın kapsamı, coğrafi sınırların ötesine geçerek dünyadaki tüm veri işleme faaliyetlerini etkileyebilir:<br>
+            <ul style="margin:8px 0 0 18px;">
+              <li><b>Kişi ve Kurumlar:</b> AB vatandaşlarına mal veya hizmet sunan ya da onların verilerini işleyen, dünyanın neresinde olursa olsun tüm gerçek ve tüzel kişileri kapsar.</li>
+              <li><b>Kişisel Veri Tanımı:</b> Bir bireyi doğrudan veya dolaylı olarak tanımlayabilecek her türlü bilgi (isim, e-posta, konum, IP adresi, biyometrik veriler, dini inançlar vb.) kişisel veridir.</li>
+              <li><b>Roller:</b> Veri Sorumlusu (Controller) ve Veri İşleyen (Processor) olmak üzere iki temel rol tanımlanmıştır.</li>
+            </ul>
           </div>
-
+          <div class="gdpr-note" style="background:rgba(255,214,0,.07);border-left:4px solid var(--yellow);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>GDPR'ın 7 Temel İlkesi (Madde 5)</b><br>
+            <ul style="margin:8px 0 0 18px;">
+              <li>Hukuka Uygunluk, Adalet ve Şeffaflık</li>
+              <li>Amaçla Sınırlılık</li>
+              <li>Veri Minimizasyonu</li>
+              <li>Doğruluk</li>
+              <li>Saklama Sınırlaması</li>
+              <li>Bütünlük ve Gizlilik</li>
+              <li>Hesap Verebilirlik</li>
+            </ul>
+          </div>
+          <div class="gdpr-note" style="background:rgba(185,125,255,.07);border-left:4px solid var(--purple);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Veri İşlemenin Hukuki Dayanakları (Madde 6)</b><br>
+            <ul style="margin:8px 0 0 18px;">
+              <li>Açık Rıza</li>
+              <li>Sözleşmenin İfası</li>
+              <li>Yasal Yükümlülük</li>
+              <li>Hayati Çıkarlar</li>
+              <li>Kamu Yararı</li>
+              <li>Meşru Menfaat</li>
+            </ul>
+          </div>
+          <div class="gdpr-note" style="background:rgba(0,229,255,.07);border-left:4px solid var(--cyan);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Tasarım Gereği ve Varsayılan Veri Koruması (Madde 25)</b><br>
+            Kurumlar, bir ürünü veya sistemi tasarlarken mahremiyeti en baştan mimariye dahil etmelidir (Privacy by Design). Sistemlerin varsayılan ayarları kullanıcı müdahalesi gerektirmeden en yüksek gizlilik düzeyinde olmalıdır (Privacy by Default).
+          </div>
+          <div class="gdpr-note" style="background:rgba(255,140,0,.07);border-left:4px solid var(--orange);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Teknik ve Organizasyonel Önlemler (TOM - Madde 32)</b><br>
+            <ul style="margin:8px 0 0 18px;">
+              <li><b>Teknik:</b> Şifreleme (AES-256, BitLocker, FileVault, VeraCrypt), 2FA, güvenli iletişim (E2EE, VPN), güncel yazılım.</li>
+              <li><b>Organizasyonel:</b> Personel eğitimi, gizlilik politikaları, veri ihlal bildirimi (72 saat kuralı), DPIA.</li>
+            </ul>
+          </div>
+          <div class="gdpr-note" style="background:rgba(0,255,136,.07);border-left:4px solid var(--green);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Sosyal Medya ve Messenger Güvenliği</b><br>
+            <ul style="margin:8px 0 0 18px;">
+              <li>Sosyal medya platformları çok geniş kapsamlı veri toplar.</li>
+              <li>Messenger seçimi: Signal, Threema, TeleGuard gibi meta verileri de şifreleyen ve açık kaynak kodlu servisler önerilir.</li>
+              <li>Gizlilik ayarları periyodik olarak kontrol edilmeli, tanınmayan kişilerle bağlantı kurulmamalı.</li>
+            </ul>
+          </div>
+          <div class="gdpr-note" style="background:rgba(185,125,255,.07);border-left:4px solid var(--purple);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Yapay Zeka ve Gelecek: GDPR ve AI Act</b><br>
+            AB Yapay Zeka Yasası (AI Act), GDPR ile benzer şeffaflık ve hesap verebilirlik ilkelerini paylaşır ancak risk odaklı bir yaklaşım benimser. Yapay zeka araçları kullanılırken kişisel veya hassas verilerin paylaşılmaması bir refleks haline gelmelidir.
+          </div>
+          <div class="gdpr-note" style="background:rgba(255,214,0,.07);border-left:4px solid var(--yellow);padding:16px 20px;margin-bottom:18px;border-radius:12px;">
+            <b>Güncel Durum ve İstatistikler</b><br>
+            2025-2026 yılı verilerine göre, Avrupa'da veri ihlali bildirimlerinde %22'lik bir artış gözlenmiş ve günlük ortalama ihlal bildirimi sayısı 443'e ulaşmıştır. 2018'den bu yana kesilen toplam cezalar 7,1 milyar Euro'yu aşmıştır. Özellikle Meta (1,2 Milyar €) ve TikTok (530 Milyon €) gibi devlere kesilen cezalar, denetim makamlarının kararlılığını göstermektedir.
+          </div>
+          <div class="gdpr-note" style="background:linear-gradient(90deg,rgba(0,229,255,.08),rgba(0,255,136,.08));border-left:4px solid var(--cyan);padding:18px 22px;margin-bottom:18px;border-radius:12px;">
+            <b>Özetle:</b> GDPR, veri güvenliğini bir "eklenti" değil, tüm sistemlerin temel taşı olarak tanımlar. Hem bireyler hem de kurumlar için veriyi korumak bir fıtrat ve günlük alışkanlık haline gelmelidir.
+          </div>
           <button class="btn btn-primary" style="margin-top:24px" onclick="completeStep(2)">Okumayı Tamamladım →</button>
         </div>
 
