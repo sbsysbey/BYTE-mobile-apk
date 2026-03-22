@@ -809,7 +809,7 @@ function renderQuestion() {
   
   if (quizFill) quizFill.style.width = ((currentQ + 1) / quizQuestions.length * 100) + '%';
   if (qLabel) qLabel.textContent = 'Soru ' + (currentQ + 1) + ' / ' + quizQuestions.length;
-  if (qScore) qScore.textContent = quizCorrect + ' / ' + quizQuestions.length + ' Doğru';
+  if (qScore) qScore.textContent = quizCorrect + ' / ' + (currentQ) + ' Doğru';
   
   const L = ['A', 'B', 'C', 'D'];
   const quizArea = document.getElementById('quiz-area');
@@ -851,7 +851,7 @@ function answerQ(i) {
   }
   
   const qScore = document.getElementById('q-score');
-  if (qScore) qScore.textContent = quizCorrect + ' / ' + quizQuestions.length + ' Doğru';
+  if (qScore) qScore.textContent = quizCorrect + ' / ' + (currentQ + 1) + ' Doğru';
   
   document.querySelectorAll('.option-btn').forEach(b => (b.disabled = true));
   document.getElementById('opt-' + i).classList.add(ok ? 'correct' : 'wrong');
