@@ -283,9 +283,11 @@ function buildAutoModuleNav() {
     card.setAttribute('tabindex', '0');
     card.innerHTML = '<div class="next-num">' + num + '</div><div class="next-name">' + name + '</div><div class="next-xp">' + xp + '</div>';
     card.onclick = function () {
-      // Rozet ve sonraki modül kartı: modül tamamlanmadan geçiş engellenir
+      // Eğer mevcut modül tamamlandıysa kısıtlama uygulanmaz
       const moduleNum = getCurrentModuleNumber();
-      if (typeof moduleNum === 'number' && !completedSteps.has(5)) {
+      const doneModules = getCompletedModulesSafe();
+      const moduleIsDone = doneModules.includes(moduleNum);
+      if (!moduleIsDone && typeof moduleNum === 'number' && !completedSteps.has(5)) {
         showToast('warn', 'Modül tamamlanmadı', 'Tüm adımları bitirmeden sonraki modüle geçemezsin.');
         return;
       }
@@ -295,7 +297,9 @@ function buildAutoModuleNav() {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
         const moduleNum = getCurrentModuleNumber();
-        if (typeof moduleNum === 'number' && !completedSteps.has(5)) {
+        const doneModules = getCompletedModulesSafe();
+        const moduleIsDone = doneModules.includes(moduleNum);
+        if (!moduleIsDone && typeof moduleNum === 'number' && !completedSteps.has(5)) {
           showToast('warn', 'Modül tamamlanmadı', 'Tüm adımları bitirmeden sonraki modüle geçemezsin.');
           return;
         }
@@ -367,6 +371,12 @@ function normalizeSidebarNavigation() {
     if (!Number.isFinite(modNo) || modNo < 1 || modNo > 13) return;
 
     item.onclick = function () {
+      // Eğer bu modül tamamlandıysa serbest dolaşım
+      const doneModules = getCompletedModulesSafe();
+      if (doneModules.includes(modNo)) {
+        window.location.href = 'modul' + modNo + '.html';
+        return;
+      }
       if (!openModuleFromSidebar(modNo)) {
         showToast('warn', '🔒 Kilitli', 'Önceki modülü tamamla.');
       }
@@ -633,8 +643,11 @@ function normalizeModuleVideo() {
 // ADIM YÖNETİMİ
 // ──────────────────────────────────────────────────────────────
 function goStep(n) {
-  // Adım sıralama kontrolü: Önceki adım tamamlanmadan geçiş engellenir
-  if (n > 1 && !completedSteps.has(n - 1)) {
+  // Eğer mevcut modül tamamlandıysa adım geçiş kısıtlaması uygulanmaz
+  const moduleNum = getCurrentModuleNumber();
+  const doneModules = getCompletedModulesSafe();
+  const moduleIsDone = doneModules.includes(moduleNum);
+  if (!moduleIsDone && n > 1 && !completedSteps.has(n - 1)) {
     showToast('warn', 'Önceki adımı tamamla', 'Bu adıma geçmek için önceki adımı bitirmen gerekiyor.');
     return;
   }
@@ -924,6 +937,8 @@ function showResult() {
       if (icon) {
         icon.style.animation = 'celebratePop 0.5s cubic-bezier(.42,1.2,.58,1), celebrateJumpSpin 1.2s 0.5s cubic-bezier(.42,1.2,.58,1)';
       }
+      const btn = document.getElementById('btn-senaryo-gec');
+      if (btn) btn.onclick = () => completeStep(3);
     }, 120);
     // Buton aktif, disabled özelliği yok; tıklama kontrolü eklenmiyor
   } else {

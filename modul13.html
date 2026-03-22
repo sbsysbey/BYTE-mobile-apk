@@ -581,19 +581,19 @@
         <div class="chat-q-section">
           <div class="chat-q-title">🤔 Melek'sin. Grup mesajını gördün, Can'ın fotoğrafı alay amacıyla paylaşılmış. Ne yaparsın?</div>
           <div class="chat-opts" id="scene-opts">
-            <button class="chat-opt" onclick="pickScene(0)">
+            <button class="chat-opt" onclick="pickScene13(0)">
               <span class="chat-opt-icon">😂</span>
               <div><strong>A)</strong> Sen de "hahaha" emojisi gönderiyorsun — akıntıya kürek çekmeden.</div>
             </button>
-            <button class="chat-opt" onclick="pickScene(1)">
+            <button class="chat-opt" onclick="pickScene13(1)">
               <span class="chat-opt-icon">👀</span>
               <div><strong>B)</strong> Okuyorsun ama sessiz kalıyorsun — bana da yapabilirler diye korkuyorsun.</div>
             </button>
-            <button class="chat-opt" onclick="pickScene(2)">
+            <button class="chat-opt" onclick="pickScene13(2)">
               <span class="chat-opt-icon">💬</span>
               <div><strong>C)</strong> Gruba "Bu çok yanlış, bu böyle yapılmaz" yazıyorsun; sonra Can'a özel mesaj atıp yanında olduğunu söylüyorsun.</div>
             </button>
-            <button class="chat-opt" onclick="pickScene(3)">
+            <button class="chat-opt" onclick="pickScene13(3)">
               <span class="chat-opt-icon">🔕</span>
               <div><strong>D)</strong> Grubu sessize alıyorsun — görmezsem olmamış gibi.</div>
             </button>
@@ -649,7 +649,7 @@
 <script>
 let moduleCompletedSteps = new Set();
 const stepXP = {1:50,2:70,3:160,4:40,5:30};
-let moduleQuizCorrect = 0, moduleCurrentQ = 0, moduleQuizAnswered = false;
+let module13QuizCorrect = 0, module13CurrentQ = 0, module13QuizAnswered = false;
 
 function forceCompleteModule13() {
   try {
@@ -666,8 +666,8 @@ function forceCompleteModule13() {
 
     if (!u.quizStats || typeof u.quizStats !== 'object') u.quizStats = {};
     if (!u.quizStats['13']) {
-      var totalQ = (window.moduleQuestions && window.moduleQuestions.length) ? window.moduleQuestions.length : 10;
-      u.quizStats['13'] = { correct: Math.max(0, Number(moduleQuizCorrect) || 0), total: totalQ };
+      var totalQ = (window.module13Questions && window.module13Questions.length) ? window.module13Questions.length : 10;
+      u.quizStats['13'] = { correct: Math.max(0, Number(module13QuizCorrect) || 0), total: totalQ };
     }
 
     users[session] = u;
@@ -728,7 +728,7 @@ function startVideo(){
   document.getElementById('step-btn-'+n).classList.add('active');
   if (n===5) forceCompleteModule13();
   if (n===5 && typeof saveProgress === 'function') saveProgress(13);
-  if (n===3 && moduleCurrentQ===0) renderQuestion();
+  if (n===3 && module13CurrentQ===0) renderQuestion13();
   window.scrollTo({top:180,behavior:'smooth'});
 }
 
@@ -744,7 +744,7 @@ function completeStep(n) {
     forceCompleteModule13();
     if (typeof saveProgress === 'function') saveProgress(13);
     document.getElementById('final-xp').textContent = xp;
-    document.getElementById('sum-correct').textContent = moduleQuizCorrect;
+    document.getElementById('sum-correct').textContent = module13QuizCorrect;
     showToast('xp','🏆 ROZET KAZANILDI!','Dijital Cesaret rozetini aldın!');
     showToast('xp','🎓 TEBRİKLER!','Tüm 13 modülü tamamladın!');
     goStep(5);
@@ -786,7 +786,7 @@ function byteSpeak() {
   if(voices.length===0){window.speechSynthesis.onvoiceschanged=()=>{const t2=window.speechSynthesis.getVoices().find(v=>v.lang.startsWith('tr'));if(t2)ut.voice=t2;window.speechSynthesis.speak(ut);};}else{window.speechSynthesis.speak(ut);}
 }
 
-window.moduleQuestions = [
+window.module13Questions = [
   {
     q:'Zorbalığa maruz kaldığında yapman gereken ilk şey nedir?',
     opts:['Hemen saldırgana yanıt ver','Ekran görüntüsü al ve kanıtları kaydet','Sosyal medya hesabını kapat','Polise git'],
@@ -850,29 +850,31 @@ window.moduleQuestions = [
 ];
 
 function renderQuestion() {
-  if (moduleCurrentQ>=window.moduleQuestions.length){showQuizResult();return;}
-  moduleQuizAnswered=false;
-  const q=window.moduleQuestions[moduleCurrentQ];
-  prepareModuleQuestion(q);
+
+function renderQuestion13() {
+  if (module13CurrentQ>=window.module13Questions.length){showQuizResult13();return;}
+  module13QuizAnswered=false;
+  const q=window.module13Questions[module13CurrentQ];
+  prepareModule13Question(q);
   const displayOpts=Array.isArray(q._displayOpts)?q._displayOpts:q.opts;
-  document.getElementById('qprog').style.width=(moduleCurrentQ/window.moduleQuestions.length*100)+'%';
-  document.getElementById('q-label').textContent='Soru '+(moduleCurrentQ+1)+' / '+window.moduleQuestions.length;
-  document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';
+  document.getElementById('qprog').style.width=(module13CurrentQ/window.module13Questions.length*100)+'%';
+  document.getElementById('q-label').textContent='Soru '+(module13CurrentQ+1)+' / '+window.module13Questions.length;
+  document.getElementById('q-score').textContent=module13QuizCorrect+' / '+window.module13Questions.length+' Doğru';
   const L=['A','B','C','D'];
   document.getElementById('quiz-area').innerHTML=`
     <div class="question-card">
-      <div class="question-num">SORU ${moduleCurrentQ+1} / ${window.moduleQuestions.length}</div>
+      <div class="question-num">SORU ${module13CurrentQ+1} / ${window.module13Questions.length}</div>
       <div class="question-text">${q.q}</div>
-      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
+      <div class="options">${displayOpts.map((o,i)=>`<button class="option-btn" id="opt-${i}" onclick="answerQ13(${i})"><div class="option-letter">${L[i]}</div><span>${o}</span></button>`).join('')}</div>
       <div class="feedback-box" id="fb-box"></div>
     </div>
-    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion()">${moduleCurrentQ<window.moduleQuestions.length-1?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
+    <div class="quiz-actions"><button class="btn btn-primary" id="nqb" style="display:none" onclick="nextQuestion13()">${module13CurrentQ<window.module13Questions.length-1?'Sonraki Soru →':'Sonucu Gör →'}</button></div>`;
 }
 
-function answerQ(i) {
-  if(moduleQuizAnswered)return;
-  moduleQuizAnswered=true;
-  const q=window.moduleQuestions[moduleCurrentQ];
+function answerQ13(i) {
+  if(module13QuizAnswered)return;
+  module13QuizAnswered=true;
+  const q=window.module13Questions[module13CurrentQ];
   const correctIdx=typeof q._displayCorrect==='number'?q._displayCorrect:q.correct;
   document.querySelectorAll('.option-btn').forEach((b,j)=>{
     b.style.pointerEvents='none';
@@ -881,10 +883,10 @@ function answerQ(i) {
   });
   const fb=document.getElementById('fb-box');
   if(i===correctIdx){
-    moduleQuizCorrect++;
+    module13QuizCorrect++;
     fb.className='feedback-box correct show';
     fb.textContent='✓ '+q.fb;
-    document.getElementById('q-score').textContent=moduleQuizCorrect+' / '+window.moduleQuestions.length+' Doğru';
+    document.getElementById('q-score').textContent=module13QuizCorrect+' / '+window.module13Questions.length+' Doğru';
   } else {
     fb.className='feedback-box wrong show';
     fb.textContent='✗ '+q.fb;
@@ -892,25 +894,25 @@ function answerQ(i) {
   document.getElementById('nqb').style.display='block';
 }
 
-function nextQuestion(){moduleCurrentQ++;renderQuestion();}
+function nextQuestion13(){module13CurrentQ++;renderQuestion13();}
 
-function showQuizResult() {
+function showQuizResult13() {
   document.getElementById('qprog').style.width='100%';
-  const passed=moduleQuizCorrect>=7;
-  if (typeof saveQuizResult === 'function') saveQuizResult(moduleQuizCorrect, window.moduleQuestions.length);
+  const passed=module13QuizCorrect>=7;
+  if (typeof saveQuizResult === 'function') saveQuizResult(module13QuizCorrect, window.module13Questions.length);
   document.getElementById('quiz-area').innerHTML=`
     <div class="question-card" style="text-align:center;padding:36px;">
       <div style="font-size:3.5rem;margin-bottom:16px;">${passed?'🏆':'📚'}</div>
       <div style="font-family:'Orbitron',sans-serif;font-size:1.1rem;color:${passed?'var(--green)':'var(--yellow)'};margin-bottom:8px;">${passed?'BAŞARILI!':'TEKRAR DENEYEBİLİRSİN'}</div>
-      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${moduleQuizCorrect} / ${window.moduleQuestions.length} doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
-      ${passed?`<button class="btn btn-primary" onclick="return safeAdvance(3,4)">Senaryoya Geç →</button>`:`<button class="btn btn-primary" onclick="restartQuiz()">Tekrar Dene</button>`}
+      <div style="font-size:.90rem;color:var(--text-dim);margin-bottom:22px;">${module13QuizCorrect} / ${window.module13Questions.length} doğru · ${passed?'Senaryoya hazırsın.':'7 veya üzeri gerekli.'}</div>
+      ${passed?`<button class="btn btn-primary" onclick="return safeAdvance(3,4)">Senaryoya Geç →</button>`:`<button class="btn btn-primary" onclick="restartQuiz13()">Tekrar Dene</button>`}
     </div>`;
-  document.getElementById('sum-correct').textContent=moduleQuizCorrect;
+  document.getElementById('sum-correct').textContent=module13QuizCorrect;
 }
 
-function restartQuiz(){window.moduleQuestions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});moduleQuizCorrect=0;moduleCurrentQ=0;renderQuestion();}
+function restartQuiz13(){window.module13Questions.forEach(q=>{delete q._displayOpts;delete q._displayCorrect;});module13QuizCorrect=0;module13CurrentQ=0;renderQuestion13();}
 
-function prepareModuleQuestion(q){
+function prepareModule13Question(q){
   if(!q || !Array.isArray(q.opts) || typeof q.correct!=='number') return;
   if(Array.isArray(q._displayOpts) && typeof q._displayCorrect==='number') return;
   const pairs=q.opts.map((opt,idx)=>({text:opt,isCorrect:idx===q.correct}));
@@ -922,19 +924,21 @@ function prepareModuleQuestion(q){
   q._displayCorrect=pairs.findIndex(p=>p.isCorrect);
 }
 
-const sceneFB=[
+
+// MODÜL 13'E ÖZEL benzersiz isimler
+const sceneFB13=[
   {ok:false, text:'<strong class="bad">Yanlış tercih.</strong> Alaycı emoji göndermek zorbalığı normalleştirir ve mağduru daha fazla yalnız bırakır. Dijital ortamda bu da aktif katılım sayılır.'},
   {ok:false, text:'<strong class="bad">Eksik yaklaşım.</strong> Sessiz kalmak tarafsızlık değildir. Tanık müdahalesi olmadığında zorbalık güçlenir ve grup dinamiği saldırgan lehine döner.'},
   {ok:true,  text:'<strong>Mükemmel karar!</strong> Grupta "Bu yanlış" diyerek sınır koymak zorbanın etkisini azaltır ve mağdura yalnız olmadığını hissettirir.'},
   {ok:false, text:'<strong class="bad">Yetersiz çözüm.</strong> Sadece sessize almak kişisel kaçıştır; sorunu bitirmez. Doğru adım raporlama ve mağdura açık destek vermektir.'}
 ];
 
-function pickScene(i){
+function pickScene13(i){
   document.querySelectorAll('.chat-opt').forEach(b=>b.style.pointerEvents='none');
-  document.querySelectorAll('.chat-opt')[i].classList.add(sceneFB[i].ok?'chosen-correct':'chosen-wrong');
-  document.getElementById('byte-fb-text').innerHTML=sceneFB[i].text;
+  document.querySelectorAll('.chat-opt')[i].classList.add(sceneFB13[i].ok?'chosen-correct':'chosen-wrong');
+  document.getElementById('byte-fb-text').innerHTML=sceneFB13[i].text;
   document.getElementById('byte-fb').classList.add('show');
-  if(sceneFB[i].ok) setTimeout(()=>{document.getElementById('scene-next-btn').style.display='inline-block';},800);
+  if(sceneFB13[i].ok) setTimeout(()=>{document.getElementById('scene-next-btn').style.display='inline-block';},800);
 }
 
 function showToast(type,title,msg){
